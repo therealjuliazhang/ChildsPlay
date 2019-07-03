@@ -19,7 +19,7 @@ function backToGroupList(){
 }
 
 function runTest(){
-	window.location = "task.php";
+	window.location = "likertScaleTask.php";
 }
 
 function goNext()

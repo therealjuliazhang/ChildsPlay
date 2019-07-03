@@ -6,7 +6,7 @@
         <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
         <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
-		<script type="text/javascript" src="scripts.js"></script>
+		<script type="text/javascript" src="javascript/scripts.js"></script>
     </head>
     <!--the stuff in the head is all the linking things to Materialize-->
     <!--all the linking's been done, so you shouldn't need to download anything from Materialise-->
@@ -22,17 +22,13 @@
 					<div class="col s2 offset-s10">
 						<a class="waves-effect waves-light btn blue darken-2 right logout" onclick="logout()">Logout</a>
 					</div>
-					
 				</div>
-                
-				
             </div>
         </nav>
         </div>
         <!--end header-->
         
         <!-- body content -->
-
         <div class="container grey-text text-darken-1">
 			<div class="row">
 				<div class="col s12">
@@ -68,7 +64,7 @@ CloseCon($conn);
 						<img src="images/greyCircle.png" width="60px">
 					</div>
 					<h5 class="blue-text darken-2">Image Under Test:</h5>
-					<img src="images/Puff.JPG" width="100px">
+					<img src="images/Puff.jpg" width="100px">
 				</div>
 			</div>
 			<div class="row">
