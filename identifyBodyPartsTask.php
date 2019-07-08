@@ -62,7 +62,7 @@ while($row = mysqli_fetch_assoc($result))
 	var preschoolerNumber = 0;
 	//characterNumber determines which character is being tested
 	var characterNumber = 0;
-	var characterURLs = ['url(\'/images/Puff.png\')', 'url(\'/images/character2.png\')'];
+	var characterURLs = ['url(\'/images/Puff.png\')', 'url(\'/images/character2.jpg\')'];
 	//gets preschoolers array from php
 	var preschoolers = <?php echo(json_encode($preschoolers)); ?>;
 	
@@ -99,7 +99,7 @@ while($row = mysqli_fetch_assoc($result))
 		ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height);
 		ctx.fillStyle = 'rgba(50,50,50, ' + opacity + ')';
 		ctx.beginPath();
-		ctx.arc(canX, canY, 10, 0, 2 * Math.PI);
+		ctx.arc(canX, canY, 30, 0, 2 * Math.PI);
 		ctx.fill();
 		ctx.restore();
 		if (opacity > 0) {
@@ -125,7 +125,7 @@ while($row = mysqli_fetch_assoc($result))
 	function displayCharacter(characterNumber){
 		document.getElementById("myCanvas").style.background = characterURLs[characterNumber];
 		document.getElementById("myCanvas").style.backgroundRepeat = 'no-repeat';
-		document.getElementById("myCanvas").style.backgroundSize = '55%';
+		document.getElementById("myCanvas").style.backgroundSize = '50%';
 		document.getElementById("myCanvas").style.backgroundPosition = 'center';
 	}
 	</script>
