@@ -95,7 +95,7 @@
       var myChart = new Chart(ctx, {
           type: "horizontalBar", // Make the graph horizontal
           data: {
-              labels:  ["Happy", "Sad"],
+              labels:  ["happy", "Sad"],
               datasets: [
                   {
                       label: "Number of Answers",

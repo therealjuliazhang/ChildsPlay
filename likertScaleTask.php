@@ -37,7 +37,7 @@
 				<tr>
 					<td width="15%"></td>
 					<td width="70%">
-						<div class="center-align"><img src="images/Puff.jpg" width="90%"></img></div>
+						<div class="center-align"><img src="images/Puff.png" width="90%"></img></div>
 					</td>
 					<td width="15%"></td>
 				</tr>

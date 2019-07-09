@@ -53,7 +53,8 @@ if($tests->num_rows > 0) {
 	echo "0 results";
 }
 CloseCon($conn);
-?> 					
+?> 
+					
 						</br>
 						<img src="images/happy.jpg" width="75px"><img src="images/sad.jpg" width="75px">
 						</br>
