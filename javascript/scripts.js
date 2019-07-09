@@ -3,7 +3,7 @@ function check(){
 }
 
 function startTest(testID){
-	window.location = "instruction.php";
+	window.location = "likertScaleInstructions.php";
 }
 
 function editGroup(){
