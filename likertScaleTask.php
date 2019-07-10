@@ -76,11 +76,11 @@
 	<script>
 		function sadClicked()
 		{
-			alert("kid hates it");
+            		document.getElementById("sad").src="images/fireworks.gif";
 		}
 		function happyClicked()
 		{
-			alert("kid likes it");
+			document.getElementById("happy").src="images/fireworks.gif";
 		}
 	</script>
     <style>
