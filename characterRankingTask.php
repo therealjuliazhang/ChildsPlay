@@ -27,7 +27,8 @@ mysqli_close($conn);
 	var preschoolers = <?php echo(json_encode($preschoolers)); ?>;
 	//colour of backround of preschoolers names at bottom
 	var colours = ['amber accent-4', 'red', 'deep-purple', 'deep-orange', ' blue accent-4', 'teal', 'indigo accent-4', 'light-green accent-4', 'green', 'lime']
-	var characterURLs = ['/images/Puff.png', '/images/character2.jpg', '/images/character3.jpg', '/images/character4.jpg', '/images/character5.jpg', '/images/character6.png'];
+	var characterURLs = ['/images/Puff.png', '/images/character2.jpg', '/images/character3.jpg', '/images/character4.jpg', '/images/character5.jpg'];
+	var pointsToGive = characterURLs.length;
 	//creates canvas and displays preschoolers name
 	window.onload = function() {
 		displayCharacters();
@@ -37,12 +38,20 @@ mysqli_close($conn);
 	//Next participant
 	function goNext(){
 		preschoolerNumber++;
-		if(preschoolerNumber == preschoolers.length){
+		if(preschoolerNumber == preschoolers.length)
 			preschoolerNumber = 0;
-			displayCharacters();
-		}
-		document.getElementById("preschoolerName").innerHTML = preschoolers[preschoolerNumber]['name'];
+		var previousPreschoolerName = document.getElementById("preschoolerName").innerHTML;
+		document.getElementById("preschoolerName").innerHTML = preschoolers[preschoolerNumber]['name'];;
 		document.getElementById("participant").className = 'row ' + colours[preschoolerNumber % colours.length]; 
+		var chosenCharacters = document.getElementsByClassName("character");
+		for (var i = 0; i < chosenCharacters.length; i++){
+			chosenCharacters[i].classList.remove("chosen");
+			var points = chosenCharacters[i].getAttribute("points");
+			var characterURL = characterURLs[i]; 
+			console.log(previousPreschoolerName + " " + characterURL + " " + points)
+			//savePointsToDatabase(previousPreschoolerName, characterURL, points);
+		}
+		pointsToGive = characterURLs.length;
 	}
 	
 	function displayCharacters(){
@@ -52,31 +61,29 @@ mysqli_close($conn);
 			var img = document.createElement("img");
 			img.src = characterURLs[i];
 			img.style.height = '200px';
-			div.style.position = 'absolute';
-			div.style.top = '100px';
 			div.style.left = width * i + "px";
+			div.className = 'character';
+			div.setAttribute('points', 0);
 			div.appendChild(img);
+			div.onclick = function(){
+				requestAnimationFrame(() => {
+					this.classList.add("chosen");
+					this.setAttribute('points', parseInt(this.getAttribute("points")) + pointsToGive);
+					pointsToGive--;
+				})
+			};
+			div.onTouchStart = function(){
+				requestAnimationFrame(() => {
+					this.classList.add("chosen");
+				})
+			};
 			document.getElementById("container").appendChild(div);
-			div.addEventListener("mousedown", chosen, false);
-			div.addEventListener("touchstart", chosen, false);
 		}
 	}
 	
-	function chosen(e){
-		if (!e)
-			var e = event;
-		var id = setInterval(frame, 5);
-		var pos = 0;
-		function frame() {
-		  if (pos == 100) {
-			clearInterval(id);
-		  } else {
-			pos++; 
-			e.target.style.top = 100-pos + "px"; 
-			console.log(e.target.style.top);
-		  }
-		}
-	}
+	/*function savePointsToDatabase(){
+		
+	}*/
 	</script>
 	<!--link for font awesome icons-->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -93,8 +100,16 @@ mysqli_close($conn);
 		}
 		#container{
 			position: relative;
-			height = 100%;
-			width = 100%;
+			height: 100%;
+			width: 93%;
+		}
+		.character {
+			position: absolute;
+			top: 150px;
+			transition: top 4000ms;
+		}
+		.character.chosen {
+			top: -350px;
 		}
 	</style>
 </head>
