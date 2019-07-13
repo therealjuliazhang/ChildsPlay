@@ -21,6 +21,12 @@ INSERT INTO TASK(instruction, questionType, testID) VALUES (@instruction, @quest
 
 SET
 @instruction = "Ask each participant individually if he/she likes the monster and ask him/her, 'if you like the monster, press the happy face, if you don't like the monster, press the sad face'.",
+@questionType = "ranking",
+@testID=1;
+INSERT INTO TASK(instruction, questionType, testID) VALUES (@instruction, @questionType, @testID);
+
+SET
+@instruction = "Ask each participant individually if he/she likes the monster and ask him/her, 'if you like the monster, press the happy face, if you don't like the monster, press the sad face'.",
 @questionType = "likert",
 @testID=2;
 INSERT INTO TASK(instruction, questionType, testID) VALUES (@instruction, @questionType, @testID);
@@ -32,16 +38,19 @@ SET
 INSERT INTO TASK(instruction, questionType, testID) VALUES (@instruction, @questionType, @testID);
 
 SET
-@name = "Group 1";
-INSERT INTO GROUPTEST(groupName) VALUES(@name);
+@name = "Group 1",
+@testID = "1";
+INSERT INTO GROUPTEST(groupName, testID) VALUES(@name, @testID);
 
 SET
-@name = "Group 2";
-INSERT INTO GROUPTEST(groupName) VALUES(@name);
+@name = "Group 2",
+@testID = 2;
+INSERT INTO GROUPTEST(groupName, testID) VALUES(@name, @testID);
 
 SET
-@name = "Group 3";
-INSERT INTO GROUPTEST(groupName) VALUES(@name);
+@name = "Group 3",
+@testID = 3;
+INSERT INTO GROUPTEST(groupName, testID) VALUES(@name, @testID);
 
 SET 
 @name = "Julia",
