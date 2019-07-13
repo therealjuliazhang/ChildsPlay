@@ -52,7 +52,7 @@
 					<td width="25%" style="vertical-align:bottom">
 						<div class="left-align">
 							<!--sad face-->
-							<img src="images/sad.jpg" onclick="sadClicked()" width="70%"></img>
+							<img id="sad" src="images/sad.jpg" onclick="sadClicked()" width="70%"></img>
 						</div>
 					</td>
 					<td width="50%"></td>
