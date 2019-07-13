@@ -58,7 +58,7 @@ mysqli_close($conn);?>
 				 url: 'http://localhost/CSIT321/testing/getCoordinates.php',
 				 data: { x : canX, y : canY },
 				 success: function(response){
-					 $("#hello").html(response);
+					 $("#placeholder").html(response);
 					 console.log(canX + ", " + canY);
 				 }
 		});
@@ -152,7 +152,7 @@ mysqli_close($conn);?>
 			</span>'s Turn
 		</div>
 	</div>
-	<div id="hello"></div>
+	<div id="placeholder"></div>
 	<!--end body content-->
 </body>	
 </html>
