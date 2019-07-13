@@ -1,4 +1,6 @@
+<html>
 <?php
+header('Access-Control-Allow-Origin: *');
 session_start();
 include 'db_connection.php';
 $conn = OpenCon();
@@ -8,18 +10,7 @@ $preschoolers = array();
 //fetches names of preschoolers into array
 while($row = mysqli_fetch_assoc($result))
    $preschoolers[] = $row;
-mysqli_close($conn);
-$canX = "not set";
-$canY = "not set";
-if ( isset( $_POST['canX'] ) && (isset( $_POST['canY'] ))) {
-	$canX = $_POST['canX'];
-	$canY = $_POST['canY'];
-	$sql="INSERT INTO COORDINATES VALUES ('".$canX."', '".$canY."')";
-	$result=mysql_query($sql);
-	exit;
-}
-?>	
-
+mysqli_close($conn);?>
 <head>
 	<title>Identify Body Parts Task</title>
 	<!--links for Materialize-->
@@ -49,7 +40,7 @@ if ( isset( $_POST['canX'] ) && (isset( $_POST['canY'] ))) {
 		ctx = canvas.getContext("2d");
 		displayCharacter(characterNumber);
 		canvas.addEventListener("mousedown", mouseDown, false);
-		canvas.addEventListener("touchstart", touchDown, false);
+		//canvas.addEventListener("touchstart", touchDown, false);
 		document.getElementById("preschoolerName").innerHTML = preschoolers[0]['name'];
 		document.getElementById("participant").className = 'row ' + colours[preschoolerNumber % colours.length];
 	}
@@ -57,15 +48,18 @@ if ( isset( $_POST['canX'] ) && (isset( $_POST['canY'] ))) {
 	function mouseDown(e) {
 		if (!e)
 			var e = event;
-		canX = e.pageX - canvas.offsetLeft;
-		canY = e.pageY - canvas.offsetTop;
+		 canX = e.pageX - canvas.offsetLeft;
+		 canY = e.pageY - canvas.offsetTop;
 		opacity = 1;
 		window.requestAnimationFrame(draw);
+	
 		$.ajax({
 				 type: 'POST',
-				 data: { 'canX' : canX , 'canY' : canY },
-				 success: function(){
-					 console.log("ajax working");
+				 url: 'http://localhost/CSIT321/testing/getCoordinates.php',
+				 data: { x : canX, y : canY },
+				 success: function(response){
+					 $("#hello").html(response);
+					 console.log(canX + ", " + canY);
 				 }
 		});
 	}
@@ -78,6 +72,15 @@ if ( isset( $_POST['canX'] ) && (isset( $_POST['canY'] ))) {
 		canY = e.targetTouches[0].pageY - canvas.offsetTop;
 		opacity = 1;
 		window.requestAnimationFrame(draw);
+		
+		$.ajax({
+				 type: 'POST',
+				 url: 'http://localhost/CSIT321/testing/getCoordinates.php',
+				 data: { x : canX, y : canY },
+				 success: function(response){
+					 console.log(canX + ", " + canY);
+				 }
+		});
 	}	
 	//draws circle
 	function draw(){
@@ -138,15 +141,19 @@ if ( isset( $_POST['canX'] ) && (isset( $_POST['canY'] ))) {
 <body>
 	<!-- body content -->
 	<img id="button" src="images/greyCircle.png" alt= "image not workning" width="7%" onclick="goNext();"></img>
+	
 	<canvas id="myCanvas" width="800" height="400">
 		Your browser does not support the HTML5 canvas tag.
 	</canvas>  
+	
 	<div id="participant" class="row" style="font-size:18px;font-weight:bold">
 		<div class="center-align">
 			<span id="preschoolerName">
 			</span>'s Turn
 		</div>
 	</div>
+	<div id="hello"></div>
 	<!--end body content-->
 </body>	
 </html>
+
