@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Preview Test</title>
+        <title>Select Group For Task</title>
         <meta name = "viewport" content = "width = device-width, initial-scale = 1">
         <link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
@@ -22,10 +22,7 @@
 					<div class="col s2 offset-s10">
 						<a class="waves-effect waves-light btn blue darken-2 right logout" onclick="logout()">Logout</a>
 					</div>
-					
 				</div>
-                
-				
             </div>
         </nav>
         </div>
