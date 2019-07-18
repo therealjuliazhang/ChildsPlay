@@ -10,17 +10,20 @@
 		<!--link for font awesome icons-->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<style>
-		.border{
-			border:10px solid #586F80;
-			width: 100%;
+		.bottom{
+			position:absolute;
+			bottom: 0px;
+			right:0px;
+			left:0px
 		}
-		.left-align{
-			position:relative;
-			left: 100%;
+		.faces{
+			border:5px solid #586F80;
 		}
-		.right-align{
-			position:relative;
-			right: 100%;
+		#happy{
+			margin-left: 20%;
+		}
+		#sad{
+			margin-left: 40%;
 		}
 		</style>
     </head>
@@ -29,45 +32,22 @@
         <!--no header needed for test pages-->
         <!-- body content -->
 
-			<img src="images/greyCircle.png" width="7%" align="right" onclick="goNext();"></img>
+		<img src="images/greyCircle.png" width="7%" align="right" onclick="goNext();"></img>
 
 		<div class="container">
-        
-			<table>
-				<tr>
-					<td width="15%"></td>
-					<td width="70%">
-						<div class="center-align"><img src="images/Puff.png" width="90%"></img></div>
-					</td>
-					<td width="15%"></td>
-				</tr>
-				
-			</table>
-            <!--all container does is create padding on the left & right sides.-->
-            <!--row for kid's name-->
-		</div>
-		
-		<table>
-		<tr class="border">
-					<td width="25%" style="vertical-align:bottom">
-						<div class="left-align">
-							<!--sad face-->
-							<img id="sad" src="images/sad.jpg" onclick="sadClicked()" width="70%"></img>
-						</div>
-					</td>
-					<td width="50%"></td>
-					<td width="25%" style="vertical-align:bottom">
-						<div class="right-align">
-							<!--happy face-->
-							<img id="happy" src="images/happy.jpg" onclick="happyClicked()" width="70%"></img>
-						</div>
-					</td>
-				</tr>
-		</table>
-		<!--end container-->
-        <div class="row amber accent-4" style="font-size:35px;font-weight:bold">
-			<div class="center-align">
-				<span id="preschoolerName">Aiden</span>'s Turn
+			<div class="center-align"><img src="images/Puff.png" width="28%"></img></div>
+			<!--all container does is create padding on the left & right sides.-->
+			</div>
+			<div class="bottom">
+				<div class="row faces">
+					<img id="happy" src="images/happy.jpg" onclick="happyClicked()" width="10%"></img>
+					<img id="sad" src="images/sad.jpg" onclick="sadClicked()" width="10%"></img>
+				</div>
+				<div class="row amber accent-4" style="font-size:18px;font-weight:bold">
+					<div class="center-align">
+						<span id="preschoolerName">Aiden</span>'s Turn
+					</div>
+				</div>
 			</div>
 		</div>
         <!--end body content-->
@@ -83,6 +63,4 @@
 			document.getElementById("happy").src="images/fireworks.gif";
 		}
 	</script>
-    <style>
-    </style>
 </html>

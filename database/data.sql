@@ -269,9 +269,3 @@ SET
 @imgType = true,
 @taskID = 3;
 INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);
-
-SET
-@address = "/images/character6.png",
-@imgType = true,
-@taskID = 3;
-INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);

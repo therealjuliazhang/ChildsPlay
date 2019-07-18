@@ -1,13 +1,25 @@
+<html>
 <?php
+//these values should be set by user selecting task
+$testID = '1';
+$taskID = '3';
+$groupID = '1';
+
 session_start();
 include 'db_connection.php';
 $conn = OpenCon();
-$sql = "SELECT * FROM PRESCHOOLER";
+//fetch preschoolers from database
+$sql = "SELECT * FROM PRESCHOOLER WHERE GROUPID = '$groupID'";
 $result = $conn->query($sql);
 $preschoolers = array();
-//fetches names of preschoolers into array
 while($row = mysqli_fetch_assoc($result))
    $preschoolers[] = $row;
+//fetch images
+$sql = "SELECT * FROM IMAGE WHERE TASKID = '$taskID'";
+$result = $conn->query($sql);
+$images = array();
+while($row = mysqli_fetch_assoc($result))
+   $images[] = $row;
 mysqli_close($conn);
 ?>	
 
@@ -21,14 +33,18 @@ mysqli_close($conn);
 	<script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
 	<script type="text/javascript" src="javascript/scripts.js"></script>
 	<script>
+	var testID = <?php echo(json_encode($testID)); ?>;
+	var taskID = <?php echo(json_encode($taskID)); ?>;
+	
 	//preschoolerNumber determines whos turn it is
 	var preschoolerNumber = 0;
 	//gets preschoolers array from php
 	var preschoolers = <?php echo(json_encode($preschoolers)); ?>;
 	//colour of backround of preschoolers names at bottom
-	var colours = ['amber accent-4', 'red', 'deep-purple', 'deep-orange', ' blue accent-4', 'teal', 'indigo accent-4', 'light-green accent-4', 'green', 'lime']
-	var characterURLs = ['/images/Puff.png', '/images/character2.jpg', '/images/character3.jpg', '/images/character4.jpg', '/images/character5.jpg'];
-	var pointsToGive = characterURLs.length;
+	var colours = ['amber accent-4', 'red', 'deep-purple', 'deep-orange', ' blue accent-4', 'teal', 'indigo accent-4', 'light-green accent-4', 'green', 'lime'];
+	//characters being tested
+	var images = <?php echo(json_encode($images)); ?>;
+	var pointsToGive = images.length;
 	//creates canvas and displays preschoolers name
 	window.onload = function() {
 		displayCharacters();
@@ -46,44 +62,53 @@ mysqli_close($conn);
 		var chosenCharacters = document.getElementsByClassName("character");
 		for (var i = 0; i < chosenCharacters.length; i++){
 			chosenCharacters[i].classList.remove("chosen");
-			var points = chosenCharacters[i].getAttribute("points");
-			var characterURL = characterURLs[i]; 
-			console.log(previousPreschoolerName + " " + characterURL + " " + points)
-			//savePointsToDatabase(previousPreschoolerName, characterURL, points);
+			chosenCharacters[i].setAttribute("points", 0);
 		}
-		pointsToGive = characterURLs.length;
+		pointsToGive = images.length;
 	}
 	
 	function displayCharacters(){
 		var width = 170;
-		for(var i = 0; i < characterURLs.length; i++){
+		for(var i = 0; i < images.length; i++){
 			var div = document.createElement("div");
 			var img = document.createElement("img");
-			img.src = characterURLs[i];
+			img.src = images[i]['address'];
 			img.style.height = '200px';
 			div.style.left = width * i + "px";
 			div.className = 'character';
 			div.setAttribute('points', 0);
+			div.setAttribute('imageID', images[i]['imageID']);
 			div.appendChild(img);
 			div.onclick = function(){
+				this.setAttribute('points', parseInt(this.getAttribute("points")) + pointsToGive);
+				pointsToGive--;
 				requestAnimationFrame(() => {
 					this.classList.add("chosen");
-					this.setAttribute('points', parseInt(this.getAttribute("points")) + pointsToGive);
-					pointsToGive--;
 				})
+				//send results to php file
+				$.ajax({
+						 type: 'POST',
+						 url: 'http://localhost/getRanking.php/',
+						 data: { imageID : this.getAttribute("imageID"), score : this.getAttribute("points"), testID : testID, taskID : taskID, preID : preschoolers[preschoolerNumber]['preID']},
+						 success: function(imageID){
+							console.log(imageID);
+						}			
+				});
 			};
 			div.onTouchStart = function(){
 				requestAnimationFrame(() => {
 					this.classList.add("chosen");
 				})
+				//send results to php file
+				$.ajax({
+						 type: 'POST',
+						 url: 'http://localhost/getRanking.php/',
+						 data: { imageID : imageID, score : this.getAttribute("points"), testID : testID, taskID : taskID, preID : preschoolers[preschoolerNumber]['preID']}
+				});
 			};
 			document.getElementById("container").appendChild(div);
 		}
 	}
-	
-	/*function savePointsToDatabase(){
-		
-	}*/
 	</script>
 	<!--link for font awesome icons-->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">

@@ -3,13 +3,14 @@
 //these values should be set by user selecting task
 $testID = '1';
 $taskID = '2';
+$groupID = '1';
 
 header('Access-Control-Allow-Origin: *');
 session_start();
 include 'db_connection.php';
 $conn = OpenCon();
 //fetch names of preschoolers
-$sql = "SELECT * FROM PRESCHOOLER";
+$sql = "SELECT * FROM PRESCHOOLER WHERE GROUPID = '$groupID'";
 $result = $conn->query($sql);
 $preschoolers = array();
 while($row = mysqli_fetch_assoc($result))
@@ -31,7 +32,6 @@ mysqli_close($conn);?>
 	<script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
 	<script type="text/javascript" src="javascript/scripts.js"></script>
 	<script>
-	//these values should be set by user selecting task
 	var testID = <?php echo(json_encode($testID)); ?>;
 	var taskID = <?php echo(json_encode($taskID)); ?>;
 
@@ -46,7 +46,7 @@ mysqli_close($conn);?>
 	//preschoolerNumber determines whos turn it is
 	var preschoolerNumber = 0;
 	//colour of backround of preschoolers names at bottom
-	var colours = ['amber accent-4', 'red', 'deep-purple', 'deep-orange', ' blue accent-4', 'teal', 'indigo accent-4', 'light-green accent-4', 'green', 'lime']
+	var colours = ['amber accent-4', 'red', 'deep-purple', 'deep-orange', ' blue accent-4', 'teal', 'indigo accent-4', 'light-green accent-4', 'green', 'lime'];
 	
 	//creates canvas and displays preschoolers name
 	window.onload = function() {
@@ -66,10 +66,10 @@ mysqli_close($conn);?>
 		 canY = e.pageY - canvas.offsetTop;
 		opacity = 1;
 		window.requestAnimationFrame(draw);
-	
+		//send results to php file
 		$.ajax({
 				 type: 'POST',
-				 url: 'http://localhost/getResults.php',
+				 url: 'http://localhost/getCoordinates.php',
 				 data: { x : canX, y : canY , testID : testID, taskID : taskID, preID : preschoolers[preschoolerNumber]['preID']}
 		});
 	}
@@ -82,10 +82,10 @@ mysqli_close($conn);?>
 		canY = e.targetTouches[0].pageY - canvas.offsetTop;
 		opacity = 1;
 		window.requestAnimationFrame(draw);
-		
+		//send results to php file
 		$.ajax({
 				 type: 'POST',
-				 url: 'http://localhost/getResults.php',
+				 url: 'http://localhost/getCoordinates.php',
 				 data: { x : canX, y : canY , testID : testID, taskID : taskID, preID : preschoolers[preschoolerNumber]['preID']}
 		});
 	}	
@@ -159,7 +159,6 @@ mysqli_close($conn);?>
 			</span>'s Turn
 		</div>
 	</div>
-	<div id="placeholder"></div>
 	<!--end body content-->
 </body>	
 </html>
