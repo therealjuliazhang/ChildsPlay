@@ -1,15 +1,25 @@
 <html>
 <?php
+//these values should be set by user selecting task
+$testID = '1';
+$taskID = '2';
+
 header('Access-Control-Allow-Origin: *');
 session_start();
 include 'db_connection.php';
 $conn = OpenCon();
+//fetch names of preschoolers
 $sql = "SELECT * FROM PRESCHOOLER";
 $result = $conn->query($sql);
 $preschoolers = array();
-//fetches names of preschoolers into array
 while($row = mysqli_fetch_assoc($result))
    $preschoolers[] = $row;
+//fetch images
+$sql = "SELECT * FROM IMAGE WHERE TASKID = '$taskID'";
+$result = $conn->query($sql);
+$images = array();
+while($row = mysqli_fetch_assoc($result))
+   $images[] = $row;
 mysqli_close($conn);?>
 <head>
 	<title>Identify Body Parts Task</title>
@@ -21,16 +31,20 @@ mysqli_close($conn);?>
 	<script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
 	<script type="text/javascript" src="javascript/scripts.js"></script>
 	<script>
+	//these values should be set by user selecting task
+	var testID = <?php echo(json_encode($testID)); ?>;
+	var taskID = <?php echo(json_encode($taskID)); ?>;
+
 	//canX is canvas x coordinate, canY is y coordinate
 	var canvas, ctx, canX, canY = 0;
 	var opacity = 1;
-	//preschoolerNumber determines whos turn it is
-	var preschoolerNumber = 0;
-	//characterNumber determines which character is being tested
-	var characterNumber = 0;
-	var characterURLs = ['url(\'/images/Puff.png\')', 'url(\'/images/character2.jpg\')'];
+	var images = <?php echo(json_encode($images)); ?>;
+	//characterNumber determines which image is being tested
+	var imageNumber = 0;
 	//gets preschoolers array from php
 	var preschoolers = <?php echo(json_encode($preschoolers)); ?>;
+	//preschoolerNumber determines whos turn it is
+	var preschoolerNumber = 0;
 	//colour of backround of preschoolers names at bottom
 	var colours = ['amber accent-4', 'red', 'deep-purple', 'deep-orange', ' blue accent-4', 'teal', 'indigo accent-4', 'light-green accent-4', 'green', 'lime']
 	
@@ -38,9 +52,9 @@ mysqli_close($conn);?>
 	window.onload = function() {
 		canvas = document.getElementById("myCanvas");
 		ctx = canvas.getContext("2d");
-		displayCharacter(characterNumber);
+		displayCharacter(imageNumber);
 		canvas.addEventListener("mousedown", mouseDown, false);
-		//canvas.addEventListener("touchstart", touchDown, false);
+		canvas.addEventListener("touchstart", touchDown, false);
 		document.getElementById("preschoolerName").innerHTML = preschoolers[0]['name'];
 		document.getElementById("participant").className = 'row ' + colours[preschoolerNumber % colours.length];
 	}
@@ -55,12 +69,8 @@ mysqli_close($conn);?>
 	
 		$.ajax({
 				 type: 'POST',
-				 url: 'http://localhost/CSIT321/testing/getCoordinates.php',
-				 data: { x : canX, y : canY },
-				 success: function(response){
-					 $("#placeholder").html(response);
-					 console.log(canX + ", " + canY);
-				 }
+				 url: 'http://localhost/getResults.php',
+				 data: { x : canX, y : canY , testID : testID, taskID : taskID, preID : preschoolers[preschoolerNumber]['preID']}
 		});
 	}
 		
@@ -75,11 +85,8 @@ mysqli_close($conn);?>
 		
 		$.ajax({
 				 type: 'POST',
-				 url: 'http://localhost/CSIT321/testing/getCoordinates.php',
-				 data: { x : canX, y : canY },
-				 success: function(response){
-					 console.log(canX + ", " + canY);
-				 }
+				 url: 'http://localhost/getResults.php',
+				 data: { x : canX, y : canY , testID : testID, taskID : taskID, preID : preschoolers[preschoolerNumber]['preID']}
 		});
 	}	
 	//draws circle
@@ -101,18 +108,18 @@ mysqli_close($conn);?>
 	function goNext(){
 		preschoolerNumber++;
 		if(preschoolerNumber == preschoolers.length){
-			//if(characterNumber == characterURLs.length)
+			//if(imageNumber == images.length)
 			//	goToNextPage();
 			preschoolerNumber = 0;
-			characterNumber++;
-			displayCharacter(characterNumber);
+			imageNumber++;
+			displayCharacter(imageNumber);
 		}
 		document.getElementById("preschoolerName").innerHTML = preschoolers[preschoolerNumber]['name'];
 		document.getElementById("participant").className = 'row ' + colours[preschoolerNumber % colours.length]; 
 	}
 	
-	function displayCharacter(characterNumber){
-		document.getElementById("myCanvas").style.background = characterURLs[characterNumber];
+	function displayCharacter(imageNumber){
+		document.getElementById("myCanvas").style.background = "url(" + images[imageNumber]['address'] + ")";
 		document.getElementById("myCanvas").style.backgroundRepeat = 'no-repeat';
 		document.getElementById("myCanvas").style.backgroundSize = 'contain';
 		document.getElementById("myCanvas").style.backgroundPosition = 'center top';
@@ -156,4 +163,3 @@ mysqli_close($conn);?>
 	<!--end body content-->
 </body>	
 </html>
-
