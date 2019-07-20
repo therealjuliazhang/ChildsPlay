@@ -1,4 +1,9 @@
 <html>
+<?php
+$testID = htmlspecialchars($_GET["testID"]);
+$groupID = htmlspecialchars($_GET["groupID"]);
+$numTasksComplete = isset($_GET['numTasksComplete']) ? $_GET['numTasksComplete'] : 0;
+?>
     <head>
         <title>Likert Scale Instructions</title>
         <meta name = "viewport" content = "width = device-width, initial-scale = 1">
@@ -6,7 +11,7 @@
         <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
         <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
-		<script type="text/javascript" src="scripts.js"></script>
+		<script type="text/javascript" src="javascript/scripts.js"></script>
     </head>
     <!--the stuff in the head is all the linking things to Materialize-->
     <!--all the linking's been done, so you shouldn't need to download anything from Materialise-->
@@ -22,17 +27,13 @@
 					<div class="col s2 offset-s10">
 						<a class="waves-effect waves-light btn blue darken-2 right logout" onclick="logout()">Logout</a>
 					</div>
-					
 				</div>
-                
-				
             </div>
         </nav>
         </div>
         <!--end header-->
         
         <!-- body content -->
-
         <div class="container grey-text text-darken-1">
 			<div class="row">
 				<div class="col s12">
@@ -41,24 +42,14 @@
 <?php
 include 'db_connection.php';
 $conn = OpenCon();
-
-$id = $_REQUEST['testID'];
-$testQuery = "SELECT taskType FROM TASK WHERE testID=".$id;
-$tests = $conn->query($testQuery);
-
-
-if($tests->num_rows > 0) {
-	while($row = $tests->fetch_assoc()){
-		if($row["taskType"] == "likert"){
-			echo "Ask each participant individually if he/she likes the monster and ask him/her, 'if you 
-						like the monster, press the happy face, if you don't like the monster, press the sad 
-						face'."; 
-		}
-		//else if questionType = "ranking" or "bodyparts" or "mechanic"...
-	}
-} else {
-	echo "0 results";
-}
+$testQuery = "SELECT * FROM TASK WHERE testID=" . $testID;
+$result = $conn->query($testQuery);
+$tasks = array();
+while($row = mysqli_fetch_assoc($result))
+	$tasks[] = $row;
+if($tasks[$numTasksComplete]["taskType"] == "Likert Scale")
+	echo "Ask each participant individually if he/she likes the monster and ask him/her, 'if you 
+	like the monster, press the happy face, if you don't like the monster, press the sad face'."; 
 CloseCon($conn);
 ?> 
 					
@@ -71,17 +62,13 @@ CloseCon($conn);
 						<img src="images/greyCircle.png" width="60px">
 					</div>
 					<h5 class="blue-text darken-2">Image Under Test:</h5>
-					<img src="images/Puff.JPG" width="100px">
+					<img src="images/Puff.jpg" width="100px">
 				</div>
 			</div>
 			<div class="row">
 				<div class="col s12">
 					<div class="right-align">
-					<?php
-						$url = "task.php?testID=".$id;
-						echo '<a class="waves-effect waves-light btn blue darken-2" href="'.$url.'">Start</a>';
-					?>
-						<!--<a class="waves-effect waves-light btn blue darken-2" onclick="runTest()">Start</a>-->
+						<a href="" class="waves-effect waves-light btn blue darken-2">Start</a>
 						<a class="waves-effect waves-light btn blue darken-4" onclick="backToTestList()">Back</a>
 					</div>
 				</div>

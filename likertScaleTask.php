@@ -1,5 +1,23 @@
-<head>
-        <title>Likert Scale Task</title>
+<html>
+	<?php
+	//these values should be set by user selecting task
+	$testID = '1';
+	$taskID = '1';
+	$groupID = '1';
+
+	header('Access-Control-Allow-Origin: *');
+	session_start();
+	include 'db_connection.php';
+	$conn = OpenCon();
+	//fetch images
+	$sql = "SELECT * FROM IMAGE WHERE TASKID = '$taskID'";
+	$result = $conn->query($sql);
+	$images = array();
+	while($row = mysqli_fetch_assoc($result))
+	   $images[] = $row;
+	mysqli_close($conn);?>
+	<head>
+		<title>Likert Scale Task</title>
 		<!--links for Materialize-->
         <meta name = "viewport" content = "width = device-width, initial-scale = 1">
         <link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -35,7 +53,7 @@
 		<img src="images/greyCircle.png" width="7%" align="right" onclick="goNext();"></img>
 
 		<div class="container">
-			<div class="center-align"><img src="images/Puff.png" width="28%"></img></div>
+			<div class="center-align"><img id="image" width="28%"></img></div>
 			<!--all container does is create padding on the left & right sides.-->
 			</div>
 			<div class="bottom">
@@ -54,9 +72,12 @@
 
     </body>
 	<script>
+		var images = <?php echo(json_encode($images)); ?>;
+		var imageURL = images[0]['address'];
+		document.getElementById("image").src = imageURL;
 		function sadClicked()
 		{
-            		document.getElementById("sad").src="images/fireworks.gif";
+            document.getElementById("sad").src="images/fireworks2.gif";
 		}
 		function happyClicked()
 		{

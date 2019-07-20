@@ -1,4 +1,7 @@
 <html>
+	<?php
+	$testID = htmlspecialchars($_GET["testID"]);
+	?>
     <head>
         <title>Select Group For Task</title>
         <meta name = "viewport" content = "width = device-width, initial-scale = 1">
@@ -67,10 +70,10 @@
 			$preschoolers = array();
 			while($row = mysqli_fetch_assoc($result2))
 				$preschoolers[] = $row;
-			echo '<tr><td>', $value['groupName'], '</td>', '<td>';
+			echo '<tr><td>', $value['name'], '</td>', '<td>';
 			foreach ($preschoolers as $value) 
 				echo $value['name'], ' ';
-			echo '</td><td><a class="waves-effect waves-light btn blue darken-2 " onclick="">Select</a></td></tr>';
+			echo '</td><td><a href="instruction.php?testID=', $testID, '&groupID=', $groupID, '" class="waves-effect waves-light btn blue darken-2">Select</a></td></tr>';
 		}
 		?>
 				</tbody>

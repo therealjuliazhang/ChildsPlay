@@ -6,7 +6,7 @@
         <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
         <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
-		<script type="text/javascript" src="scripts.js"></script>
+		<script type="text/javascript" src="javascript/scripts.js"></script>
     </head>
     <!--the stuff in the head is all the linking things to Materialize-->
     <!--all the linking's been done, so you shouldn't need to download anything from Materialise-->
@@ -61,14 +61,12 @@ $result = $conn->query($sql);
 
 if($result->num_rows > 0) {
 	while($row = $result->fetch_assoc()){
-		$url = "instruction.php?testID=".$row["testID"];
 		echo '<div class="row">
                 <div class="col s2 tableData" class="testID">'.$row["testID"].'</div>
                 <div class="col s4 tableData">'.$row["description"].'</div>
-                <div class="col s3 tableData"><button class="waves-effect waves-light btn blue darken-4 right preview" onclick="check()">Preview</button></div>'.
-				'<div class="col s3 tableData"><a class="waves-effect waves-light btn blue darken-2 right startB" href="'.$url.'">Start</a></div>'.
-                //<div class="col s3 tableData"><a class="waves-effect waves-light btn blue darken-2 right startB" onclick="startTest('.$row["testID"].')">Start</a></div>
-              '</div>
+                <div class="col s3 tableData"><button class="waves-effect waves-light btn blue darken-4 right preview" onclick="check()">Preview</button></div>
+                <div class="col s3 tableData"><a class="waves-effect waves-light btn blue darken-2 right startB" onclick="startTest('.$row["testID"].')">Start</a></div>
+              </div>
                     
               <div class="divider"></div>';
 	}
@@ -102,7 +100,7 @@ if($groups->num_rows > 0) {
 		$childQuery = "SELECT * FROM PRESCHOOLER WHERE groupID=$groupID";
 		$children = $conn->query($childQuery);
 		echo '<div class="row">
-                        <div class="col s2 tableData">'.$group["name"].'</div>
+                        <div class="col s2 tableData">'.$group["groupName"].'</div>
 						<div class="col s7 tableData">';
 						$count = 0;
 				while($child = $children->fetch_assoc()){
