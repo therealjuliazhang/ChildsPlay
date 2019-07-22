@@ -1,8 +1,10 @@
 <html>
 <?php
-$testID = htmlspecialchars($_GET["testID"]);
-$groupID = htmlspecialchars($_GET["groupID"]);
-$numTasksComplete = isset($_GET['numTasksComplete']) ? $_GET['numTasksComplete'] : 0;
+$testID = $_GET["testID"];
+$groupID = $_GET["groupID"];
+//index of task in array
+$taskIndex = isset($_GET['taskIndex']) ? $_GET['taskIndex'] : 0;
+$bodyPart = "eye";
 ?>
     <head>
         <title>Likert Scale Instructions</title>
@@ -11,7 +13,6 @@ $numTasksComplete = isset($_GET['numTasksComplete']) ? $_GET['numTasksComplete']
         <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
         <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
-		<script type="text/javascript" src="javascript/scripts.js"></script>
     </head>
     <!--the stuff in the head is all the linking things to Materialize-->
     <!--all the linking's been done, so you shouldn't need to download anything from Materialise-->
@@ -40,36 +41,63 @@ $numTasksComplete = isset($_GET['numTasksComplete']) ? $_GET['numTasksComplete']
 					<h5 class="blue-text darken-2">Task Instructions:</h5>
 					<div style="font-size:18px">
 <?php
+//Display instructions for task
 include 'db_connection.php';
 $conn = OpenCon();
+$taskTypeUrl;
 $testQuery = "SELECT * FROM TASK WHERE testID=" . $testID;
 $result = $conn->query($testQuery);
 $tasks = array();
 while($row = mysqli_fetch_assoc($result))
 	$tasks[] = $row;
-if($tasks[$numTasksComplete]["taskType"] == "Likert Scale")
-	echo "Ask each participant individually if he/she likes the monster and ask him/her, 'if you 
-	like the monster, press the happy face, if you don't like the monster, press the sad face'."; 
+$info = "testID=" . $testID . "&groupID=" . $groupID . "&taskIndex=" . $taskIndex;
+switch($tasks[$taskIndex]["taskType"]){
+	case "Likert Scale":
+		echo $tasks[$taskIndex]['instruction'] . 
+		"</br>
+			<img src=\"images/happy.jpg\" width=\"75px\"><img src=\"images/sad.jpg\" width=\"75px\">
+		</br>"; 
+		$taskTypeUrl = "likertScaleTask.php?" . $info;
+		break;
+	case "Identify Body Parts":
+		echo $tasks[$taskIndex]['instruction']; 
+		$taskTypeUrl = "identifyBodyPartsTask.php?" . $info;
+		break;
+	case "Character Ranking":
+		echo $tasks[$taskIndex]['instruction'];  
+		$taskTypeUrl = "characterRankingTask.php?" . $info;
+		break;
+	case "Drag and Drop":
+		echo $tasks[$taskIndex]['instruction']; 
+		$taskTypeUrl = "dragAndDropTask.php?" . $info;
+		break;
+}
 CloseCon($conn);
 ?> 
-					
-						</br>
-						<img src="images/happy.jpg" width="75px"><img src="images/sad.jpg" width="75px">
-						</br>
-						After the participant has responded, select the grey, quarter-circle button on the top right 
+						After the participant has completed their task, select the grey, quarter-circle button on the top right 
 						of the screen to go to the next participant's turn.
 						</br>
 						<img src="images/greyCircle.png" width="60px">
 					</div>
-					<h5 class="blue-text darken-2">Image Under Test:</h5>
-					<img src="images/Puff.jpg" width="100px">
+					<h5 class="blue-text darken-2">Images Under Test:</h5>
+<?php
+//display images under test
+$conn = OpenCon();
+$testQuery = "SELECT address FROM IMAGE WHERE taskID=" . $tasks[$taskIndex]["taskID"];
+$result = $conn->query($testQuery);
+$imageAdresses = array();
+while($row = mysqli_fetch_assoc($result))
+	$imageAdresses[] = $row;
+foreach ($imageAdresses as $value) 
+  echo '<img src=' . $value['address'] . ' width="100px">';
+?>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col s12">
 					<div class="right-align">
-						<a href="" class="waves-effect waves-light btn blue darken-2">Start</a>
-						<a class="waves-effect waves-light btn blue darken-4" onclick="backToTestList()">Back</a>
+						<a href= <?php echo $taskTypeUrl; ?> class="waves-effect waves-light btn blue darken-2">Start</a>
+						<a onclick="goBack()" class="waves-effect waves-light btn blue darken-4">Back</a>
 					</div>
 				</div>
 			</div>
@@ -79,6 +107,17 @@ CloseCon($conn);
         
     </body>
 	<script>
+	function goBack(){
+		var taskIndex = <?php echo $taskIndex ?>;
+		var testID = <?php echo $testID ?>;
+		var groupID = <?php echo $groupID ?>;
+		if(taskIndex == 0)
+			window.location.href = "selectGroupForTask.php?testID=" + testID;
+		else{
+			taskIndex = <?php echo --$taskIndex; ?>;
+			window.location.href = "comments.php?testID=" + testID + "&groupID=" + groupID + "&taskIndex=" + taskIndex;
+		}
+	}
 	</script>
     <style>
 	.brand-logo{

@@ -1,19 +1,31 @@
 <!DOCTYPE html>
 
 <html>
+	<?php
+	$testID = $_GET["testID"];
+	$groupID = $_GET["groupID"];
+	$taskIndex = $_GET['taskIndex'];
+	//fetch task
+	$testQuery = "SELECT * FROM TASK WHERE testID=" . $testID;
+	include 'db_connection.php';
+	$conn = OpenCon();
+	$result = $conn->query($testQuery);
+	$tasks = array();
+	while($row = mysqli_fetch_assoc($result))
+		$tasks[] = $row;
+	$taskID = $tasks[$taskIndex]['taskID'];
+	?>
     <head>
         <title>Comments</title>
 		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
 		<meta http-equiv="Pragma" content="no-cache" />
 		<meta http-equiv="Expires" content="0" />
-		
         <meta name = "viewport" content = "width = device-width, initial-scale = 1">
         <link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
         <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
-        <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
-		<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-		<script type = "text/javascript" src="scripts.js"></script>
+        <script type = "text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+		<script type = "text/javascript" src = "https://code.jquery.com/jquery-1.12.4.min.js"></script>
 		<style>
 		#error{
 			font-style: italic;
@@ -30,14 +42,12 @@
             <div class="nav-wrapper">
 				<div class="row">
 					<div class="col s10">
-						<a href="#" class="brand-logo"><img src="logo1.png" height="200px"></a>
+						<a href="#" class="brand-logo"><img src="images/logo1.png" height="200px"></a>
 					</div>
 					<div class="col s2 offset-s10">
 						<a class="waves-effect waves-light btn blue darken-2 right logout" onclick="logout()">Logout</a>
 					</div>
 				</div>
-                
-				
             </div>
         </nav>
         </div>
@@ -71,9 +81,8 @@ header("Expires: 0"); // Proxies.
 
 session_start();
 
-include 'db_connection.php';
 $conn = OpenCon();
-$link = mysqli_connect("localhost", "root", "root", "test");
+$link = mysqli_connect("localhost", "root", "", "test");
 
 if($link === false){
     die("ERROR: Could not connect. " . mysqli_connect_error());
@@ -83,10 +92,10 @@ $id = $_REQUEST["testID"];
 
 if(isset($_POST['nextButton'])){
 	function processText($text) {
-    $text = strip_tags($text);
-    $text = trim($text);
-    $text = htmlspecialchars($text);
-    return $text;
+		$text = strip_tags($text);
+		$text = trim($text);
+		$text = htmlspecialchars($text);
+		return $text;
 	}
 	$comment = processText($_POST['area1']);
 	if($comment != ""){
@@ -109,8 +118,8 @@ if(isset($_POST['backButton'])){
 			<div class="row">
 				<div class="col s12">
 					<div class="right-align">
-						<button type="submit" class="waves-effect waves-light btn blue darken-2" name="button1">Next</button>
-						<a class="waves-effect waves-light btn blue darken-4" name="button2">Back</a>
+						<button type="button" class="waves-effect waves-light btn blue darken-2" name="button1" onclick="next();">Next</button>
+						<!--<a class="waves-effect waves-light btn blue darken-4" name="button2">Back</a>-->
 					</div>
 				</div>
 			</div>
@@ -121,17 +130,42 @@ if(isset($_POST['backButton'])){
         <!--end body content-->
         
     </body>
-
 	<script>
-	function printComment(){
-		/*var comment = document.getElementById("textarea1").innerText;
-		console.log("This is the comment: " + comment);*/
-		var comment = $.trim($("#textarea1").val());
-            if(comment != ""){
-                alert(comment);
-            }
-	}
-	
+		function printComment(){
+			/*var comment = document.getElementById("textarea1").innerText;
+			console.log("This is the comment: " + comment);*/
+			var comment = $.trim($("#textarea1").val());
+			if(comment != ""){
+				alert(comment);
+			}
+		}
+		function next(){
+			var taskIndex = <?php echo $taskIndex; ?>;
+			var tasks = <?php echo json_encode($tasks); ?>;
+			if(taskIndex == tasks.length-1)
+				window.location.href = "thankyou.php";
+			else{
+				var testID = <?php echo $testID; ?>;
+				var groupID = <?php echo $groupID; ?>;
+				taskIndex++;
+				window.location.href = "instruction.php?" + "testID=" + testID + "&groupID=" + groupID + "&taskIndex=" + taskIndex;
+				/*var info = "testID=" + testID + "&groupID=" + groupID + "&taskIndex=" + taskIndex;
+				switch(tasks[taskIndex]["taskType"]){
+					case "Likert Scale":
+						window.location.href = "likertScaleTask.php?" + info;
+						break;
+					case "Identify Body Parts": 
+						window.location.href = "identifyBodyPartsTask.php?" + info;
+						break;
+					case "Character Ranking":
+						window.location.href = "characterRankingTask.php?" + info;
+						break;
+					case "Drag and Drop":
+						window.location.href = "dragAndDropTask.php?" + info;
+						break;
+				}*/
+			}
+		}
 	</script>
     <style>
 	.brand-logo{

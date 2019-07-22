@@ -1,21 +1,33 @@
 <html>
 	<?php
-	//these values should be set by user selecting task
-	$testID = '1';
-	$taskID = '1';
-	$groupID = '1';
-
+	$testID = $_GET["testID"];
+	$groupID = $_GET["groupID"];
+	$taskIndex = $_GET['taskIndex'];
 	header('Access-Control-Allow-Origin: *');
 	session_start();
 	include 'db_connection.php';
 	$conn = OpenCon();
+	//fetch task
+	$testQuery = "SELECT * FROM TASK WHERE testID=" . $testID;
+	$result = $conn->query($testQuery);
+	$tasks = array();
+	while($row = mysqli_fetch_assoc($result))
+		$tasks[] = $row;
+	$taskID = $tasks[$taskIndex]['taskID'];
 	//fetch images
 	$sql = "SELECT * FROM IMAGE WHERE TASKID = '$taskID'";
 	$result = $conn->query($sql);
 	$images = array();
 	while($row = mysqli_fetch_assoc($result))
 	   $images[] = $row;
-	mysqli_close($conn);?>
+	//fetch preschoolers
+	$sql = "SELECT * FROM PRESCHOOLER WHERE GROUPID = '$groupID'";
+	$result = $conn->query($sql);
+	$preschoolers = array();
+	while($row = mysqli_fetch_assoc($result))
+	   $preschoolers[] = $row;
+    mysqli_close($conn);
+	?>
 	<head>
 		<title>Likert Scale Task</title>
 		<!--links for Materialize-->
@@ -61,9 +73,10 @@
 					<img id="happy" src="images/happy.jpg" onclick="happyClicked()" width="10%"></img>
 					<img id="sad" src="images/sad.jpg" onclick="sadClicked()" width="10%"></img>
 				</div>
-				<div class="row amber accent-4" style="font-size:18px;font-weight:bold">
+				<div id="participant" class="row" style="font-size:18px;font-weight:bold">
 					<div class="center-align">
-						<span id="preschoolerName">Aiden</span>'s Turn
+						<span id="preschoolerName">
+						</span>'s Turn
 					</div>
 				</div>
 			</div>
@@ -72,15 +85,38 @@
 
     </body>
 	<script>
+		var taskIndex = <?php echo(json_encode($taskIndex)); ?>;
 		var images = <?php echo(json_encode($images)); ?>;
 		var imageURL = images[0]['address'];
 		document.getElementById("image").src = imageURL;
-		function sadClicked()
-		{
+		//gets preschoolers array from php
+		var preschoolers = <?php echo(json_encode($preschoolers)); ?>;
+		//preschoolerIndex determines whos turn it is
+		var preschoolerIndex = 0;
+		//colour of backround of preschoolers names at bottom
+		var colours = ['amber accent-4', 'red', 'deep-purple', 'deep-orange', ' blue accent-4', 'teal', 'indigo accent-4', 'light-green accent-4', 'green', 'lime'];
+		document.getElementById("preschoolerName").innerHTML = preschoolers[0]['name'];
+		document.getElementById("participant").className = 'row ' + colours[preschoolerIndex % colours.length];
+		
+		function goNext(){
+			preschoolerIndex++;
+			if(preschoolerIndex == preschoolers.length){
+				var testID = <?php echo $testID ?>;
+				var groupID = <?php echo $groupID ?>;
+				var taskIndex = <?php echo $taskIndex ?>;
+				window.location.href = "comments.php?testID=" + testID + "&groupID=" + groupID + "&taskIndex=" + taskIndex;
+			}
+			document.getElementById("preschoolerName").innerHTML = preschoolers[preschoolerIndex]['name'];
+			document.getElementById("participant").className = 'row ' + colours[preschoolerIndex % colours.length]; 
+			document.getElementById("sad").src="images/sad.jpg";
+			document.getElementById("happy").src="images/happy.jpg";
+		}
+		
+		function sadClicked(){
             document.getElementById("sad").src="images/fireworks2.gif";
 		}
-		function happyClicked()
-		{
+		
+		function happyClicked(){
 			document.getElementById("happy").src="images/fireworks.gif";
 		}
 	</script>

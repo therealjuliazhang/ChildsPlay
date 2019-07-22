@@ -5,6 +5,7 @@ $testID = '1';
 $taskID = '2';
 $groupID = '1';
 
+$taskIndex = $_GET['taskIndex'];
 header('Access-Control-Allow-Origin: *');
 session_start();
 include 'db_connection.php';
@@ -39,12 +40,12 @@ mysqli_close($conn);?>
 	var canvas, ctx, canX, canY = 0;
 	var opacity = 1;
 	var images = <?php echo(json_encode($images)); ?>;
-	//characterNumber determines which image is being tested
-	var imageNumber = 0;
+	//imageIndex determines which image in array is being tested
+	var imageIndex = 0;
 	//gets preschoolers array from php
 	var preschoolers = <?php echo(json_encode($preschoolers)); ?>;
-	//preschoolerNumber determines whos turn it is
-	var preschoolerNumber = 0;
+	//preschoolerIndex determines whos turn it is
+	var preschoolerIndex = 0;
 	//colour of backround of preschoolers names at bottom
 	var colours = ['amber accent-4', 'red', 'deep-purple', 'deep-orange', ' blue accent-4', 'teal', 'indigo accent-4', 'light-green accent-4', 'green', 'lime'];
 	
@@ -52,11 +53,11 @@ mysqli_close($conn);?>
 	window.onload = function() {
 		canvas = document.getElementById("myCanvas");
 		ctx = canvas.getContext("2d");
-		displayCharacter(imageNumber);
+		displayCharacter(imageIndex);
 		canvas.addEventListener("mousedown", mouseDown, false);
 		canvas.addEventListener("touchstart", touchDown, false);
 		document.getElementById("preschoolerName").innerHTML = preschoolers[0]['name'];
-		document.getElementById("participant").className = 'row ' + colours[preschoolerNumber % colours.length];
+		document.getElementById("participant").className = 'row ' + colours[preschoolerIndex % colours.length];
 	}
 	
 	function mouseDown(e) {
@@ -70,7 +71,7 @@ mysqli_close($conn);?>
 		$.ajax({
 				 type: 'POST',
 				 url: 'http://localhost/getCoordinates.php',
-				 data: { x : canX, y : canY , testID : testID, taskID : taskID, preID : preschoolers[preschoolerNumber]['preID']}
+				 data: { x : canX, y : canY , testID : testID, taskID : taskID, preID : preschoolers[preschoolerIndex]['preID']}
 		});
 	}
 		
@@ -86,7 +87,7 @@ mysqli_close($conn);?>
 		$.ajax({
 				 type: 'POST',
 				 url: 'http://localhost/getCoordinates.php',
-				 data: { x : canX, y : canY , testID : testID, taskID : taskID, preID : preschoolers[preschoolerNumber]['preID']}
+				 data: { x : canX, y : canY , testID : testID, taskID : taskID, preID : preschoolers[preschoolerIndex]['preID']}
 		});
 	}	
 	//draws circle
@@ -106,20 +107,24 @@ mysqli_close($conn);?>
 	}
 	//Next participant
 	function goNext(){
-		preschoolerNumber++;
-		if(preschoolerNumber == preschoolers.length){
-			//if(imageNumber == images.length)
-			//	goToNextPage();
-			preschoolerNumber = 0;
-			imageNumber++;
-			displayCharacter(imageNumber);
+		preschoolerIndex++;
+		if(preschoolerIndex == preschoolers.length){
+			imageIndex++;
+			if(imageIndex == images.length){
+				var testID = <?php echo $testID ?>;
+				var groupID = <?php echo $groupID ?>;
+				var taskIndex = <?php echo $taskIndex ?>;
+				window.location.href = "comments.php?testID=" + testID + "&groupID=" + groupID + "&taskIndex=" + taskIndex;
+			}
+			preschoolerIndex = 0;
+			displayCharacter(imageIndex);
 		}
-		document.getElementById("preschoolerName").innerHTML = preschoolers[preschoolerNumber]['name'];
-		document.getElementById("participant").className = 'row ' + colours[preschoolerNumber % colours.length]; 
+		document.getElementById("preschoolerName").innerHTML = preschoolers[preschoolerIndex]['name'];
+		document.getElementById("participant").className = 'row ' + colours[preschoolerIndex % colours.length]; 
 	}
 	
-	function displayCharacter(imageNumber){
-		document.getElementById("myCanvas").style.background = "url(" + images[imageNumber]['address'] + ")";
+	function displayCharacter(imageIndex){
+		document.getElementById("myCanvas").style.background = "url(" + images[imageIndex]['address'] + ")";
 		document.getElementById("myCanvas").style.backgroundRepeat = 'no-repeat';
 		document.getElementById("myCanvas").style.backgroundSize = 'contain';
 		document.getElementById("myCanvas").style.backgroundPosition = 'center top';
