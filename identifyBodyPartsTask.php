@@ -1,15 +1,19 @@
 <html>
 <?php
-//these values should be set by user selecting task
-$testID = '1';
-$taskID = '2';
-$groupID = '1';
-
+$testID = $_GET["testID"];
+$groupID = $_GET["groupID"];
 $taskIndex = $_GET['taskIndex'];
 header('Access-Control-Allow-Origin: *');
 session_start();
 include 'db_connection.php';
 $conn = OpenCon();
+//fetch task
+$testQuery = "SELECT * FROM TASK WHERE testID=" . $testID;
+$result = $conn->query($testQuery);
+$tasks = array();
+while($row = mysqli_fetch_assoc($result))
+	$tasks[] = $row;
+$taskID = $tasks[$taskIndex]['taskID'];
 //fetch names of preschoolers
 $sql = "SELECT * FROM PRESCHOOLER WHERE GROUPID = '$groupID'";
 $result = $conn->query($sql);

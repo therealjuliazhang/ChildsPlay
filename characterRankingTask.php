@@ -1,13 +1,18 @@
 <html>
 <?php
-//these values should be set by user selecting task
-$testID = '1';
-$taskID = '3';
-$groupID = '1';
-
+$testID = $_GET["testID"];
+$groupID = $_GET["groupID"];
+$taskIndex = $_GET['taskIndex'];
 session_start();
 include 'db_connection.php';
 $conn = OpenCon();
+//fetch task
+$testQuery = "SELECT * FROM TASK WHERE testID=" . $testID;
+$result = $conn->query($testQuery);
+$tasks = array();
+while($row = mysqli_fetch_assoc($result))
+	$tasks[] = $row;
+$taskID = $tasks[$taskIndex]['taskID'];
 //fetch preschoolers from database
 $sql = "SELECT * FROM PRESCHOOLER WHERE GROUPID = '$groupID'";
 $result = $conn->query($sql);
@@ -54,8 +59,13 @@ mysqli_close($conn);
 	//Next participant
 	function goNext(){
 		preschoolerNumber++;
-		if(preschoolerNumber == preschoolers.length)
-			preschoolerNumber = 0;
+		if(preschoolerNumber == preschoolers.length){
+			var testID = <?php echo $testID ?>;
+			var groupID = <?php echo $groupID ?>;
+			var taskIndex = <?php echo $taskIndex ?>;
+			window.location.href = "comments.php?testID=" + testID + "&groupID=" + groupID + "&taskIndex=" + taskIndex;
+		}
+		
 		var previousPreschoolerName = document.getElementById("preschoolerName").innerHTML;
 		document.getElementById("preschoolerName").innerHTML = preschoolers[preschoolerNumber]['name'];;
 		document.getElementById("participant").className = 'row ' + colours[preschoolerNumber % colours.length]; 

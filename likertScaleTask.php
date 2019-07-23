@@ -1,7 +1,8 @@
 <html>
 	<?php
 	$testID = $_GET["testID"];
-	$groupID = $_GET["groupID"];
+	//if there is no groupId then it is a preview and groupID is set to 1 (preview group)
+	$groupID = isset($_GET['groupID']) ? $_GET['groupID'] : 1;
 	$taskIndex = $_GET['taskIndex'];
 	header('Access-Control-Allow-Origin: *');
 	session_start();
@@ -25,7 +26,7 @@
 	$result = $conn->query($sql);
 	$preschoolers = array();
 	while($row = mysqli_fetch_assoc($result))
-	   $preschoolers[] = $row;
+	$preschoolers[] = $row;
     mysqli_close($conn);
 	?>
 	<head>
@@ -36,7 +37,6 @@
         <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
         <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
-		<script type="text/javascript" src="javascript/scripts.js"></script>
 		<!--link for font awesome icons-->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<style>

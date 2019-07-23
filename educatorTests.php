@@ -6,7 +6,6 @@
         <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
         <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
-		<script type="text/javascript" src="javascript/scripts.js"></script>
     </head>
     <!--the stuff in the head is all the linking things to Materialize-->
     <!--all the linking's been done, so you shouldn't need to download anything from Materialise-->
@@ -57,9 +56,9 @@
 					$tests[] = $row;
 				//for each group, get preschooler's names and display information
 				foreach ($tests as $value) {
-					echo '<tr><td>', $value['title'], '</td><td>', $value['description'];
-					echo '</td><td><a class="waves-effect waves-light btn blue darken-4 " onclick="">Preview</a></td>';
-					echo '</td><td><a href="selectGroupForTask.php?testID=', $value['testID'], '" class="waves-effect waves-light btn blue darken-2 ">Start</a></td></tr>';
+					echo '<tr><td>' . $value['title'] . '</td><td>' . $value['description'];
+					echo '</td><td><a href="instruction.php?testID=' . $value['testID'] . '" class="waves-effect waves-light btn blue darken-4 ">Preview</a></td>';
+					echo '</td><td><a href="selectGroupForTask.php?testID=' . $value['testID'] . '" class="waves-effect waves-light btn blue darken-2 ">Start</a></td></tr>';
 				}
 				?>
 				</tbody>
@@ -97,7 +96,7 @@
 					?>
 					</tbody>
 				</table>
-				<a class="waves-effect waves-light btn blue darken-4 right" onclick="">Add New Group</a>
+				<a href="educatorAddGroup.php" class="waves-effect waves-light btn blue darken-4 right">Add New Group</a>
 			</div>
         </div>
         <!--end body content-->

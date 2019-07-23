@@ -1,7 +1,7 @@
 <html>
 <?php
 $testID = $_GET["testID"];
-$groupID = $_GET["groupID"];
+$groupID = isset($_GET['groupID']) ? $_GET['groupID'] : 1;
 //index of task in array
 $taskIndex = isset($_GET['taskIndex']) ? $_GET['taskIndex'] : 0;
 $bodyPart = "eye";
@@ -112,7 +112,11 @@ foreach ($imageAdresses as $value)
 		var testID = <?php echo $testID ?>;
 		var groupID = <?php echo $groupID ?>;
 		if(taskIndex == 0)
-			window.location.href = "selectGroupForTask.php?testID=" + testID;
+			//if preview (group is preview group), go back to educator tests page
+			if(groupID == 1)
+				window.location.href = "educatorTests.php";
+			else
+				window.location.href = "selectGroupForTask.php?testID=" + testID;
 		else{
 			taskIndex = <?php echo --$taskIndex; ?>;
 			window.location.href = "comments.php?testID=" + testID + "&groupID=" + groupID + "&taskIndex=" + taskIndex;
