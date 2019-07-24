@@ -149,21 +149,6 @@ if(isset($_POST['backButton'])){
 				var groupID = <?php echo $groupID; ?>;
 				taskIndex++;
 				window.location.href = "instruction.php?" + "testID=" + testID + "&groupID=" + groupID + "&taskIndex=" + taskIndex;
-				/*var info = "testID=" + testID + "&groupID=" + groupID + "&taskIndex=" + taskIndex;
-				switch(tasks[taskIndex]["taskType"]){
-					case "Likert Scale":
-						window.location.href = "likertScaleTask.php?" + info;
-						break;
-					case "Identify Body Parts": 
-						window.location.href = "identifyBodyPartsTask.php?" + info;
-						break;
-					case "Character Ranking":
-						window.location.href = "characterRankingTask.php?" + info;
-						break;
-					case "Drag and Drop":
-						window.location.href = "dragAndDropTask.php?" + info;
-						break;
-				}*/
 			}
 		}
 	</script>

@@ -1,4 +1,14 @@
 <html>
+    <?php 
+        include 'db_connection.php';
+        $conn = OpenCon();
+        //fetch locations
+        $sql = "SELECT * FROM LOCATION";
+        $result = $conn->query($sql);
+        $locations = array();
+        while($row = mysqli_fetch_assoc($result))
+            $locations[] = $row;
+    ?>
     <head>
         <title>Add New Group For Educator</title>
         <meta name = "viewport" content = "width = device-width, initial-scale = 1">
@@ -30,92 +40,122 @@
         
         <!-- body content -->
         <div class="container grey-text text-darken-1" style="font-size:18px">
-            <div class="row">
-                <div class="col s12">
-                    <h5 class="blue-text darken-2">Add New Group</h5></br>
-                    Please input the details for each test participant:</br></br>
-                    <div class="col s6"><b>Name:</b></div>
-                    <div class="col s2"><b>Age:</b></div>
-                    <div class="col s2" ><b style="padding-left:20px;">Male:</b></div>
-                    <div class="col s2"><b>Female:</b></div></br>
-                    <form id="form" style="font-size:18px"></form>
-                </div>
+                <h5 class="blue-text darken-2">Add New Group</h5>
+                <form id="form" style="font-size:18px" action="insertGroup.php" method="POST">
                 <div class="row">
-                    <div class="right-align">
-                        <a class="waves-effect waves-light btn blue darken-4" onclick="addMore()">Add More</a>
+                    <div class="input-field col s12">
+                        <input id="groupName" type="text" class="validate" name="groupName">
+                        <label for="groupName">Group Name</label>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="right-align">
-                    <a class="waves-effect waves-light btn blue darken-2" onclick="startTest()">Start Test</a>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <select id="select">
+                        <option value="" disabled selected>Choose your location</option>
+                        <option value="1">Option 1</option>
+                        <option value="2">Option 2</option>
+                        <option value="3">Option 3</option>
+                        </select>
+                        <label>Group Location</label>
+                    </div>
+                </div>
+                
+                Please input the details for each test participant:
+                </form>
+                <div class="row right-align">
+                    <a class="waves-effect waves-light btn blue darken-4" onclick="addRow()">Add More</a>
+                </div>
+                <div class="row right-align">
+                    <button type="submit" class="waves-effect waves-light btn blue darken-2" onclick="document.getElementById('form').submit();">Start Test</button>
                     <a href="educatorTests.php" class="waves-effect waves-light btn blue darken-4">Cancel</a>
                 </div>
-            </div>
         </div>
         <!--end body content-->
         
     </body>
 	<script>
+        $(document).ready(function() {
+            $('select').material_select();
+        });
+        window.onload = function() {
+            getLocations();
+        }
         var num = 1;
         var form = document.getElementById("form");
-        for(var i=0; i < 5; i++){
-            addMore();
+        for(var i=0; i<3; i++){
+            addRow();
             num++;
         }
         
-        function addMore(){
-            addInput("name");
-            addInput("age");
-            addRadio("male");
-            addRadio("female");
+        function addRow(){
+            var newRow = document.createElement("div");
+            newRow.className = ("row");
+            addInput("name", newRow);
+            addInput("age", newRow);
+            addRadio("male", newRow);
+            addRadio("female", newRow);
+            form.appendChild(newRow);
         }
 
-        function addInput(type){
+        function addInput(type, row){
             var newDiv = document.createElement("div");
             var newInput = document.createElement("input");
-            newInput.type = "text";
+            var newLabel = document.createElement("label");
             newInput.className = "validate";
             if (type == "name"){
-                newDiv.classList.add("col", "s6");
+                newDiv.classList.add("input-field", "col", "s6");
                 newInput.id = "name" + num;
+                newInput.name = "name" + num;
+                newInput.type = "text";
+                newLabel.innerHTML = "Name";
             }
             else if(type == "age"){
-                newDiv.classList.add("col", "s2");
+                newDiv.classList.add("input-field", "col", "s2");
                 newInput.id = "age" + num;
+                newInput.name = "age" + num;
+                newInput.type = "number";
+                newLabel.innerHTML = "Age";
             }
+            newLabel.htmlFor = newInput.id;
             newDiv.appendChild(newInput);
-            form.appendChild(newDiv);
+            newDiv.appendChild(newLabel);
+            row.appendChild(newDiv);
         }
         
-        function addRadio(gender){
+        function addRadio(gender, row){
             var newDiv = document.createElement("div");
-            newDiv.classList.add("col", "s2");
             var newP = document.createElement("p");
-            newP.className = "center-align";
             var newInput = document.createElement("input");
+            var newLabel = document.createElement("label");
+            newDiv.classList.add("col", "s2");
             newInput.type = 'radio';
             if (gender == "male"){
                 newInput.id = "genderM" + num;
+                newInput.name = "gender" + num;
+                newLabel.innerHTML = "Male";
             }
             else if(gender == "female"){
                 newInput.id = "genderF" + num;
+                newInput.name = "gender" + num;
+                newLabel.innerHTML = "Female";
             }
-            var newLabel = document.createElement("label");
-            newLabel.for = newInput.id;
+            newLabel.htmlFor = newInput.id;
             newP.appendChild(newInput);
             newP.appendChild(newLabel);
             newDiv.appendChild(newP);
-            form.appendChild(newDiv);
+            row.appendChild(newDiv);
         }
 
-        function startTest(){
-            //insert group to database
-            //get number of kids
-            var groupSize = document.getElementById("form").childElementCount / 4;
+        function getLocations(){
+            var locations = <?php echo json_encode($locations); ?>;
+            for(var i=0; i<locations.length; i++){
+                var option = document.createElement("option");
+                option.innerHTML = locations[i]['name'];
+                document.getElementById("select").appendChild(option);
+            }
         }
-
-        </script>
+        
+    </script>
     <style>
 	.brand-logo{
 		margin-top:-67px;
@@ -124,5 +164,8 @@
 		margin-top: 15px;
 		margin-right:15px;
 	}
+    p{
+        padding-top:8px;
+    }
     </style>
 </html>
