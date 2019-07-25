@@ -15,8 +15,9 @@
         <link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
         <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
-        <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
-        
+        <script type = "text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+        <script type = "text/javascript" src = "https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
+        <script type = "text/javascript" src = "https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/additional-methods.min.js"></script>
     </head>
     <!--the stuff in the head is all the linking things to Materialize-->
     <!--all the linking's been done, so you shouldn't need to download anything from Materialise-->
@@ -41,52 +42,76 @@
         <!-- body content -->
         <div class="container grey-text text-darken-1" style="font-size:18px">
                 <h5 class="blue-text darken-2">Add New Group</h5>
-                <form id="form" style="font-size:18px" action="insertGroup.php" method="POST">
+                <form id="form" style="font-size:18px" novalidate="novalidate" action="insertGroup.php" method="POST" >
                 <div class="row">
                     <div class="input-field col s12">
-                        <input id="groupName" type="text" class="validate" name="groupName">
+                        <input id="groupName" type="text" class="validate" name="groupName" required="" aria-required="true">
                         <label for="groupName">Group Name</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
-                        <select id="select">
+                        <select id="select" class="materialSelect validate" name="locationSelect" required="required">
                         <option value="" disabled selected>Choose your location</option>
-                        <option value="1">Option 1</option>
-                        <option value="2">Option 2</option>
-                        <option value="3">Option 3</option>
                         </select>
                         <label>Group Location</label>
                     </div>
                 </div>
                 
                 Please input the details for each test participant:
-                </form>
+                <div id ="rows"></div>
                 <div class="row right-align">
-                    <a class="waves-effect waves-light btn blue darken-4" onclick="addRow()">Add More</a>
+                    <a class="waves-effect waves-light btn blue darken-4" onclick="addRow()"><i class="material-icons"style="font-size:30px;">add</i></a>
                 </div>
                 <div class="row right-align">
-                    <button type="submit" class="waves-effect waves-light btn blue darken-2" onclick="document.getElementById('form').submit();">Start Test</button>
+                    <button type="submit" class="waves-effect waves-light btn blue darken-2" >Start Test</button> 
                     <a href="educatorTests.php" class="waves-effect waves-light btn blue darken-4">Cancel</a>
                 </div>
+                </form>
         </div>
         <!--end body content-->
         
     </body>
 	<script>
         $(document).ready(function() {
+            //initiate select input
             $('select').material_select();
+            $('.materialSelect').on('contentChanged', function() {
+                $(this).material_select();
+            });
+            //set locations into select options
+            var locations = <?php echo json_encode($locations); ?>;
+            for(var i=0; i<locations.length; i++){
+                var option = document.createElement("option");
+                option.value = locations[i]['locationID'];
+                option.name = locations[i]['name'];
+                option.innerHTML = locations[i]['name'];
+                document.getElementById("select").appendChild(option);
+            }
+            $("#select").trigger('contentChanged');
+            //validate form
+            $.validator.setDefaults({
+                ignore: []
+            });
+            $("#form").validate({
+                errorClass: "invalid form-error",       
+                errorElement : 'div',       
+                errorPlacement: function(error, element) {
+                    error.appendTo( element.parent() );
+                },
+                messages: {
+                    groupName: "Enter a group name.",
+                    locationSelect: "Pick your location from the drop down menu."
+                }
+            });
         });
-        window.onload = function() {
-            getLocations();
-        }
+        //add rows for preschooler data
         var num = 1;
-        var form = document.getElementById("form");
+        var rowsDiv = document.getElementById("rows");
         for(var i=0; i<3; i++){
             addRow();
-            num++;
         }
-        
+        //creates a row for inputing for preschool data
         function addRow(){
             var newRow = document.createElement("div");
             newRow.className = ("row");
@@ -94,16 +119,30 @@
             addInput("age", newRow);
             addRadio("male", newRow);
             addRadio("female", newRow);
-            form.appendChild(newRow);
+            var iconDiv = document.createElement("div");
+            //implements remove row
+            iconDiv.addEventListener("click", function() {
+                rowsDiv.removeChild(newRow);
+            }, false);
+            iconDiv.classList.add("col", "s1", "changeCursor");
+            var removeIcon = document.createElement("i");
+            removeIcon.classList.add("material-icons", "medium", "icon-red"); 
+            removeIcon.innerHTML = "remove";
+            iconDiv.appendChild(removeIcon);
+            newRow.appendChild(iconDiv);
+            rowsDiv.appendChild(newRow);
+            num++;
         }
-
+        //creates text field input
         function addInput(type, row){
             var newDiv = document.createElement("div");
             var newInput = document.createElement("input");
             var newLabel = document.createElement("label");
             newInput.className = "validate";
+            newInput.setAttribute('required', "");
+            newInput.setAttribute('aria-disabled', true);
             if (type == "name"){
-                newDiv.classList.add("input-field", "col", "s6");
+                newDiv.classList.add("input-field", "col", "s5");
                 newInput.id = "name" + num;
                 newInput.name = "name" + num;
                 newInput.type = "text";
@@ -121,7 +160,7 @@
             newDiv.appendChild(newLabel);
             row.appendChild(newDiv);
         }
-        
+        //creates radio button
         function addRadio(gender, row){
             var newDiv = document.createElement("div");
             var newP = document.createElement("p");
@@ -129,6 +168,7 @@
             var newLabel = document.createElement("label");
             newDiv.classList.add("col", "s2");
             newInput.type = 'radio';
+            newInput.required = true;
             if (gender == "male"){
                 newInput.id = "genderM" + num;
                 newInput.name = "gender" + num;
@@ -145,16 +185,6 @@
             newDiv.appendChild(newP);
             row.appendChild(newDiv);
         }
-
-        function getLocations(){
-            var locations = <?php echo json_encode($locations); ?>;
-            for(var i=0; i<locations.length; i++){
-                var option = document.createElement("option");
-                option.innerHTML = locations[i]['name'];
-                document.getElementById("select").appendChild(option);
-            }
-        }
-        
     </script>
     <style>
 	.brand-logo{
@@ -166,6 +196,24 @@
 	}
     p{
         padding-top:8px;
+    }
+
+    label {
+        width: 100%;
+    }
+
+    .form-error{
+        color: #D8000C; 
+        font-size: 12px;
+    }
+    
+    i.icon-red {
+        color: #CA3433;
+        padding-top: 10px;
+    }
+
+    .changeCursor { 
+        cursor: pointer; 
     }
     </style>
 </html>
