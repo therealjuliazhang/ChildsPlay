@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+            <title>Drag and Drop</title>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/interact.js/1.2.8/interact.min.js"></script>
+			<link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
+			
+            <style>
+            .dropzone {
+                background-color: #ccc;
+                border: dashed 4px transparent;
+                border-radius: 4px;
+				
+				margin-left:auto;
+				margin-right:20px;
+                padding: 30px;
+                width: 40%;
+                height:90%;
+                transition: background-color 1s;
+            }
+            
+            .drop-active {
+                border-color: #9F9F9F;
+            }
+            
+            .drop-target {
+                background-color: #1976d2;
+                border-style: solid;
+				border-color: #64b5f6;
+                
+            }
+            
+            .drag-drop {
+                display: inline-block;
+                min-width: 40px;
+                max-width: 200px;
+                padding: 0.5em 0.5em;
+                
+                color: #fff;
+				background-color: #1976d2;
+                transform: translate(0px, 0px);
+                -webkit-transform: translate(0px, 0px);
+                transition: background-color 0.5s;
+				margin-left:20px;
+            }
+            
+            .drag-drop.can-drop {
+                color: #000;
+                background-color: #4e4;
+            }
+            .nextButton
+            {
+                position: absolute;
+                right:0px;
+                top:0px;
+            }
+            #wrapper
+            {
+                width:100%;
+                height:450px;
+                display:flex;
+                align-items:center;
+                
+            }
+            
+
+            </style>
+    </head>
+    <body>
+        
+        <img id="nextButton" src="Images/greyCircle.png" width="7%" align="right" onclick="goNext();"></img>
+        
+        <div id="wrapper">
+            <div id="yes-drop" class="draggable drag-drop">
+                <img src="Images/Spike.png" width="100%"></img>
+            </div>
+            <div class="dropzone"></div>
+        </div>
+        <!--
+        <div id="display">false</div>
+        -->
+		<!--row for kid's name-->
+        <div class="row amber accent-4" style="font-size:35px;font-weight:bold">
+            <div class="center-align">
+                <span id="preschoolerName">asdf</span>'s Turn
+            </div>
+        </div>
+        
+        <script>
+            //variable to show that drag is true
+            var movedCorrectly = false;
+            //set it to true/false depending on whether or not it's in.
+			
+			var box = document.getElementById("yes-drop");
+			
+			box.addEventListener('touchmove',function(e)
+				{
+					event.preventDefault();
+				}
+			)
+			
+            
+            // target elements with the "draggable" class
+            interact('.draggable')
+            .draggable({
+                       // enable inertial throwing
+                       inertia: true,
+                       // keep the element within the area of it's parent
+                       restrict: {
+                       restriction: "parent",
+                       endOnly: true,
+                       elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
+                       },
+                       // enable autoScroll
+                       autoScroll: true,
+                       
+                       // call this function on every dragmove event
+                       onmove: dragMoveListener,
+                       // call this function on every dragend event
+                       onend: function (event) {
+                       var textEl = event.target.querySelector('p');
+                       
+                       textEl && (textEl.textContent =
+                                  'moved a distance of '
+                                  + (Math.sqrt(event.dx * event.dx +
+                                               event.dy * event.dy)|0) + 'px');
+                       }
+                       });
+                       
+                       function dragMoveListener (event) {
+                           var target = event.target,
+                           // keep the dragged position in the data-x/data-y attributes
+                           x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
+                           y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+                           
+                           // translate the element
+                           target.style.webkitTransform =
+                           target.style.transform =
+                           'translate(' + x + 'px, ' + y + 'px)';
+                           
+                           // update the posiion attributes
+                           target.setAttribute('data-x', x);
+                           target.setAttribute('data-y', y);
+                       }
+        
+        
+        
+        // enable draggables to be dropped into this
+        interact('.dropzone').dropzone({
+                                       // only accept elements matching this CSS selector
+                                       accept: '#yes-drop',
+                                       // Require a 75% element overlap for a drop to be possible
+                                       overlap: 0.75,
+                                       
+                                       // listen for drop related events:
+                                       
+                                       ondropactivate: function (event) {
+									   
+                                       // add active dropzone feedback
+                                       event.target.classList.add('drop-active');
+                                       },
+                                       ondragenter: function (event) {
+                                       var draggableElement = event.relatedTarget,
+                                       dropzoneElement = event.target;
+                                       
+                                       // feedback the possibility of a drop
+                                       dropzoneElement.classList.add('drop-target');
+                                       draggableElement.classList.add('can-drop');
+                                       //draggableElement.textContent = 'Dragged in';
+                                       movedCorrectly=true;
+                                       //document.getElementById("display").innerHTML="true";
+                                       },
+                                       ondragleave: function (event) {
+                                       // remove the drop feedback style
+                                       event.target.classList.remove('drop-target');
+                                       event.relatedTarget.classList.remove('can-drop');
+                                       //event.relatedTarget.textContent = 'Dragged out';
+                                       },
+                                       ondrop: function (event) {
+                                       //event.relatedTarget.textContent = 'Dropped';
+                                       },
+                                       ondropdeactivate: function (event) {
+                                       // remove active dropzone feedback
+                                       event.target.classList.remove('drop-active');
+                                       event.target.classList.remove('drop-target');
+                                       }
+                                       });
+
+        </script>
+    </body>
+</html>
