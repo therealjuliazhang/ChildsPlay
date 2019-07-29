@@ -8,6 +8,9 @@ $locations = array();
 while($row = mysqli_fetch_assoc($result))
    $locations[] = $row;*/
 
+//This should be gotten from some php file 
+$userID = 2;
+
 $valueCount = 0;
 $groupName = $_POST["groupName"];
 $location = $_POST["locationSelect"];
@@ -25,7 +28,7 @@ foreach ($_POST as $key => $value) {
         else if($valueCount%3==2){ //gender
             $gender = $value;
             //insert preschooler into database
-            //$sql = "INSERT INTO PRESCHOOLER VALUES (".$preschoolerName.", ".$age.", ".$gender.")";
+            $sql = "INSERT INTO GROUPTEST VALUES (".$groupName.", ".$location.")";
         }   
     }
 }

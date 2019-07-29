@@ -45,7 +45,7 @@
                 <form id="form" style="font-size:18px" novalidate="novalidate" action="insertGroup.php" method="POST" >
                 <div class="row">
                     <div class="input-field col s12">
-                        <input id="groupName" type="text" class="validate" name="groupName" required="" aria-required="true">
+                        <input id="groupName" type="text" class="validate" name="groupName" required="" aria-required="true" >
                         <label for="groupName">Group Name</label>
                     </div>
                 </div>
@@ -57,7 +57,6 @@
                         <label>Group Location</label>
                     </div>
                 </div>
-                
                 Please input the details for each test participant:
                 <div id ="rows"></div>
                 <div class="row right-align">
@@ -94,14 +93,26 @@
                 ignore: []
             });
             $("#form").validate({
+                rules: {
+                    groupName: {
+                        required: true,
+                        remote: {
+                            url: "checkGroupName.php",
+                            type: "post"
+                        }
+                    }
+                },
+                messages: {
+                    groupName: {
+                        remote: "Group name already exists.",
+                        required: "Enter a group name."
+                    },
+                    locationSelect: "Pick your location from the drop down menu."
+                },
                 errorClass: "invalid form-error",       
                 errorElement : 'div',       
                 errorPlacement: function(error, element) {
                     error.appendTo( element.parent() );
-                },
-                messages: {
-                    groupName: "Enter a group name.",
-                    locationSelect: "Pick your location from the drop down menu."
                 }
             });
         });
@@ -185,6 +196,7 @@
             newDiv.appendChild(newP);
             row.appendChild(newDiv);
         }
+            
     </script>
     <style>
 	.brand-logo{

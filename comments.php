@@ -82,11 +82,11 @@ header("Expires: 0"); // Proxies.
 session_start();
 
 $conn = OpenCon();
-$link = mysqli_connect("localhost", "root", "", "test");
+//$link = mysqli_connect("localhost", "root", "", "test");
 
-if($link === false){
+/*if($link === false){
     die("ERROR: Could not connect. " . mysqli_connect_error());
-}
+}*/
 
 $id = $_REQUEST["testID"];
 
