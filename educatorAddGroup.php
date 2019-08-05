@@ -42,19 +42,19 @@
         <!-- body content -->
         <div class="container grey-text text-darken-1" style="font-size:18px">
                 <h5 class="blue-text darken-2">Add New Group</h5>
-                <form id="form" style="font-size:18px" novalidate="novalidate" action="insertGroup.php" method="POST" >
+                 <form id="form" style="font-size:18px"> <!-- novalidate="novalidate" -->
                 <div class="row">
                     <div class="input-field col s12">
-                        <input id="groupName" type="text" class="validate" name="groupName" required="" aria-required="true" >
+                        <input class="validate" id="groupName" type="text" name="groupName" >
                         <label for="groupName">Group Name</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
-                        <select id="select" class="materialSelect validate" name="locationSelect" required="required">
-                        <option value="" disabled selected>Choose your location</option>
+                        <select id="locationSelect" class="materialSelect" name="locationSelect">
+                         <option value="" >Choose your location</option><!--disabled selected -->
                         </select>
-                        <label>Group Location</label>
+                        <label id="locationLabel" for="locationSelect" >Group Location</label><!--data-error="Select your location" -->
                     </div>
                 </div>
                 Please input the details for each test participant:
@@ -63,7 +63,7 @@
                     <a class="waves-effect waves-light btn blue darken-4" onclick="addRow()"><i class="material-icons"style="font-size:30px;">add</i></a>
                 </div>
                 <div class="row right-align">
-                    <button type="submit" class="waves-effect waves-light btn blue darken-2" >Start Test</button> 
+                    <button type="submit" id="startButton" class="waves-effect waves-light btn blue darken-2" >Start Test</button> <!---->
                     <a href="educatorTests.php" class="waves-effect waves-light btn blue darken-4">Cancel</a>
                 </div>
                 </form>
@@ -75,6 +75,12 @@
         $(document).ready(function() {
             //initiate select input
             $('select').material_select();
+            $("select[required]").css({
+                display: "inline",
+                height: 0,
+                padding: 0,
+                width: 0
+            });
             $('.materialSelect').on('contentChanged', function() {
                 $(this).material_select();
             });
@@ -85,14 +91,31 @@
                 option.value = locations[i]['locationID'];
                 option.name = locations[i]['name'];
                 option.innerHTML = locations[i]['name'];
-                document.getElementById("select").appendChild(option);
+                document.getElementById("locationSelect").appendChild(option);
             }
-            $("#select").trigger('contentChanged');
-            //validate form
+            $("#locationSelect").trigger('contentChanged');
+            //validation
             $.validator.setDefaults({
                 ignore: []
             });
-            $("#form").validate({
+            var validator = $("#form").validate({
+                errorElement : 'div',
+                errorClass: 'invalid',
+                errorPlacement: function(error, element) {
+                    if(element.attr('type') == "text" || element.attr('type') == "number"){
+                        console.log(element.attr('type'));
+                        $(element)
+                        .closest("form")
+                        .find("label[for='" + element.attr("id") + "']")
+                        .attr('data-error', error.text());
+                    }
+                    else if(element.hasClass("materialSelect")){
+                        element.after(error);
+                    }   
+                    else if(element.attr('type')=="radio"){
+                        element.before(error);
+                    } 
+                },
                 rules: {
                     groupName: {
                         required: true,
@@ -100,20 +123,19 @@
                             url: "checkGroupName.php",
                             type: "post"
                         }
+                    },
+                    locationSelect: {
+                        required: true
                     }
                 },
                 messages: {
-                    groupName: {
-                        remote: "Group name already exists.",
-                        required: "Enter a group name."
-                    },
+                    groupName: "Enter a group name.",
                     locationSelect: "Pick your location from the drop down menu."
-                },
-                errorClass: "invalid form-error",       
-                errorElement : 'div',       
-                errorPlacement: function(error, element) {
-                    error.appendTo( element.parent() );
                 }
+            });
+            $("#startButton").on('click', function(){
+                validator.resetForm();
+                $("#form").submit();
             });
         });
         //add rows for preschooler data
@@ -214,7 +236,7 @@
         width: 100%;
     }
 
-    .form-error{
+    .invalid{
         color: #D8000C; 
         font-size: 12px;
     }
@@ -227,5 +249,7 @@
     .changeCursor { 
         cursor: pointer; 
     }
+
+    
     </style>
 </html>
