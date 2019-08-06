@@ -247,25 +247,25 @@ SET
 INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);
 
 SET
-@address = "/images/character2.jpg",
+@address = "/images/orbi.jpg",
 @imgType = true,
 @taskID = 3;
 INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);
 
 SET
-@address = "/images/character3.jpg",
+@address = "/images/peanut.jpg",
 @imgType = true,
 @taskID = 3;
 INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);
 
 SET
-@address = "/images/character4.jpg",
+@address = "/images/pod.jpg",
 @imgType = true,
 @taskID = 3;
 INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);
 
 SET
-@address = "/images/character5.jpg",
+@address = "/images/spike.jpg",
 @imgType = true,
 @taskID = 3;
 INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);

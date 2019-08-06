@@ -1,10 +1,9 @@
 <?php 
 include 'db_connection.php';
 $conn = OpenCon();
-
 //This should be received from another page  
 $userID = 2;
-
+//used to determine what information $value holds
 $valueCount = 0;
 if(isset($_POST["groupName"]))
     $groupName = $_POST["groupName"];
@@ -31,16 +30,19 @@ foreach ($_POST as $key => $value) {
                 echo "Error: " . $sql . "<br>" . $conn->error;
             }
             //get groupID of new inserted group
-            $sql = "SELECT groupID FROM GROUPTEST WHERE name = " . $groupName;
+            $sql = "SELECT groupID FROM GROUPTEST WHERE name = '" . $groupName. "' limit 1";
             $result = $conn->query($sql);
+            $row = mysqli_fetch_array($result);
+            $groupID = $row['groupID'];
+            
             //insert preschoolers into preschooler table
-            // $sql = "INSERT INTO PRESCHOOLER (name, age, gender, groupID) 
-            // VALUES ('".$preschoolerName."', '".$age."', '".$gender."', '".$groupID."')";
-            // if ($conn->query($sql) === TRUE) {
-            //     echo "New record created successfully";
-            // } else {
-            //     echo "Error: " . $sql . "<br>" . $conn->error;
-            // }
+            $sql = "INSERT INTO PRESCHOOLER (name, age, gender, groupID) 
+            VALUES ('".$preschoolerName."', '".$age."', '".$gender."', '".$groupID."')";
+            if ($conn->query($sql) === TRUE) {
+                echo "New record created successfully";
+            } else {
+                echo "Error: " . $sql . "<br>" . $conn->error;
+            }
             //insert preschooler to group assignment into groupAssignment table
             // $sql = "INSERT INTO GROUPTEST (name, locationID)VALUES ('".$groupName."', '".$location."')";
             // if ($conn->query($sql) === TRUE) {
@@ -52,5 +54,4 @@ foreach ($_POST as $key => $value) {
     }
 }
 $conn->close();
-echo $valueCount;
 ?>

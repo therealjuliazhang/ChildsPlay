@@ -42,7 +42,7 @@
         <!-- body content -->
         <div class="container grey-text text-darken-1" style="font-size:18px">
                 <h5 class="blue-text darken-2">Add New Group</h5>
-                 <form id="form" style="font-size:18px" action="insertGroup.php" method="post"> <!-- novalidate="novalidate" -->
+                 <form id="form" style="font-size:18px" action="insertGroup.php" method="post">
                 <div class="row">
                     <div class="input-field col s12">
                         <input class="validate" id="groupName" type="text" name="groupName" >
@@ -63,7 +63,7 @@
                     <a class="waves-effect waves-light btn blue darken-4" onclick="addRow()"><i class="material-icons"style="font-size:30px;">add</i></a>
                 </div>
                 <div class="row right-align">
-                    <button type="submit" id="startButton" class="waves-effect waves-light btn blue darken-2" >Start Test</button>
+                    <button type="button" id="startButton" class="waves-effect waves-light btn blue darken-2" >Start Test</button>
                     <a href="educatorTests.php" class="waves-effect waves-light btn blue darken-4">Cancel</a>
                 </div> 
                 </form>
@@ -134,8 +134,9 @@
             });
             $("#startButton").on('click', function(){
                 validator.resetForm();
-                if(validator.form())
-                    $('#form').get(0).submit();
+                console.log($("#groupName").valid());
+                // if(validator.form())
+                //     $('#form').get(0).submit();
             });
         });
         //add rows for preschooler data
@@ -205,11 +206,13 @@
             if (gender == "male"){
                 newInput.id = "genderM" + num;
                 newInput.name = "gender" + num;
+                newInput.value = "Male";
                 newLabel.innerHTML = "Male";
             }
             else if(gender == "female"){
                 newInput.id = "genderF" + num;
                 newInput.name = "gender" + num;
+                newInput.value = "Female";
                 newLabel.innerHTML = "Female";
             }
             newLabel.htmlFor = newInput.id;
