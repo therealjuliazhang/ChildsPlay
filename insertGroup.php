@@ -1,19 +1,15 @@
 <?php 
 include 'db_connection.php';
 $conn = OpenCon();
-//fetch locations
-/*$sql = "SELECT * FROM LOCATION";
-$result = $conn->query($sql);
-$locations = array();
-while($row = mysqli_fetch_assoc($result))
-   $locations[] = $row;*/
 
-//This should be gotten from some php file 
+//This should be received from another page  
 $userID = 2;
 
 $valueCount = 0;
-$groupName = $_POST["groupName"];
-$location = $_POST["locationSelect"];
+if(isset($_POST["groupName"]))
+    $groupName = $_POST["groupName"];
+if(isset($_POST["locationSelect"]))
+    $location = $_POST["locationSelect"];
 foreach ($_POST as $key => $value) {
     $valueCount++;
     if($valueCount>2){
@@ -27,10 +23,34 @@ foreach ($_POST as $key => $value) {
             $age = $value;
         else if($valueCount%3==2){ //gender
             $gender = $value;
-            //insert preschooler into database
-            $sql = "INSERT INTO GROUPTEST VALUES (".$groupName.", ".$location.")";
+            //insert group into grouptest table
+            $sql = "INSERT INTO GROUPTEST (name, locationID)VALUES ('".$groupName."', '".$location."')";
+            if ($conn->query($sql) === TRUE) {
+                echo "New record created successfully";
+            } else {
+                echo "Error: " . $sql . "<br>" . $conn->error;
+            }
+            //get groupID of new inserted group
+            $sql = "SELECT groupID FROM GROUPTEST WHERE name = " . $groupName;
+            $result = $conn->query($sql);
+            //insert preschoolers into preschooler table
+            // $sql = "INSERT INTO PRESCHOOLER (name, age, gender, groupID) 
+            // VALUES ('".$preschoolerName."', '".$age."', '".$gender."', '".$groupID."')";
+            // if ($conn->query($sql) === TRUE) {
+            //     echo "New record created successfully";
+            // } else {
+            //     echo "Error: " . $sql . "<br>" . $conn->error;
+            // }
+            //insert preschooler to group assignment into groupAssignment table
+            // $sql = "INSERT INTO GROUPTEST (name, locationID)VALUES ('".$groupName."', '".$location."')";
+            // if ($conn->query($sql) === TRUE) {
+            //     echo "New record created successfully";
+            // } else {
+            //     echo "Error: " . $sql . "<br>" . $conn->error;
+            // }
         }   
     }
 }
+$conn->close();
 echo $valueCount;
 ?>
