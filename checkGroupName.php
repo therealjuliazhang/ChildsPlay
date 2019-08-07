@@ -9,28 +9,33 @@
         $groups[] = $row;
     if(isset($_REQUEST['groupName']))
         $input = $_REQUEST['groupName'];
-    $valid = true;
+    // $valid = true;
     $nameExists = false;
-    $inputEmpty = false;
-    if(!isset($input) || trim($input) == ''){
-        $valid = false;
-        $inputEmpty = true;
-    }
-    else{
+    // $inputEmpty = false;
+    // if(!isset($input) || trim($input) == ''){
+    //     $valid = false;
+        // $inputEmpty = true;
+    // }
+    // else{
         for($i=0;$i<sizeof($groups);$i++){
             if($input==$groups[$i]['name']){
-                $valid = false;
+                // echo true;
+                // $valid = false;
                 $nameExists = true;
+                break;
             }
         }
-    }
-    if($valid){
-        echo false;
-    }
-    else{
+    // }
+    // if($valid){
+        // echo false;
+    // }
+    // else{
         if($nameExists)
-            echo json_encode("This name is already used by an existing group.");
-        else if($inputEmpty)
-            echo json_encode("Enter a group name.");
-    }
+            echo json_encode("");
+        else
+            echo json_encode("true");
+            // echo json_encode("This name is already used by an existing group.");
+        // else if($inputEmpty)
+        //     echo json_encode("Enter a group name.");
+    // }
 ?>

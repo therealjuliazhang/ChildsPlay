@@ -17,7 +17,8 @@
         <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script type = "text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
         <script type = "text/javascript" src = "https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
-        <script type = "text/javascript" src = "https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/additional-methods.min.js"></script>
+        <script type = "text/javascript" src = "formValidation.js"></script>
+        <!-- <script type = "text/javascript" src = "https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/additional-methods.min.js"></script> -->
     </head>
     <!--the stuff in the head is all the linking things to Materialize-->
     <!--all the linking's been done, so you shouldn't need to download anything from Materialise-->
@@ -38,7 +39,6 @@
         </nav>
         </div>
         <!--end header-->
-        
         <!-- body content -->
         <div class="container grey-text text-darken-1" style="font-size:18px">
                 <h5 class="blue-text darken-2">Add New Group</h5>
@@ -51,7 +51,7 @@
                 </div>
                  <div class="row">
                     <div class="input-field col s12">
-                        <select id="locationSelect" class="materialSelect" name="locationSelect">
+                        <select id="locationSelect" class="materialSelect" name="locationSelect" required>
                          <option value="" >Choose your location</option>
                         </select>
                         <label id="locationLabel" for="locationSelect" >Group Location</label>
@@ -63,13 +63,12 @@
                     <a class="waves-effect waves-light btn blue darken-4" onclick="addRow()"><i class="material-icons"style="font-size:30px;">add</i></a>
                 </div>
                 <div class="row right-align">
-                    <button type="button" id="startButton" class="waves-effect waves-light btn blue darken-2" >Start Test</button>
+                    <input type="submit" id="startButton" class="submit waves-effect waves-light btn blue darken-2" value="Start Test">
                     <a href="educatorTests.php" class="waves-effect waves-light btn blue darken-4">Cancel</a>
-                </div> 
+                </div>  
                 </form>
         </div>
         <!--end body content-->
-        
     </body>
 	<script>
         $(document).ready(function() {
@@ -94,58 +93,14 @@
                 document.getElementById("locationSelect").appendChild(option);
             }
             $("#locationSelect").trigger('contentChanged');
-            //validation
-            $.validator.setDefaults({
-                ignore: []
-            });
-            var validator = $("#form").validate({
-                errorElement : 'div',
-                errorClass: 'invalid',
-                errorPlacement: function(error, element) {
-                    if(element.attr('type') == "text" || element.attr('type') == "number"){
-                        $(element)
-                        .closest("form")
-                        .find("label[for='" + element.attr("id") + "']")
-                        .attr('data-error', error.text());
-                    }
-                    else if(element.hasClass("materialSelect")){
-                        element.after(error);
-                    }   
-                    else if(element.attr('type')=="radio"){
-                        element.before(error);
-                    } 
-                },
-                rules: {
-                    groupName: {
-                        required: true,
-                        remote: {
-                            url: "checkGroupName.php",
-                            type: "post"
-                        }
-                    },
-                    locationSelect: {
-                        required: true
-                    }
-                },
-                messages: {
-                    groupName: "Enter a group name.",
-                    locationSelect: "Pick your location from the drop down menu."
-                }
-            });
-            $("#startButton").on('click', function(){
-                validator.resetForm();
-                console.log($("#groupName").valid());
-                // if(validator.form())
-                //     $('#form').get(0).submit();
-            });
         });
-        //add rows for preschooler data
+        // add rows for preschooler data
         var num = 1;
         var rowsDiv = document.getElementById("rows");
         for(var i=0; i<3; i++){
             addRow();
         }
-        //creates a row for inputing for preschool data
+        // //creates a row for inputing for preschool data
         function addRow(){
             var newRow = document.createElement("div");
             newRow.className = ("row");
@@ -167,7 +122,7 @@
             rowsDiv.appendChild(newRow);
             num++;
         }
-        //creates text field input
+        // //creates text field input
         function addInput(type, row){
             var newDiv = document.createElement("div");
             var newInput = document.createElement("input");
@@ -194,7 +149,7 @@
             newDiv.appendChild(newLabel);
             row.appendChild(newDiv);
         }
-        //creates radio button
+        // //creates radio button
         function addRadio(gender, row){
             var newDiv = document.createElement("div");
             var newP = document.createElement("p");
@@ -221,7 +176,6 @@
             newDiv.appendChild(newP);
             row.appendChild(newDiv);
         }
-            
     </script>
     <style>
 	.brand-logo{
@@ -234,24 +188,23 @@
     p{
         padding-top:8px;
     }
-
-    label {
+    label[data-error] {
         width: 100%;
-    }
-
-    .invalid{
-        color: #D8000C; 
         font-size: 12px;
     }
-    
-    i.icon-red {
+    .invalid{
+        font-size: 12px;
+        color: #EC453C;
+    } 
+     i.icon-red {
         color: #CA3433;
         padding-top: 10px;
-    }
-
+    } 
     .changeCursor { 
         cursor: pointer; 
     }
-
+    #startButton{
+        padding-top: 7px;
+    }
     </style>
 </html>
