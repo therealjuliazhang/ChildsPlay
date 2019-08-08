@@ -1,13 +1,13 @@
 <html>
     <head>
         <title>Child'sPlay</title>
-        <meta name = "viewport" content = "width = device-width, initial-scale = 1">
+    <meta name = "viewport" content = "width = device-width, initial-scale = 1">
 		<link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
 		<link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 		<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
-		
+
 	</head>
     <!--the stuff in the head is all the linking things to Materialize-->
     <!--all the linking's been done, so you shouldn't need to download anything from Materialise-->
@@ -32,7 +32,7 @@
             </div>
         </div>
         <!--end header-->
-        
+
         <!--side bar-->
 		<ul id="sidebar" class="sidenav sidenav-fixed" >
 			<li><h5><a href="#" data-target="slide-out" class="sidenav-trigger">More Tests</a></h5></li><!--button to activate more tests-->
@@ -110,7 +110,7 @@
 					</li>
 				</ul>
 			</li>
-			
+
 			<li>
 				<ul class="collapsible">
 					<li>
@@ -147,7 +147,7 @@
 					</li>
 				</ul>
 			</li>
-			
+
 			<li>
 				<ul class="collapsible">
 					<li>
@@ -202,7 +202,7 @@
 			<!--end sort result form-->
 		</ul>
         <!--end side bar-->
-        
+
         <!-- body content -->
         <div id="body">
             <!--the slide out menu-->
@@ -348,7 +348,7 @@
 		$(document).ready(function()
 		{
 			$('.collapsible').collapsible();
-		});	  
+		});
 		//likert scale task results
 		var ctx = document.getElementById("likertChart").getContext('2d');
 		var likertChart = new Chart(ctx, {

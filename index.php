@@ -47,7 +47,7 @@
                         <div class="col s3"><h5 class="blue-text darken-2">Preview Test</h5></div>
                         <div class="col s3"><h5 class="blue-text darken-2">Start Testing</h5></div>
                     </div>
-					
+
 					<div class="divider"></div><div class="divider"></div>
 
 <?php
@@ -67,19 +67,19 @@ if($result->num_rows > 0) {
                 <div class="col s3 tableData"><button class="waves-effect waves-light btn blue darken-4 right preview" onclick="check()">Preview</button></div>
                 <div class="col s3 tableData"><a class="waves-effect waves-light btn blue darken-2 right startB" onclick="startTest('.$row["testID"].')">Start</a></div>
               </div>
-                    
+
               <div class="divider"></div>';
 	}
 } else {
 	echo "0 results";
 }
-?>                    
-                    
+?>
+
                 </div>
-				
+
 
                 <!--end test list page-->
-                
+
                 <!--start group list page-->
                 <div id="GroupList" class="col s12">
                     <div class="row">
@@ -105,9 +105,9 @@ if($groups->num_rows > 0) {
 						$count = 0;
 				while($child = $children->fetch_assoc()){
 					array_push($array, $child["name"]);
-					
+
                     echo $child["name"];
-					
+
 					$count++;
 					if($count < $children->num_rows){
 						echo ", ";
@@ -119,27 +119,27 @@ if($groups->num_rows > 0) {
                 echo '</div>
 				<div class="col s3"><a class="waves-effect waves-light btn blue darken-4 right edit" onclick="editGroup();">Edit</a></div>
 				</div>
-                    
+
               <div class="divider"></div>';
 	}
 	$_SESSION['names'] = $array;
 } else {
 	echo "0 results";
-}			
+}
 CloseCon($conn);
 ?>
 					<!--end of one row-->
-                    
+
                 </div>
                 <!--end group list page-->
             </div>
         </div>
-        
-        
-        
-        
+
+
+
+
         <!--end body content-->
-		
+
     </body>
     <style>
         .brand-logo{
