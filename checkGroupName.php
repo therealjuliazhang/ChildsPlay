@@ -1,5 +1,5 @@
 <?php
-    //fetch groups
+    //fetch group names from database
     include 'db_connection.php';
     $conn = OpenCon();
     $sql = "SELECT * FROM GROUPTEST";
@@ -9,33 +9,17 @@
         $groups[] = $row;
     if(isset($_REQUEST['groupName']))
         $input = $_REQUEST['groupName'];
-    // $valid = true;
     $nameExists = false;
-    // $inputEmpty = false;
-    // if(!isset($input) || trim($input) == ''){
-    //     $valid = false;
-        // $inputEmpty = true;
-    // }
-    // else{
-        for($i=0;$i<sizeof($groups);$i++){
-            if($input==$groups[$i]['name']){
-                // echo true;
-                // $valid = false;
-                $nameExists = true;
-                break;
-            }
+    //check if input is the same as group name from database
+    for($i=0;$i<sizeof($groups);$i++){
+        if($input==$groups[$i]['name']){
+            $nameExists = true;
+            break;
         }
-    // }
-    // if($valid){
-        // echo false;
-    // }
-    // else{
-        if($nameExists)
-            echo json_encode("");
-        else
-            echo json_encode("true");
-            // echo json_encode("This name is already used by an existing group.");
-        // else if($inputEmpty)
-        //     echo json_encode("Enter a group name.");
-    // }
+    }
+    //return "" for error, true for no error
+    if($nameExists)
+        echo json_encode("");
+    else
+        echo json_encode("true");
 ?>

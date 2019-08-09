@@ -91,7 +91,7 @@
 						echo '<tr><td>', $value['name'], '</td>', '<td>';
 						foreach ($preschoolers as $value) 
 							echo $value['name'], ' ';
-						echo '</td><td><a class="waves-effect waves-light btn blue darken-4 " onclick="">Edit</a></td></tr>';
+						echo '</td><td><a href="educatorEditGroup.php?groupID=', $groupID ,'" class="waves-effect waves-light btn blue darken-4 ">Edit</a></td></tr>';
 					}
 					?>
 					</tbody>

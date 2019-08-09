@@ -4,7 +4,7 @@ SET
 @password = "holly",
 @email = "holly@gmail.com",
 @accountType = true,
-@fullName = "Holly Tootle";
+@fullName = "Holly Tootell";
 INSERT INTO USERS(username, password, email, accountType, fullName) VALUES (@username, @password, @email, @accountType, @fullName);
 
 SET

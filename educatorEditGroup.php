@@ -1,7 +1,17 @@
 <html>
     <?php 
+        //gets groupID from url
+        $groupID = $_GET["groupID"];
         include 'db_connection.php';
         $conn = OpenCon();
+        //get group name from database
+        $sql = "SELECT name FROM grouptest WHERE groupID = " . $groupID;
+        $result = $conn->query($sql);
+        $groupName = mysqli_fetch_assoc($result);
+        //get current location of group
+        $sql = "SELECT location.locationID FROM grouptest INNER JOIN location ON location.locationID = grouptest.locationID WHERE grouptest.groupID = " . $groupID;
+        $result = $conn->query($sql);
+        $currentLocationID = mysqli_fetch_assoc($result);
         //fetch locations for select drop down
         $sql = "SELECT * FROM LOCATION";
         $result = $conn->query($sql);
@@ -10,7 +20,7 @@
             $locations[] = $row;
     ?>
     <head>
-        <title>Add New Group For Educator</title>
+        <title>Edit Group for Educator</title>
         <meta name = "viewport" content = "width = device-width, initial-scale = 1">
         <link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
@@ -41,7 +51,7 @@
         <!--end header-->
         <!-- body content -->
         <div class="container grey-text text-darken-1" style="font-size:18px">
-                <h5 class="blue-text darken-2">Add New Group</h5>
+                <h5 class="blue-text darken-2">Edit Group</h5>
                  <form id="form" style="font-size:18px" action="insertGroup.php" method="post">
                 <div class="row">
                     <div class="input-field col s12">
@@ -52,7 +62,7 @@
                  <div class="row">
                     <div class="input-field col s12">
                         <select id="locationSelect" class="materialSelect" name="locationSelect" required>
-                         <option value="" >Choose your location</option>
+                         <option id="currentLocation"></option>
                         </select>
                         <label id="locationLabel" for="locationSelect" >Group Location</label>
                     </div>
@@ -74,23 +84,27 @@
         $(document).ready(function() {
             //initiate select input
             $('select').material_select();
-            $("select[required]").css({
-                display: "inline",
-                height: 0,
-                padding: 0,
-                width: 0
-            });
             $('.materialSelect').on('contentChanged', function() {
                 $(this).material_select();
             });
             //set locations into select options
             var locations = <?php echo json_encode($locations); ?>;
+            var currentLocationID = <?php echo json_encode($currentLocationID); ?>;
+            var groupID = <?php echo json_encode($groupID); ?>;
             for(var i=0; i<locations.length; i++){
-                var option = document.createElement("option");
-                option.value = locations[i]['locationID'];
-                option.name = locations[i]['name'];
-                option.innerHTML = locations[i]['name'];
-                document.getElementById("locationSelect").appendChild(option);
+                if(locations[i]['locationID']==currentLocationID['locationID']){
+                    $("#currentLocation").value = locations[i]['locationID'];
+                    $("#currentLocation").name = locations[i]['name'];
+                    $("#currentLocation").html(locations[i]['name']);
+                }
+                else{
+                    var option = document.createElement("option");
+                    option.value = locations[i]['locationID'];
+                    option.name = locations[i]['name'];
+                    option.innerHTML = locations[i]['name'];
+                    $("#locationSelect").append(option);
+                }
+                debugger;
             }
             $("#locationSelect").trigger('contentChanged');
         });
@@ -196,12 +210,10 @@
         font-size: 12px;
         color: #EC453C;
     } 
-    /*for the red remove button*/
      i.icon-red {
         color: #CA3433;
         padding-top: 10px;
     } 
-    /*changes cursor when hovring over remove button*/
     .changeCursor { 
         cursor: pointer; 
     }
