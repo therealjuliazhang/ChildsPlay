@@ -17,7 +17,7 @@
         <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script type = "text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
         <script type = "text/javascript" src = "https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
-        <script type = "text/javascript" src = "formValidation.js"></script>
+        <!-- <script type = "text/javascript" src = "formValidation.js"></script> -->
         <!-- <script type = "text/javascript" src = "https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/additional-methods.min.js"></script> -->
     </head>
     <!--the stuff in the head is all the linking things to Materialize-->
@@ -43,29 +43,29 @@
         <div class="container grey-text text-darken-1" style="font-size:18px">
                 <h5 class="blue-text darken-2">Add New Group</h5>
                  <form id="form" style="font-size:18px" action="insertGroup.php" method="post">
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input class="validate" id="groupName" type="text" name="groupName" >
-                        <label for="groupName">Group Name</label>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input class="validate" id="groupName" type="text" name="groupName" >
+                            <label for="groupName">Group Name</label>
+                        </div>
                     </div>
-                </div>
-                 <div class="row">
-                    <div class="input-field col s12">
-                        <select id="locationSelect" class="materialSelect" name="locationSelect" required>
-                         <option value="" >Choose your location</option>
-                        </select>
-                        <label id="locationLabel" for="locationSelect" >Group Location</label>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <select id="locationSelect" class="materialSelect" name="locationSelect" required>
+                            <option value="" >Choose your location</option>
+                            </select>
+                            <label id="locationLabel" for="locationSelect" >Group Location</label>
+                        </div>
                     </div>
-                </div>
-                Please input the details for each test participant:
-                <div id ="rows"></div>
-                <div class="row right-align">
-                    <a class="waves-effect waves-light btn blue darken-4" onclick="addRow()"><i class="material-icons"style="font-size:30px;">add</i></a>
-                </div>
-                <div class="row right-align">
-                    <input type="submit" id="startButton" class="submit waves-effect waves-light btn blue darken-2" value="Start Test">
-                    <a href="educatorTests.php" class="waves-effect waves-light btn blue darken-4">Cancel</a>
-                </div>  
+                    Please input the details for each test participant:
+                    <div id ="rows"></div>
+                    <div class="row right-align">
+                        <a class="waves-effect waves-light btn blue darken-4" onclick="addRow()"><i class="material-icons"style="font-size:30px;">add</i></a>
+                    </div>
+                    <div class="row right-align">
+                        <input type="submit" id="startButton" class="submit waves-effect waves-light btn blue darken-2" value="Start Test">
+                        <a href="educatorTests.php" class="waves-effect waves-light btn blue darken-4">Cancel</a>
+                    </div>  
                 </form>
         </div>
         <!--end body content-->
@@ -93,6 +93,44 @@
                 document.getElementById("locationSelect").appendChild(option);
             }
             $("#locationSelect").trigger('contentChanged');
+            //Places error element next to invalid inputs
+            $.validator.setDefaults({
+                errorElement : 'div',
+                errorClass: 'invalid',
+                errorPlacement: function(error, element) {
+                    if(element.attr('type') == "text" || element.attr('type') == "number"){
+                        $(element)
+                        .closest("form")
+                        .find("label[for='" + element.attr("id") + "']")
+                        .attr('data-error', error.text());
+                    }
+                    else if(element.hasClass("materialSelect")){
+                        element.after(error);
+                    }   
+                    else if(element.attr('type')=="radio"){
+                        element.before(error);
+                    } 
+                }
+            })
+            //set up rules and messages for errors
+            $("#form").validate({
+                rules: {
+                    groupName: {
+                        required: true,
+                        remote: {
+                            url: "checkGroupName.php",
+                            type: "post"
+                        }
+                    }
+                },
+                messages: {
+                    groupName: {
+                        required: "Enter a group name.",
+                        remote: jQuery.validator.format("{0} is already used by an existing group.")
+                    },
+                    locationSelect: "Pick your location from the drop down menu."
+                }
+            });
         });
         // add rows for preschooler data
         var num = 1;
