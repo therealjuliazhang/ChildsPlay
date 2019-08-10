@@ -26,7 +26,7 @@ $images = array();
 while($row = mysqli_fetch_assoc($result))
    $images[] = $row;
 mysqli_close($conn);
-?>	
+?>
 
 <head>
 	<title>Character Ranking Task</title>
@@ -39,7 +39,7 @@ mysqli_close($conn);
 	<script>
 	var testID = <?php echo(json_encode($testID)); ?>;
 	var taskID = <?php echo(json_encode($taskID)); ?>;
-	
+
 	//preschoolerNumber determines whos turn it is
 	var preschoolerNumber = 0;
 	//gets preschoolers array from php
@@ -64,10 +64,10 @@ mysqli_close($conn);
 			var taskIndex = <?php echo $taskIndex ?>;
 			window.location.href = "comments.php?testID=" + testID + "&groupID=" + groupID + "&taskIndex=" + taskIndex;
 		}
-		
+
 		var previousPreschoolerName = document.getElementById("preschoolerName").innerHTML;
 		document.getElementById("preschoolerName").innerHTML = preschoolers[preschoolerNumber]['name'];;
-		document.getElementById("participant").className = 'row ' + colours[preschoolerNumber % colours.length]; 
+		document.getElementById("participant").className = 'row ' + colours[preschoolerNumber % colours.length];
 		var chosenCharacters = document.getElementsByClassName("character");
 		for (var i = 0; i < chosenCharacters.length; i++){
 			chosenCharacters[i].classList.remove("chosen");
@@ -75,7 +75,7 @@ mysqli_close($conn);
 		}
 		pointsToGive = images.length;
 	}
-	
+
 	function displayCharacters(){
 		var width = 170;
 		for(var i = 0; i < images.length; i++){
@@ -101,7 +101,7 @@ mysqli_close($conn);
 						 data: { imageID : this.getAttribute("imageID"), score : this.getAttribute("points"), testID : testID, taskID : taskID, preID : preschoolers[preschoolerNumber]['preID']},
 						 success: function(imageID){
 							console.log(imageID);
-						}			
+						}
 				});
 			};
 			div.onTouchStart = function(){
@@ -127,6 +127,7 @@ mysqli_close($conn);
 			right: 0px;
 		}
 		#participant{
+			height: 220px;
 			position:absolute;
 			bottom: 0px;
 			right:0px;
@@ -145,6 +146,12 @@ mysqli_close($conn);
 		.character.chosen {
 			top: -350px;
 		}
+		.center-align{
+			position:absolute;
+			bottom: 0px;
+			right:0px;
+			left:0px
+		}
 	</style>
 </head>
 <body>
@@ -158,5 +165,5 @@ mysqli_close($conn);
 		</div>
 	</div>
 	<!--end body content-->
-</body>	
+</body>
 </html>
