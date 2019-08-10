@@ -16,7 +16,7 @@
             <div class="nav-wrapper">
 				<div class="row">
 					<div class="col s10">
-						<a href="#" class="brand-logo"><img src="images/logo1.png" height="200px"></a>
+						<a href="educatorTests.php" class="brand-logo"><img src="images/logo1.png" height="200px"></a>
 					</div>
 					<div class="col s2 offset-s10">
 						<a class="waves-effect waves-light btn blue darken-2 right logout" onclick="logout()">Logout</a>
@@ -49,16 +49,19 @@
 				include 'db_connection.php';
 				$conn = OpenCon();
 				//get tests from database
-				$sql = "SELECT * FROM TEST";
-				$result = $conn->query($sql); 
+				$sql1 = "SELECT testID FROM TESTASSIGNMENT WHERE userID=2"; //Need to fix value of userID after Login page is implemented
+				$testIndexes = $conn->query($sql1);
+				
 				$tests = array();
-				while($row = mysqli_fetch_assoc($result))
-					$tests[] = $row;
-				//for each group, get preschooler's names and display information
-				foreach ($tests as $value) {
-					echo '<tr><td>' . $value['title'] . '</td><td>' . $value['description'];
-					echo '</td><td><a href="instruction.php?testID=' . $value['testID'] . '" class="waves-effect waves-light btn blue darken-4 ">Preview</a></td>';
-					echo '</td><td><a href="selectGroupForTask.php?testID=' . $value['testID'] . '" class="waves-effect waves-light btn blue darken-2 ">Start</a></td></tr>';
+				while($row = mysqli_fetch_assoc($testIndexes)){
+					$sql2 = "SELECT * FROM TEST WHERE testID=".$row["testID"];
+					$result = $conn->query($sql2);
+					
+					while($value = mysqli_fetch_assoc($result)){
+						echo '<tr><td>' . $value['title'] . '</td><td>' . $value['description'];
+						echo '</td><td><a href="instruction.php?testID=' . $value['testID'] . '" class="waves-effect waves-light btn blue darken-4 ">Preview</a></td>';
+						echo '</td><td><a href="selectGroupForTask.php?testID=' . $value['testID'] . '" class="waves-effect waves-light btn blue darken-2 ">Start</a></td></tr>';
+					}
 				}
 				?>
 				</tbody>
@@ -74,6 +77,37 @@
 					</thead>
 					<tbody class="grey-text text-darken-1">
 					<?php
+					//get groups from database
+					$sql = "SELECT groupID FROM GROUPASSIGNMENT WHERE userID=2 GROUP BY groupID"; //Need to fix value of userID after Login page is implemented
+					$result = $conn->query($sql); 
+					
+					while($row = mysqli_fetch_assoc($result)){
+						$sql2 = "SELECT name FROM GROUPTEST WHERE groupID=".$row["groupID"];
+						$result2 = $conn->query($sql2);
+						while($row2 = mysqli_fetch_assoc($result2)){
+							echo '<tr><td>', $row2['name'], '</td>', '<td>'; //print out group name
+						}
+						
+						$sql3 =  "SELECT name FROM PRESCHOOLER P JOIN GROUPASSIGNMENT GA ON P.preID = GA.preID WHERE GA.groupID=".$row["groupID"]." AND GA.userID=2";
+						$result3 = $conn->query($sql3);
+						$names = array();
+						while($row3 = mysqli_fetch_assoc($result3)){
+							$names[] = $row3; 
+						}
+						
+						$count = 0;
+						foreach ($names as $value) {
+							echo $value['name']; //print out preschooler's name
+							$count++;
+							if($count == sizeof($names)) break;
+							echo ", ";
+						}
+						echo '</td><td><a href="educatorEditGroup.php?groupID=', $row["groupID"] ,'" class="waves-effect waves-light btn blue darken-4 ">Edit</a></td></tr>';
+					}
+						
+					
+					
+					/*
 					//get groups from database
 					$sql = "SELECT * FROM GROUPTEST";
 					$result = $conn->query($sql); 
@@ -92,7 +126,7 @@
 						foreach ($preschoolers as $value) 
 							echo $value['name'], ' ';
 						echo '</td><td><a href="educatorEditGroup.php?groupID=', $groupID ,'" class="waves-effect waves-light btn blue darken-4 ">Edit</a></td></tr>';
-					}
+					}*/
 					?>
 					</tbody>
 				</table>

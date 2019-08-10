@@ -42,30 +42,30 @@
         <!-- body content -->
         <div class="container grey-text text-darken-1" style="font-size:18px">
                 <h5 class="blue-text darken-2">Add New Group</h5>
-                 <form id="form" style="font-size:18px" action="insertGroup.php" method="post">
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input class="validate" id="groupName" type="text" name="groupName" >
-                        <label for="groupName">Group Name</label>
-                    </div>
-                </div>
-                 <div class="row">
-                    <div class="input-field col s12">
-                        <select id="locationSelect" class="materialSelect" name="locationSelect" required>
-                         <option value="" >Choose your location</option>
-                        </select>
-                        <label id="locationLabel" for="locationSelect" >Group Location</label>
-                    </div>
-                </div>
-                Please input the details for each test participant:
-                <div id ="rows"></div>
-                <div class="row right-align">
-                    <a class="waves-effect waves-light btn blue darken-4" onclick="addRow()"><i class="material-icons"style="font-size:30px;">add</i></a>
-                </div>
-                <div class="row right-align">
-                    <input type="submit" id="startButton" class="submit waves-effect waves-light btn blue darken-2" value="Start Test">
-                    <a href="educatorTests.php" class="waves-effect waves-light btn blue darken-4">Cancel</a>
-                </div>  
+                <form id="form" style="font-size:18px" action="insertGroup.php" method="post">
+					<div class="row">
+						<div class="input-field col s12">
+							<input class="validate" id="groupName" type="text" name="groupName" >
+							<label for="groupName">Group Name</label>
+						</div>
+					</div>
+					 <div class="row">
+						<div class="input-field col s12">
+							<select id="locationSelect" class="materialSelect" name="locationSelect" required>
+							 <option value="" >Choose your location</option>
+							</select>
+							<label id="locationLabel" for="locationSelect" >Group Location</label>
+						</div>
+					</div>
+					Please input the details for each test participant:
+					<div id ="rows"></div>
+					<div class="row right-align">
+						<a class="waves-effect waves-light btn blue darken-4" onclick="addRow()"><i class="material-icons"style="font-size:30px;">add</i></a>
+					</div>
+					<div class="row right-align">
+						<input type="submit" name="submit" id="saveButton" class="submit waves-effect waves-light btn blue darken-2" value="Save Changes">
+						<a href="educatorTests.php#groups" class="waves-effect waves-light btn blue darken-4">Cancel</a>
+					</div>  
                 </form>
         </div>
         <!--end body content-->
@@ -205,7 +205,7 @@
     .changeCursor { 
         cursor: pointer; 
     }
-    #startButton{
+    #saveButton{
         padding-top: 7px;
     }
     </style>

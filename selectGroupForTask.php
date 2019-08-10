@@ -57,6 +57,35 @@
 		include 'db_connection.php';
 		$conn = OpenCon();
 		//get groups from database
+		$sql = "SELECT groupID FROM GROUPASSIGNMENT WHERE userID=2 GROUP BY groupID"; //Need to fix value of userID after Login page is implemented
+		$result = $conn->query($sql); 
+					
+		while($row = mysqli_fetch_assoc($result)){
+			$sql2 = "SELECT name FROM GROUPTEST WHERE groupID=".$row["groupID"];
+			$result2 = $conn->query($sql2);
+			while($row2 = mysqli_fetch_assoc($result2)){
+				echo '<tr><td>', $row2['name'], '</td>', '<td>'; //print out group name
+		    }
+						
+			$sql3 =  "SELECT name FROM PRESCHOOLER P JOIN GROUPASSIGNMENT GA ON P.preID = GA.preID WHERE GA.groupID=".$row["groupID"]." AND GA.userID=2";
+			$result3 = $conn->query($sql3);
+			$names = array();
+			while($row3 = mysqli_fetch_assoc($result3)){
+				$names[] = $row3; 
+			}
+			
+			$count = 0;
+			foreach ($names as $value) {
+				echo $value['name']; //print out preschooler's name
+				$count++;
+				if($count == sizeof($names)) break;
+				echo ", ";
+			}
+			echo '</td><td><a href="instruction.php?testID=', $testID, '&groupID=', $row["groupID"], '" class="waves-effect waves-light btn blue darken-2">Select</a></td></tr>';			
+		}
+		
+		/*
+		//get groups from database
 		$sql = "SELECT * FROM GROUPTEST";
 		$result = $conn->query($sql); 
 		$groups = array();
@@ -74,7 +103,7 @@
 			foreach ($preschoolers as $value) 
 				echo $value['name'], ' ';
 			echo '</td><td><a href="instruction.php?testID=', $testID, '&groupID=', $groupID, '" class="waves-effect waves-light btn blue darken-2">Select</a></td></tr>';
-		}
+		}*/
 		?>
 				</tbody>
 			</table>

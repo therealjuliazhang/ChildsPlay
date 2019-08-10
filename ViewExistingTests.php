@@ -48,7 +48,31 @@
        </thead>
 
        <tbody>
-         <tr>
+		<?php
+			session_start();
+			include 'db_connection.php';
+			$conn = OpenCon();
+			//get tests from database
+			$sql = "SELECT * FROM TEST";
+			$result = $conn->query($sql); 
+			$tests = array();
+			while($row = mysqli_fetch_assoc($result))
+				$tests[] = $row;
+			//for each group, get preschooler's names and display information
+			foreach ($tests as $value) {
+				$createDate = strtotime($value['dateCreated']);
+				$formattedCreateDate = date( 'd/m/Y', $createDate ); //j F Y for the following date format: 15 January 2019
+				
+				$editDate = strtotime($value['dateEdited']);
+				$formattedEditDate = date( 'd/m/Y', $editDate );
+				echo '<tr><td>' . $value['title'] . '</td><td>' . $value['description'];
+				echo '</td><td>'.$formattedCreateDate.'</td><td>'.$formattedEditDate;
+				echo '</td><td><a href="instruction.php?testID=' . $value['testID'] . '" class="waves-effect waves-light btn blue darken-2 preview">Preview</a></td>';
+				echo '</td><td><a href="#?testID=' . $value['testID'] . '" class="waves-effect waves-light btn blue darken-4 edit">Edit</a></td>';
+				echo '</td><td><a href="#?testID=' . $value['testID'] . '" class="waves-effect waves-light btn blue darken-4 results">Results</a></td></tr>';
+			}
+		?>
+         <!--<tr>
            <td>Test 1</td>
            <td>Testing of the new set of monsters with updated eye colours.</td>
            <td>09/04/19</td>
@@ -74,7 +98,7 @@
            <td><button class="waves-effect waves-light btn blue darken-2 preview" onclick="">Preview</button></td>
            <td><button class="waves-effect waves-light btn blue darken-4 edit" onclick="">Edit</button></td>
            <td><button class="waves-effect waves-light btn blue darken-4 redults" onclick="">Results</button></td>
-         </tr>
+         </tr>-->
        </tbody>
      </table>
 

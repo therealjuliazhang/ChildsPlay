@@ -1,4 +1,7 @@
 <?php 
+if(isset($_POST["submit"])){
+	$check = false;
+	
 include 'db_connection.php';
 $conn = OpenCon();
 //This should be received from another page  
@@ -11,13 +14,17 @@ if(isset($_POST["groupName"]))
 if(isset($_POST["locationSelect"]))
     $location = $_POST["locationSelect"];
 //insert group into grouptest table
-$sql = "INSERT INTO GROUPTEST (name, locationID)VALUES ('".$groupName."', '".$location."')";
-if ($conn->query($sql) === TRUE) 
-    echo "New record created successfully";
-else
+$sql = "INSERT INTO GROUPTEST (name, locationID)VALUES ('".$groupName."', '".$location."')"; 
+if ($conn->query($sql) === TRUE){ 
+	echo "New record created successfully";
+	$check = true;
+}
+else{
     echo "Error: " . $sql . "<br>" . $conn->error;
+	$check = false;
+}	
 //get groupID of inserted group
-$sql = "SELECT groupID FROM GROUPTEST WHERE name = '" . $groupName. "' limit 1";
+$sql = "SELECT groupID FROM GROUPTEST WHERE name = '" . $groupName. "' limit 1"; //groupname is unique
 $result = $conn->query($sql);
 $row = mysqli_fetch_array($result);
 $groupID;
@@ -34,20 +41,28 @@ foreach ($_POST as $key => $value) {
             $preschooler->age = $value;
         else if($valueCount%3==2){ //gender
             $preschooler->gender = $value;
-            insertPreschooler($conn, $preschooler, $groupID);
+            insertPreschooler($conn, $preschooler, $check);
             $preID = getPreID($conn, $preschooler);
-            insertGroupAssignment($conn, $groupID, $preID);
+            insertGroupAssignment($conn, $groupID, $preID, $userID, $check);
         }
     }
 }
 $conn->close();
+	if($check == true)
+		header('Location: educatorTests.php#groups');
+}
+
 //insert preschooler into preschooler table
-function insertPreschooler($conn, $preschooler, $groupID){
-    $sql = "INSERT INTO PRESCHOOLER (name, age, gender, groupID) VALUES ('".$preschooler->name."', '".$preschooler->age."', '".$preschooler->gender."', '".$groupID."')";
-    if ($conn->query($sql) === TRUE) 
+function insertPreschooler($conn, $preschooler, $check){
+    $sql = "INSERT INTO PRESCHOOLER (name, age, gender) VALUES ('".$preschooler->name."', '".$preschooler->age."', '".$preschooler->gender."')";
+    if ($conn->query($sql) === TRUE){ 
         echo "New record created successfully";
-    else 
+		$check = true;
+	}	
+    else {
         echo "Error: " . $sql . "<br>" . $conn->error;
+		$check = false;
+	}
 }
 //get preschooler ID of the preschooler just inserted into database
 function getPreID($conn, $preschooler){
@@ -57,11 +72,15 @@ function getPreID($conn, $preschooler){
     return $row['preID'];
 }
 //insert preschooler to group assignment into groupAssignment table
-function insertGroupAssignment($conn, $groupID, $preID){
-    $sql = "INSERT INTO GROUPASSIGNMENT (groupID, preID)VALUES ('".$groupID."', '".$preID."')";
-    if ($conn->query($sql) === TRUE)
+function insertGroupAssignment($conn, $groupID, $preID, $userID, $check){
+    $sql = "INSERT INTO GROUPASSIGNMENT (groupID, preID, userID) VALUES ('".$groupID."', '".$preID."', '".$userID."')";
+    if ($conn->query($sql) === TRUE){
         echo "New record created successfully";
-    else
+		$check = true;
+	}
+    else{
         echo "Error: " . $sql . "<br>" . $conn->error;
+		$check = false;
+	}
 }
 ?>

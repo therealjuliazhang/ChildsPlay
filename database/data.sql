@@ -67,63 +67,83 @@ INSERT INTO GROUPTEST(name, locationID) VALUES(@name, @locationID);
 SET 
 @name = "Julia",
 @age = 6,
-@gender = "Female",
-@groupID = 1;
-INSERT INTO PRESCHOOLER(name, age, gender, groupID) VALUES (@name, @age, @gender, @groupID);
+@gender = "Female";
+INSERT INTO PRESCHOOLER(name, age, gender) VALUES (@name, @age, @gender);
 
 SET 
 @name = "Alex",
 @age = 10,
-@gender = "Male",
-@groupID = 1;
-INSERT INTO PRESCHOOLER(name, age, gender, groupID) VALUES (@name, @age, @gender, @groupID);
+@gender = "Male";
+INSERT INTO PRESCHOOLER(name, age, gender) VALUES (@name, @age, @gender);
 
 SET 
 @name = "Eric",
 @age = 8,
-@gender = "Male",
-@groupID = 1;
-INSERT INTO PRESCHOOLER(name, age, gender, groupID) VALUES (@name, @age, @gender, @groupID);
+@gender = "Male";
+INSERT INTO PRESCHOOLER(name, age, gender) VALUES (@name, @age, @gender);
 
 SET 
 @name = "Kate",
 @age = 7,
-@gender = "Female",
-@groupID = 1;
-INSERT INTO PRESCHOOLER(name, age, gender, groupID) VALUES (@name, @age, @gender, @groupID);
+@gender = "Female";
+INSERT INTO PRESCHOOLER(name, age, gender) VALUES (@name, @age, @gender);
 
 SET 
 @name = "Ren",
 @age = 8,
-@gender = "Male",
-@groupID = 1;
-INSERT INTO PRESCHOOLER(name, age, gender, groupID) VALUES (@name, @age, @gender, @groupID);
+@gender = "Male";
+INSERT INTO PRESCHOOLER(name, age, gender) VALUES (@name, @age, @gender);
 
 /*GROUPASSIGNMENT*/
 SET
 @groupID = 1,
-@preID = 1;
-INSERT INTO GROUPASSIGNMENT(groupID, preID) VALUES (@groupID, @preID);
+@preID = 1,
+@userID = 2;
+INSERT INTO GROUPASSIGNMENT(groupID, preID, userID) VALUES (@groupID, @preID, @userID);
 
 SET
 @groupID = 1,
-@preID = 2;
-INSERT INTO GROUPASSIGNMENT(groupID, preID) VALUES (@groupID, @preID);
+@preID = 2,
+@userID = 2;
+INSERT INTO GROUPASSIGNMENT(groupID, preID, userID) VALUES (@groupID, @preID, @userID);
 
 SET
 @groupID = 1,
-@preID = 3;
-INSERT INTO GROUPASSIGNMENT(groupID, preID) VALUES (@groupID, @preID);
+@preID = 3,
+@userID = 2;
+INSERT INTO GROUPASSIGNMENT(groupID, preID, userID) VALUES (@groupID, @preID, @userID);
 
 SET
 @groupID = 1,
-@preID = 4;
-INSERT INTO GROUPASSIGNMENT(groupID, preID) VALUES (@groupID, @preID);
+@preID = 4,
+@userID = 3;
+INSERT INTO GROUPASSIGNMENT(groupID, preID, userID) VALUES (@groupID, @preID, @userID);
 
 SET
-@groupID = 1,
-@preID = 5;
-INSERT INTO GROUPASSIGNMENT(groupID, preID) VALUES (@groupID, @preID);
+@groupID = 2,
+@preID = 5,
+@userID = 2;
+INSERT INTO GROUPASSIGNMENT(groupID, preID, userID) VALUES (@groupID, @preID, @userID);
+
+/*Group 2*/
+SET
+@groupID = 2,
+@preID = 1,
+@userID = 3;
+INSERT INTO GROUPASSIGNMENT(groupID, preID, userID) VALUES (@groupID, @preID, @userID);
+
+SET
+@groupID = 2,
+@preID = 5,
+@userID = 3;
+INSERT INTO GROUPASSIGNMENT(groupID, preID, userID) VALUES (@groupID, @preID, @userID);
+
+SET
+@groupID = 2,
+@preID = 3,
+@userID = 3;
+INSERT INTO GROUPASSIGNMENT(groupID, preID, userID) VALUES (@groupID, @preID, @userID);
+
 
 /*TEST*/
 SET 
@@ -158,21 +178,21 @@ INSERT INTO TEST(title, description, dateCreated, dateEdited, numberOfParticipan
 
 /*TESTASSIGNMENT*/
 SET
-@userID = 1,
+@userID = 2,
 @testID = 1,
-@status = "Not yet conducted";
+@status = "Not conducted yet";
 INSERT INTO TESTASSIGNMENT(userID, testID, status) VALUES (@userID, @testID, @status);
 
 SET
-@userID = 1,
+@userID = 2,
 @testID = 2,
-@status = "Not yet conducted";
+@status = "Not conducted yet";
 INSERT INTO TESTASSIGNMENT(userID, testID, status) VALUES (@userID, @testID, @status);
 
 SET
-@userID = 1,
+@userID = 3,
 @testID = 3,
-@status = "Not yet conducted";
+@status = "Not conducted yet";
 INSERT INTO TESTASSIGNMENT(userID, testID, status) VALUES (@userID, @testID, @status);
 
 /*TASK*/
@@ -223,49 +243,49 @@ INSERT INTO TASKASSIGNMENT(taskID, testID) VALUES (@taskID, @testID);
 
 /*IMAGE*/
 SET
-@address = "/images/Puff.png",
+@address = "images/Puff.png",
 @imgType = true,
 @taskID = 1;
 INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);
 
 SET
-@address = "/images/Puff.png",
+@address = "images/Puff.png",
 @imgType = true,
 @taskID = 2;
 INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);
 
 SET
-@address = "/images/Puff.png",
+@address = "images/Puff.png",
 @imgType = true,
 @taskID = 3;
 INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);
 
 SET
-@address = "/images/Puff.png",
+@address = "images/Puff.png",
 @imgType = true,
 @taskID = 4;
 INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);
 
 SET
-@address = "/images/orbi.jpg",
+@address = "images/orbi.jpg",
 @imgType = true,
 @taskID = 3;
 INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);
 
 SET
-@address = "/images/peanut.jpg",
+@address = "images/peanut.jpg",
 @imgType = true,
 @taskID = 3;
 INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);
 
 SET
-@address = "/images/pod.jpg",
+@address = "images/pod.jpg",
 @imgType = true,
 @taskID = 3;
 INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);
 
 SET
-@address = "/images/spike.jpg",
+@address = "images/spike.jpg",
 @imgType = true,
 @taskID = 3;
 INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);

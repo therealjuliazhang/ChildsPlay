@@ -14,11 +14,17 @@ while($row = mysqli_fetch_assoc($result))
 	$tasks[] = $row;
 $taskID = $tasks[$taskIndex]['taskID'];
 //fetch preschoolers from database
-$sql = "SELECT * FROM PRESCHOOLER WHERE GROUPID = '$groupID'";
+$sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$groupID." AND userID=2"; ////Need to fix value of userID after Login page is implemented
+//$sql = "SELECT * FROM PRESCHOOLER WHERE GROUPID = '$groupID'";
 $result = $conn->query($sql);
 $preschoolers = array();
-while($row = mysqli_fetch_assoc($result))
-   $preschoolers[] = $row;
+while($row = mysqli_fetch_assoc($result)){
+	$sql2 = "SELECT * FROM PRESCHOOLER WHERE preID=".$row["preID"];
+	$result2 = $conn->query($sql2);
+	while($value = mysqli_fetch_assoc($result2)){
+		$preschoolers[] = $value;
+	}
+}
 //fetch images
 $sql = "SELECT * FROM IMAGE WHERE TASKID = '$taskID'";
 $result = $conn->query($sql);
