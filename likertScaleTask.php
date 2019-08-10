@@ -54,13 +54,29 @@
 		}
 		.faces{
 			border:5px solid #586F80;
+			text-align: center;
 		}
 		#happy{
-			margin-left: 20%;
+			margin-right: 5%;
 		}
 		#sad{
-			margin-left: 40%;
+			margin-left: 5%;
 		}
+
+		#participant{
+			height: 220px;
+			position:absolute;
+			bottom: 0px;
+			right:0px;
+			left:0px
+		}
+		.bottomInBottom{
+			position: absolute;
+			bottom: 0px;
+			right:0px;
+			left:0px
+		}
+
 		</style>
     </head>
 
@@ -74,19 +90,24 @@
 			<div class="center-align"><img id="image" width="28%"></img></div>
 			<!--all container does is create padding on the left & right sides.-->
 			</div>
-			<div class="bottom">
+
+		<div class="bottom">
+			<div id="participant" class="row" style="font-size:18px;font-weight:bold">
+
+				<div class="bottomInBottom">
 				<div class="row faces">
 					<img id="happy" src="images/happy.jpg" onclick="happyClicked()" width="10%"></img>
 					<img id="sad" src="images/sad.jpg" onclick="sadClicked()" width="10%"></img>
 				</div>
-				<div id="participant" class="row" style="font-size:18px;font-weight:bold">
-					<div class="center-align">
-						<span id="preschoolerName">
-						</span>'s Turn
-					</div>
+
+				<div class="center-align">
+					<span id="preschoolerName">
+					</span>'s Turn
+				</div>
 				</div>
 			</div>
 		</div>
+
         <!--end body content-->
 
     </body>
@@ -103,7 +124,7 @@
 		var colours = ['amber accent-4', 'red', 'deep-purple', 'deep-orange', ' blue accent-4', 'teal', 'indigo accent-4', 'light-green accent-4', 'green', 'lime'];
 		document.getElementById("preschoolerName").innerHTML = preschoolers[0]['name'];
 		document.getElementById("participant").className = 'row ' + colours[preschoolerIndex % colours.length];
-		
+
 		function goNext(){
 			preschoolerIndex++;
 			if(preschoolerIndex == preschoolers.length){
@@ -113,15 +134,15 @@
 				window.location.href = "comments.php?testID=" + testID + "&groupID=" + groupID + "&taskIndex=" + taskIndex;
 			}
 			document.getElementById("preschoolerName").innerHTML = preschoolers[preschoolerIndex]['name'];
-			document.getElementById("participant").className = 'row ' + colours[preschoolerIndex % colours.length]; 
+			document.getElementById("participant").className = 'row ' + colours[preschoolerIndex % colours.length];
 			document.getElementById("sad").src="images/sad.jpg";
 			document.getElementById("happy").src="images/happy.jpg";
 		}
-		
+
 		function sadClicked(){
             document.getElementById("sad").src="images/fireworks2.gif";
 		}
-		
+
 		function happyClicked(){
 			document.getElementById("happy").src="images/fireworks.gif";
 		}

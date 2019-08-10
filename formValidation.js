@@ -1,17 +1,4 @@
 $(document).ready(function() {
-    // console.log(!($("select.materialSelect")[0].value == ""));
-    // $.validator.addMethod("notEqual", function() {
-    //     console.log(value);
-    //     return !(value == "Choose your location");
-    // }, "Pick your location from the drop down menu.");
-    // jQuery.validator.addMethod(
-    //     "notEqualTo",
-    //     function(elementValue,element,param) {
-    //       return elementValue != param;
-    //     },
-    //     "Value cannot be {0}"
-    //   );
-
     //Places error element next to invalid inputs
     $.validator.setDefaults({
         errorElement : 'div',
@@ -41,9 +28,6 @@ $(document).ready(function() {
                     type: "post"
                 }
             }
-            // locationSelect: {
-            //     notEqualTo: "Choose your location"
-            // }
         },
         messages: {
             groupName: {

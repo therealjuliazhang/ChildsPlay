@@ -1,4 +1,11 @@
 <?php
+    $editing;
+    if(isset($_POST['groupNameForEdit'])){
+        $groupNameForEdit = $_POST['groupNameForEdit'];
+        $editing = true;
+    }
+    else
+        $editing = false;
     //fetch group names from database
     include 'db_connection.php';
     $conn = OpenCon();
@@ -13,8 +20,12 @@
     //check if input is the same as group name from database
     for($i=0;$i<sizeof($groups);$i++){
         if($input==$groups[$i]['name']){
-            $nameExists = true;
-            break;
+            if($editing)
+                continue;
+            else{
+                $nameExists = true;
+                break;
+            }
         }
     }
     //return "" for error, true for no error

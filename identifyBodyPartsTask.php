@@ -57,7 +57,7 @@ mysqli_close($conn);?>
 	var preschoolerIndex = 0;
 	//colour of backround of preschoolers names at bottom
 	var colours = ['amber accent-4', 'red', 'deep-purple', 'deep-orange', ' blue accent-4', 'teal', 'indigo accent-4', 'light-green accent-4', 'green', 'lime'];
-	
+
 	//creates canvas and displays preschoolers name
 	window.onload = function() {
 		canvas = document.getElementById("myCanvas");
@@ -68,7 +68,7 @@ mysqli_close($conn);?>
 		document.getElementById("preschoolerName").innerHTML = preschoolers[0]['name'];
 		document.getElementById("participant").className = 'row ' + colours[preschoolerIndex % colours.length];
 	}
-	
+
 	function mouseDown(e) {
 		if (!e)
 			var e = event;
@@ -83,7 +83,7 @@ mysqli_close($conn);?>
 				 data: { x : canX, y : canY , testID : testID, taskID : taskID, preID : preschoolers[preschoolerIndex]['preID']}
 		});
 	}
-		
+
 	function touchDown(e) {
 		if (!e)
 			var e = event;
@@ -98,7 +98,7 @@ mysqli_close($conn);?>
 				 url: 'http://localhost/getCoordinates.php',
 				 data: { x : canX, y : canY , testID : testID, taskID : taskID, preID : preschoolers[preschoolerIndex]['preID']}
 		});
-	}	
+	}
 	//draws circle
 	function draw(){
 		ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height);
@@ -129,9 +129,9 @@ mysqli_close($conn);?>
 			displayCharacter(imageIndex);
 		}
 		document.getElementById("preschoolerName").innerHTML = preschoolers[preschoolerIndex]['name'];
-		document.getElementById("participant").className = 'row ' + colours[preschoolerIndex % colours.length]; 
+		document.getElementById("participant").className = 'row ' + colours[preschoolerIndex % colours.length];
 	}
-	
+
 	function displayCharacter(imageIndex){
 		document.getElementById("myCanvas").style.background = "url(" + images[imageIndex]['address'] + ")";
 		document.getElementById("myCanvas").style.backgroundRepeat = 'no-repeat';
@@ -152,6 +152,13 @@ mysqli_close($conn);?>
 			right: 0px;
 		}
 		#participant{
+			height: 220px;
+			position:absolute;
+			bottom: 0px;
+			right:0px;
+			left:0px
+		}
+		.center-align{
 			position:absolute;
 			bottom: 0px;
 			right:0px;
@@ -162,11 +169,11 @@ mysqli_close($conn);?>
 <body>
 	<!-- body content -->
 	<img id="button" src="images/greyCircle.png" alt= "image not workning" width="7%" onclick="goNext();"></img>
-	
+
 	<canvas id="myCanvas" width="800" height="400">
 		Your browser does not support the HTML5 canvas tag.
-	</canvas>  
-	
+	</canvas>
+
 	<div id="participant" class="row" style="font-size:18px;font-weight:bold">
 		<div class="center-align">
 			<span id="preschoolerName">
@@ -174,5 +181,5 @@ mysqli_close($conn);?>
 		</div>
 	</div>
 	<!--end body content-->
-</body>	
+</body>
 </html>

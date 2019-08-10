@@ -17,7 +17,7 @@
         <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script type = "text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
         <script type = "text/javascript" src = "https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
-        <script type = "text/javascript" src = "formValidation.js"></script>
+        <!-- <script type = "text/javascript" src = "formValidation.js"></script> -->
         <!-- <script type = "text/javascript" src = "https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/additional-methods.min.js"></script> -->
     </head>
     <!--the stuff in the head is all the linking things to Materialize-->
@@ -93,6 +93,44 @@
                 document.getElementById("locationSelect").appendChild(option);
             }
             $("#locationSelect").trigger('contentChanged');
+            //Places error element next to invalid inputs
+            $.validator.setDefaults({
+                errorElement : 'div',
+                errorClass: 'invalid',
+                errorPlacement: function(error, element) {
+                    if(element.attr('type') == "text" || element.attr('type') == "number"){
+                        $(element)
+                        .closest("form")
+                        .find("label[for='" + element.attr("id") + "']")
+                        .attr('data-error', error.text());
+                    }
+                    else if(element.hasClass("materialSelect")){
+                        element.after(error);
+                    }   
+                    else if(element.attr('type')=="radio"){
+                        element.before(error);
+                    } 
+                }
+            })
+            //set up rules and messages for errors
+            $("#form").validate({
+                rules: {
+                    groupName: {
+                        required: true,
+                        remote: {
+                            url: "checkGroupName.php",
+                            type: "post"
+                        }
+                    }
+                },
+                messages: {
+                    groupName: {
+                        required: "Enter a group name.",
+                        remote: jQuery.validator.format("{0} is already used by an existing group.")
+                    },
+                    locationSelect: "Pick your location from the drop down menu."
+                }
+            });
         });
         // add rows for preschooler data
         var num = 1;
