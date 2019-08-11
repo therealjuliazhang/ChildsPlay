@@ -2,18 +2,25 @@
 
 <html>
 	<?php
+	include 'db_connection.php';
+	$conn = OpenCon();
+	
 	$testID = $_GET["testID"];
 	$groupID = $_GET["groupID"];
 	$taskIndex = $_GET['taskIndex'];
 	//fetch task
-	$testQuery = "SELECT * FROM TASK WHERE testID=" . $testID;
-	include 'db_connection.php';
-	$conn = OpenCon();
-	$result = $conn->query($testQuery);
+	$query = "SELECT taskID FROM TASKASSIGNMENT WHERE testID=".$testID;
+	$result = $conn->query($query);
+
 	$tasks = array();
-	while($row = mysqli_fetch_assoc($result))
-		$tasks[] = $row;
+	while($value = mysqli_fetch_assoc($result)){
+		$taskQuery = "SELECT * FROM TASK WHERE taskID=".$value["taskID"];
+		$result2 = $conn->query($taskQuery);
+		while($row = mysqli_fetch_assoc($result2))
+			$tasks[] = $row;
+	}
 	$taskID = $tasks[$taskIndex]['taskID'];
+	CloseCon($conn);
 	?>
     <head>
         <title>Comments</title>
@@ -67,14 +74,25 @@
 			</div>
 			
 			<div class="row">
-				<form class="col s12" method="POST" action="<?php $_PHP_SELF ?>">
+				<form class="col s12" method="POST" action="">
 				  <div class="row">
 					<div class="input-field col s12">
 					  <textarea id="textarea1" name="area1" class="materialize-textarea"></textarea>
 					  <label for="textarea1">Comments</label>
 					</div>
 				  </div>
-				<?php
+				  <div class="row">
+				<div class="col s12">
+					<div class="right-align">
+						<button type="submit" class="waves-effect waves-light btn blue darken-2" name="nextButton" ><!--onclick="next();"-->Next</button>
+						<!--<button class="waves-effect waves-light btn blue darken-4" name="backButton">Back</button>-->
+					</div>
+				</div>
+			</div>
+			</form>
+			</div>
+        </div>
+<?php
 header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1.
 header("Pragma: no-cache"); // HTTP 1.0.
 header("Expires: 0"); // Proxies.
@@ -82,14 +100,6 @@ header("Expires: 0"); // Proxies.
 session_start();
 
 $conn = OpenCon();
-//$link = mysqli_connect("localhost", "root", "", "test");
-
-/*if($link === false){
-    die("ERROR: Could not connect. " . mysqli_connect_error());
-}*/
-
-$id = $_REQUEST["testID"];
-
 if(isset($_POST['nextButton'])){
 	function processText($text) {
 		$text = strip_tags($text);
@@ -98,60 +108,45 @@ if(isset($_POST['nextButton'])){
 		return $text;
 	}
 	$comment = processText($_POST['area1']);
-	if($comment != ""){
-		$sql = "UPDATE task SET comments = '". $comment ."' WHERE testID = ".$id." AND comments IS NULL";
-		if(mysqli_query($link, $sql)){
-		header("Location: index.php");
-		} else{
-			echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+	
+	if($_SESSION["mode"] == "preview"){
+		if($taskIndex == (sizeof($tasks)-1))
+				header("Location: thankyou.php");
+			else{
+				$taskIndex++;
+				header("Location: instruction.php?testID=".$testID."&groupID=".$groupID."&taskIndex=".$taskIndex);
+			}
+	}
+	else{
+		if($comment != ""){
+			$sql = "UPDATE TASKASSIGNMENT SET comments = '". $comment ."' WHERE taskID = ".$taskID." AND testID=".$testID;
+			if(mysqli_query($conn,$sql)){ //check if the query is executed successfully
+				if($taskIndex == (sizeof($tasks)-1))
+					header("Location: thankyou.php");
+				else{
+					$taskIndex++;
+					header("Location: instruction.php?testID=".$testID."&groupID=".$groupID."&taskIndex=".$taskIndex);
+				}
+			} else{
+				echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
+			}
 		}
-	} else{
-		echo "<span id='error'>Please write a comment!</span>";
+		else
+			echo "<span id='error'>Please write a comment!</span>";
 	}
 }
-
+/*
+$taskTypeUrl = $_SESSION["url"];
 if(isset($_POST['backButton'])){
-	header("Location: task.php?testID=".$id);
-}
+	header("Location: ".$taskTypeUrl);
+}*/
     CloseCon($conn);
 ?>
-			<div class="row">
-				<div class="col s12">
-					<div class="right-align">
-						<button type="button" class="waves-effect waves-light btn blue darken-2" name="button1" onclick="next();">Next</button>
-						<!--<a class="waves-effect waves-light btn blue darken-4" name="button2">Back</a>-->
-					</div>
-				</div>
-			</div>
-			</form>
-			</div>
-        </div>
+			
         
         <!--end body content-->
         
     </body>
-	<script>
-		function printComment(){
-			/*var comment = document.getElementById("textarea1").innerText;
-			console.log("This is the comment: " + comment);*/
-			var comment = $.trim($("#textarea1").val());
-			if(comment != ""){
-				alert(comment);
-			}
-		}
-		function next(){
-			var taskIndex = <?php echo $taskIndex; ?>;
-			var tasks = <?php echo json_encode($tasks); ?>;
-			if(taskIndex == tasks.length-1)
-				window.location.href = "thankyou.php";
-			else{
-				var testID = <?php echo $testID; ?>;
-				var groupID = <?php echo $groupID; ?>;
-				taskIndex++;
-				window.location.href = "instruction.php?" + "testID=" + testID + "&groupID=" + groupID + "&taskIndex=" + taskIndex;
-			}
-		}
-	</script>
     <style>
 	.brand-logo{
 		margin-top:-67px;

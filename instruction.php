@@ -1,7 +1,9 @@
 <html>
 <?php
+session_start();
+
 $testID = $_GET["testID"];
-$groupID = isset($_GET['groupID']) ? $_GET['groupID'] : 1;
+$groupID = isset($_GET['groupID']) ? $_GET['groupID'] : 4;
 //index of task in array
 $taskIndex = isset($_GET['taskIndex']) ? $_GET['taskIndex'] : 0;
 $bodyPart = "eye";
@@ -45,34 +47,45 @@ $bodyPart = "eye";
 include 'db_connection.php';
 $conn = OpenCon();
 $taskTypeUrl;
-$testQuery = "SELECT * FROM TASK WHERE testID=" . $testID;
-$result = $conn->query($testQuery);
+//$testQuery = "SELECT * FROM TASK WHERE testID=" . $testID;
+$query = "SELECT taskID FROM TASKASSIGNMENT WHERE testID=".$testID;
+$result = $conn->query($query);
+
 $tasks = array();
-while($row = mysqli_fetch_assoc($result))
-	$tasks[] = $row;
+while($value = mysqli_fetch_assoc($result)){
+	$taskQuery = "SELECT * FROM TASK WHERE taskID=".$value["taskID"];
+	$result2 = $conn->query($taskQuery);
+	while($row = mysqli_fetch_assoc($result2))
+		$tasks[] = $row;
+}
+
 $info = "testID=" . $testID . "&groupID=" . $groupID . "&taskIndex=" . $taskIndex;
-switch($tasks[$taskIndex]["taskType"]){
-	case "Likert Scale":
-		echo $tasks[$taskIndex]['instruction'] . 
-		"</br>
-			<img src=\"images/happy.jpg\" width=\"75px\"><img src=\"images/sad.jpg\" width=\"75px\">
-		</br>"; 
-		$taskTypeUrl = "likertScaleTask.php?" . $info;
-		break;
-	case "Identify Body Parts":
-		echo $tasks[$taskIndex]['instruction']; 
-		$taskTypeUrl = "identifyBodyPartsTask.php?" . $info;
-		break;
-	case "Character Ranking":
-		echo $tasks[$taskIndex]['instruction'];  
-		$taskTypeUrl = "characterRankingTask.php?" . $info;
-		break;
-	case "Drag and Drop":
-		echo $tasks[$taskIndex]['instruction']; 
-		$taskTypeUrl = "dragAndDropTask.php?" . $info;
-		break;
+$taskTypeUrl = "likertScaleTask.php?" . $info;
+if(count($tasks) > 0){
+	switch($tasks[$taskIndex]["taskType"]){
+		case "Likert Scale":
+			echo $tasks[$taskIndex]['instruction'] . 
+			"</br>
+				<img src=\"images/happy.jpg\" width=\"75px\"><img src=\"images/sad.jpg\" width=\"75px\">
+			</br>"; 
+			$taskTypeUrl = "likertScaleTask.php?" . $info;
+			break;
+		case "Identify Body Parts":
+			echo $tasks[$taskIndex]['instruction']; 
+			$taskTypeUrl = "identifyBodyPartsTask.php?" . $info;
+			break;
+		case "Character Ranking":
+			echo $tasks[$taskIndex]['instruction'];  
+			$taskTypeUrl = "characterRankingTask.php?" . $info;
+			break;
+		/*case "Drag and Drop":
+			echo $tasks[$taskIndex]['instruction']; 
+			$taskTypeUrl = "dragAndDropTask.php?" . $info;
+			break;*/
+	}
 }
 CloseCon($conn);
+$_SESSION["url"] = $taskTypeUrl;
 ?> 
 						After the participant has completed their task, select the grey, quarter-circle button on the top right 
 						of the screen to go to the next participant's turn.
@@ -83,6 +96,8 @@ CloseCon($conn);
 <?php
 //display images under test
 $conn = OpenCon();
+
+if(count($tasks) > 0){
 $testQuery = "SELECT address FROM IMAGE WHERE taskID=" . $tasks[$taskIndex]["taskID"];
 $result = $conn->query($testQuery);
 $imageAdresses = array();
@@ -90,13 +105,23 @@ while($row = mysqli_fetch_assoc($result))
 	$imageAdresses[] = $row;
 foreach ($imageAdresses as $value) 
   echo '<img src=' . $value['address'] . ' width="100px">';
+}
 ?>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col s12">
 					<div class="right-align">
-						<a href= <?php echo $taskTypeUrl; ?> class="waves-effect waves-light btn blue darken-2">Start</a>
+						<a href= <?php echo $taskTypeUrl; ?> class="waves-effect waves-light btn blue darken-2">
+						<?php $mode=isset($_GET['mode']);
+						if($mode){
+							echo "Start Preview";
+							$_SESSION["mode"] = "preview";
+						}
+						else
+							echo "Start";
+						?>
+						</a>
 						<a onclick="goBack()" class="waves-effect waves-light btn blue darken-4">Back</a>
 					</div>
 				</div>

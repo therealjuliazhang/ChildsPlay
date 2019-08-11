@@ -7,13 +7,20 @@ header('Access-Control-Allow-Origin: *');
 session_start();
 include 'db_connection.php';
 $conn = OpenCon();
+
 //fetch task
-$testQuery = "SELECT * FROM TASK WHERE testID=" . $testID;
-$result = $conn->query($testQuery);
+$query = "SELECT taskID FROM TASKASSIGNMENT WHERE testID=".$testID;
+$result = $conn->query($query);
+
 $tasks = array();
-while($row = mysqli_fetch_assoc($result))
-	$tasks[] = $row;
+while($value = mysqli_fetch_assoc($result)){
+	$taskQuery = "SELECT * FROM TASK WHERE taskID=".$value["taskID"];
+	$result2 = $conn->query($taskQuery);
+	while($row = mysqli_fetch_assoc($result2))
+		$tasks[] = $row;
+}
 $taskID = $tasks[$taskIndex]['taskID'];
+
 //fetch names of preschoolers
 $sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$groupID." AND userID=2"; ////Need to fix value of userID after Login page is implemented
 $result = $conn->query($sql);
@@ -25,6 +32,7 @@ while($row = mysqli_fetch_assoc($result)){
 		$preschoolers[] = $value;
 	}
 }
+
 //fetch images
 $sql = "SELECT * FROM IMAGE WHERE TASKID = '$taskID'";
 $result = $conn->query($sql);

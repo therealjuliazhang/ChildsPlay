@@ -204,11 +204,11 @@ SET
 @instruction = "Select the monsters in order of your favourite to least favourite.",
 @taskType = "Character Ranking";
 INSERT INTO TASK(instruction, taskType) VALUES (@instruction, @taskType);
-
+/*
 SET
 @instruction = "Drag the monster into the box.",
 @taskType = "Drag and Drop";
-INSERT INTO TASK(instruction, taskType) VALUES (@instruction, @taskType);
+INSERT INTO TASK(instruction, taskType) VALUES (@instruction, @taskType);*/
 
 /*TASKASSIGNMENT*/
 SET
@@ -227,8 +227,8 @@ SET
 INSERT INTO TASKASSIGNMENT(taskID, testID) VALUES (@taskID, @testID);
 
 SET
-@taskID = 4,
-@testID = 1;
+@taskID = 2,
+@testID = 2;
 INSERT INTO TASKASSIGNMENT(taskID, testID) VALUES (@taskID, @testID);
 
 /*IMAGE*/
@@ -250,11 +250,11 @@ SET
 @taskID = 3;
 INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);
 
-SET
+/*SET
 @address = "images/Puff.png",
 @imgType = true,
 @taskID = 4;
-INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);
+INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);*/
 
 SET
 @address = "images/orbi.jpg",
