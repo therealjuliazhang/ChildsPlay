@@ -19,14 +19,14 @@
 						<a href="educatorTests.php" class="brand-logo"><img src="images/logo1.png" height="200px"></a>
 					</div>
 					<div class="col s2 offset-s10">
-						<a class="waves-effect waves-light btn blue darken-2 right logout" onclick="logout()">Logout</a>
+						<a class="waves-effect waves-light btn blue darken-2" id="profileLink" href="profile.php">Profile</a>
 					</div>
 				</div>
             </div>
         </nav>
         </div>
         <!--end header-->
-        
+
         <!-- body content -->
         <div class="container">
 			<ul class="tabs ">
@@ -51,12 +51,12 @@
 				//get tests from database
 				$sql1 = "SELECT testID FROM TESTASSIGNMENT WHERE userID=2"; //Need to fix value of userID after Login page is implemented
 				$testIndexes = $conn->query($sql1);
-				
+
 				$tests = array();
 				while($row = mysqli_fetch_assoc($testIndexes)){
 					$sql2 = "SELECT * FROM TEST WHERE testID=".$row["testID"];
 					$result = $conn->query($sql2);
-					
+
 					while($value = mysqli_fetch_assoc($result)){
 						echo '<tr><td>' . $value['title'] . '</td><td>' . $value['description'];
 						echo '</td><td><a href="instruction.php?testID=' . $value['testID'] . '&mode=preview'.'" class="waves-effect waves-light btn blue darken-4 ">Preview</a></td>';
@@ -79,7 +79,7 @@
 					<?php
 					//get groups from database
 					$sql = "SELECT groupID FROM GROUPASSIGNMENT WHERE userID=2 GROUP BY groupID"; //Need to fix value of userID after Login page is implemented
-					$result = $conn->query($sql); 
+					$result = $conn->query($sql);
 					while($row = mysqli_fetch_assoc($result)){
 						$sql2 = "SELECT name FROM GROUPTEST WHERE groupID=".$row["groupID"];
 						$result2 = $conn->query($sql2);
@@ -90,7 +90,7 @@
 						$result3 = $conn->query($sql3);
 						$names = array();
 						while($row3 = mysqli_fetch_assoc($result3)){
-							$names[] = $row3; 
+							$names[] = $row3;
 						}
 						$count = 0;
 						foreach ($names as $value) {
@@ -102,11 +102,11 @@
 						 //Need to fix value of userID after Login page is implemented
 						echo '</td><td><a href="educatorEditGroup.php?userID=2&&groupID=', $row["groupID"] ,'" class="waves-effect waves-light btn blue darken-4 ">Edit</a></td></tr>';
 					}
-						
+
 					/*
 					//get groups from database
 					$sql = "SELECT * FROM GROUPTEST";
-					$result = $conn->query($sql); 
+					$result = $conn->query($sql);
 					$groups = array();
 					while($row = mysqli_fetch_assoc($result))
 						$groups[] = $row;
@@ -114,12 +114,12 @@
 					foreach ($groups as $value) {
 						$groupID = $value['groupID'];
 						$sql2 = "SELECT * FROM PRESCHOOLER WHERE GROUPID = '$groupID'";
-						$result2 = $conn->query($sql2); 
+						$result2 = $conn->query($sql2);
 						$preschoolers = array();
 						while($row = mysqli_fetch_assoc($result2))
 							$preschoolers[] = $row;
 						echo '<tr><td>', $value['name'], '</td>', '<td>';
-						foreach ($preschoolers as $value) 
+						foreach ($preschoolers as $value)
 							echo $value['name'], ' ';
 						echo '</td><td><a href="educatorEditGroup.php?groupID=', $groupID ,'" class="waves-effect waves-light btn blue darken-4 ">Edit</a></td></tr>';
 					}*/
@@ -130,9 +130,9 @@
 			</div>
         </div>
         <!--end body content-->
-        
+
     </body>
-	
+
     <style>
 	.brand-logo{
 		margin-top:-67px;
@@ -144,5 +144,8 @@
 	.tabs .tab .active {
 	  background-color: rgba(38, 166, 154, 0.2);
 	}
+  #profileLink{
+    margin-top: 15px;
+  }
     </style>
 </html>
