@@ -60,11 +60,11 @@
 					Please input the details for each test participant:
 					<div id ="rows"></div>
 					<div class="row right-align">
-						<a class="waves-effect waves-light btn blue darken-4" onclick="addRow()"><i class="material-icons"style="font-size:30px;">add</i></a>
+						<a class="waves-effect waves-light btn blue darken-4 tooltipped" data-position="right" data-tooltip="Add more" onclick="addRow()"><i class="material-icons"style="font-size:30px;">add</i></a>
 					</div>
 					<div class="row right-align">
 						<input type="submit" name="submit" id="saveButton" class="submit waves-effect waves-light btn blue darken-2" value="Save Changes">
-						<a href="educatorTests.php#groups" class="waves-effect waves-light btn blue darken-4">Cancel</a>
+                        <a href="educatorTests.php#groups" class="waves-effect waves-light btn blue darken-4 ">Cancel</a>
 					</div>  
                 </form>
         </div>
@@ -72,6 +72,8 @@
     </body>
 	<script>
         $(document).ready(function() {
+            //initiate tooltip
+            $('.tooltipped').tooltip();
             //initiate select input
             $('select').material_select();
             $("select[required]").css({
@@ -151,9 +153,11 @@
             iconDiv.addEventListener("click", function() {
                 rowsDiv.removeChild(newRow);
             }, false);
-            iconDiv.classList.add("col", "s1", "changeCursor");
+            iconDiv.classList.add("col", "s1", "changeCursor", "icon-red", "tooltipped");
+            iconDiv.setAttribute("data-position", "right");
+            iconDiv.setAttribute("data-tooltip", "Remove row");
             var removeIcon = document.createElement("i");
-            removeIcon.classList.add("material-icons", "medium", "icon-red"); 
+            removeIcon.classList.add("material-icons", "medium"); 
             removeIcon.innerHTML = "remove";
             iconDiv.appendChild(removeIcon);
             newRow.appendChild(iconDiv);
@@ -235,7 +239,7 @@
         color: #EC453C;
     } 
     /*for the red remove button*/
-     i.icon-red {
+    .icon-red {
         color: #CA3433;
         padding-top: 10px;
     } 

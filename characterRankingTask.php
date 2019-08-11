@@ -97,9 +97,7 @@ mysqli_close($conn);
 			div.onclick = function(){
 				this.setAttribute('points', parseInt(this.getAttribute("points")) + pointsToGive);
 				pointsToGive--;
-				requestAnimationFrame(() => {
-					this.classList.add("chosen");
-				})
+				this.classList.add("chosen");
 				//send results to php file
 				$.ajax({
 						 type: 'POST',
@@ -111,9 +109,7 @@ mysqli_close($conn);
 				});
 			};
 			div.onTouchStart = function(){
-				requestAnimationFrame(() => {
-					this.classList.add("chosen");
-				})
+				this.classList.add("chosen");
 				//send results to php file
 				$.ajax({
 						 type: 'POST',
@@ -150,7 +146,7 @@ mysqli_close($conn);
 			transition: top 4000ms;
 		}
 		.character.chosen {
-			top: -350px;
+			display: none;
 		}
 		.center-align{
 			position:absolute;

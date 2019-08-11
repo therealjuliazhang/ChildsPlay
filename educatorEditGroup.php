@@ -1,9 +1,13 @@
 <html>
     <?php 
-        //gets groupID from url
-        $groupID = $_GET["groupID"];
         include 'db_connection.php';
         $conn = OpenCon();
+        //get userID
+        if(isset($_GET["userID"]))
+            $userID = (int)str_replace('"', '', $_GET["userID"]);
+        //get groupID
+        if(isset($_GET["groupID"]))
+            $groupID = (int)str_replace('"', '', $_GET["groupID"]);
         //get group name from database
         $sql = "SELECT name FROM grouptest WHERE groupID = " . $groupID;
         $result = $conn->query($sql);
@@ -18,12 +22,20 @@
         $locations = array();
         while($row = mysqli_fetch_assoc($result))
             $locations[] = $row;
-        //fetch preschoolers from database
-        $sql = "SELECT * FROM preschooler WHERE groupID = " . $groupID;
+        //fetch preschoolerIDs from groupassignment table
+        $sql = "SELECT preID FROM groupassignment WHERE groupID = " . $groupID;
         $result = $conn->query($sql);
-        $preschoolers = array();
+        $preschoolerIDs = array();
         while($row = mysqli_fetch_assoc($result))
-            $preschoolers[] = $row;
+            $preschoolerIDs[] = $row;
+        //fetch preschoolers from database
+        $preschoolers = array();
+        foreach($preschoolerIDs as $value){
+            $sql = "SELECT * FROM preschooler WHERE preID = " . $value['preID'];
+            $result = $conn->query($sql);
+            while($row = mysqli_fetch_assoc($result))
+                array_push($preschoolers, $row);
+        }
     ?>
     <head>
         <title>Edit Group for Educator</title>
@@ -54,7 +66,7 @@
         <!-- body content -->
         <div class="container grey-text text-darken-1" style="font-size:18px">
                 <h5 class="blue-text darken-2">Edit Group</h5>
-                 <form id="form" style="font-size:18px" action='updateGroup.php?groupID=<?php echo json_encode($groupID); ?>' method="post">
+                 <form id="form" style="font-size:18px" action='updateGroup.php?userID=<?php echo json_encode($userID); ?>&&groupID=<?php echo json_encode($groupID); ?>' method="post">
                     <div class="row">
                         <div class="input-field col s12">
                             <input class="validate" id="groupName" type="text" name="groupName" >
@@ -72,7 +84,7 @@
                     Please input the details for each test participant:
                     <div id ="rows"></div>
                     <div class="row right-align">
-                        <a class="waves-effect waves-light btn blue darken-4" onclick="addRow()"><i class="material-icons"style="font-size:30px;">add</i></a>
+                        <a class="waves-effect waves-light btn blue darken-4 tooltipped" data-position="right" data-tooltip="Add more" onclick="addEmptyRow()"><i class="material-icons"style="font-size:30px;">add</i></a>
                     </div>
                     <div class="row right-align">
                         <input type="submit" id="startButton" class="submit waves-effect waves-light btn blue darken-2" value="Save Changes">
@@ -162,7 +174,6 @@
         for(var i=0; i<preschoolers.length; i++){
             addRow(preschoolers[i]);
         }
-        // //creates a row for inputing for preschool data
         function addRow(preschooler){
             var newRow = document.createElement("div");
             newRow.className = ("row");
@@ -177,14 +188,16 @@
             }, false);
             iconDiv.classList.add("col", "s1", "changeCursor");
             var removeIcon = document.createElement("i");
-            removeIcon.classList.add("material-icons", "medium", "icon-red"); 
+            removeIcon.classList.add("material-icons", "medium", "icon-red", "tooltipped"); 
             removeIcon.innerHTML = "remove";
+            removeIcon.setAttribute("data-position", "right");
+            removeIcon.setAttribute("data-tooltip", "Remove row");
             iconDiv.appendChild(removeIcon);
             newRow.appendChild(iconDiv);
             rowsDiv.appendChild(newRow);
             num++;
         }
-        // //creates text field input
+        //creates text field input
         function addInput(type, row, preschooler){
             var newDiv = document.createElement("div");
             var newInput = document.createElement("input");
@@ -236,6 +249,85 @@
                 newInput.value = "Female";
                 if(preschooler['gender']=="Female")
                     newInput.checked = true;
+                newLabel.innerHTML = "Female";
+            }
+            newLabel.htmlFor = newInput.id;
+            newP.appendChild(newInput);
+            newP.appendChild(newLabel);
+            newDiv.appendChild(newP);
+            row.appendChild(newDiv);
+        }
+        //creates empty row for inputing for preschool data
+        function addEmptyRow(){
+            var newRow = document.createElement("div");
+            newRow.className = ("row");
+            addEmptyInput("name", newRow);
+            addEmptyInput("age", newRow);
+            addUncheckedRadio("male", newRow);
+            addUncheckedRadio("female", newRow);
+            var iconDiv = document.createElement("div");
+            //implements remove row
+            iconDiv.addEventListener("click", function() {
+                rowsDiv.removeChild(newRow);
+            }, false);
+            iconDiv.classList.add("col", "s1", "changeCursor");
+            var removeIcon = document.createElement("i");
+            removeIcon.classList.add("material-icons", "medium", "icon-red", "tooltipped"); 
+            removeIcon.innerHTML = "remove";
+            removeIcon.setAttribute("data-position", "right");
+            removeIcon.setAttribute("data-tooltip", "Remove row");
+            iconDiv.appendChild(removeIcon);
+            newRow.appendChild(iconDiv);
+            rowsDiv.appendChild(newRow);
+            num++;
+        }
+        
+        // //creates empty text field input
+        function addEmptyInput(type, row){
+            var newDiv = document.createElement("div");
+            var newInput = document.createElement("input");
+            var newLabel = document.createElement("label");
+            newInput.className = "validate";
+            newInput.setAttribute('required', "");
+            newInput.setAttribute('aria-disabled', true);
+            if (type == "name"){
+                newDiv.classList.add("input-field", "col", "s5");
+                newInput.id = "name" + num;
+                newInput.name = "name" + num;
+                newInput.type = "text";
+                newLabel.innerHTML = "Name";
+            }
+            else if(type == "age"){
+                newDiv.classList.add("input-field", "col", "s2");
+                newInput.id = "age" + num;
+                newInput.name = "age" + num;
+                newInput.type = "number";
+                newLabel.innerHTML = "Age";
+            }
+            newLabel.htmlFor = newInput.id;
+            newDiv.appendChild(newInput);
+            newDiv.appendChild(newLabel);
+            row.appendChild(newDiv);
+        }
+        // //creates unchecked radio button
+        function addUncheckedRadio(gender, row){
+            var newDiv = document.createElement("div");
+            var newP = document.createElement("p");
+            var newInput = document.createElement("input");
+            var newLabel = document.createElement("label");
+            newDiv.classList.add("col", "s2");
+            newInput.type = 'radio';
+            newInput.required = true;
+            if (gender == "male"){
+                newInput.id = "genderM" + num;
+                newInput.name = "gender" + num;
+                newInput.value = "Male";
+                newLabel.innerHTML = "Male";
+            }
+            else if(gender == "female"){
+                newInput.id = "genderF" + num;
+                newInput.name = "gender" + num;
+                newInput.value = "Female";
                 newLabel.innerHTML = "Female";
             }
             newLabel.htmlFor = newInput.id;

@@ -30,7 +30,7 @@
         <!-- body content -->
         <div class="container">
 			<ul class="tabs ">
-				<li class="tab col s3"><a class="active blue-text darken-2" href="#tests">Tests</a></li>
+				<li class="tab col s3"><a class="blue-text darken-2" href="#tests">Tests</a></li>
 				<li class="tab col s3"><a class="blue-text darken-2" href="#groups">Groups</a></li>
 				<div class="indicator blue darken-2" style="z-index:1"></div>
 			</ul>
@@ -80,21 +80,18 @@
 					//get groups from database
 					$sql = "SELECT groupID FROM GROUPASSIGNMENT WHERE userID=2 GROUP BY groupID"; //Need to fix value of userID after Login page is implemented
 					$result = $conn->query($sql); 
-					
 					while($row = mysqli_fetch_assoc($result)){
 						$sql2 = "SELECT name FROM GROUPTEST WHERE groupID=".$row["groupID"];
 						$result2 = $conn->query($sql2);
 						while($row2 = mysqli_fetch_assoc($result2)){
 							echo '<tr><td>', $row2['name'], '</td>', '<td>'; //print out group name
 						}
-						
 						$sql3 =  "SELECT name FROM PRESCHOOLER P JOIN GROUPASSIGNMENT GA ON P.preID = GA.preID WHERE GA.groupID=".$row["groupID"]." AND GA.userID=2";
 						$result3 = $conn->query($sql3);
 						$names = array();
 						while($row3 = mysqli_fetch_assoc($result3)){
 							$names[] = $row3; 
 						}
-						
 						$count = 0;
 						foreach ($names as $value) {
 							echo $value['name']; //print out preschooler's name
@@ -102,11 +99,10 @@
 							if($count == sizeof($names)) break;
 							echo ", ";
 						}
-						echo '</td><td><a href="educatorEditGroup.php?groupID=', $row["groupID"] ,'" class="waves-effect waves-light btn blue darken-4 ">Edit</a></td></tr>';
+						 //Need to fix value of userID after Login page is implemented
+						echo '</td><td><a href="educatorEditGroup.php?userID=2&&groupID=', $row["groupID"] ,'" class="waves-effect waves-light btn blue darken-4 ">Edit</a></td></tr>';
 					}
 						
-					
-					
 					/*
 					//get groups from database
 					$sql = "SELECT * FROM GROUPTEST";

@@ -1,4 +1,26 @@
 <html>
+	<?php
+		//these should be gotten from another page.
+		$userID = 2;
+		$testID = 1;
+		//connect to database
+		include 'db_connection.php';
+		$conn = OpenCon();
+		//get tasks IDs from taskassignment table
+		$taskIDs = array();
+		$sql = "SELECT taskID FROM taskassignment WHERE testID = " .$testID;
+        $result = $conn->query($sql);
+        while($row = mysqli_fetch_assoc($result))
+			$taskIDs[] = $row;
+		//get tasks
+		$tasks = array();
+		foreach($taskIDs as $value){
+			$sql = "SELECT * FROM task WHERE taskID = " .$value['taskID'];
+			$result = $conn->query($sql);
+			while($row = mysqli_fetch_assoc($result))
+				$tasks[] = $row;
+		}
+	?>
     <head>
         <title>Child'sPlay</title>
     <meta name = "viewport" content = "width = device-width, initial-scale = 1">
@@ -212,102 +234,103 @@
                 <li><a href="">Wollongong Preschool Test 3</a></li>
                 <li><a href="">Wollongong Preschool Test 4</a></li>
             </ul>
-            <!--end slide out menu-->
-            <!-- Task01 -->
-            <h5 class="blue-text darken-2 header">Likert Scale:</h5>
-            Do you like this monster?
-            <br>
-            <img class="image" src="images/Puff.jpg" style="width:15%;">
-			<br>
-			<h5 class="blue-text darken-2 header">Results:</h5>
-			<!-- Chart.JS -->
-			<canvas id="likertChart" width="800px;">CanvasNotSupported</canvas>
-			<div class="row">
-				<form class="col s12">
-					<div class="input-field col s8">
-						<textarea id="textarea1" class="materialize-textarea"></textarea>
-						<label for="textarea1">Comments</label>
-					</div>
-				</form>
+			<!--end slide out menu-->
+			<div id="results">
+				<!-- LIKERT SCALE TASK -->
+				<h5 class="blue-text darken-2 header">Likert Scale:</h5>
+				Do you like this monster?
+				<br>
+				<img class="image" src="images/Puff.jpg" style="width:15%;">
+				<br>
+				<h5 class="blue-text darken-2 header">Results:</h5>
+				<!-- Chart.JS -->
+				<canvas id="likertChart" width="800px;">CanvasNotSupported</canvas>
+				<div class="row">
+					<form class="col s12">
+						<div class="input-field col s8">
+							<textarea id="textarea1" class="materialize-textarea"></textarea>
+							<label for="textarea1">Comments</label>
+						</div>
+					</form>
+				</div>
+				<!-- IDENTIFY BODY PARTS TASK -->
+				<h5 class="blue-text darken-2 header">Identify Eye Task:</h5>
+				Can you point to the monster's eyes?
+				</br>
+				<img class="image" src="images/Puff.jpg" style="width:15%;">
+				</br>
+				<h5 class="blue-text darken-2 header">Results:</h5>
+				<canvas class="image" id="myCanvas" width="240" height="297" style="border:1px solid #d3d3d3;">
+					Your browser does not support the HTML5 canvas tag.
+				</canvas>
+				<div class="row">
+					<form class="col s12">
+						<div class="input-field col s8">
+							<textarea id="textarea1" class="materialize-textarea"></textarea>
+							<label for="textarea1">Comments</label>
+						</div>
+					</form>
+				</div>
+				<!-- CHARACTER RANKING TASK -->
+				<h5 class="blue-text darken-2 header">Ranking the monsters:</h5>
+				Ranking the monsters from favourite to least favourite
+				<h5 class="blue-text darken-2 header">Results:</h5>
+				<div id="tableDiv">
+					<table class="centered">
+						<thead>
+							<tr>
+								<th>Rank: </th>
+								<th>Points: </th>
+								<th>Image: </th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>1st</td>
+								<td>17</td>
+								<td><img class="image" src="images/Puff.jpg" style="width:15%;"></td>
+							</tr>
+							<tr>
+								<td>2nd</td>
+								<td>3</td>
+								<td><img class="image" src="images/character2.png" style="width:15%;"></td>
+							</tr>
+							<tr>
+								<td>3rd</td>
+								<td>5</td>
+								<td><img class="image" src="images/Puff.jpg" style="width:15%;"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="row">
+					<form class="col s12">
+						<div class="input-field col s8">
+							<textarea id="textarea1" class="materialize-textarea"></textarea>
+							<label for="textarea1">Comments</label>
+						</div>
+					</form>
+				</div>
+				<!-- DRAG AND DROP TASK -->
+				<!-- <h5 class="blue-text darken-2 header">Drag and Drop Task:</h5>
+				Testing their ability to drag and drop the monsters.
+				<br>
+				<img class="image" src="images/Puff.jpg" style="width:15%;">
+				<h5 class="blue-text darken-2 header">Results:</h5>
+				<canvas id="dragAndDropChart" width="800px;">CanvasNotSupported</canvas>
+				<div class="row">
+					<form class="col s12">
+						<div class="input-field col s8">
+							<textarea id="textarea1" class="materialize-textarea"></textarea>
+							<label for="textarea1">Comments</label>
+						</div>
+					</form>
+				</div>
+				<div class="center-align">
+					<a class="waves-effect waves-light btn blue darken-4" id="backToTopButton" onclick="backToTop()">Back To Top</a>
+				</div>
+				<br/> -->
 			</div>
-			<!-- Task02 -->
-			<h5 class="blue-text darken-2 header">Identify Eye Task:</h5>
-			Can you point to the monster's eyes?
-			</br>
-			<img class="image" src="images/Puff.jpg" style="width:15%;">
-			</br>
-			<h5 class="blue-text darken-2 header">Results:</h5>
-			<canvas class="image" id="myCanvas" width="240" height="297" style="border:1px solid #d3d3d3;">
-				Your browser does not support the HTML5 canvas tag.
-			</canvas>
-			<div class="row">
-				<form class="col s12">
-					<div class="input-field col s8">
-						<textarea id="textarea1" class="materialize-textarea"></textarea>
-						<label for="textarea1">Comments</label>
-					</div>
-				</form>
-			</div>
-			<!-- Task03 -->
-			<h5 class="blue-text darken-2 header">Ranking the monsters:</h5>
-			Ranking the monsters from favourite to least favourite
-			<h5 class="blue-text darken-2 header">Results:</h5>
-			<div id="tableDiv">
-				<table class="centered">
-					<thead>
-						<tr>
-							<th>Rank: </th>
-							<th>Points: </th>
-							<th>Image: </th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>1st</td>
-							<td>17</td>
-							<td><img class="image" src="images/Puff.jpg" style="width:15%;"></td>
-						</tr>
-						<tr>
-							<td>2nd</td>
-							<td>3</td>
-							<td><img class="image" src="images/character2.png" style="width:15%;"></td>
-						</tr>
-						<tr>
-							<td>3rd</td>
-							<td>5</td>
-							<td><img class="image" src="images/Puff.jpg" style="width:15%;"></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			<div class="row">
-				<form class="col s12">
-					<div class="input-field col s8">
-						<textarea id="textarea1" class="materialize-textarea"></textarea>
-						<label for="textarea1">Comments</label>
-					</div>
-				</form>
-			</div>
-			<!-- Task04 -->
-			<h5 class="blue-text darken-2 header">Drag and Drop Task:</h5>
-			Testing their ability to drag and drop the monsters.
-			<br>
-            <img class="image" src="images/Puff.jpg" style="width:15%;">
-			<h5 class="blue-text darken-2 header">Results:</h5>
-			<!-- Chart.JS -->
-			<canvas id="dragAndDropChart" width="800px;">CanvasNotSupported</canvas>
-			<div class="row">
-				<form class="col s12">
-					<div class="input-field col s8">
-						<textarea id="textarea1" class="materialize-textarea"></textarea>
-						<label for="textarea1">Comments</label>
-					</div>
-				</form>
-			</div>
-			<div class="center-align">
-				<a class="waves-effect waves-light btn blue darken-4" id="backToTopButton" onclick="backToTop()">Back To Top</a>
-			</div>
-			<br/>
 		</div>
 		<!--end body content-->
 		</body>
@@ -344,71 +367,106 @@
 		}
 		$(document).ready(function(){
 			$('.sidenav').sidenav();
-		});
-		$(document).ready(function()
-		{
 			$('.collapsible').collapsible();
+			displayTaskResults();
 		});
+		//displays all the task results
+		function displayTaskResults(){
+			var tasks = <?php echo json_encode($tasks); ?>;
+			//for each task
+			tasks.forEach(function(task){
+				//check the task type
+				switch(task.taskType) {
+				case "Likert Scale":
+					displayLikertScale(task);
+					break;
+				case "Identify Body Parts":
+					displayIdentifyBodyParts(task);
+					break;
+				case "Character Ranking":
+					displayCharacterRanking(task);
+					break;
+				case "Preferred Mechanics":
+					displayPreferredMechanics(task);
+					break;
+				default:
+				}
+			});
+		};
 		//likert scale task results
-		var ctx = document.getElementById("likertChart").getContext('2d');
-		var likertChart = new Chart(ctx, {
-			type: "horizontalBar", // Make the graph horizontal
-			data: {
-			labels:  ["Like", "Dislike"],
-			datasets: [{
-			   label: "Number of Answers",
-			   data: [6, 2],
-			   backgroundColor: ["green", "yellow"]
-			}]},
-			options: {
-				responsive: false,
-				title: {
-				display: true,
-				fontSize: 10,
-				text: "Results"
-				},
-				legend: {
-				display: false,
-				},
-				scales: {
-					xAxes: [{ // Ｘ Axes Option
-						ticks: {
-							min: 0
-						}}],
-					yAxes: []
+		function displayLikertScale(task){
+			var ctx = document.getElementById("likertChart").getContext('2d');
+			var likertChart = new Chart(ctx, {
+				type: "horizontalBar", // Make the graph horizontal
+				data: {
+				labels:  ["Like", "Dislike"],
+				datasets: [{
+				label: "Number of Answers",
+				data: [6, 2],
+				backgroundColor: ["green", "yellow"]
+				}]},
+				options: {
+					responsive: false,
+					title: {
+					display: true,
+					fontSize: 10,
+					text: "Results"
+					},
+					legend: {
+					display: false,
+					},
+					scales: {
+						xAxes: [{ // Ｘ Axes Option
+							ticks: {
+								min: 0
+							}}],
+						yAxes: []
+					}
 				}
-			}
-		});
+			});
+		};
+		//display likert scale task results
+		function displayIdentifyBodyParts(task){
+		
+		}
+		//display Character ranking task results
+		function displayCharacterRanking(task){
+
+		}
+		//display likert scale task results
+		function displayPreferredMechanics(task){
+
+		}
 		//drag and drop task results
-		var ctx = document.getElementById("dragAndDropChart").getContext('2d');
-		var likertChart = new Chart(ctx, {
-			type: "horizontalBar", // Make the graph horizontal
-			data: {
-			labels:  ["Successful", "Unsuccessful"],
-			datasets: [{
-			   label: "Number of Answers",
-			   data: [6, 2],
-			   backgroundColor: ["green", "yellow"]
-			}]},
-			options: {
-				responsive: false,
-				title: {
-				display: true,
-				fontSize: 10,
-				text: "Results"
-				},
-				legend: {
-				display: false,
-				},
-				scales: {
-					xAxes: [{ // Ｘ Axes Option
-						ticks: {
-							min: 0
-						}}],
-					yAxes: []
-				}
-			}
-		});
+		// var ctx = document.getElementById("dragAndDropChart").getContext('2d');
+		// var likertChart = new Chart(ctx, {
+		// 	type: "horizontalBar", // Make the graph horizontal
+		// 	data: {
+		// 	labels:  ["Successful", "Unsuccessful"],
+		// 	datasets: [{
+		// 	   label: "Number of Answers",
+		// 	   data: [6, 2],
+		// 	   backgroundColor: ["green", "yellow"]
+		// 	}]},
+		// 	options: {
+		// 		responsive: false,
+		// 		title: {
+		// 		display: true,
+		// 		fontSize: 10,
+		// 		text: "Results"
+		// 		},
+		// 		legend: {
+		// 		display: false,
+		// 		},
+		// 		scales: {
+		// 			xAxes: [{ // Ｘ Axes Option
+		// 				ticks: {
+		// 					min: 0
+		// 				}}],
+		// 			yAxes: []
+		// 		}
+		// 	}
+		// });
 		//function to scroll back to top of page
 		function backToTop()
 		{
