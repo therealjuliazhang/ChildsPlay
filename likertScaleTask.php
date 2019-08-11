@@ -1,19 +1,25 @@
 <html>
 	<?php
 	$testID = $_GET["testID"];
-	//if there is no groupId then it is a preview and groupID is set to 1 (preview group)
-	$groupID = isset($_GET['groupID']) ? $_GET['groupID'] : 1;
+	//if there is no groupId then it is a preview and groupID is set to 4 (preview group)
+	$groupID = isset($_GET['groupID']) ? $_GET['groupID'] : 4;
 	$taskIndex = $_GET['taskIndex'];
 	header('Access-Control-Allow-Origin: *');
 	session_start();
 	include 'db_connection.php';
 	$conn = OpenCon();
 	//fetch task
-	$testQuery = "SELECT * FROM TASK WHERE testID=" . $testID;
-	$result = $conn->query($testQuery);
+	$query = "SELECT taskID FROM TASKASSIGNMENT WHERE testID=".$testID;
+	$result = $conn->query($query);
+
 	$tasks = array();
-	while($row = mysqli_fetch_assoc($result))
-		$tasks[] = $row;
+	while($value = mysqli_fetch_assoc($result)){
+		$taskQuery = "SELECT * FROM TASK WHERE taskID=".$value["taskID"];
+		$result2 = $conn->query($taskQuery);
+		while($row = mysqli_fetch_assoc($result2))
+			$tasks[] = $row;
+	}
+
 	$taskID = $tasks[$taskIndex]['taskID'];
 	//fetch images
 	$sql = "SELECT * FROM IMAGE WHERE TASKID = '$taskID'";

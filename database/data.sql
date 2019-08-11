@@ -150,31 +150,25 @@ SET
 @title = "Test 1",
 @description = "Testing of the new set of monsters with updated eye colors.",
 @dateCreated = "2019-01-15",
-@dateEdited = "2019-01-15",
-@numberOfParticipants = 3,
-@numberOfQuestions = 1;
-INSERT INTO TEST(title, description, dateCreated, dateEdited, numberOfParticipants, numberOfQuestions) VALUES 
-(@title, @description, @dateCreated, @dateEdited, @numberOfParticipants, @numberOfQuestions);
+@dateEdited = "2019-01-15";
+INSERT INTO TEST(title, description, dateCreated, dateEdited) VALUES 
+(@title, @description, @dateCreated, @dateEdited);
 
 SET 
 @title = "Test 2",
 @description = "Test the updated monsters for the early start day care centre.",
 @dateCreated = "2019-04-27",
-@dateEdited = "2019-04-27",
-@numberOfParticipants = 2,
-@numberOfQuestions = 1;
-INSERT INTO TEST(title, description, dateCreated, dateEdited, numberOfParticipants, numberOfQuestions) VALUES 
-(@title, @description, @dateCreated, @dateEdited, @numberOfParticipants, @numberOfQuestions);
+@dateEdited = "2019-04-27";
+INSERT INTO TEST(title, description, dateCreated, dateEdited) VALUES 
+(@title, @description, @dateCreated, @dateEdited);
 
 SET 
 @title = "Test 3",
 @description = "Ranking test of the old monsters with the updated monsters.",
 @dateCreated = "2019-07-14",
-@dateEdited = "2019-07-14",
-@numberOfParticipants = 3,
-@numberOfQuestions = 1;
-INSERT INTO TEST(title, description, dateCreated, dateEdited, numberOfParticipants, numberOfQuestions) VALUES 
-(@title, @description, @dateCreated, @dateEdited, @numberOfParticipants, @numberOfQuestions);
+@dateEdited = "2019-07-14";
+INSERT INTO TEST(title, description, dateCreated, dateEdited) VALUES 
+(@title, @description, @dateCreated, @dateEdited);
 
 /*TESTASSIGNMENT*/
 SET
@@ -198,27 +192,23 @@ INSERT INTO TESTASSIGNMENT(userID, testID, status) VALUES (@userID, @testID, @st
 /*TASK*/
 SET
 @instruction = "Touch the smiley face if you like it and touch the sad face if you don't like it.",
-@taskType = "Likert Scale",
-@testID = 1;
-INSERT INTO TASK(instruction, taskType, testID) VALUES (@instruction, @taskType, @testID);
+@taskType = "Likert Scale";
+INSERT INTO TASK(instruction, taskType) VALUES (@instruction, @taskType);
 
 SET
 @instruction = "Touch the monster's eyes.",
-@taskType = "Identify Body Parts",
-@testID = 1;
-INSERT INTO TASK(instruction, taskType, testID) VALUES (@instruction, @taskType, @testID);
+@taskType = "Identify Body Parts";
+INSERT INTO TASK(instruction, taskType) VALUES (@instruction, @taskType);
 
 SET
 @instruction = "Select the monsters in order of your favourite to least favourite.",
-@taskType = "Character Ranking",
-@testID = 1;
-INSERT INTO TASK(instruction, taskType, testID) VALUES (@instruction, @taskType, @testID);
-
+@taskType = "Character Ranking";
+INSERT INTO TASK(instruction, taskType) VALUES (@instruction, @taskType);
+/*
 SET
 @instruction = "Drag the monster into the box.",
-@taskType = "Drag and Drop",
-@testID = 1;
-INSERT INTO TASK(instruction, taskType, testID) VALUES (@instruction, @taskType, @testID);
+@taskType = "Drag and Drop";
+INSERT INTO TASK(instruction, taskType) VALUES (@instruction, @taskType);*/
 
 /*TASKASSIGNMENT*/
 SET
@@ -237,8 +227,8 @@ SET
 INSERT INTO TASKASSIGNMENT(taskID, testID) VALUES (@taskID, @testID);
 
 SET
-@taskID = 4,
-@testID = 1;
+@taskID = 2,
+@testID = 2;
 INSERT INTO TASKASSIGNMENT(taskID, testID) VALUES (@taskID, @testID);
 
 /*IMAGE*/
@@ -260,11 +250,11 @@ SET
 @taskID = 3;
 INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);
 
-SET
+/*SET
 @address = "images/Puff.png",
 @imgType = true,
 @taskID = 4;
-INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);
+INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);*/
 
 SET
 @address = "images/orbi.jpg",
