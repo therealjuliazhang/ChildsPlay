@@ -46,8 +46,12 @@
           </div>
           </td>
           <td width="50%">
+
+          <div id="user">
           <i class="medium material-icons" id="mailIcon">account_box</i>
-          <span class="blue-text text-darken-4" id="userType">Educator</span>
+          <span class="blue-text text-darken-4" id="userType">Admin</span>
+          </div>
+
           </td>
         </tr>
       </tbody>
@@ -56,7 +60,7 @@
     <!--Side Bar-->
     <ul id="sidebar" class="sidenav sidenav-fixed #bbdefb blue lighten-4">
           <li class="active #ffffff white"><a href="#!">Profile</a></li>
-          <li><a href="#!">Activity</a></li>
+          <li><a href="#!">Location</a></li>
           <li><a href="#!">Tests</a></li>
     </ul>
     <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
@@ -161,21 +165,27 @@
   position: fixed;
   }
   .tableLeft{
-    text-align:center;
+    text-align:right;
+    margin-right: 100px;
   }
 
   #mailInCell{
-    font-size:30px;
+    font-size:20px;
+    vertical-align: top;
+  }
+  #user{
+    margin-left: 100px;
   }
   #userType{
     font-size:40px;
+    vertical-align: top;
   }
   .active{
     color:white;
   }
   #userDetail{
-    margin-top:15%;
-    margin-left:30%;
+    margin-top:150px;
+    margin-left:400px;
     width:500px;
   }
   .row1{
