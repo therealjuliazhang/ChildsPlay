@@ -61,8 +61,6 @@ CREATE TABLE TEST(
 	description				VARCHAR(700)	NULL,
 	dateCreated				DATE			NOT NULL,
 	dateEdited				DATE			NULL,
-	numberOfParticipants	INTEGER			NOT NULL,
-	numberOfQuestions		INTEGER			NOT NULL,
 	CONSTRAINT test_pk PRIMARY KEY (testID)
 );
 
@@ -81,9 +79,7 @@ CREATE TABLE TASK(
 	taskType				VARCHAR(500)	NOT NULL,
 	activity				VARCHAR(500)	NULL,
 	comments				VARCHAR(700)	NULL,
-	testID					INTEGER			NOT NULL,
-	CONSTRAINT task_pk PRIMARY KEY (taskID),
-	CONSTRAINT task_fk FOREIGN KEY (testID) REFERENCES TEST(testID)
+	CONSTRAINT task_pk PRIMARY KEY (taskID)
 );
 
 CREATE TABLE TASKASSIGNMENT(
