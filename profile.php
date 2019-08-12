@@ -22,9 +22,6 @@
                         <li><a href="" >Results</a></li>
                         <li><a href="">Users</a></li>
                     </ul>
-                    <ul id="logoutButton" class="right hide-on-med-and-down logout">
-                        <li><a class="waves-effect waves-light btn blue darken-2 right" onclick="logout()">Logout</a></li>
-                    </ul>
                 </div>
             </nav>
         </div>
@@ -105,11 +102,8 @@
            </tr>
        </tbody>
      </table>
+     <a class="waves-effect waves-light btn blue darken-2 logoutButton right" onclick="logout()">Logout</a>
     </div>
-
-
-
-
 
 
   </body>
@@ -132,9 +126,8 @@
   .brand-logo{
       margin-top:-67px;
   }
-  .logout{
+  .logoutButton{
       margin-top: 15px;
-      margin-right:15px;
   }
   #sidebar{
       margin-top: 264px;
