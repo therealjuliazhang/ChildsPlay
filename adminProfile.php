@@ -53,7 +53,7 @@
     </div>
     <!--Side Bar-->
     <ul id="sidebar" class="sidenav sidenav-fixed #ffffff white">
-          <li class="active"><a href="#!">Profile</a></li>
+          <li class="active #ffffff white"><a href="#!">Profile</a></li>
           <li><a href="#!">Location</a></li>
           <li><a href="#!">Tests</a></li>
     </ul>
@@ -95,19 +95,33 @@
            <tr>
              <td class="row1">Location:</td>
              <td class="row2">Wollongong Preschool</td>
-             <td class="row3"><a>Edit</a></td>
+             <td class="row3">
+               <div class="input-field col s12">
+                 <select multiple>
+                   <option value="" disabled selected>Edit Locations</option>
+                   <option value="1">Wollongong Preschool</option>
+                   <option value="2">Keiraville Community Preschool</option>
+                   <option value="3">KU Gwynneville Preschool</option>
+                 </select>
+               </div>
+               <!-- Initialize select element-->
+               <script>
+               $(document).ready(function(){
+                   $('select').formSelect();
+                 });
+              </script>
+            </td>
            </tr>
        </tbody>
      </table>
-     <a class="waves-effect waves-light btn blue darken-2 logoutButton right" onclick="logout()">Logout</a>
+     <a class="waves-effect waves-light btn blue darken-2 buttons right" onclick="logout()">Logout</a>
+     <a class="waves-effect waves-light btn #2196f3 blue buttons right" id="saveButton" onclick="logout()">Save Changes</a>
     </div>
 
 
   </body>
 
-  <script>
 
-	</script>
 
 
 
@@ -123,7 +137,7 @@
   .brand-logo{
       margin-top:-67px;
   }
-  .logoutButton{
+  .buttons{
       margin-top: 15px;
   }
   #sidebar{
@@ -186,6 +200,9 @@
   }
   .row3{
     text-align:right;
+  }
+  #saveButton{
+    margin-right: 20px;
   }
 
   </style>
