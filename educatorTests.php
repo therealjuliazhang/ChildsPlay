@@ -19,7 +19,7 @@
 						<a href="educatorTests.php" class="brand-logo"><img src="images/logo1.png" height="200px"></a>
 					</div>
 					<div class="col s2 offset-s10">
-						<a class="waves-effect waves-light btn blue darken-2" id="profileLink" href="profile.php">Profile</a>
+						<a class="waves-effect waves-light btn blue darken-2" id="profileLink" href="adminProfile.php">Profile</a>
 					</div>
 				</div>
             </div>
