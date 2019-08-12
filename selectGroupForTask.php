@@ -84,6 +84,9 @@
 			echo '</td><td><a href="instruction.php?testID=', $testID, '&groupID=', $row["groupID"], '" class="waves-effect waves-light btn blue darken-2">Select</a></td></tr>';			
 		}
 		
+		if($_GET['mode'] == "start")
+			$_SESSION['mode'] = "start";
+		
 		/*
 		//get groups from database
 		$sql = "SELECT * FROM GROUPTEST";

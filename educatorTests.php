@@ -59,10 +59,18 @@
 
 					while($value = mysqli_fetch_assoc($result)){
 						echo '<tr><td>' . $value['title'] . '</td><td>' . $value['description'];
-						echo '</td><td><a href="instruction.php?testID=' . $value['testID'] . '&mode=preview'.'" class="waves-effect waves-light btn blue darken-4 ">Preview</a></td>';
-						echo '</td><td><a href="selectGroupForTask.php?testID=' . $value['testID'] . '" class="waves-effect waves-light btn blue darken-2 ">Start</a></td></tr>';
+						echo '</td><td><a href="instruction.php?testID=' . $value['testID'] .'&mode=preview'.'" class="waves-effect waves-light btn blue darken-4 ">Preview</a></td>';
+						echo '</td><td><a href="selectGroupForTask.php?testID=' . $value['testID'] .'&mode=start'. '" class="waves-effect waves-light btn blue darken-2 ">Start</a></td></tr>';
 					}
 				}
+				/*
+				if(isset($_GET['mode'])){
+					if($_GET['mode'] == "preview"){
+						$_SESSION['mode'] = "preview";
+					}
+					else
+						$_SESSION['mode'] = "start";
+				}*/
 				?>
 				</tbody>
 			</table>

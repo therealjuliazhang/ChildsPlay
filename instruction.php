@@ -113,12 +113,21 @@ foreach ($imageAdresses as $value)
 				<div class="col s12">
 					<div class="right-align">
 						<a href= <?php echo $taskTypeUrl; ?> class="waves-effect waves-light btn blue darken-2">
-						<?php $mode=isset($_GET['mode']);
-						if($mode){
-							echo "Start Preview";
-							$_SESSION["mode"] = "preview";
+						<?php //$mode=isset($_GET['mode']);
+						//echo $_SESSION['mode'];
+						
+						if(isset($_GET['mode'])){
+							if($_GET['mode'] == "preview"){
+								$_SESSION['mode'] = "preview";
+							}
+							else
+								$_SESSION['mode'] = "start";
 						}
-						else
+						
+						if($_SESSION['mode'] == "preview"){
+							echo "Start Preview";
+						}
+						else if ($_SESSION['mode'] == "start")
 							echo "Start";
 						?>
 						</a>
