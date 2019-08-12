@@ -28,25 +28,22 @@
 
     <!--end header-->
 <!--Body part-->
-    <!--
-    Need to be modified : Table border,position aberration between icon and <h>tag
-    -->
     <div class="navbar-fixed">
-    <table id="infoTable" height="200px" >
-      <tbody class="#bbdefb blue lighten-4">
+    <table id="infoTable" height="200px" class="white-text">
+      <tbody class="#1565c0 blue darken-3">
         <tr>
           <td width="50%">
           <div class="tableLeft">
-          <h3 class="blue-text text-darken-4">Michael Finley</h3>
+          <h3 class="">Michael Finley</h3>
           <i class="small material-icons" id="mailIcon">email</i>
-          <span id="mailInCell" class="blue-text text-darken-1">mfin@gmail.com</span>
+          <span id="mailInCell">mfin@gmail.com</span>
           </div>
           </td>
           <td width="50%">
 
           <div id="user">
           <i class="medium material-icons" id="mailIcon">account_box</i>
-          <span class="blue-text text-darken-4" id="userType">Admin</span>
+          <span id="userType">Admin</span>
           </div>
 
           </td>
@@ -55,8 +52,8 @@
     </table>
     </div>
     <!--Side Bar-->
-    <ul id="sidebar" class="sidenav sidenav-fixed #bbdefb blue lighten-4">
-          <li class="active #ffffff white"><a href="#!">Profile</a></li>
+    <ul id="sidebar" class="sidenav sidenav-fixed #ffffff white">
+          <li class="active"><a href="#!">Profile</a></li>
           <li><a href="#!">Location</a></li>
           <li><a href="#!">Tests</a></li>
     </ul>
@@ -67,7 +64,7 @@
       <table id="userInfo">
        <thead>
          <tr>
-             <th colspan="3">Account Information</th>
+             <th colspan="3" class="blue-text darken-2">Account Information</th>
          </tr>
        </thead>
 
@@ -85,7 +82,7 @@
 
          <thead>
            <tr>
-               <th colspan="3">Personal Information</th>
+               <th colspan="3" class="blue-text darken-2">Personal Information</th>
            </tr>
          </thead>
 
