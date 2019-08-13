@@ -59,7 +59,7 @@ mysqli_close($conn);
 	var colours = ['amber accent-4', 'red', 'deep-purple', 'deep-orange', ' blue accent-4', 'teal', 'indigo accent-4', 'light-green accent-4', 'green', 'lime'];
 	//characters being tested
 	var images = <?php echo(json_encode($images)); ?>;
-	var pointsToGive = images.length;
+	var pointsToGive = images.length * 5;
 	//creates canvas and displays preschoolers name
 	window.onload = function() {
 		displayCharacters();
@@ -84,7 +84,7 @@ mysqli_close($conn);
 			chosenCharacters[i].classList.remove("chosen");
 			chosenCharacters[i].setAttribute("points", 0);
 		}
-		pointsToGive = images.length;
+		pointsToGive = images.length * 5;
 	}
 
 	function displayCharacters(){
@@ -101,25 +101,24 @@ mysqli_close($conn);
 			div.appendChild(img);
 			div.onclick = function(){
 				this.setAttribute('points', parseInt(this.getAttribute("points")) + pointsToGive);
-				pointsToGive--;
+				pointsToGive -= 5;
 				this.classList.add("chosen");
 				//send results to php file
 				$.ajax({
 						 type: 'POST',
 						 url: 'http://localhost/getRanking.php/',
 						 data: { imageID : this.getAttribute("imageID"), score : this.getAttribute("points"), testID : testID, taskID : taskID, preID : preschoolers[preschoolerNumber]['preID']},
-						 success: function(imageID){
-							console.log(imageID);
-						}
 				});
 			};
 			div.onTouchStart = function(){
+				this.setAttribute('points', parseInt(this.getAttribute("points")) + pointsToGive);
+				pointsToGive -= 5;
 				this.classList.add("chosen");
 				//send results to php file
 				$.ajax({
 						 type: 'POST',
 						 url: 'http://localhost/getRanking.php/',
-						 data: { imageID : imageID, score : this.getAttribute("points"), testID : testID, taskID : taskID, preID : preschoolers[preschoolerNumber]['preID']}
+						 data: { imageID : this.getAttribute("imageID"), score : this.getAttribute("points"), testID : testID, taskID : taskID, preID : preschoolers[preschoolerNumber]['preID']}
 				});
 			};
 			document.getElementById("container").appendChild(div);

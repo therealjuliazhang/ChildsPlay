@@ -9,11 +9,11 @@
         if(isset($_GET["groupID"]))
             $groupID = (int)str_replace('"', '', $_GET["groupID"]);
         //get group name from database
-        $sql = "SELECT name FROM grouptest WHERE groupID = " . $groupID;
+        $sql = "SELECT name FROM GROUPTEST WHERE groupID = " . $groupID;
         $result = $conn->query($sql);
         $groupName = mysqli_fetch_assoc($result)["name"];
         //get current location of group
-        $sql = "SELECT location.locationID FROM grouptest INNER JOIN location ON location.locationID = grouptest.locationID WHERE grouptest.groupID = " . $groupID;
+        $sql = "SELECT locationID FROM GROUPTEST WHERE groupID = " . $groupID;
         $result = $conn->query($sql);
         $currentLocationID = mysqli_fetch_assoc($result);
         //fetch locations for select drop down
@@ -23,7 +23,7 @@
         while($row = mysqli_fetch_assoc($result))
             $locations[] = $row;
         //fetch preschoolerIDs from groupassignment table
-        $sql = "SELECT preID FROM groupassignment WHERE groupID = " . $groupID;
+        $sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID = " . $groupID;
         $result = $conn->query($sql);
         $preschoolerIDs = array();
         while($row = mysqli_fetch_assoc($result))
@@ -31,7 +31,7 @@
         //fetch preschoolers from database
         $preschoolers = array();
         foreach($preschoolerIDs as $value){
-            $sql = "SELECT * FROM preschooler WHERE preID = " . $value['preID'];
+            $sql = "SELECT * FROM PRESCHOOLER WHERE preID = " . $value['preID'];
             $result = $conn->query($sql);
             while($row = mysqli_fetch_assoc($result))
                 array_push($preschoolers, $row);

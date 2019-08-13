@@ -119,7 +119,7 @@ if(isset($_POST['nextButton'])){
 	}
 	else{
 		if($comment != ""){
-			$sql = "UPDATE TASKASSIGNMENT SET comments = '". $comment ."' WHERE taskID = ".$taskID." AND testID=".$testID;
+			$sql = "UPDATE TASK SET comments = '". $comment ."' WHERE taskID = ".$taskID." AND testID=".$testID;
 			if(mysqli_query($conn,$sql)){ //check if the query is executed successfully
 				if($taskIndex == (sizeof($tasks)-1))
 					header("Location: thankyou.php");

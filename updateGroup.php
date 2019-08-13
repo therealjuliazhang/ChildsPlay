@@ -13,7 +13,7 @@ if(isset($_POST["groupName"]))
 if(isset($_POST["locationSelect"]))
     $location = $_POST["locationSelect"];
 //update groupName
-$sql = "UPDATE grouptest SET name = '" .$groupName. "' WHERE groupID = " .$groupID;
+$sql = "UPDATE GROUPTEST SET name = '" .$groupName. "' WHERE groupID = " .$groupID;
 if ($conn->query($sql) === TRUE) {
     echo "Record updated successfully";
 } else {
@@ -21,7 +21,7 @@ if ($conn->query($sql) === TRUE) {
 }
 //update location if it has been changed ($location will be id instead of name)
 if(is_numeric($location)){
-    $sql = "UPDATE grouptest SET locationID = " .$location. " WHERE groupID = " .$groupID;
+    $sql = "UPDATE GROUPTEST SET locationID = " .$location. " WHERE groupID = " .$groupID;
     if ($conn->query($sql) === TRUE) {
         echo "Record updated successfully";
     } else {
@@ -55,16 +55,16 @@ header('Location: educatorTests.php#groups');
 //insert preschooler if doesnt exist in database and get preschooler ID
 function getID($conn, $preschooler){
     //check if preschooler exists
-    $sql = "SELECT preID FROM preschooler WHERE name = '" .$preschooler->name. "' AND age = '" .$preschooler->age. "' AND gender = '" .$preschooler->gender. "' limit 1";
+    $sql = "SELECT preID FROM PRESCHOOLER WHERE name = '" .$preschooler->name. "' AND age = '" .$preschooler->age. "' AND gender = '" .$preschooler->gender. "' limit 1";
     $result = $conn->query($sql);
     //if preschooler doesnt exist, insert into database, then get new preID
     if (mysqli_num_rows($result) == 0) { 
-        $sql = "INSERT INTO preschooler (name, age, gender) VALUES ('".$preschooler->name."', ".$preschooler->age.", '".$preschooler->gender."')";
+        $sql = "INSERT INTO PRESCHOOLER (name, age, gender) VALUES ('".$preschooler->name."', ".$preschooler->age.", '".$preschooler->gender."')";
         if ($conn->query($sql) === TRUE) 
             echo "New preschooler added successfully";
         else 
             echo "Error: " . $sql . "<br>" . $conn->error;
-        $sql = "SELECT preID FROM preschooler WHERE name = '" .$preschooler->name. "' AND age = '" .$preschooler->age. "' AND gender = '" .$preschooler->gender. "' limit 1";
+        $sql = "SELECT preID FROM PRESCHOOLER WHERE name = '" .$preschooler->name. "' AND age = '" .$preschooler->age. "' AND gender = '" .$preschooler->gender. "' limit 1";
         $result = $conn->query($sql);
         $row = mysqli_fetch_array($result);
         return $row['preID'];
@@ -77,7 +77,7 @@ function getID($conn, $preschooler){
 }   
 //update preschooler into preschooler table
 function updatePreschooler($conn, $preschooler){
-    $sql = "UPDATE preschooler SET name = '".$preschooler->name."', age = '".$preschooler->age."', gender = '".$preschooler->gender."' WHERE preID = " .$preschooler->id;
+    $sql = "UPDATE PRESCHOOLER SET name = '".$preschooler->name."', age = '".$preschooler->age."', gender = '".$preschooler->gender."' WHERE preID = " .$preschooler->id;
     if ($conn->query($sql) === TRUE) 
         echo "Record updated successfully";
     else 
@@ -85,7 +85,7 @@ function updatePreschooler($conn, $preschooler){
 }
 //delete current group assignments
 function deleteGroupAssignments($conn, $groupID){
-    $sql = "DELETE FROM groupassignment WHERE groupID = ".$groupID;
+    $sql = "DELETE FROM GROUPASSIGNMENT WHERE groupID = ".$groupID;
     if ($conn->query($sql) === TRUE)
         echo "Records deleted successfully";
     else
@@ -94,7 +94,7 @@ function deleteGroupAssignments($conn, $groupID){
 //update preschooler to group assignment into groupAssignment table
 function insertGroupAssignment($conn, $groupID, $preID, $userID){
     //insert new group assignment
-    $sql = "INSERT INTO groupassignment (groupID, preID, userID) VALUES (".$groupID.", ".$preID.", ".$userID.")";
+    $sql = "INSERT INTO GROUPASSIGNMENT (groupID, preID, userID) VALUES (".$groupID.", ".$preID.", ".$userID.")";
     if ($conn->query($sql) === TRUE)
         echo "Record inserted successfully";
     else

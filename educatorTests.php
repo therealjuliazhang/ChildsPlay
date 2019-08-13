@@ -108,7 +108,7 @@
 							echo ", ";
 						}
 						 //Need to fix value of userID after Login page is implemented
-						echo '</td><td><a href="educatorEditGroup.php?userID=2&&groupID=', $row["groupID"] ,'" class="waves-effect waves-light btn blue darken-4 ">Edit</a></td></tr>';
+						echo '</td><td><a href="educatorEditGroup.php?userID=2&groupID=', $row["groupID"] ,'" class="waves-effect waves-light btn blue darken-4 ">Edit</a></td></tr>';
 					}
 
 					/*

@@ -1,25 +1,25 @@
 <html>
 	<?php
-		//these should be gotten from another page.
+		//these should be gotten from somewhere else, not hard coded.
 		$userID = 2;
 		$testID = 1;
 		//connect to database
 		include 'db_connection.php';
 		$conn = OpenCon();
 		//get tasks IDs from taskassignment table
-		$taskIDs = array();
-		$sql = "SELECT taskID FROM taskassignment WHERE testID = " .$testID;
-        $result = $conn->query($sql);
-        while($row = mysqli_fetch_assoc($result))
-			$taskIDs[] = $row;
+		//$taskIDs = array();
+		// $sql = "SELECT taskID FROM taskassignment WHERE testID = " .$testID;
+        // $result = $conn->query($sql);
+        // while($row = mysqli_fetch_assoc($result))
+		// 	$taskIDs[] = $row;
 		//get tasks
 		$tasks = array();
-		foreach($taskIDs as $value){
-			$sql = "SELECT * FROM task WHERE taskID = " .$value['taskID'];
+		//foreach($taskIDs as $value){
+			$sql = "SELECT * FROM task WHERE testID = " .$testID;
 			$result = $conn->query($sql);
 			while($row = mysqli_fetch_assoc($result))
 				$tasks[] = $row;
-		}
+		//}
 		//get character ranking task results
 		$rankingResults = array();
 		foreach($tasks as $value){
@@ -30,11 +30,10 @@
 					$rankingResults[] = $row;
 			}
 		}
-		//get images
+		//get images for each task
 		$images = array();
-		//for eachh taskID
-		foreach($taskIDs as $taskID){
-			$sql = "SELECT * FROM image WHERE taskID = " .$taskID['taskID'];
+		foreach($tasks as $task){
+			$sql = "SELECT * FROM image WHERE taskID = " .$task['taskID'];
 			$result = $conn->query($sql);
 			while($row = mysqli_fetch_assoc($result))
 				$images[] = $row;
@@ -422,22 +421,18 @@
 			//calculate total scores and rankings
 			var rankedImages = rankImages(taskImages, taskRankingResults);
 			//create html
-			var header = "<h5 class=\"blue-text darken-2 header\">" + task.taskType + " (Task ID: " + task.taskID + ")</h5\>";
+			var header = "<h5 class=\"blue-text darken-2 header\">" + task.taskType + " (Test ID: " + task.testID + ", Task ID: " + task.taskID + ")</h5\>";
 			var resultsHeader = "<h5 class=\"blue-text darken-2 header\">Results:</h5>";
 			var tableHeader = "<div id=\"tableDiv\"><table class=\"centered\"><thead><tr><th>Rank: </th><th>Points: </th><th>Image: </th></tr></thead>";
 			var tableBody = "<tbody>" + createTableRows(rankedImages) + "</tbody></table></div>";
 			var table = tableHeader + tableBody;
-			console.log(task);
-			var commentsDiv = "<div class=\"row\"><form class=\"col s12\"><div class=\"input-field col s8\>"
+			var commentsDiv = "<div class=\"row\"><form class=\"col s12\"><div class=\"input-field col s8\">"
 			var textArea = "<textarea id=\"textarea1\" class=\"materialize-textarea\"";
 			if(task.comments != null){
 				textArea += " value=" + task.comments;
 			}
-			textArea += "></textarea>";
+			textArea += "></textarea><label for=\"textarea1\">Comments</label></div></form></div><div class=\"row\"><form class=\"col s12\"><div class=\"input-field col s8\>";
 			commentsDiv += textArea;
-			commentsDiv += "<label for=\"textarea1\">Comments</label></div></form></div>";
-			commentsDiv += "<div class=\"row\"><form class=\"col s12\"><div class=\"input-field col s8\>"
-			console.log(commentsDiv);
 			$("#results").append(header, task.instruction, resultsHeader, table, commentsDiv);
 			//adds score attribute to images and sorts them from highest score to lowest score
 			function rankImages(images, results){
