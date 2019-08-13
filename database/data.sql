@@ -112,17 +112,17 @@ SET
 @preID = 3,
 @userID = 2;
 INSERT INTO GROUPASSIGNMENT(groupID, preID, userID) VALUES (@groupID, @preID, @userID);
-
+/*
 SET
 @groupID = 1,
 @preID = 4,
 @userID = 3;
 INSERT INTO GROUPASSIGNMENT(groupID, preID, userID) VALUES (@groupID, @preID, @userID);
-
+*/
 SET
 @groupID = 2,
 @preID = 5,
-@userID = 2;
+@userID = 3;
 INSERT INTO GROUPASSIGNMENT(groupID, preID, userID) VALUES (@groupID, @preID, @userID);
 
 /*Group 2*/
@@ -134,7 +134,7 @@ INSERT INTO GROUPASSIGNMENT(groupID, preID, userID) VALUES (@groupID, @preID, @u
 
 SET
 @groupID = 2,
-@preID = 5,
+@preID = 4,
 @userID = 3;
 INSERT INTO GROUPASSIGNMENT(groupID, preID, userID) VALUES (@groupID, @preID, @userID);
 

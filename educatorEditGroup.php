@@ -12,18 +12,20 @@
         $sql = "SELECT name FROM GROUPTEST WHERE groupID = " . $groupID;
         $result = $conn->query($sql);
         $groupName = mysqli_fetch_assoc($result)["name"];
-        //get current location of group
-        $sql = "SELECT locationID FROM GROUPTEST WHERE groupID = " . $groupID;
+        //get current location of group		
+		$sql = "SELECT name, locationID FROM GROUPTEST WHERE groupID=".$groupID;
         $result = $conn->query($sql);
-        $currentLocationID = mysqli_fetch_assoc($result);
+		$values = mysqli_fetch_assoc($result);
+		$groupName = $values["name"];
+        $currentLocationID = $values["locationID"];
         //fetch locations for select drop down
-        $sql = "SELECT * FROM LOCATION";
-        $result = $conn->query($sql);
+        $sql2 = "SELECT * FROM LOCATION";
+        $result2 = $conn->query($sql2);
         $locations = array();
-        while($row = mysqli_fetch_assoc($result))
+        while($row = mysqli_fetch_assoc($result2))
             $locations[] = $row;
         //fetch preschoolerIDs from groupassignment table
-        $sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID = " . $groupID;
+        $sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID = " . $groupID ." AND userID=".$userID;
         $result = $conn->query($sql);
         $preschoolerIDs = array();
         while($row = mysqli_fetch_assoc($result))
@@ -69,7 +71,7 @@
                  <form id="form" style="font-size:18px" action='updateGroup.php?userID=<?php echo json_encode($userID); ?>&&groupID=<?php echo json_encode($groupID); ?>' method="post">
                     <div class="row">
                         <div class="input-field col s12">
-                            <input class="validate" id="groupName" type="text" name="groupName" >
+                            <input class="validate" id="groupName" type="text" name="groupName" value="<?php echo $groupName;?>" />
                             <label for="groupName">Group Name</label>
                         </div>
                     </div>
@@ -88,7 +90,7 @@
                     </div>
                     <div class="row right-align">
                         <input type="submit" id="startButton" class="submit waves-effect waves-light btn blue darken-2" value="Save Changes">
-                        <a href="educatorTests.php" class="waves-effect waves-light btn blue darken-4">Cancel</a>
+                        <a href="educatorTests.php#groups" class="waves-effect waves-light btn blue darken-4">Cancel</a>
                     </div>  
                 </form>
         </div>
@@ -103,17 +105,20 @@
                 $(this).material_select();
             });
             //set group name
-            var groupName = <?php echo json_encode($groupName); ?>;
-            $("#groupName").val(groupName);      
-            //set locations into select options
+            /*var name = <?php echo json_encode($groupName); ?>;
+            $("#groupName").val(name);
+				//document.getElementById("groupName").innerHTML = groupName;
+            */
+			//set locations into select options
             var locations = <?php echo json_encode($locations); ?>;
             var currentLocationID = <?php echo json_encode($currentLocationID); ?>;
             var groupID = <?php echo json_encode($groupID); ?>;
             for(var i=0; i<locations.length; i++){
-                if(locations[i]['locationID']==currentLocationID['locationID']){
-                    $("#currentLocation").value = locations[i]['locationID'];
-                    $("#currentLocation").name = locations[i]['name'];
-                    $("#currentLocation").html(locations[i]['name']);
+				var loc = locations[i];
+                if(loc['locationID']==currentLocationID){
+                    $("#currentLocation").value = loc['locationID'];
+                    $("#currentLocation").name = loc['name'];
+                    $("#currentLocation").html(loc['name']);
                 }
                 else{
                     var option = document.createElement("option");
