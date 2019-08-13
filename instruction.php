@@ -68,7 +68,7 @@ if(count($tasks) > 0){
       echo "<h5 class='blue-text text-darken-2'>Task Instructions:</h5>";
 			echo $tasks[$taskIndex]['instruction'] .
 			"</br>
-				<img src=\"images/happy.jpg\" width=\"75px\"><img src=\"images/sad.jpg\" width=\"75px\">
+				<img src=\"images/happy.png\" width=\"75px\"><img src=\"images/sad.png\" width=\"75px\">
 			</br>";
 			$taskTypeUrl = "likertScaleTask.php?" . $info;
 			break;

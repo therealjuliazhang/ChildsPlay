@@ -101,8 +101,8 @@
 
 				<div class="bottomInBottom">
 				<div class="row faces">
-					<img id="happy" src="images/happy.jpg" onclick="happyClicked()" width="10%"></img>
-					<img id="sad" src="images/sad.jpg" onclick="sadClicked()" width="10%"></img>
+					<img id="happy" src="images/happy.png" onclick="happyClicked()" width="10%"></img>
+					<img id="sad" src="images/sad.png" onclick="sadClicked()" width="10%"></img>
 				</div>
 
 				<div class="center-align">
@@ -140,8 +140,8 @@
 			}
 			document.getElementById("preschoolerName").innerHTML = preschoolers[preschoolerIndex]['name'];
 			document.getElementById("participant").className = 'row ' + colours[preschoolerIndex % colours.length];
-			document.getElementById("sad").src="images/sad.jpg";
-			document.getElementById("happy").src="images/happy.jpg";
+			document.getElementById("sad").src="images/sad.png";
+			document.getElementById("happy").src="images/happy.png";
 		}
 
 		function sadClicked(){
