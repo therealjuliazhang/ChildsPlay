@@ -64,8 +64,8 @@ $taskTypeUrl = "likertScaleTask.php?" . $info;
 if(count($tasks) > 0){
 	switch($tasks[$taskIndex]["taskType"]){
 		case "Likert Scale":
-      echo "<h4>Likert Scale</h4><br>";
-      echo "<h5>Task Instructions:</h5>";
+      echo "<h4 class='blue-text text-darken-2'>Likert Scale</h4><br>";
+      echo "<h5 class='blue-text text-darken-2'>Task Instructions:</h5>";
 			echo $tasks[$taskIndex]['instruction'] .
 			"</br>
 				<img src=\"images/happy.jpg\" width=\"75px\"><img src=\"images/sad.jpg\" width=\"75px\">
@@ -73,14 +73,14 @@ if(count($tasks) > 0){
 			$taskTypeUrl = "likertScaleTask.php?" . $info;
 			break;
 		case "Identify Body Parts":
-      echo "<h4>Identify Body Parts</h4><br>";
-      echo "<h5>Task Instructions:</h5>";
+      echo "<h4 class='blue-text text-darken-2'>Identify Body Parts</h4><br>";
+      echo "<h5 class='blue-text text-darken-2'>Task Instructions:</h5>";
 			echo $tasks[$taskIndex]['instruction'];
 			$taskTypeUrl = "identifyBodyPartsTask.php?" . $info;
 			break;
 		case "Character Ranking":
-      echo "<h4>Character Ranking</h4><br>";
-      echo "<h5>Task Instructions:</h5>";
+      echo "<h4 class='blue-text text-darken-2'>Character Ranking</h4><br>";
+      echo "<h5 class='blue-text text-darken-2'>Task Instructions:</h5>";
 			echo $tasks[$taskIndex]['instruction'];
 			$taskTypeUrl = "characterRankingTask.php?" . $info;
 			break;
