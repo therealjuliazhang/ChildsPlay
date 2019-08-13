@@ -153,10 +153,8 @@ mysqli_close($conn);
 			display: none;
 		}
 		.center-align{
-			position:absolute;
-			bottom: 0px;
-			right:0px;
-			left:0px
+			margin-top: 100px;
+			font-size: 50px;
 		}
 	</style>
 </head>

@@ -35,12 +35,12 @@ $bodyPart = "eye";
         </nav>
         </div>
         <!--end header-->
-        
+
         <!-- body content -->
         <div class="container grey-text text-darken-1">
 			<div class="row">
 				<div class="col s12">
-					<h5 class="blue-text darken-2">Task Instructions:</h5>
+					<!--<h5 class="blue-text darken-2">Task Instructions:</h5>-->
 					<div style="font-size:18px">
 <?php
 //Display instructions for task
@@ -64,30 +64,36 @@ $taskTypeUrl = "likertScaleTask.php?" . $info;
 if(count($tasks) > 0){
 	switch($tasks[$taskIndex]["taskType"]){
 		case "Likert Scale":
-			echo $tasks[$taskIndex]['instruction'] . 
+      echo "<h4>Likert Scale</h4><br>";
+      echo "<h5>Task Instructions:</h5>";
+			echo $tasks[$taskIndex]['instruction'] .
 			"</br>
 				<img src=\"images/happy.jpg\" width=\"75px\"><img src=\"images/sad.jpg\" width=\"75px\">
-			</br>"; 
+			</br>";
 			$taskTypeUrl = "likertScaleTask.php?" . $info;
 			break;
 		case "Identify Body Parts":
-			echo $tasks[$taskIndex]['instruction']; 
+      echo "<h4>Identify Body Parts</h4><br>";
+      echo "<h5>Task Instructions:</h5>";
+			echo $tasks[$taskIndex]['instruction'];
 			$taskTypeUrl = "identifyBodyPartsTask.php?" . $info;
 			break;
 		case "Character Ranking":
-			echo $tasks[$taskIndex]['instruction'];  
+      echo "<h4>Character Ranking</h4><br>";
+      echo "<h5>Task Instructions:</h5>";
+			echo $tasks[$taskIndex]['instruction'];
 			$taskTypeUrl = "characterRankingTask.php?" . $info;
 			break;
 		/*case "Drag and Drop":
-			echo $tasks[$taskIndex]['instruction']; 
+			echo $tasks[$taskIndex]['instruction'];
 			$taskTypeUrl = "dragAndDropTask.php?" . $info;
 			break;*/
 	}
 }
 CloseCon($conn);
 $_SESSION["url"] = $taskTypeUrl;
-?> 
-						After the participant has completed their task, select the grey, quarter-circle button on the top right 
+?>
+						After the participant has completed their task, select the grey, quarter-circle button on the top right
 						of the screen to go to the next participant's turn.
 						</br>
 						<img src="images/greyCircle.png" width="60px">
@@ -103,7 +109,7 @@ $result = $conn->query($testQuery);
 $imageAdresses = array();
 while($row = mysqli_fetch_assoc($result))
 	$imageAdresses[] = $row;
-foreach ($imageAdresses as $value) 
+foreach ($imageAdresses as $value)
   echo '<img src=' . $value['address'] . ' width="100px">';
 }
 ?>
@@ -115,7 +121,7 @@ foreach ($imageAdresses as $value)
 						<a href= <?php echo $taskTypeUrl; ?> class="waves-effect waves-light btn blue darken-2">
 						<?php //$mode=isset($_GET['mode']);
 						//echo $_SESSION['mode'];
-						
+
 						if(isset($_GET['mode'])){
 							if($_GET['mode'] == "preview"){
 								$_SESSION['mode'] = "preview";
@@ -123,7 +129,7 @@ foreach ($imageAdresses as $value)
 							else
 								$_SESSION['mode'] = "start";
 						}
-						
+
 						if($_SESSION['mode'] == "preview"){
 							echo "Start Preview";
 						}
@@ -136,9 +142,9 @@ foreach ($imageAdresses as $value)
 				</div>
 			</div>
         </div>
-        
+
         <!--end body content-->
-        
+
     </body>
 	<script>
 	function goBack(){

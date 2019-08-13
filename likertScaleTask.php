@@ -38,7 +38,7 @@
 			$preschoolers[] = $value;
 		}
 	}
-	
+
     mysqli_close($conn);
 	?>
 	<head>
@@ -59,7 +59,6 @@
 			left:0px
 		}
 		.faces{
-			border:5px solid #586F80;
 			text-align: center;
 		}
 		#happy{
