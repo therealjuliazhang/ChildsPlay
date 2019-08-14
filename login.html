@@ -6,11 +6,10 @@
         <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
         <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
-		<script type="text/javascript" src="javascript/scripts.js"></script>
     </head>
     <!--the stuff in the head is all the linking things to Materialize-->
     <!--all the linking's been done, so you shouldn't need to download anything from Materialise-->
-    <body bgcolor = "#eeeeee">
+    <body>
         <!--header-->
         <nav class="nav-extended blue darken-4">
             <div class="nav-wrapper">
@@ -33,12 +32,45 @@
                 
             </div>
         </nav>
-		<br><br><br><br><br><br>
         
         <!--end header-->
         
-        <!-- body content -->
-        <div class ="container grey-text text-darken-1"> 
+		<!-- body content -->
+		<div class="container grey-text">
+			<div id="cardWrapper" class="row valign-wrapper">
+				<div class="col s12 valign center-align">
+					<div class="card teal lighten-5">
+						<div class="card-content">
+							<img src="Images/login icon.png"  height ="10%"style="display:block; margin:auto;"/>
+							<form style="font-size:20px" action="Registersucess.html">
+								<div class="row">
+									<div class="input-field col s12">
+										<input id="userName" type="text" class="validate">
+										<label class="center-align" for="userName">User Name</label>
+									</div>
+								</div>
+								<div class="row">
+									<div class="input-field col s12">
+										<input id="email" type="text" class="validate">
+										<label for="email">Email</label>
+									</div>
+								</div>
+								<div class="row">
+									<div class="input-field col s12">
+										<input id="password" type="password" class="validate">
+										<label for="password">Password</label>
+									</div>
+								</div>
+								<div class="card-action">
+									<input type="submit" value="Login" class="btn blue darken-4 middle" onClick="submit()">
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+        <!-- <div class ="container grey-text text-darken-1"> 
 		<div class=" light-blue lighten-5"
 		class="col s12 m4 l8">                     
 		<img src="Images/login icon.png"  height ="10%"style="display:block; margin:auto;"/>
@@ -93,19 +125,38 @@
 				<p></p>
 			</div>
 		</div>
-		</div>
+		</div> -->
         
         <!--end body content-->
         
     </body>
 	
     <style>
-	.brand-logo{
-		margin-top:-67px;
-	}
-	.logout{
-		margin-top: 15px;
-		margin-right:15px;
-	}
+		body{
+			background-image: url("images/loginBackground.jpg");
+			background-position: 0px 64px; 
+			background-repeat: no-repeat;
+		}
+		.brand-logo{
+			margin-top:-67px;
+		}
+		.logout{
+			margin-top: 15px;
+			margin-right:15px;
+		}
+		.card {
+			margin-top: 30px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width:80%;
+			margin-left:11%;
+		}
+		.card form {
+			max-width: 100%;
+		}
+		.card-content{
+			width: 45%;
+		}
     </style>
 </html>
