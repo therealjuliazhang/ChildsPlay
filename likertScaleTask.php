@@ -145,11 +145,11 @@
 		}
 
 		function sadClicked(){
-            document.getElementById("sad").src="images/fireworks2.gif";
+            document.getElementById("sad").src="images/transparent.png";
 		}
 
 		function happyClicked(){
-			document.getElementById("happy").src="images/fireworks.gif";
+			document.getElementById("happy").src="images/transparent.png";
 		}
 	</script>
 </html>
