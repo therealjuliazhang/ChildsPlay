@@ -88,6 +88,33 @@
                 }
             });
 		});
+		
+		function validate() {
+			var password1 = document.getElementById("password1").value;
+			var password2 = document.getElementById("password2").value;
+			if(password1 == password2) {
+			document.getElementById("tishi").innerHTML="<font color='green'>password correct</font>";
+			document.getElementById("submit").disabled = false;
+			}
+			else {
+			document.getElementById("tishi").innerHTML="<font color='red'>password different</font>";
+			document.getElementById("submit").disabled = true;
+			}
+		}
+		function myFunction() {
+			var x = document.getElementById("accountType").value;
+			console.log(x);
+			if(x =="educator"){
+			document.getElementById("locationdiv").innerHTML = "<div class=\"input-field col s12\"><select name=\"location\" id=\"location\" class=\"materialSelect\" required multiple><option value=\"hi\"disabled selected >Location</option></select></div>";
+			}
+			else{
+				document.getElementById("locationdiv").innerHTML = "";
+			}
+		}
+		
+		
+
+		
     </script>
     </head>
     <!--the stuff in the head is all the linking things to Materialize-->
@@ -125,16 +152,9 @@
 								<div class="row valign-wrapper">
 									<div class="col s12 right-align">Register as an</div>
 									<div class="input-field col s12">
-										<select name="accountType" required>
+										<select name="accountType" required id="accountType" onchange="myFunction()">
 											<option value="educator">Educator</option>
 											<option value="admin">Admin</option>
-										</select>
-									</div>
-								</div>
-								<div class="row">
-									<div class="input-field col s12">
-										<select name="location" id="location" class="materialSelect" required>
-											<option value="" >Location</option>
 										</select>
 									</div>
 								</div>
@@ -152,13 +172,28 @@
 								</div>
 								<div class="row">
 									<div class="input-field col s12">
-										<input name="password" type="password" class="validate">
-										<label for="password">Password</label>
+										<input id="password1" type="password" class="validate">
+										<label for="password1">Password</label>
 									</div>
 								</div>
-								<div class="card-action center-align">
-									<input type="submit" value="Register" class="btn blue darken-4">
+								
+								<div class="row">
+									<div class="input-field col s12">
+										<input id="password2" type="password" class="validate" onkeyup="validate()">
+										<label for ="password2">Password Again</label>
+										<span id="tishi"></span>
+									</div>
 								</div>
+								
+								<div class="row" id="locationdiv">
+									
+								</div>
+								
+								<div class="card-action center-align">
+									<input type="submit" value="Register" class="btn blue darken-4" id="submit"/>
+								</div>
+								
+								
 							</form>
 						</div>
 					</div>
@@ -174,6 +209,7 @@
 			background-position: 0px 64px; 
 			background-repeat: no-repeat;
 			background-color: #E1E6E9;
+			background-size:100% 100%;
 		}
 		label[data-error] {
 			width: 100%;
