@@ -19,11 +19,18 @@
 		$groupName = $values["name"];
         $currentLocationID = $values["locationID"];
         //fetch locations for select drop down
-        $sql2 = "SELECT * FROM LOCATION";
+        $sql2 = "SELECT locationID FROM LOCATIONASSIGNMENT WHERE userID=".$userID;
         $result2 = $conn->query($sql2);
         $locations = array();
-        while($row = mysqli_fetch_assoc($result2))
-            $locations[] = $row;
+		
+		while($row = mysqli_fetch_assoc($result2)){
+			$query = "SELECT * FROM LOCATION WHERE locationID=".$row["locationID"];
+			$qResult = $conn->query($query);
+			while($value = mysqli_fetch_assoc($qResult))
+				$locations[] = $value;
+		}
+		
+        
         //fetch preschoolerIDs from groupassignment table
         $sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID = " . $groupID ." AND userID=".$userID;
         $result = $conn->query($sql);

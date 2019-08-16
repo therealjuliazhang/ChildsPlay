@@ -192,8 +192,13 @@ SET
 INSERT INTO LOCATIONASSIGNMENT(locationID, userID) VALUES (@locationID, @userID);
 
 SET
-@locationID = 3,
-@userID = 1;
+@locationID = 1,
+@userID = 2;
+INSERT INTO LOCATIONASSIGNMENT(locationID, userID) VALUES (@locationID, @userID);
+
+SET
+@locationID = 2,
+@userID = 2;
 INSERT INTO LOCATIONASSIGNMENT(locationID, userID) VALUES (@locationID, @userID);
 
 SET

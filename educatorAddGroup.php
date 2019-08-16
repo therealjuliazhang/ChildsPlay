@@ -2,12 +2,23 @@
     <?php 
         include 'db_connection.php';
         $conn = OpenCon();
+		
+		$userID = 2; 	//need to fix after account management is implemented
+		
         //fetch locations for select drop down
-        $sql = "SELECT * FROM LOCATION";
+		$locations = array();
+        $sql = "SELECT locationID FROM LOCATIONASSIGNMENT WHERE userID=".$userID;
         $result = $conn->query($sql);
-        $locations = array();
-        while($row = mysqli_fetch_assoc($result))
-            $locations[] = $row;
+		while($row = mysqli_fetch_assoc($result)){
+			$sql2 = "SELECT * FROM LOCATION WHERE locationID=".$row["locationID"];
+			$result2 = $conn->query($sql2);
+			while($value = mysqli_fetch_assoc($result2))
+				$locations[] = $value;
+		}
+            
+		
+        
+        
     ?>
     <head>
         <title>Add New Group For Educator</title>
