@@ -103,7 +103,8 @@ CREATE TABLE RESULTS(
 	success					BOOLEAN			NULL,
 	x						DECIMAL(5,2)	NULL,
 	y						DECIMAL(5,2)	NULL,
-	dateCollected			DATE			NOT NULL,
+	happy					BOOLEAN			NULL,
+	/*dateCollected			DATE			NOT NULL,*/
 	testID					INTEGER			NOT NULL,
 	taskID					INTEGER			NOT NULL,
 	preID					INTEGER			NOT NULL,

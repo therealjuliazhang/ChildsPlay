@@ -131,8 +131,16 @@ if(isset($_POST['nextButton'])){
 				echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
 			}
 		}
-		else
-			echo "<span id='error'>Please write a comment!</span>";
+		else{
+			if($taskIndex == (sizeof($tasks)-1))
+					header("Location: thankyou.php");
+				else{
+					$taskIndex++;
+					header("Location: instruction.php?testID=".$testID."&groupID=".$groupID."&taskIndex=".$taskIndex);
+				}
+		}
+		/*else
+			echo "<span id='error'>Please write a comment!</span>";*/
 	}
 }
 /*

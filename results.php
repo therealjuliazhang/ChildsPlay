@@ -6,22 +6,23 @@
 		//connect to database
 		include 'db_connection.php';
 		$conn = OpenCon();
-		//get tasks IDs from taskassignment table
-		//$taskIDs = array();
-		// $sql = "SELECT taskID FROM taskassignment WHERE testID = " .$testID;
-        // $result = $conn->query($sql);
-        // while($row = mysqli_fetch_assoc($result))
-		// 	$taskIDs[] = $row;
-		//get tasks
+		
 		$tasks = array();
-		//foreach($taskIDs as $value){
-			$sql = "SELECT * FROM task WHERE testID = " .$testID;
-			$result = $conn->query($sql);
-			while($row = mysqli_fetch_assoc($result))
-				$tasks[] = $row;
-		//}
+		$sql = "SELECT taskID FROM TASKASSIGNMENT WHERE testID = " .$testID;
+		$result = $conn->query($sql);
+		while($row = mysqli_fetch_assoc($result)){
+			//get tasks
+			$sql1 = "SELECT * FROM TASK WHERE taskID=".$row["taskID"];
+			$result1 = $conn->query($sql1);
+			while($row1 = mysqli_fetch_assoc($result1)){
+				array_push($tasks, $row1);
+			}
+		}
+		
 		//get character ranking task results
 		$rankingResults = array();
+		$countSad = 0;
+		$countHappy = 0;
 		foreach($tasks as $value){
 			if($value['taskType']=="Character Ranking"){
 				$sql = "SELECT * FROM ranking WHERE testID = " .$testID. " AND taskID = " .$value['taskID'];
@@ -29,14 +30,26 @@
 				while($row = mysqli_fetch_assoc($result))
 					$rankingResults[] = $row;
 			}
+			else if($value['taskType'] == "Likert Scale"){
+				$resultQuery = "SELECT happy FROM RESULTS WHERE testID=".$testID." AND taskID=".$value["taskID"]; //can retrieve preID as well if Holly cares about result of each kid
+				$result2 = $conn->query($resultQuery);
+				while($row2 = mysqli_fetch_assoc($result2)){
+					if($row2["happy"] == false){
+						$countSad++;
+					}
+					else if($row2["happy"] == true){
+						$countHappy++;
+					}
+				}
+			}
 		}
 		//get images for each task
 		$images = array();
 		foreach($tasks as $task){
-			$sql = "SELECT * FROM image WHERE taskID = " .$task['taskID'];
-			$result = $conn->query($sql);
-			while($row = mysqli_fetch_assoc($result))
-				$images[] = $row;
+			$sql3 = "SELECT * FROM image WHERE taskID = " .$task['taskID'];
+			$result3 = $conn->query($sql3);
+			while($row3 = mysqli_fetch_assoc($result3))
+				$images[] = $row3;
 		}
 	?>
     <head>
@@ -382,26 +395,32 @@
 			var likertChart = new Chart(ctx, {
 				type: "horizontalBar", // Make the graph horizontal
 				data: {
-				labels:  ["Like", "Dislike"],
+				labels:  ["Happy", "Sad"],
 				datasets: [{
 				label: "Number of Answers",
-				data: [6, 2],
-				backgroundColor: ["green", "yellow"]
+				data: [<?php echo $countHappy;?>, <?php echo $countSad;?>],
+				backgroundColor: ['rgba(255, 159, 64, 0.2)',
+                'rgba(153, 102, 255, 0.2)'],
+				borderColor:['rgba(255, 159, 64, 1)',
+                'rgba(153, 102, 255, 1)'],
+				borderWidth: 1
 				}]},
 				options: {
 					responsive: false,
 					title: {
 					display: true,
-					fontSize: 10,
+					fontSize: 15,
 					text: "Results"
 					},
 					legend: {
+						//position: 'right',
 					display: false,
 					},
 					scales: {
 						xAxes: [{ // Ｘ Axes Option
 							ticks: {
-								min: 0
+								beginAtZero: true,
+								stepSize: 1
 							}}],
 						yAxes: []
 					}

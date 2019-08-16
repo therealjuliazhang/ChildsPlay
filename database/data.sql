@@ -279,3 +279,56 @@ SET
 @imgType = true,
 @taskID = 3;
 INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);
+
+
+/*RESULTS*/
+SET 
+@happy = true,
+@testID = 1,
+@taskID = 1,
+@preID = 1;
+INSERT INTO RESULTS(happy, testID, taskID, preID) VALUES (@happy, @testID, @taskID, @preID);
+
+SET
+@happy = false,
+@testID = 1,
+@taskID = 1,
+@preID = 2;
+INSERT INTO RESULTS(happy, testID, taskID, preID) VALUES (@happy, @testID, @taskID, @preID);
+
+SET
+@happy = true,
+@testID = 1,
+@taskID = 1,
+@preID = 3;
+INSERT INTO RESULTS(happy, testID, taskID, preID) VALUES (@happy, @testID, @taskID, @preID);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
