@@ -1,6 +1,10 @@
 <html>
 	<?php
-	$testID = htmlspecialchars($_GET["testID"]);
+	//$testID = htmlspecialchars($_GET["testID"]);
+	if(isset($_GET["testID"])){
+		$_SESSION["testID"] = $_GET["testID"];
+		$testID = $_SESSION["testID"];
+	}
 	?>
     <head>
         <title>Select Group For Task</title>
@@ -84,8 +88,11 @@
 			echo '</td><td><a href="instruction.php?testID=', $testID, '&groupID=', $row["groupID"], '" class="waves-effect waves-light btn blue darken-2">Select</a></td></tr>';			
 		}
 		
-		if($_GET['mode'] == "start")
-			$_SESSION['mode'] = "start";
+		if(isset($_GET['mode'])){
+			if($_GET['mode'] == "start")
+				$_SESSION['mode'] = "start";
+		}
+		
 		
 		/*
 		//get groups from database
@@ -110,7 +117,6 @@
 		?>
 				</tbody>
 			</table>
-			<a class="waves-effect waves-light btn right blue darken-4 " onclick="">Add New Group</a>
         </div>
         <!--end body content-->
         

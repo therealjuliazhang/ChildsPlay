@@ -33,24 +33,21 @@ INSERT INTO USERS(username, password, email, accountType, fullName) VALUES (@use
 
 /*LOCATION*/
 SET
-@name = "Mulberry Hill Preschool",
-@userID = 2;
-INSERT INTO LOCATION(name, userID) VALUES (@name, @userID);
+@name = "Mulberry Hill Preschool";
+INSERT INTO LOCATION(name) VALUES (@name);
 
 SET
-@name = "Smith Preschool",
-@userID = 3;
-INSERT INTO LOCATION(name, userID) VALUES (@name, @userID);
+@name = "Smith Preschool";
+INSERT INTO LOCATION(name) VALUES (@name);
 
 SET
-@name = "Miranda Kindergarten",
-@userID = 4;
-INSERT INTO LOCATION(name, userID) VALUES (@name, @userID);
+@name = "Miranda Kindergarten";
+INSERT INTO LOCATION(name) VALUES (@name);
 
 /*GROUPTEST*/
 SET
 @name = "Group 1",
-@locationID = "1";
+@locationID = 1;
 INSERT INTO GROUPTEST(name, locationID) VALUES(@name, @locationID);
 
 SET
@@ -61,6 +58,11 @@ INSERT INTO GROUPTEST(name, locationID) VALUES(@name, @locationID);
 SET
 @name = "Group 3",
 @locationID = 3;
+INSERT INTO GROUPTEST(name, locationID) VALUES(@name, @locationID);
+
+SET
+@name = "Group 4",
+@locationID = 2;
 INSERT INTO GROUPTEST(name, locationID) VALUES(@name, @locationID);
 
 /*PRESCHOOLER*/
@@ -144,6 +146,19 @@ SET
 @userID = 3;
 INSERT INTO GROUPASSIGNMENT(groupID, preID, userID) VALUES (@groupID, @preID, @userID);
 
+/*Group 4*/
+SET
+@groupID = 4,
+@preID = 4,
+@userID = 2;
+INSERT INTO GROUPASSIGNMENT(groupID, preID, userID) VALUES (@groupID, @preID, @userID);
+
+SET
+@groupID = 4,
+@preID = 1,
+@userID = 2;
+INSERT INTO GROUPASSIGNMENT(groupID, preID, userID) VALUES (@groupID, @preID, @userID);
+
 
 /*TEST*/
 SET 
@@ -169,6 +184,28 @@ SET
 @dateEdited = "2019-07-14";
 INSERT INTO TEST(title, description, dateCreated, dateEdited) VALUES 
 (@title, @description, @dateCreated, @dateEdited);
+
+/*LOCATIONASSIGNMENT*/
+SET
+@locationID = 1,
+@userID = 1;
+INSERT INTO LOCATIONASSIGNMENT(locationID, userID) VALUES (@locationID, @userID);
+
+SET
+@locationID = 3,
+@userID = 1;
+INSERT INTO LOCATIONASSIGNMENT(locationID, userID) VALUES (@locationID, @userID);
+
+SET
+@locationID = 2,
+@userID = 3;
+INSERT INTO LOCATIONASSIGNMENT(locationID, userID) VALUES (@locationID, @userID);
+
+SET
+@locationID = 3,
+@userID = 4;
+INSERT INTO LOCATIONASSIGNMENT(locationID, userID) VALUES (@locationID, @userID);
+
 
 /*TESTASSIGNMENT*/
 SET

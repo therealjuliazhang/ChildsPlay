@@ -2,7 +2,8 @@
 <?php
 session_start();
 
-$testID = $_GET["testID"];
+$testID = $_SESSION["testID"];
+//$testID = $_GET["testID"];
 $groupID = isset($_GET['groupID']) ? $_GET['groupID'] : 4;
 //index of task in array
 $taskIndex = isset($_GET['taskIndex']) ? $_GET['taskIndex'] : 0;
@@ -137,7 +138,24 @@ foreach ($imageAdresses as $value)
 							echo "Start";
 						?>
 						</a>
-						<a onclick="goBack()" class="waves-effect waves-light btn blue darken-4">Back</a>
+						<a href="?back=true" class="waves-effect waves-light btn blue darken-4">Back</a>
+						<?php
+							if(isset($_GET["back"])){
+								if($taskIndex == 0)
+									//if preview (group is preview group), go back to educator tests page
+									if($_SESSION['mode'] == "preview")
+										header("Location: educatorTests.php");
+									else
+										header("Location: selectGroupForTask.php?testID=".$testID);
+								else{
+									--$taskIndex;
+									if($_SESSION['mode'] == "preview")
+										header("Location: educatorTests.php");
+									else
+										header("Location: comments.php?testID=".$testID."&groupID=".$groupID."&taskIndex=".$taskIndex);
+								}
+							}
+						?>
 					</div>
 				</div>
 			</div>
@@ -153,7 +171,7 @@ foreach ($imageAdresses as $value)
 		var groupID = <?php echo $groupID ?>;
 		if(taskIndex == 0)
 			//if preview (group is preview group), go back to educator tests page
-			if(groupID == 1)
+			if(groupID == 4)
 				window.location.href = "educatorTests.php";
 			else
 				window.location.href = "selectGroupForTask.php?testID=" + testID;
