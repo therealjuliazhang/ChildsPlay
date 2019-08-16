@@ -31,16 +31,46 @@
 					$rankingResults[] = $row;
 			}
 			else if($value['taskType'] == "Likert Scale"){
-				$resultQuery = "SELECT happy FROM RESULTS WHERE testID=".$testID." AND taskID=".$value["taskID"]; //can retrieve preID as well if Holly cares about result of each kid
-				$result2 = $conn->query($resultQuery);
-				while($row2 = mysqli_fetch_assoc($result2)){
-					if($row2["happy"] == false){
-						$countSad++;
+				if(isset($_POST["action"])){
+					if(isset($_POST["2"])){
+						$locationID = $_POST["2"];
+						$sql = "SELECT groupID FROM GROUPTEST WHERE locationID=".$locationID;
+						$result = $conn->query($sql);
+						while($row=mysqli_fetch_assoc($result)){
+							echo "GroupID: ".$row["groupID"];
+							$sql1 = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$row["groupID"];
+							$result1 = $conn->query($sql1);
+							while($v=mysqli_fetch_assoc($result1)){
+								$resultQuery = "SELECT happy FROM RESULTS WHERE testID=".$testID." AND taskID=".$value["taskID"]." AND preID=".$v["preID"];
+								$result2 = $conn->query($resultQuery);
+								while($row2 = mysqli_fetch_assoc($result2)){
+									if($row2["happy"] == false){
+										$countSad++;
+									}
+									else if($row2["happy"] == true){
+										$countHappy++;
+									}
+								}			
+							}
+						}
 					}
-					else if($row2["happy"] == true){
-						$countHappy++;
-					}
+					/*else{
+						echo "None";
+					}*/
 				}
+				else{
+					$resultQuery = "SELECT happy FROM RESULTS WHERE testID=".$testID." AND taskID=".$value["taskID"]; //can retrieve preID as well if Holly cares about result of each kid
+					$result2 = $conn->query($resultQuery);
+					while($row2 = mysqli_fetch_assoc($result2)){
+						if($row2["happy"] == false){
+							$countSad++;
+						}
+						else if($row2["happy"] == true){
+							$countHappy++;
+						}
+					}	
+				}	
+							
 			}
 		}
 		//get images for each task
@@ -90,7 +120,7 @@
 		<ul id="sidebar" class="sidenav sidenav-fixed" >
 			<li><h5><a href="#" data-target="slide-out" class="sidenav-trigger">More Tests</a></h5></li><!--button to activate more tests-->
 			<li><h5>Sort Results By</h5></li>
-			<form action="">
+			<form action="" method="post">
 			<li>
 				<ul class="collapsible">
 					<li>
@@ -100,7 +130,7 @@
 								<!--start checkbox-->
 								<p>
 								<label>
-									<input type="checkbox" class="filled-in"/>
+									<input type="checkbox" name="allLocation" class="filled-in"/>
 									<span>All Locations</span>
 								</label>
 								</p>
@@ -109,15 +139,15 @@
 								<!--start checkbox-->
 								<p>
 								<label>
-									<input type="checkbox" class="filled-in"/>
-									<span>Location 1</span>
+									<input type="checkbox" name="2" value="2" class="filled-in" checked/>
+									<span>Smith Preschool</span>
 								</label>
 								</p>
 								<!--end checkbox-->
 								<!--start checkbox-->
 								<p>
 								<label>
-									<input type="checkbox" class="filled-in"/>
+									<input type="checkbox" name="3" class="filled-in"/>
 									<span>Location 2</span>
 								</label>
 								</p>
@@ -252,6 +282,9 @@
 				</div>
 			</li>
 			</form>
+			
+			
+			
 			<!--end sort result form-->
 		</ul>
         <!--end side bar-->

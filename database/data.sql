@@ -96,6 +96,14 @@ SET
 @gender = "Male";
 INSERT INTO PRESCHOOLER(name, age, gender) VALUES (@name, @age, @gender);
 
+/*
+SET 
+@name = "Caroline",
+@age = 6,
+@gender = "Female";
+INSERT INTO PRESCHOOLER(name, age, gender) VALUES (@name, @age, @gender);
+*/
+
 /*GROUPASSIGNMENT*/
 SET
 @groupID = 1,
