@@ -1,10 +1,6 @@
 <html>
 	<?php
-	//$testID = htmlspecialchars($_GET["testID"]);
-	if(isset($_GET["testID"])){
-		$_SESSION["testID"] = $_GET["testID"];
-		$testID = $_SESSION["testID"];
-	}
+	$testID = htmlspecialchars($_GET["testID"]);
 	?>
     <head>
         <title>Select Group For Task</title>
@@ -37,13 +33,6 @@
         
         <!-- body content -->
         <div class="container">
-			<div class="row">
-				<div class="col s12">				
-					<div class="right-align">
-						<a class="waves-effect waves-light btn blue darken-2" onclick="">Cancel</a>
-					</div>
-				</div>
-			</div>
 			<div class="row">
 				<h5 class="blue-text darken-2">Groups</h5>
 			</div>
@@ -88,11 +77,8 @@
 			echo '</td><td><a href="instruction.php?testID=', $testID, '&groupID=', $row["groupID"], '" class="waves-effect waves-light btn blue darken-2">Select</a></td></tr>';			
 		}
 		
-		if(isset($_GET['mode'])){
-			if($_GET['mode'] == "start")
-				$_SESSION['mode'] = "start";
-		}
-		
+		if($_GET['mode'] == "start")
+			$_SESSION['mode'] = "start";
 		
 		/*
 		//get groups from database
@@ -117,6 +103,16 @@
 		?>
 				</tbody>
 			</table>
+
+			<a class="waves-effect waves-light btn right blue darken-4 " onclick="">Add New Group</a>
+			<br/><br/><br/>
+			<div class="row">
+				<div class="col s12">				
+					<div class="right-align">
+						<a class="waves-effect waves-light btn blue darken-4" onclick="">Cancel</a>
+					</div>
+				</div>
+			</div>
         </div>
         <!--end body content-->
         
