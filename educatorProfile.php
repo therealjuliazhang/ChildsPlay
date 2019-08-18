@@ -35,21 +35,22 @@
     Need to be modified : Table border,position aberration between icon and <h>tag
     -->
     <div class="navbar-fixed">
-    <table id="infoTable" height="200px" >
-      <tbody class="#bbdefb blue lighten-4">
+    <table id="infoTable" height="200px" class="white-text">
+      <tbody class="#1565c0 blue darken-3">
         <tr>
           <td width="50%">
           <div class="tableLeft">
-          <h3 class="blue-text text-darken-4">Alex Satoru Hanrahan</h3>
+          <h3>Alex Satoru Hanrahan</h3>
           <i class="small material-icons" id="mailIcon">email</i>
-          <span id="mailInCell" class="blue-text text-darken-1">ash@gmail.com</span>
+          <span id="mailInCell">ash@gmail.com</span>
           </div>
           </td>
           <td width="50%">
 
           <div id="user">
           <i class="medium material-icons" id="mailIcon">account_box</i>
-          <span class="blue-text text-darken-4" id="userType">Educator</span>
+          <span id="userType">Educator</span><br>
+          <a class="waves-effect waves-light btn #2196f3 blue right" id="logoutButton" onclick="logout()">Logout</a>
           </div>
 
           </td>
@@ -58,7 +59,7 @@
     </table>
     </div>
     <!--Side Bar-->
-    <ul id="sidebar" class="sidenav sidenav-fixed #bbdefb blue lighten-4">
+    <ul id="sidebar" class="sidenav sidenav-fixed #ffffff white">
           <li class="active #ffffff white"><a href="#!">Profile</a></li>
           <li><a href="#!">Tests</a></li>
     </ul>
@@ -69,7 +70,7 @@
       <table id="userInfo">
        <thead>
          <tr>
-             <th colspan="3">Account Information</th>
+             <th colspan="3" class="blue-text darken-2">Account Information</th>
          </tr>
        </thead>
 
@@ -77,17 +78,17 @@
          <tr>
            <td class="row1">Username:</td>
            <td class="row2">Alex</td>
-           <td class="row3"><a>Edit</a></td>
+           <td class="row3"></td>
          </tr>
          <tr>
            <td class="row1">Password:</td>
            <td class="row2">********</td>
-           <td class="row3"><a>Edit</a></td>
+           <td class="row3"></td>
          </tr>
 
          <thead>
            <tr>
-               <th colspan="3">Personal Information</th>
+               <th colspan="3" class="blue-text darken-2">Personal Information</th>
            </tr>
          </thead>
 
@@ -95,15 +96,31 @@
            <tr>
              <td class="row1">Email:</td>
              <td class="row2">ash@gmail.com</td>
-             <td class="row3"><a>Edit</a></td>
+             <td class="row3"></td>
            </tr>
            <tr>
              <td class="row1">Location:</td>
-             <td class="row2">Shellharbour Preschool</td>
-             <td class="row3"><a>Edit</a></td>
+             <td class="row2">Wollongong Preschool</td>
+             <td class="row3">
+               <div class="input-field col s12">
+                 <select multiple>
+                   <option value="" disabled selected>Edit Locations</option>
+                   <option value="1">Wollongong Preschool</option>
+                   <option value="2">Keiraville Community Preschool</option>
+                   <option value="3">KU Gwynneville Preschool</option>
+                 </select>
+               </div>
+               <!-- Initialize select element-->
+               <script>
+               $(document).ready(function(){
+                   $('select').formSelect();
+                 });
+              </script>
+            </td>
            </tr>
        </tbody>
      </table>
+     <a class="waves-effect waves-light btn #2196f3 blue right" id="editButton" onclick="logout()">Edit</a>
     </div>
 
 
@@ -173,6 +190,7 @@
     vertical-align: top;
   }
   #user{
+    width:230px;
     margin-left: 100px;
   }
   #userType{
@@ -195,6 +213,9 @@
   }
   .row3{
     text-align:right;
+  }
+  #editButton{
+    margin-top: 15px;
   }
 
   </style>

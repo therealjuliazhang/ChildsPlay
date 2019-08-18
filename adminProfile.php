@@ -43,7 +43,8 @@
 
           <div id="user">
           <i class="medium material-icons" id="mailIcon">account_box</i>
-          <span id="userType">Admin</span>
+          <span id="userType">Admin</span><br>
+          <a class="waves-effect waves-light btn #2196f3 blue right" id="logoutButton" onclick="logout()">Logout</a>
           </div>
 
           </td>
@@ -72,12 +73,12 @@
          <tr>
            <td class="row1">Username:</td>
            <td class="row2">Holly</td>
-           <td class="row3"><a>Edit</a></td>
+           <td class="row3"></td>
          </tr>
          <tr>
            <td class="row1">Password:</td>
            <td class="row2">********</td>
-           <td class="row3"><a>Edit</a></td>
+           <td class="row3"></td>
          </tr>
 
          <thead>
@@ -90,32 +91,13 @@
            <tr>
              <td class="row1">Email:</td>
              <td class="row2">mfin@gmail.com</td>
-             <td class="row3"><a>Edit</a></td>
+             <td class="row3"></td>
            </tr>
-           <tr>
-             <td class="row1">Location:</td>
-             <td class="row2">Wollongong Preschool</td>
-             <td class="row3">
-               <div class="input-field col s12">
-                 <select multiple>
-                   <option value="" disabled selected>Edit Locations</option>
-                   <option value="1">Wollongong Preschool</option>
-                   <option value="2">Keiraville Community Preschool</option>
-                   <option value="3">KU Gwynneville Preschool</option>
-                 </select>
-               </div>
-               <!-- Initialize select element-->
-               <script>
-               $(document).ready(function(){
-                   $('select').formSelect();
-                 });
-              </script>
-            </td>
-           </tr>
+           
        </tbody>
      </table>
-     <a class="waves-effect waves-light btn blue darken-2 buttons right" onclick="logout()">Logout</a>
-     <a class="waves-effect waves-light btn #2196f3 blue buttons right" id="saveButton" onclick="logout()">Save Changes</a>
+    <!--<a class="waves-effect waves-light btn blue darken-2 buttons right" onclick="logout()">Logout</a>-->
+     <a class="waves-effect waves-light btn #2196f3 blue right" id="editButton" onclick="logout()">Edit</a>
     </div>
 
 
@@ -136,9 +118,6 @@
   }
   .brand-logo{
       margin-top:-67px;
-  }
-  .buttons{
-      margin-top: 15px;
   }
   #sidebar{
       margin-top: 264px;
@@ -178,6 +157,7 @@
     vertical-align: top;
   }
   #user{
+    width:200px;
     margin-left: 100px;
   }
   #userType{
@@ -201,8 +181,10 @@
   .row3{
     text-align:right;
   }
-  #saveButton{
-    margin-right: 20px;
+  #editButton{
+    margin-top: 15px;
+  }
+  #logoutButton{
   }
 
   </style>
