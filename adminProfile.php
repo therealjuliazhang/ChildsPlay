@@ -73,21 +73,17 @@
          <tr>
            <td class="row1">Username:</td>
            <td class="row2" id="uNameCell">
-            <span id="uName">
               <div class='input-field col s6'>
-                <input disabled value='Holly' type='text' class='validate'>
+                <input id="uName" disabled value='Holly' type='text' class='validate'>
               </div>
-            </span>
            </td>
          </tr>
          <tr>
            <td class="row1">Password:</td>
            <td class="row2" id="passwordCell">
-            <span id="password">
               <div class='input-field col s6'>
-                <input disabled value='********' type='text' class='validate'>
+                <input id="password" disabled value='********' type='text' class='validate'>
               </div>
-            </span>
             </td>
          </tr>
 
@@ -101,11 +97,9 @@
            <tr>
              <td class="row1">Email:</td>
              <td class="row2" id="emailCell">
-              <span id="email">
                <div class='input-field col s6'>
-                <input disabled value='mfin@gmail.com' type='text' class='validate'>
+                <input id="email" disabled value='mfin@gmail.com' type='text' class='validate'>
                </div>
-              </span>
              </td>
            </tr>
 
@@ -121,25 +115,22 @@
 
 <!--Edit and Save information function-->
   <script>
+//enable input
   $(document).ready(function(){
     $("#editButton").click(function(){
-      $("#uName").replaceWith("<span id='uName'><div class='input-field col s6'><input value='Holly' type='text' class='validate'></div></span>");
-      $("#password").replaceWith("<span id='password'><div class='input-field col s6'><input value='********' type='text' class='validate'></div></span>");
-      $("#email").replaceWith("<span id='email'><div class='input-field col s6'><input value='mfin@gmail.com' type='text' class='validate'></div></span>");
+      $("#uName").prop( "disabled", false );
+      $("#password").prop( "disabled", false );
+      $("#email").prop( "disabled", false );
     })
   });
-
-  //save button is clicked
-  //User name
+//disable input
   $(document).ready(function(){
     $("#saveButton").click(function(){
-      $("#uName").replaceWith("<span id='uName'><div class='input-field col s6'><input disabled value='Holly' type='text' class='validate'></div></span>");
-      $("#password").replaceWith("<span id='password'><div class='input-field col s6'><input disabled value='********' type='text' class='validate'></div></span>");
-      $("#email").replaceWith("<span id='email'><div class='input-field col s6'><input disabled value='mfin@gmail.com' type='text' class='validate'></div></span>");
+      $("#uName").prop( "disabled", true );
+      $("#password").prop( "disabled", true );
+      $("#email").prop( "disabled", true );
     })
   });
-  //password
-  //Email
   </script>
 
 

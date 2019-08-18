@@ -77,13 +77,19 @@
        <tbody>
          <tr>
            <td class="row1">Username:</td>
-           <td class="row2">Alex</td>
-           <td class="row3"></td>
+           <td class="row2" id="uNameCell">
+              <div class='input-field col s6'>
+                <input id="uName" disabled value='Alex Satoru' type='text' class='validate'>
+              </div>
+           </td>
          </tr>
          <tr>
            <td class="row1">Password:</td>
-           <td class="row2">********</td>
-           <td class="row3"></td>
+           <td class="row2" id="passwordCell">
+              <div class='input-field col s6'>
+                <input id="password" disabled value='********' type='text' class='validate'>
+              </div>
+            </td>
          </tr>
 
          <thead>
@@ -95,32 +101,48 @@
          <tbody>
            <tr>
              <td class="row1">Email:</td>
-             <td class="row2">ash@gmail.com</td>
-             <td class="row3"></td>
+             <td class="row2" id="emailCell">
+               <div class='input-field col s6'>
+                <input id="email" disabled value='ash@gmail.com' type='text' class='validate'>
+               </div>
+             </td>
            </tr>
            <tr>
              <td class="row1">Location:</td>
-             <td class="row2">Wollongong Preschool</td>
-             <td class="row3">
-               <div class="input-field col s12">
-                 <select multiple>
-                   <option value="" disabled selected>Edit Locations</option>
-                   <option value="1">Wollongong Preschool</option>
-                   <option value="2">Keiraville Community Preschool</option>
-                   <option value="3">KU Gwynneville Preschool</option>
-                 </select>
-               </div>
-               <!-- Initialize select element-->
-               <script>
-               $(document).ready(function(){
-                   $('select').formSelect();
-                 });
-              </script>
+             <td class="row2" id="selectorCell">
+              <div class="input-field col s12">
+                <select id="selectLocation">
+                <option value="">KU Gwynneville Preschool</option>
+                <option value="2" selected>Wollongong Preschool</option>
+                <option value="3">Keiraville Community Preschool</option>
+                </select>
+              </div>
+              <div class="input-field col s12">
+                <select disabled>
+                <option value=""selected>KU Gwynneville Preschool</option>
+                <option value="2">Wollongong Preschool</option>
+                <option value="3">Keiraville Community Preschool</option>
+                </select>
+              </div>
+              <div class="input-field col s12">
+                <select disabled>
+                <option value="">KU Gwynneville Preschool</option>
+                <option value="2">Wollongong Preschool</option>
+                <option value="3" selected>Keiraville Community Preschool</option>
+                </select>
+              </div>
             </td>
+           </tr>
+           <tr>
+             <td class="row1"></td>
+             <td class="row2" id="buttonInTable">
+               <a class="waves-effect waves-light btn blue darken-4" id="addButton"><i class="material-icons">add</i></a>
+             </td>
            </tr>
        </tbody>
      </table>
-     <a class="waves-effect waves-light btn #2196f3 blue right" id="editButton" onclick="logout()">Edit</a>
+     <a class="waves-effect waves-light btn blue darken-2 right" id="saveButton">Save</a>
+     <a class="waves-effect waves-light btn #2196f3 blue right" id="editButton">Edit</a>
     </div>
 
 
@@ -130,9 +152,37 @@
 
   </body>
 
-  <script>
+  <!--Edit and Save information function-->
+    <script>
+    //enable inputs
+    $(document).ready(function(){
+      $("#editButton").click(function(){
+        $("#uName").prop( "disabled", false );
+        $("#password").prop( "disabled", false );
+        $("#email").prop( "disabled", false );
+      })
+    });
+    //disable inputs
+    $(document).ready(function(){
+      $("#saveButton").click(function(){
+        $("#uName").prop( "disabled", true );
+        $("#password").prop( "disabled", true );
+        $("#email").prop( "disabled", true );
+        $("#selectLocation").prop('disabled', true);
+      })
+    });
+    //Add new selector
+    $(document).ready(function(){
+    $("#addButton").click(function(){
+      $("#selectorCell").append("<div class='input-field col s12'><select disabled><option>KU Gwynneville Preschool</option></select></div>");
+      });
+    });
+    //Initialization for selector
+    $(document).ready(function(){
+    $('select').formSelect();
+    });
 
-	</script>
+    </script>
 
 
 
@@ -216,6 +266,13 @@
   }
   #editButton{
     margin-top: 15px;
+    margin-right: 10px;
+  }
+  #saveButton{
+    margin-top: 15px;
+  }
+  #buttonInTable{
+    text-align: right;
   }
 
   </style>
