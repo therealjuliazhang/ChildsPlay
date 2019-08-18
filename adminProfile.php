@@ -72,13 +72,23 @@
        <tbody>
          <tr>
            <td class="row1">Username:</td>
-           <td class="row2">Holly</td>
-           <td class="row3"></td>
+           <td class="row2" id="uNameCell">
+            <span id="uName">
+              <div class='input-field col s6'>
+                <input disabled value='Holly' type='text' class='validate'>
+              </div>
+            </span>
+           </td>
          </tr>
          <tr>
            <td class="row1">Password:</td>
-           <td class="row2">********</td>
-           <td class="row3"></td>
+           <td class="row2" id="passwordCell">
+            <span id="password">
+              <div class='input-field col s6'>
+                <input disabled value='********' type='text' class='validate'>
+              </div>
+            </span>
+            </td>
          </tr>
 
          <thead>
@@ -90,20 +100,47 @@
          <tbody>
            <tr>
              <td class="row1">Email:</td>
-             <td class="row2">mfin@gmail.com</td>
-             <td class="row3"></td>
+             <td class="row2" id="emailCell">
+              <span id="email">
+               <div class='input-field col s6'>
+                <input disabled value='mfin@gmail.com' type='text' class='validate'>
+               </div>
+              </span>
+             </td>
            </tr>
-           
+
        </tbody>
      </table>
-    <!--<a class="waves-effect waves-light btn blue darken-2 buttons right" onclick="logout()">Logout</a>-->
-     <a class="waves-effect waves-light btn #2196f3 blue right" id="editButton" onclick="logout()">Edit</a>
+     <a class="waves-effect waves-light btn blue darken-2 right" id="saveButton">Save</a>
+     <a class="waves-effect waves-light btn #2196f3 blue right" id="editButton">Edit</a>
+     </div>
     </div>
 
 
   </body>
 
+<!--Edit and Save information function-->
+  <script>
+  $(document).ready(function(){
+    $("#editButton").click(function(){
+      $("#uName").replaceWith("<span id='uName'><div class='input-field col s6'><input value='Holly' type='text' class='validate'></div></span>");
+      $("#password").replaceWith("<span id='password'><div class='input-field col s6'><input value='********' type='text' class='validate'></div></span>");
+      $("#email").replaceWith("<span id='email'><div class='input-field col s6'><input value='mfin@gmail.com' type='text' class='validate'></div></span>");
+    })
+  });
 
+  //save button is clicked
+  //User name
+  $(document).ready(function(){
+    $("#saveButton").click(function(){
+      $("#uName").replaceWith("<span id='uName'><div class='input-field col s6'><input disabled value='Holly' type='text' class='validate'></div></span>");
+      $("#password").replaceWith("<span id='password'><div class='input-field col s6'><input disabled value='********' type='text' class='validate'></div></span>");
+      $("#email").replaceWith("<span id='email'><div class='input-field col s6'><input disabled value='mfin@gmail.com' type='text' class='validate'></div></span>");
+    })
+  });
+  //password
+  //Email
+  </script>
 
 
 
@@ -183,8 +220,10 @@
   }
   #editButton{
     margin-top: 15px;
+    margin-right: 10px;
   }
-  #logoutButton{
+  #saveButton{
+    margin-top: 15px;
   }
 
   </style>
