@@ -1,6 +1,6 @@
 <html>
-	<?php
-		//these should be gotten from somewhere else, not hard coded.
+<?php
+//these should be gotten from somewhere else, not hard coded.
 		$userID = 2;
 		$testID = 1;
 		//connect to database
@@ -18,70 +18,7 @@
 				array_push($tasks, $row1);
 			}
 		}
-		
-		//get character ranking task results
-		$rankingResults = array();
-		$countSad = 0;
-		$countHappy = 0;
-		foreach($tasks as $value){
-			if($value['taskType']=="Character Ranking"){
-				$sql = "SELECT * FROM ranking WHERE testID = " .$testID. " AND taskID = " .$value['taskID'];
-				$result = $conn->query($sql);
-				while($row = mysqli_fetch_assoc($result))
-					$rankingResults[] = $row;
-			}
-			else if($value['taskType'] == "Likert Scale"){
-				if(isset($_POST["action"])){
-					if(isset($_POST["2"])){
-						$locationID = $_POST["2"];
-						$sql = "SELECT groupID FROM GROUPTEST WHERE locationID=".$locationID;
-						$result = $conn->query($sql);
-						while($row=mysqli_fetch_assoc($result)){
-							echo "GroupID: ".$row["groupID"];
-							$sql1 = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$row["groupID"];
-							$result1 = $conn->query($sql1);
-							while($v=mysqli_fetch_assoc($result1)){
-								$resultQuery = "SELECT happy FROM RESULTS WHERE testID=".$testID." AND taskID=".$value["taskID"]." AND preID=".$v["preID"];
-								$result2 = $conn->query($resultQuery);
-								while($row2 = mysqli_fetch_assoc($result2)){
-									if($row2["happy"] == false){
-										$countSad++;
-									}
-									else if($row2["happy"] == true){
-										$countHappy++;
-									}
-								}			
-							}
-						}
-					}
-					/*else{
-						echo "None";
-					}*/
-				}
-				else{
-					$resultQuery = "SELECT happy FROM RESULTS WHERE testID=".$testID." AND taskID=".$value["taskID"]; //can retrieve preID as well if Holly cares about result of each kid
-					$result2 = $conn->query($resultQuery);
-					while($row2 = mysqli_fetch_assoc($result2)){
-						if($row2["happy"] == false){
-							$countSad++;
-						}
-						else if($row2["happy"] == true){
-							$countHappy++;
-						}
-					}	
-				}	
-							
-			}
-		}
-		//get images for each task
-		$images = array();
-		foreach($tasks as $task){
-			$sql3 = "SELECT * FROM image WHERE taskID = " .$task['taskID'];
-			$result3 = $conn->query($sql3);
-			while($row3 = mysqli_fetch_assoc($result3))
-				$images[] = $row3;
-		}
-	?>
+?>
     <head>
         <title>Child'sPlay</title>
     <meta name = "viewport" content = "width = device-width, initial-scale = 1">
@@ -130,61 +67,27 @@
 								<!--start checkbox-->
 								<p>
 								<label>
-									<input type="checkbox" name="allLocation" class="filled-in"/>
+									<input type="checkbox" name="location[]" class="filled-in"/>
 									<span>All Locations</span>
 								</label>
 								</p>
 								<!--end checkbox-->
 								<h6>OR</h6>
 								<!--start checkbox-->
-								<p>
-								<label>
-									<input type="checkbox" name="2" value="2" class="filled-in" checked/>
-									<span>Smith Preschool</span>
-								</label>
-								</p>
+								<?php
+								$locationQuery = "SELECT * FROM LOCATION";
+								$locationResult = $conn->query($locationQuery);
+								while($row = mysqli_fetch_assoc($locationResult)){
+									echo "<p><label><input type='checkbox' name='location[]' value='".$row["locationID"]."' class='filled-in' />".
+									     "<span>".$row["name"]."</span></label></p>";
+								}
+								?>
 								<!--end checkbox-->
 								<!--start checkbox-->
 								<p>
 								<label>
 									<input type="checkbox" name="3" class="filled-in"/>
 									<span>Location 2</span>
-								</label>
-								</p>
-								<!--end checkbox-->
-							</div> <!--end container-->
-						</div>
-					</li>
-				</ul>
-			</li>
-			<li>
-				<ul class="collapsible">
-					<li>
-						<div class="collapsible-header"><h6>Gender</h6></div>
-						<div class="collapsible-body">
-							<div class="container">
-								<!--start checkbox-->
-								<p>
-								<label>
-									<input type="checkbox" class="filled-in"/>
-									<span>All Genders</span>
-								</label>
-								</p>
-								<!--end checkbox-->
-								<h6>OR</h6>
-								<!--start checkbox-->
-								<p>
-								<label>
-									<input type="checkbox" class="filled-in"/>
-									<span>Male</span>
-								</label>
-								</p>
-								<!--end checkbox-->
-								<!--start checkbox-->
-								<p>
-								<label>
-									<input type="checkbox" class="filled-in"/>
-									<span>Female</span>
 								</label>
 								</p>
 								<!--end checkbox-->
@@ -210,20 +113,14 @@
 								<!--end checkbox-->
 								<h6>OR</h6>
 								<!--start checkbox-->
-								<p>
-								<label>
-									<input type="checkbox" class="filled-in"/>
-									<span>Group 1</span>
-								</label>
-								</p>
-								<!--end checkbox-->
-								<!--start checkbox-->
-								<p>
-								<label>
-									<input type="checkbox" class="filled-in"/>
-									<span>Group 2</span>
-								</label>
-								</p>
+								<?php
+								$groupQuery = "SELECT * FROM GROUPTEST";
+								$groupResult = $conn->query($groupQuery);
+								while($row = mysqli_fetch_assoc($groupResult)){
+									echo "<p><label><input type='checkbox' name='group[]' value='".$row["groupID"]."' class='filled-in' />".
+									     "<span>".$row["name"]."</span></label></p>";
+								}
+								?>
 								<!--end checkbox-->
 							</div> <!--end container-->
 						</div>
@@ -231,6 +128,37 @@
 				</ul>
 			</li>
 
+			<li>
+				<ul class="collapsible">
+					<li>
+						<div class="collapsible-header"><h6>Gender</h6></div>
+						<div class="collapsible-body">
+							<div class="container">
+								<!--start checkbox-->
+								<p>
+								<label>
+									<input type="checkbox" class="filled-in"/>
+									<span>All Genders</span>
+								</label>
+								</p>
+								<!--end checkbox-->
+								<h6>OR</h6>
+								<!--start checkbox-->
+								<?php
+								$genderQuery = "SELECT DISTINCT gender FROM PRESCHOOLER";
+								$genderResult = $conn->query($genderQuery);
+								while($row = mysqli_fetch_assoc($genderResult)){
+									echo "<p><label><input type='checkbox' name='gender[]' class='filled-in' />".
+									     "<span>".$row["gender"]."</span></label></p>";
+								}
+								?>
+								<!--end checkbox-->
+							</div> <!--end container-->
+						</div>
+					</li>
+				</ul>
+			</li>
+			
 			<li>
 				<ul class="collapsible">
 					<li>
@@ -247,31 +175,123 @@
 								<!--end checkbox-->
 								<h6>OR</h6>
 								<!--start checkbox-->
-								<p>
-								<label>
-									<input type="checkbox" class="filled-in"/>
-									<span>3 Years Old</span>
-								</label>
-								</p>
-								<!--end checkbox-->
-								<!--start checkbox-->
-								<p>
-								<label>
-									<input type="checkbox" class="filled-in"/>
-									<span>4 Years Old</span>
-								</label>
-								</p>
-								<!--end checkbox-->
-								<!--start checkbox-->
-								<p>
-								<label>
-									<input type="checkbox" class="filled-in"/>
-									<span>5 Years Old</span>
-								</label>
-								</p>
+								<?php
+								$ageQuery = "SELECT DISTINCT age FROM PRESCHOOLER";
+								$ageResult = $conn->query($ageQuery);
+								while($row = mysqli_fetch_assoc($ageResult)){
+									echo "<p><label><input type='checkbox' name='age[]' class='filled-in' />".
+									     "<span>".$row["age"]."</span></label></p>";
+								}
+								?>
 								<!--end checkbox-->
 							</div> <!--end container-->
 						</div>
+						<?php
+						$rankingResults = array();
+						$countSad = 0;
+						$countHappy = 0;
+						foreach($tasks as $value){							
+							if($value['taskType'] == "Likert Scale"){
+								if(isset($_POST["action"])){
+									$countSad = 0;
+									$countHappy = 0;
+									//echo "Submitted!!";
+									if(isset($_POST["location"])){
+										$i = 0;
+										$countIDs = count($_POST["location"]);
+										$selected = "";
+										//$locationIDs = $_POST["location"];
+										$locationSql = "SELECT groupID FROM GROUPTEST WHERE locationID IN (";
+										
+										while($i < $countIDs){
+											$selected .= $_POST["location"][$i];
+											if($i < $countIDs - 1){
+												$selected .= ",";
+											}
+											$i++;
+										}
+										echo $selected;
+										
+										$locationSql .= $selected.")";
+										
+										if(isset($_POST["group"])){
+											$i = 0;
+											$countIDs = count($_POST["group"]);
+											$selected = "";
+											
+											while($i < $countIDs){
+												$selected .= $_POST["group"][$i];
+												if($i < $countIDs - 1){
+													$selected .= ",";
+												}
+												$i++;
+											}
+											echo $selected;
+											$locationSql .= " AND groupID IN (".$selected.")";
+										}
+										
+										$locationResult = $conn->query($locationSql);
+										while($row = mysqli_fetch_assoc($locationResult)){
+											$sql1 = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$row["groupID"];
+											$result1 = $conn->query($sql1);
+											while($v=mysqli_fetch_assoc($result1)){
+												$resultQuery = "SELECT happy FROM RESULTS WHERE testID=".$testID." AND taskID=".$value["taskID"]." AND preID=".$v["preID"];
+												$result2 = $conn->query($resultQuery);
+												while($row2 = mysqli_fetch_assoc($result2)){
+													if($row2["happy"] == false){
+														$countSad++;
+													}
+													else if($row2["happy"] == true){
+														$countHappy++;
+													}
+												}			
+											}
+										}
+										/*
+										foreach($locationIDs as $val){
+											$id .= $val.", ";
+											echo $val."<br/>";
+											
+										}*/
+									}
+									
+									if(isset($_POST["group"])){
+										$i = 0;
+										$countIDs = count($_POST["group"]);
+										$selected = "";											
+										while($i < $countIDs){
+											$selected .= $_POST["group"][$i];
+											if($i < $countIDs - 1){
+												$selected .= ",";
+											}
+											$i++;
+										}
+										echo $selected;
+										
+										$locationSql = "SELECT * FROM GROUPTEST WHERE groupID IN (".$selected.")";
+										
+										$locationResult = $conn->query($locationSql);
+										while($row = mysqli_fetch_assoc($locationResult)){
+											$sql1 = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$row["groupID"];
+											$result1 = $conn->query($sql1);
+											while($v=mysqli_fetch_assoc($result1)){
+												$resultQuery = "SELECT happy FROM RESULTS WHERE testID=".$testID." AND taskID=".$value["taskID"]." AND preID=".$v["preID"];
+												$result2 = $conn->query($resultQuery);
+												while($row2 = mysqli_fetch_assoc($result2)){
+													if($row2["happy"] == false){
+														$countSad++;
+													}
+													else if($row2["happy"] == true){
+														$countHappy++;
+													}
+												}			
+											}
+										}
+									}
+								}
+							}
+						}
+						?>
 					</li>
 				</ul>
 			</li>
@@ -282,13 +302,115 @@
 				</div>
 			</li>
 			</form>
-			
-			
-			
 			<!--end sort result form-->
 		</ul>
         <!--end side bar-->
 
+		
+		<?php
+		
+		/*
+		//get task results
+		$rankingResults = array();
+		$countSad = 0;
+		$countHappy = 0;
+		foreach($tasks as $value){
+			//get character ranking task results
+			if($value['taskType']=="Character Ranking"){
+				if(isset($_POST["action"])){
+					
+				}
+				else{
+					$sql = "SELECT * FROM ranking WHERE testID = " .$testID. " AND taskID = " .$value['taskID'];
+					$result = $conn->query($sql);
+					while($row = mysqli_fetch_assoc($result))
+						$rankingResults[] = $row;
+				}
+			}
+			else if($value['taskType'] == "Likert Scale"){
+				/*if(isset($_POST["action"])){
+					if(isset($_POST["location"])){
+					$locationIDs = $_POST["location"];
+					echo "Please trying to check for the location IDs: ".$locationIDs[1];
+					}
+					//echo "Check".$_POST["location"][1];
+				}
+				else{
+					$resultQuery = "SELECT happy FROM RESULTS WHERE testID=".$testID." AND taskID=".$value["taskID"]; //can retrieve preID as well if Holly cares about result of each kid
+					$result2 = $conn->query($resultQuery);
+					while($row2 = mysqli_fetch_assoc($result2)){
+						if($row2["happy"] == false){
+							$countSad++;
+						}
+						else if($row2["happy"] == true){
+							$countHappy++;
+						}
+					}	
+				}*/
+				
+				/*
+				if(isset($_POST["action"])){
+					if(isset($_POST["2"])){
+						$locationID = $_POST["2"];
+						$sql = "SELECT groupID FROM GROUPTEST WHERE locationID=".$locationID;
+						$result = $conn->query($sql);
+						while($row=mysqli_fetch_assoc($result)){
+							echo "GroupID: ".$row["groupID"];
+							$sql1 = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$row["groupID"];
+							$result1 = $conn->query($sql1);
+							while($v=mysqli_fetch_assoc($result1)){
+								$resultQuery = "SELECT happy FROM RESULTS WHERE testID=".$testID." AND taskID=".$value["taskID"]." AND preID=".$v["preID"];
+								$result2 = $conn->query($resultQuery);
+								while($row2 = mysqli_fetch_assoc($result2)){
+									if($row2["happy"] == false){
+										$countSad++;
+									}
+									else if($row2["happy"] == true){
+										$countHappy++;
+									}
+								}			
+							}
+						}
+					}
+					/*else{
+						echo "None";
+					}*/
+			/*}
+			else if ($value['taskType'] == "Identify Body Parts"){
+				
+			}	
+		}
+		*/
+		//get images for each task
+		$images = array();
+		foreach($tasks as $task){
+			$sql3 = "SELECT * FROM image WHERE taskID = " .$task['taskID'];
+			$result3 = $conn->query($sql3);
+			while($row3 = mysqli_fetch_assoc($result3))
+				$images[] = $row3;
+		}
+	?>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
         <!-- body content -->
         <div id="body">
             <!--the slide out menu-->
