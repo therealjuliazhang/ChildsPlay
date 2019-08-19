@@ -1,7 +1,6 @@
 <html>
 <?php
 session_start();
-
 $testID = $_SESSION["testID"];
 //$testID = $_GET["testID"];
 $groupID = isset($_GET['groupID']) ? $_GET['groupID'] : 4;
@@ -60,7 +59,7 @@ while($value = mysqli_fetch_assoc($result)){
 		$tasks[] = $row;
 }
 
-$info = "testID=" . $testID . "&groupID=" . $groupID . "&taskIndex=" . $taskIndex;
+$info = "groupID=" . $groupID . "&taskIndex=" . $taskIndex;
 $taskTypeUrl = "likertScaleTask.php?" . $info;
 if(count($tasks) > 0){
 	switch($tasks[$taskIndex]["taskType"]){
@@ -103,7 +102,6 @@ $_SESSION["url"] = $taskTypeUrl;
 <?php
 //display images under test
 $conn = OpenCon();
-
 if(count($tasks) > 0){
 $testQuery = "SELECT address FROM IMAGE WHERE taskID=" . $tasks[$taskIndex]["taskID"];
 $result = $conn->query($testQuery);
@@ -146,13 +144,13 @@ foreach ($imageAdresses as $value)
 									if($_SESSION['mode'] == "preview")
 										header("Location: educatorTests.php");
 									else
-										header("Location: selectGroupForTask.php?testID=".$testID);
+										header("Location: selectGroupForTask.php?");
 								else{
 									--$taskIndex;
 									if($_SESSION['mode'] == "preview")
 										header("Location: educatorTests.php");
 									else
-										header("Location: comments.php?testID=".$testID."&groupID=".$groupID."&taskIndex=".$taskIndex);
+										header("Location: comments.php?groupID=".$groupID."&taskIndex=".$taskIndex);
 								}
 							}
 						?>

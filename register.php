@@ -45,20 +45,18 @@
                 errorElement : 'div',
                 errorClass: 'invalid',
                 errorPlacement: function(error, element) {
-                    if(element.attr('type') == "text"){
-                        $(element)
-                        .closest("form")
-                        .find("label[for='" + element.attr("id") + "']")
-                        .attr('data-error', error.text());
-                    }
-                    else if(element.hasClass("materialSelect")){
-                        element.after(error);
-                    }   
+					$(element)
+					.closest("form")
+					.find("label[for='" + element.attr("id") + "']")
+					.attr('data-error', error.text());
                 }
             })
             //set up rules and messages for errors
             $("#form").validate({
                 rules: {
+					fullName: "required",
+					accountType: "required",
+					location: "required",
                     username: {
                         required: true,
                         remote: {
@@ -72,23 +70,25 @@
                             url: "checkEmail.php",
                             type: "post"
                         }
-					}
+					},
+					password1: "required"
                 },
                 messages: {
+					fullName: "Enter your full name.",
 					accountType: "Pick an account type.",
 					location: "Pick your location from the drop down menu.",
                     username: {
                         required: "Enter a username.",
-                        remote: jQuery.validator.format("Username {0} is already taken.")
+                        remote: jQuery.validator.format("Username {0} is already being used.")
                     },
                     email: {
                         required: "Enter an email.",
-                        remote: jQuery.validator.format("The email {0} is already being used by another account.")
-                    }
+                        remote: jQuery.validator.format("The email {0} is already being used.")
+					},
+					password1: "Enter your password"
                 }
             });
 		});
-		
 		function validate() {
 			var password1 = document.getElementById("password1").value;
 			var password2 = document.getElementById("password2").value;
@@ -101,25 +101,16 @@
 			document.getElementById("submit").disabled = true;
 			}
 		}
-		
-		
-	   
-   
-
-		
     </script>
 	<script>
-	 function chg(obj)
-    {
-	if(obj.options[obj.selectedIndex].value =="hi")
-        document.getElementById("10").style.display="";
-        else
-        document.getElementById("10").style.display="none";
-    }
+		function chg(obj){
+			if(obj.options[obj.selectedIndex].value =="hi")
+			document.getElementById("10").style.display="";
+			else
+			document.getElementById("10").style.display="none";
+		}
 	</script>
     </head>
-    <!--the stuff in the head is all the linking things to Materialize-->
-    <!--all the linking's been done, so you shouldn't need to download anything from Materialise-->
     <body>
         <!--header-->
         <nav class="nav-extended blue darken-4">
@@ -135,7 +126,7 @@
 				</ul>
 				</div>
 					<div class="right col s2 offset-s2">
-						<a class="waves-effect waves-light btn blue darken-2 right login" href="login.html">Login</a>
+						<a class="waves-effect waves-light btn blue darken-2 right login" href="login.php">Login</a>
 					</div>
 				</div>
             </div>
@@ -153,10 +144,16 @@
 								<div class="row valign-wrapper">
 									<div class="col s12 right-align">Register as an</div>
 									<div class="input-field col s12">
-										<select  onchange="chg(this)" name="accountType" required">
-										    <option value="admin">Admin</option>
-											<option value="hi">Educator</option>
+										<select  onchange="chg(this)" name="accountType" required>
+										    <option value="1">Admin</option>
+											<option value="0">Educator</option>
 										</select>
+									</div>
+								</div>
+								<div class="row">
+									<div class="input-field col s12">
+										<input id="fullName" name="fullName" type="text" class="validate">
+										<label for="fullName">Full Name</label>
 									</div>
 								</div>
 								<div class="row">
@@ -166,18 +163,17 @@
 									</div>
 								</div>
 								<div class="row">
-									<div name="email" class="input-field col s12">
-										<input name="email" type="text" class="validate">
+									<div class="input-field col s12">
+										<input id="email" name="email" type="text" class="validate">
 										<label for="email">Email</label>
 									</div>
 								</div>
 								<div class="row">
 									<div class="input-field col s12">
-										<input id="password1" type="password" class="validate">
+										<input id="password1" name="password1" type="password" class="validate">
 										<label for="password1">Password</label>
 									</div>
 								</div>
-								
 								<div class="row">
 									<div class="input-field col s12">
 										<input id="password2" type="password" class="validate" onkeyup="validate()">
@@ -187,17 +183,14 @@
 								</div>
 								<div class="row valign-wrapper" >
 									<div class="input-field col s12" style="display:none"  id="10">
-									<select name="location"   id="location"  class="materialSelect" required multiple>
-									<option value=""disabled selected >Location</option><
-									/select>
+									<select name="location" id="location"  class="materialSelect" required multiple>
+										<option value=""disabled selected >Location</option>
+									</select>
 									</div>
 								</div>
-								
 								<div class="card-action center-align" >
 									<input type="submit" value="Register" class="btn blue darken-4" id="submit"/>
 								</div>
-								
-								
 							</form>
 						</div>
 					</div>
@@ -217,7 +210,12 @@
 		}
 		label[data-error] {
 			width: 100%;
+			font-size: 12px;
 		}
+		.invalid{
+			font-size: 12px;
+			color: #EC453C;
+		} 
 		.brand-logo{
 			margin-top:-67px;
 		}

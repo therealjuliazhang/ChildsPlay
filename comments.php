@@ -1,17 +1,15 @@
 <!DOCTYPE html>
-
 <html>
 	<?php
+	session_start();
+	$testID = $_SESSION["testID"];
 	include 'db_connection.php';
 	$conn = OpenCon();
-	
-	$testID = $_GET["testID"];
 	$groupID = $_GET["groupID"];
 	$taskIndex = $_GET['taskIndex'];
 	//fetch task
 	$query = "SELECT taskID FROM TASKASSIGNMENT WHERE testID=".$testID;
 	$result = $conn->query($query);
-
 	$tasks = array();
 	while($value = mysqli_fetch_assoc($result)){
 		$taskQuery = "SELECT * FROM TASK WHERE taskID=".$value["taskID"];
@@ -33,12 +31,6 @@
         <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script type = "text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
 		<script type = "text/javascript" src = "https://code.jquery.com/jquery-1.12.4.min.js"></script>
-		<style>
-		#error{
-			font-style: italic;
-			color: red;
-		}
-		</style>
     </head>
     <!--the stuff in the head is all the linking things to Materialize-->
     <!--all the linking's been done, so you shouldn't need to download anything from Materialise-->
@@ -96,9 +88,6 @@
 header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1.
 header("Pragma: no-cache"); // HTTP 1.0.
 header("Expires: 0"); // Proxies.
-
-session_start();
-
 $conn = OpenCon();
 if(isset($_POST['nextButton'])){
 	function processText($text) {
@@ -108,13 +97,12 @@ if(isset($_POST['nextButton'])){
 		return $text;
 	}
 	$comment = processText($_POST['area1']);
-	
 	if($_SESSION["mode"] == "preview"){
 		if($taskIndex == (sizeof($tasks)-1))
 				header("Location: thankyou.php");
 			else{
 				$taskIndex++;
-				header("Location: instruction.php?testID=".$testID."&groupID=".$groupID."&taskIndex=".$taskIndex);
+				header("Location: instruction.php?groupID=".$groupID."&taskIndex=".$taskIndex);
 			}
 	}
 	else{
@@ -125,7 +113,7 @@ if(isset($_POST['nextButton'])){
 					header("Location: thankyou.php");
 				else{
 					$taskIndex++;
-					header("Location: instruction.php?testID=".$testID."&groupID=".$groupID."&taskIndex=".$taskIndex);
+					header("Location: instruction.php?groupID=".$groupID."&taskIndex=".$taskIndex);
 				}
 			} else{
 				echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
@@ -136,7 +124,7 @@ if(isset($_POST['nextButton'])){
 					header("Location: thankyou.php");
 				else{
 					$taskIndex++;
-					header("Location: instruction.php?testID=".$testID."&groupID=".$groupID."&taskIndex=".$taskIndex);
+					header("Location: instruction.php?groupID=".$groupID."&taskIndex=".$taskIndex);
 				}
 		}
 		/*else
@@ -150,10 +138,7 @@ if(isset($_POST['backButton'])){
 }*/
     CloseCon($conn);
 ?>
-			
-        
         <!--end body content-->
-        
     </body>
     <style>
 	.brand-logo{
@@ -162,6 +147,10 @@ if(isset($_POST['backButton'])){
 	.logout{
 		margin-top: 15px;
 		margin-right:15px;
+	}
+	#error{
+		font-style: italic;
+		color: red;
 	}
     </style>
 </html>

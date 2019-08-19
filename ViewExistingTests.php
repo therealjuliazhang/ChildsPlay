@@ -8,6 +8,11 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+    <script>
+    $(document).ready(function(){
+      $('.tabs').tabs();
+    });
+    </script>
   </head>
   <body>
     <!--header-->
@@ -32,8 +37,19 @@
     <!--end header-->
 <!--body part-->
 <div id="bodyPart">
-  <h3 class="blue-text darken-2 header">Available Tests</h3>
-
+  <h4 class="blue-text darken-2 header">Available Tests</h4>
+  <div class="row">
+    <div class="col s12">
+      <ul class="tabs">
+        <li class="tab col s3"><a class="active" href="#pendingUsers">Pending Users</a></li>
+        <li class="tab col s3"><a href="#educators">Educators</a></li>
+        <li class="tab col s3"><a href="#admin">Admin</a></li>
+      </ul>
+    </div>
+    <div id="pendingUsers" class="col s12">Test 1</div>
+    <div id="educators" class="col s12">Test 2</div>
+    <div id="admin" class="col s12">Test 3</div>
+  </div>
   <table>
        <thead>
          <tr class="blue-text darken-2">
@@ -72,45 +88,14 @@
 				echo '</td><td><a href="#?testID=' . $value['testID'] . '" class="waves-effect waves-light btn blue darken-4 results">Results</a></td></tr>';
 			}
 		?>
-         <!--<tr>
-           <td>Test 1</td>
-           <td>Testing of the new set of monsters with updated eye colours.</td>
-           <td>09/04/19</td>
-           <td>11/04/19</td>
-           <td><button class="waves-effect waves-light btn blue darken-2 preview" onclick="">Preview</button></td>
-           <td><button class="waves-effect waves-light btn blue darken-4 edit" onclick="">Edit</button></td>
-           <td><button class="waves-effect waves-light btn blue darken-4 redults" onclick="">Results</button></td>
-         </tr>
-         <tr>
-           <td>Test 2</td>
-           <td>Test for the updated monsters for the early start day care center</td>
-           <td>09/04/19</td>
-           <td>12/04/19</td>
-           <td><button class="waves-effect waves-light btn blue darken-2 preview" onclick="">Preview</button></td>
-           <td><button class="waves-effect waves-light btn blue darken-4 edit" onclick="">Edit</button></td>
-           <td><button class="waves-effect waves-light btn blue darken-4 redults" onclick="">Results</button></td>
-         </tr>
-         <tr>
-           <td>Test 3</td>
-           <td>Ranking test of the old monsters with the updated monsters</td>
-           <td>09/04/19</td>
-           <td>11/04/19</td>
-           <td><button class="waves-effect waves-light btn blue darken-2 preview" onclick="">Preview</button></td>
-           <td><button class="waves-effect waves-light btn blue darken-4 edit" onclick="">Edit</button></td>
-           <td><button class="waves-effect waves-light btn blue darken-4 redults" onclick="">Results</button></td>
-         </tr>-->
        </tbody>
      </table>
-
 </div>
-
-
-  </body>
-
-  <style>
-#body {
-  padding-left: 330px;
-}
+</body>
+<style>
+  #body {
+    padding-left: 330px;
+  }
   @media only screen and (max-width : 992px) {
       #body{
           padding-left: 0;
@@ -138,10 +123,9 @@
   #tableDiv{
       width: 400px;
   }
-.sortButton{
+  .sortButton{
   margin-bottom: 80px;
   }
-
   #bodyPart{
     margin-left: 10%;
     margin-right: 10%;
