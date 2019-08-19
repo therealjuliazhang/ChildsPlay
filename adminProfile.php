@@ -43,7 +43,8 @@
 
           <div id="user">
           <i class="medium material-icons" id="mailIcon">account_box</i>
-          <span id="userType">Admin</span>
+          <span id="userType">Admin</span><br>
+          <a class="waves-effect waves-light btn #2196f3 blue right" id="logoutButton" onclick="logout()">Logout</a>
           </div>
 
           </td>
@@ -71,13 +72,19 @@
        <tbody>
          <tr>
            <td class="row1">Username:</td>
-           <td class="row2">Holly</td>
-           <td class="row3"><a>Edit</a></td>
+           <td class="row2" id="uNameCell">
+              <div class='input-field col s6'>
+                <input id="uName" disabled value='Holly' type='text' class='validate'>
+              </div>
+           </td>
          </tr>
          <tr>
            <td class="row1">Password:</td>
-           <td class="row2">********</td>
-           <td class="row3"><a>Edit</a></td>
+           <td class="row2" id="passwordCell">
+              <div class='input-field col s6'>
+                <input id="password" disabled value='********' type='text' class='validate'>
+              </div>
+            </td>
          </tr>
 
          <thead>
@@ -89,39 +96,42 @@
          <tbody>
            <tr>
              <td class="row1">Email:</td>
-             <td class="row2">mfin@gmail.com</td>
-             <td class="row3"><a>Edit</a></td>
-           </tr>
-           <tr>
-             <td class="row1">Location:</td>
-             <td class="row2">Wollongong Preschool</td>
-             <td class="row3">
-               <div class="input-field col s12">
-                 <select multiple>
-                   <option value="" disabled selected>Edit Locations</option>
-                   <option value="1">Wollongong Preschool</option>
-                   <option value="2">Keiraville Community Preschool</option>
-                   <option value="3">KU Gwynneville Preschool</option>
-                 </select>
+             <td class="row2" id="emailCell">
+               <div class='input-field col s6'>
+                <input id="email" disabled value='mfin@gmail.com' type='text' class='validate'>
                </div>
-               <!-- Initialize select element-->
-               <script>
-               $(document).ready(function(){
-                   $('select').formSelect();
-                 });
-              </script>
-            </td>
+             </td>
            </tr>
+
        </tbody>
      </table>
-     <a class="waves-effect waves-light btn blue darken-2 buttons right" onclick="logout()">Logout</a>
-     <a class="waves-effect waves-light btn #2196f3 blue buttons right" id="saveButton" onclick="logout()">Save Changes</a>
+     <a class="waves-effect waves-light btn blue darken-2 right" id="saveButton">Save</a>
+     <a class="waves-effect waves-light btn #2196f3 blue right" id="editButton">Edit</a>
+     </div>
     </div>
 
 
   </body>
 
-
+<!--Edit and Save information function-->
+  <script>
+//enable input
+  $(document).ready(function(){
+    $("#editButton").click(function(){
+      $("#uName").prop( "disabled", false );
+      $("#password").prop( "disabled", false );
+      $("#email").prop( "disabled", false );
+    })
+  });
+//disable input
+  $(document).ready(function(){
+    $("#saveButton").click(function(){
+      $("#uName").prop( "disabled", true );
+      $("#password").prop( "disabled", true );
+      $("#email").prop( "disabled", true );
+    })
+  });
+  </script>
 
 
 
@@ -136,9 +146,6 @@
   }
   .brand-logo{
       margin-top:-67px;
-  }
-  .buttons{
-      margin-top: 15px;
   }
   #sidebar{
       margin-top: 264px;
@@ -178,6 +185,7 @@
     vertical-align: top;
   }
   #user{
+    width:200px;
     margin-left: 100px;
   }
   #userType{
@@ -201,8 +209,12 @@
   .row3{
     text-align:right;
   }
+  #editButton{
+    margin-top: 15px;
+    margin-right: 10px;
+  }
   #saveButton{
-    margin-right: 20px;
+    margin-top: 15px;
   }
 
   </style>

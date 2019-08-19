@@ -101,21 +101,22 @@
 			document.getElementById("submit").disabled = true;
 			}
 		}
-		function myFunction() {
-			var x = document.getElementById("accountType").value;
-			console.log(x);
-			if(x =="educator"){
-			document.getElementById("locationdiv").innerHTML = "<div class=\"input-field col s12\"><select name=\"location\" id=\"location\" class=\"materialSelect\" required multiple><option value=\"hi\"disabled selected >Location</option></select></div>";
-			}
-			else{
-				document.getElementById("locationdiv").innerHTML = "";
-			}
-		}
 		
 		
+	   
+   
 
 		
     </script>
+	<script>
+	 function chg(obj)
+    {
+	if(obj.options[obj.selectedIndex].value =="hi")
+        document.getElementById("10").style.display="";
+        else
+        document.getElementById("10").style.display="none";
+    }
+	</script>
     </head>
     <!--the stuff in the head is all the linking things to Materialize-->
     <!--all the linking's been done, so you shouldn't need to download anything from Materialise-->
@@ -152,9 +153,9 @@
 								<div class="row valign-wrapper">
 									<div class="col s12 right-align">Register as an</div>
 									<div class="input-field col s12">
-										<select name="accountType" required id="accountType" onchange="myFunction()">
-											<option value="educator">Educator</option>
-											<option value="admin">Admin</option>
+										<select  onchange="chg(this)" name="accountType" required">
+										    <option value="admin">Admin</option>
+											<option value="hi">Educator</option>
 										</select>
 									</div>
 								</div>
@@ -184,12 +185,15 @@
 										<span id="tishi"></span>
 									</div>
 								</div>
-								
-								<div class="row" id="locationdiv">
-									
+								<div class="row valign-wrapper" >
+									<div class="input-field col s12" style="display:none"  id="10">
+									<select name="location"   id="location"  class="materialSelect" required multiple>
+									<option value=""disabled selected >Location</option><
+									/select>
+									</div>
 								</div>
 								
-								<div class="card-action center-align">
+								<div class="card-action center-align" >
 									<input type="submit" value="Register" class="btn blue darken-4" id="submit"/>
 								</div>
 								
