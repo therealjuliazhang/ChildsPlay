@@ -40,7 +40,7 @@
 			<div class="row">
 				<div class="col s12">				
 					<div class="right-align">
-						<a class="waves-effect waves-light btn blue darken-2" onclick="">Cancel</a>
+						<a href="educatorTests.php" class="waves-effect waves-light btn blue darken-2">Cancel</a>
 					</div>
 				</div>
 			</div>
