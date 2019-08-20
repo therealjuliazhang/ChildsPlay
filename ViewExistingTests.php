@@ -2,18 +2,15 @@
 <html lang="en" dir="ltr">
   <head>
     <title>ViewExistingTests</title>
-     <meta name = "viewport" content = "width = device-width, initial-scale = 1">
+    <meta name = "viewport" content = "width = device-width, initial-scale = 1">
     <link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
-	<meta name = "viewport" content = "width = device-width, initial-scale = 1">      
-    <link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel = "stylesheet"href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
-    <script type = "text/javascript"src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>           
-    <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js">
-    </script>
+	<script> $('.dropdown-trigger').dropdown();
+	$('.modal').modal();
+	</script>
 	<style>
 #body {
   padding-left: 330px;
@@ -94,6 +91,7 @@
              <th>Last Edit</th>
              <th>Preview</th>
              <th>More</th>
+             <th>Results</th>
          </tr>
        </thead>
 
@@ -117,27 +115,21 @@
 				$formattedEditDate = date( 'd/m/Y', $editDate );
 				echo '<tr><td>' . $value['title'] . '</td><td>' . $value['description'];
 				echo '</td><td>'.$formattedCreateDate.'</td><td>'.$formattedEditDate;
-				echo '</td><td><a href="instruction.php?testID=' . $value['testID'] . '" class="btn dropdown-button blue darken-4" data-activates = "dropdown1">Preview</a></td>';
-				echo '<td><a href="#?testID=' . $value['testID'] . '" class="btn dropdown-button blue darken-4" data-activates = "dropdownTask2">...</a></td>';
+				echo '</td><td><a href="instruction.php?testID=' . $value['testID'] . '" class="waves-effect waves-light btn blue darken-2 preview">Preview</a></td>';
+				echo '<td><a href="#?testID=' . $value['testID'] . '" class="dropdown-trigger waves-effect waves-light btn blue darken-4 Edit" data-target=\'dropdown1\'>...</a></td>';
 				
 			}	
 		?>
 		
        </tbody>
      </table>
-     <ul id='dropdownTask2' class='dropdown-content'>
-        <li><a href="#">Edit</a></li>
+
+</div>
+<ul id='dropdown1' class='dropdown-content'>
+        <li><a href="#!">Edit</a></li>
         <li><a href="#!">Result</a></li>
         </ul>
-</div>
-     
-	  <ul id = "dropdown1" class = "dropdown-content">
-		   <li><a href = "#">Task1</a></li>
-		   <li><a href = "#!">Task2</a></li>
-		   <li><a href = "#">Task3</a></li>
-		   <li><a href = "#!">Task4</a></li>
-		   </ul>
-       
+		
 
   </body>
 
