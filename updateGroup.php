@@ -46,7 +46,7 @@ foreach ($_POST as $key => $value) {
             $preschooler->id = getID($conn, $preschooler);
             if($existingPreschooler)
                 updatePreschooler($conn, $preschooler);
-            insertGroupAssignment($conn, $groupID, $preschooler->id, $userID);
+			insertGroupAssignment($conn, $groupID, $preschooler->id, $userID);
         }
     }
 }
