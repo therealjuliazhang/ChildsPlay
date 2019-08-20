@@ -131,12 +131,13 @@ INSERT INTO GROUPASSIGNMENT(groupID, preID, userID) VALUES (@groupID, @preID, @u
 */
 
 /*Group 2*/
+/*
 SET
 @groupID = 2,
 @preID = 1,
 @userID = 3;
 INSERT INTO GROUPASSIGNMENT(groupID, preID, userID) VALUES (@groupID, @preID, @userID);
-
+*/
 SET
 @groupID = 2,
 @preID = 4,

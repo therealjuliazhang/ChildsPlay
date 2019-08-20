@@ -1,12 +1,11 @@
 <html>
 	<?php
+	$testID = $_GET["testID"];
 	//if there is no groupId then it is a preview and groupID is set to 4 (preview group)
 	$groupID = isset($_GET['groupID']) ? $_GET['groupID'] : 4;
 	$taskIndex = $_GET['taskIndex'];
 	header('Access-Control-Allow-Origin: *');
 	session_start();
-	$testID = $_SESSION["testID"];
-	$userID = $_SESSION['userID'];
 	include 'db_connection.php';
 	$conn = OpenCon();
 	//fetch task
@@ -29,7 +28,7 @@
 	while($row = mysqli_fetch_assoc($result))
 	   $images[] = $row;
 	//fetch preschoolers
-	$sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$groupID." AND userID=".$userID;
+	$sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$groupID." AND userID=2"; ////Need to fix value of userID after Login page is implemented
 	$result = $conn->query($sql);
 	$preschoolers = array();
 	while($row = mysqli_fetch_assoc($result)){
@@ -87,19 +86,25 @@
     </head>
 
     <body>
+        <!--no header needed for test pages-->
         <!-- body content -->
+
 		<img src="images/greyCircle.png" width="7%" align="right" onclick="goNext();"></img>
+
 		<div class="container">
 			<div class="center-align"><img id="image" width="28%"></img></div>
 			<!--all container does is create padding on the left & right sides.-->
 			</div>
+
 		<div class="bottom">
 			<div id="participant" class="row" style="font-size:18px;font-weight:bold">
+
 				<div class="bottomInBottom">
 				<div class="row faces">
 					<img id="happy" src="images/happy.png" onclick="happyClicked()" width="10%"></img>
 					<img id="sad" src="images/sad.png" onclick="sadClicked()" width="10%"></img>
 				</div>
+
 				<div class="center-align">
 					<span id="preschoolerName">
 					</span>'s Turn
@@ -107,7 +112,9 @@
 				</div>
 			</div>
 		</div>
+
         <!--end body content-->
+
     </body>
 	<script>
 		var taskIndex = <?php echo(json_encode($taskIndex)); ?>;
@@ -129,7 +136,7 @@
 				var testID = <?php echo $testID ?>;
 				var groupID = <?php echo $groupID ?>;
 				var taskIndex = <?php echo $taskIndex ?>;
-				window.location.href = "comments.php?groupID=" + groupID + "&taskIndex=" + taskIndex;
+				window.location.href = "comments.php?testID=" + testID + "&groupID=" + groupID + "&taskIndex=" + taskIndex;
 			}
 			document.getElementById("preschoolerName").innerHTML = preschoolers[preschoolerIndex]['name'];
 			document.getElementById("participant").className = 'row ' + colours[preschoolerIndex % colours.length];
