@@ -7,7 +7,7 @@
     $sql = "SELECT * FROM USERS WHERE username = '" .$input. "'";
     $result = $conn->query($sql);
     //return "" for error, true for no error
-    if(mysqli_num_rows($result)==0)
+    if(!$result)
         echo json_encode("true");
     else
         echo json_encode("");

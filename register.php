@@ -113,7 +113,7 @@
     {
 	if(obj.options[obj.selectedIndex].value =="hi")
         document.getElementById("10").style.display="";
-    else
+        else
         document.getElementById("10").style.display="none";
     }
 	</script>
@@ -185,20 +185,18 @@
 										<span id="tishi"></span>
 									</div>
 								</div>
-								
 								<div class="row valign-wrapper" >
 									<div class="input-field col s12" style="display:none"  id="10">
-										<select name="location"   id="location"  class="materialSelect" required multiple>
-											<option value=""disabled selected >Location</option>
-										</select>
-										
+									<select name="location"   id="location"  class="materialSelect" required multiple>
+									<option value=""disabled selected >Location</option><
+									/select>
 									</div>
 								</div>
-								<div class="row">
-								<div class="card-action center-align">
+								
+								<div class="card-action center-align" >
 									<input type="submit" value="Register" class="btn blue darken-4" id="submit"/>
 								</div>
-								</div>
+								
 								
 							</form>
 						</div>

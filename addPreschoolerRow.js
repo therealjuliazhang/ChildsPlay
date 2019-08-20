@@ -13,21 +13,14 @@ function addRow(preschooler=0){
     }, false);
     iconDiv.classList.add("col", "s1", "changeCursor");
     var removeIcon = document.createElement("i");
+    removeIcon.classList.add("material-icons", "medium", "icon-red", "tooltipped"); 
     removeIcon.innerHTML = "remove";
-    removeIcon.classList.add("material-icons", "medium", "icon-red"); //, "tooltipped"
     removeIcon.setAttribute("data-position", "right");
     removeIcon.setAttribute("data-tooltip", "Remove row");
     iconDiv.appendChild(removeIcon);
     newRow.appendChild(iconDiv);
     rowsDiv.appendChild(newRow);
     num++;
-    updateTooltips();
-}
-
-function updateTooltips(){
-    $('.tooltipped').tooltip('remove');
-    $("i").addClass("tooltipped");
-    $('.tooltipped').tooltip();
 }
 //creates text field input
 function addInput(type, row, preschooler=0){
