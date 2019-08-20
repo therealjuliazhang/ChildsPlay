@@ -2,14 +2,17 @@
 	<?php 
 	//send user to login if not logged in
 	session_start(); 
+	include 'db_connection.php';
+	$conn = OpenCon();
 	// if (!isset($_SESSION['userID'])) {
 	// 	header('location: login.php');
 	// }
-	if (isset($_SESSION['userID'])) {
-		$userID = $_SESSION['userID'];
-	}
-	include 'db_connection.php';
-		$conn = OpenCon();
+	if (isset($_SESSION['username'])) 
+		$username = $_SESSION['username'];
+	//get userID
+	$sql = "SELECT userID FROM USERS WHERE username = $username";
+	$result = $conn->query($sql);
+	$userID = mysqli_fetch_assoc($result)['userID'];
 	?>
     <head>
         <title>Available Tests and Groups for Educator</title>
