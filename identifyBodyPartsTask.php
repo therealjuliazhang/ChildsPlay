@@ -1,17 +1,16 @@
 <html>
 <?php
-$testID = $_GET["testID"];
 $groupID = $_GET["groupID"];
 $taskIndex = $_GET['taskIndex'];
 header('Access-Control-Allow-Origin: *');
 session_start();
 include 'db_connection.php';
 $conn = OpenCon();
-
+$testID = $_SESSION["testID"];
+$userID = $_SESSION["userID"];
 //fetch task
 $query = "SELECT taskID FROM TASKASSIGNMENT WHERE testID=".$testID;
 $result = $conn->query($query);
-
 $tasks = array();
 while($value = mysqli_fetch_assoc($result)){
 	$taskQuery = "SELECT * FROM TASK WHERE taskID=".$value["taskID"];
@@ -20,9 +19,8 @@ while($value = mysqli_fetch_assoc($result)){
 		$tasks[] = $row;
 }
 $taskID = $tasks[$taskIndex]['taskID'];
-
 //fetch names of preschoolers
-$sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$groupID." AND userID=2"; ////Need to fix value of userID after Login page is implemented
+$sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$groupID." AND userID=".$userID; 
 $result = $conn->query($sql);
 $preschoolers = array();
 while($row = mysqli_fetch_assoc($result)){
@@ -131,7 +129,7 @@ mysqli_close($conn);?>
 				var testID = <?php echo $testID ?>;
 				var groupID = <?php echo $groupID ?>;
 				var taskIndex = <?php echo $taskIndex ?>;
-				window.location.href = "comments.php?testID=" + testID + "&groupID=" + groupID + "&taskIndex=" + taskIndex;
+				window.location.href = "comments.php?groupID=" + groupID + "&taskIndex=" + taskIndex;
 			}
 			preschoolerIndex = 0;
 			displayCharacter(imageIndex);

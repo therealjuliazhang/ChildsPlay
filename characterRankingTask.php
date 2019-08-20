@@ -1,25 +1,28 @@
 <html>
 <?php
-$testID = $_GET["testID"];
+//get information
 $groupID = $_GET["groupID"];
 $taskIndex = $_GET['taskIndex'];
 session_start();
+if (isset($_SESSION['userID']))
+	$userID = $_SESSION['userID'];
+if (isset($_SESSION['testID']))
+	$testID = $_SESSION['testID'];
 include 'db_connection.php';
 $conn = OpenCon();
 //fetch task
 $query = "SELECT taskID FROM TASKASSIGNMENT WHERE testID=".$testID;
-	$result = $conn->query($query);
-
-	$tasks = array();
-	while($value = mysqli_fetch_assoc($result)){
-		$taskQuery = "SELECT * FROM TASK WHERE taskID=".$value["taskID"];
-		$result2 = $conn->query($taskQuery);
-		while($row = mysqli_fetch_assoc($result2))
-			$tasks[] = $row;
-	}
+$result = $conn->query($query);
+$tasks = array();
+while($value = mysqli_fetch_assoc($result)){
+	$taskQuery = "SELECT * FROM TASK WHERE taskID=".$value["taskID"];
+	$result2 = $conn->query($taskQuery);
+	while($row = mysqli_fetch_assoc($result2))
+		$tasks[] = $row;
+}
 $taskID = $tasks[$taskIndex]['taskID'];
 //fetch preschoolers from database
-$sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$groupID." AND userID=2"; ////Need to fix value of userID after Login page is implemented
+$sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$groupID." AND userID=".$userID; ////Need to fix value of userID after Login page is implemented
 //$sql = "SELECT * FROM PRESCHOOLER WHERE GROUPID = '$groupID'";
 $result = $conn->query($sql);
 $preschoolers = array();
@@ -73,7 +76,7 @@ mysqli_close($conn);
 			var testID = <?php echo $testID ?>;
 			var groupID = <?php echo $groupID ?>;
 			var taskIndex = <?php echo $taskIndex ?>;
-			window.location.href = "comments.php?testID=" + testID + "&groupID=" + groupID + "&taskIndex=" + taskIndex;
+			window.location.href = "comments.php?groupID=" + groupID + "&taskIndex=" + taskIndex;
 		}
 
 		var previousPreschoolerName = document.getElementById("preschoolerName").innerHTML;
