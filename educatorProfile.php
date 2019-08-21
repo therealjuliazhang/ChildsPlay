@@ -66,88 +66,44 @@
     <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 
     <!--main contents-->
-    <div id="userDetail">
-      <table id="userInfo">
-       <thead>
-         <tr>
-             <th colspan="3" class="blue-text darken-2">Account Information</th>
-         </tr>
-       </thead>
 
-       <tbody>
-         <tr>
-           <td class="row1">Username:</td>
-           <td class="row2" id="uNameCell">
-              <div class='input-field col s6'>
-                <input id="uName" disabled value='Alex Satoru' type='text' class='validate'>
-              </div>
-           </td>
-         </tr>
-         <tr>
-           <td class="row1">Password:</td>
-           <td class="row2" id="passwordCell">
-              <div class='input-field col s6'>
-                <input id="password" disabled value='********' type='text' class='validate'>
-              </div>
-            </td>
-         </tr>
+<div class="container" id="userDetail">
+   <div class="row">
+     <div class="col s12 blue-text darken-2"><h5>Account Information</h5></div>
+     <div class="col s2 column01"><p>Username:<p/></div>
+     <div class='input-field col s10'>
+       <input id="uName" disabled value='Alex Satoru' type='text' class='validate'>
+     </div>
 
-         <thead>
-           <tr>
-               <th colspan="3" class="blue-text darken-2">Personal Information</th>
-           </tr>
-         </thead>
+     <div class="col s2 column01">Password:</div>
+     <div class='input-field col s10'>
+       <input id="password" disabled value='********' type='text' class='validate'>
+     </div>
+     <div class="col s12 blue-text darken-2 column01"><h5>Personal Information</h5></div>
+     <div class="col s2"><p>Email:</p></div>
+     <div class='input-field col s10'>
+      <input id="email" disabled value='ash@gmail.com' type='text' class='validate'>
+     </div>
+     <div class="col s2">Location:</div>
+     <div class="input-field col s9 locationCell">
+       <select class="selectLocation" disabled>
+       <option value="">KU Gwynneville Preschool</option>
+       <option value="2" selected>Wollongong Preschool</option>
+       <option value="3">Keiraville Community Preschool</option>
+       </select>
+     </div>
+     <div class="col s1 right"><a class="waves-effect waves-light btn right" id="removeButton" onclick="removeRow()"><i class="material-icons">remove</i></a></div>
+   </div>
+ </div>
 
-         <tbody>
-           <tr>
-             <td class="row1">Email:</td>
-             <td class="row2" id="emailCell">
-               <div class='input-field col s6'>
-                <input id="email" disabled value='ash@gmail.com' type='text' class='validate'>
-               </div>
-             </td>
-           </tr>
-           <tr>
-             <td class="row1">Location:</td>
-             <td class="row2" id="selectorCell">
-              <div class="input-field col s12">
-                <select id="selectLocation">
-                <option value="">KU Gwynneville Preschool</option>
-                <option value="2" selected>Wollongong Preschool</option>
-                <option value="3">Keiraville Community Preschool</option>
-                </select>
-              </div>
-              <div class="input-field col s12">
-                <select disabled>
-                <option value=""selected>KU Gwynneville Preschool</option>
-                <option value="2">Wollongong Preschool</option>
-                <option value="3">Keiraville Community Preschool</option>
-                </select>
-              </div>
-              <div class="input-field col s12">
-                <select disabled>
-                <option value="">KU Gwynneville Preschool</option>
-                <option value="2">Wollongong Preschool</option>
-                <option value="3" selected>Keiraville Community Preschool</option>
-                </select>
-              </div>
-            </td>
-           </tr>
-           <tr>
-             <td class="row1"></td>
-             <td class="row2" id="buttonInTable">
-               <a class="waves-effect waves-light btn blue darken-4" id="addButton"><i class="material-icons">add</i></a>
-             </td>
-           </tr>
-       </tbody>
-     </table>
-     <a class="waves-effect waves-light btn blue darken-2 right" id="saveButton">Save</a>
-     <a class="waves-effect waves-light btn #2196f3 blue right" id="editButton">Edit</a>
-    </div>
-
-
-
-
+   <div class="container" id="buttonsContainer">
+     <div class="row">
+       <div class="col s9"></div>
+       <div class="col s1"><a class="waves-effect waves-light btn #2196f3 blue right" id="editButton">Edit</a></div>
+       <div class="col s1"><a class="waves-effect waves-light btn blue darken-2 right" id="saveButton">Save</a></div>
+       <div class="col s1"><a class="waves-effect waves-light btn blue darken-4 right" id="addButton" onclick="appendSelect()"><i class="material-icons">add</i></a></div>
+     </div>
+   </div>
 
 
   </body>
@@ -160,6 +116,8 @@
         $("#uName").prop( "disabled", false );
         $("#password").prop( "disabled", false );
         $("#email").prop( "disabled", false );
+        $(".selectLocation").prop('disabled', false);
+        $('select').formSelect();
       })
     });
     //disable inputs
@@ -168,19 +126,53 @@
         $("#uName").prop( "disabled", true );
         $("#password").prop( "disabled", true );
         $("#email").prop( "disabled", true );
-        $("#selectLocation").prop('disabled', true);
+        $(".selectLocation").prop('disabled', true);
+        $('select').formSelect();
       })
     });
+
     //Add new selector
-    $(document).ready(function(){
-    $("#addButton").click(function(){
-      $("#selectorCell").append("<div class='input-field col s12'><select disabled><option>KU Gwynneville Preschool</option></select></div>");
-      });
-    });
+
+    function appendSelect() {
+            //insert locations into variable
+            var location01 = "KU Gwynneville Preschool";
+            var location02 = "Wollongong Preschool";
+            var location03 = "Keiraville Community Preschool";
+            var removeButton = "<a class='waves-effect waves-light btn right' id='removeButton'><i class='material-icons'>remove</i></a>";
+
+
+            var locations = "<div class='row'><div class='col s2'></div><div class='input-field col s9'><select class='selectLocation' disabled><option value='1' disabled selected>Choose location<option>"
+                          + location01 + "</option><option>"
+                          + location02 + "</option><option>"
+                          + location03 + "</option></select></div><div class='col s1'>"
+                          + removeButton + "</div></div>";
+            $("#userDetail").append(locations);
+            $('select').formSelect();
+
+    };
+
+    function removeRow(){
+      var rowsDiv = document.getElementById("userDetail");
+      iconDiv.addEventListener("click", function() {
+          rowsDiv.removeChild(newRow);
+      }, false);
+
+      $(".locationCell").remove();
+    }
+    /*
+        var rowsDiv = document.getElementById("rows");
+        iconDiv.addEventListener("click", function() {
+            rowsDiv.removeChild(newRow);
+        }, false);
+    */
+
+
     //Initialization for selector
     $(document).ready(function(){
     $('select').formSelect();
     });
+
+
 
     </script>
 
@@ -234,18 +226,9 @@
     text-align:right;
     margin-right: 100px;
   }
-
-  #mailInCell{
-    font-size:20px;
-    vertical-align: top;
-  }
   #user{
     width:230px;
     margin-left: 100px;
-  }
-  #userType{
-    font-size:40px;
-    vertical-align: top;
   }
   .active{
     color:white;
@@ -253,26 +236,20 @@
   #userDetail{
     margin-top:150px;
     margin-left:400px;
-    width:500px;
+    width:800px;
   }
-  .row1{
-    width:20%;
+
+  .column01{
+    height: 80px;
+    vertical-align: middle;
   }
-  .row2{
-    width:40%;
+  #buttonsContainer{
+    margin-left:400px;
+    width:800px;
   }
-  .row3{
-    text-align:right;
-  }
-  #editButton{
-    margin-top: 15px;
-    margin-right: 10px;
-  }
-  #saveButton{
-    margin-top: 15px;
-  }
-  #buttonInTable{
-    text-align: right;
+  #userType{
+    font-size:40px;
+    vertical-align: top;
   }
 
   </style>
