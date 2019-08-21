@@ -4,15 +4,10 @@
 	session_start(); 
 	include 'db_connection.php';
 	$conn = OpenCon();
-	// if (!isset($_SESSION['userID'])) {
-	// 	header('location: login.php');
-	// }
-	if (isset($_SESSION['username'])) 
-		$username = $_SESSION['username'];
-	//get userID
-	$sql = "SELECT userID FROM USERS WHERE username = $username";
-	$result = $conn->query($sql);
-	$userID = mysqli_fetch_assoc($result)['userID'];
+	if (isset($_SESSION['userID']))
+		$userID = $_SESSION['userID'];
+	else
+		header('location: login.php');
 	?>
     <head>
         <title>Available Tests and Groups for Educator</title>
@@ -102,7 +97,7 @@
 						while($row2 = mysqli_fetch_assoc($result2)){
 							echo '<tr><td>', $row2['name'], '</td>', '<td>'; //print out group name
 						}
-						$sql3 =  "SELECT name FROM PRESCHOOLER P JOIN GROUPASSIGNMENT GA ON P.preID = GA.preID WHERE GA.groupID=".$row["groupID"]." AND GA.userID=2";
+						$sql3 =  "SELECT name FROM PRESCHOOLER P JOIN GROUPASSIGNMENT GA ON P.preID = GA.preID WHERE GA.groupID=".$row["groupID"]." AND GA.userID=".$userID;
 						$result3 = $conn->query($sql3);
 						$names = array();
 						while($row3 = mysqli_fetch_assoc($result3)){

@@ -60,10 +60,11 @@
 		session_start();
 		include 'db_connection.php';
 		$conn = OpenCon();
+		$userID = $_SESSION['userID'];
+		//$testID = $_SESSION['testID'];
 		//get groups from database
-		$sql = "SELECT groupID FROM GROUPASSIGNMENT WHERE userID=2 GROUP BY groupID"; //Need to fix value of userID after Login page is implemented
+		$sql = "SELECT groupID FROM GROUPASSIGNMENT WHERE userID=".$userID." GROUP BY groupID"; 
 		$result = $conn->query($sql); 
-					
 		while($row = mysqli_fetch_assoc($result)){
 			$sql2 = "SELECT name FROM GROUPTEST WHERE groupID=".$row["groupID"];
 			$result2 = $conn->query($sql2);
@@ -71,7 +72,7 @@
 				echo '<tr><td>', $row2['name'], '</td>', '<td>'; //print out group name
 		    }
 						
-			$sql3 =  "SELECT name FROM PRESCHOOLER P JOIN GROUPASSIGNMENT GA ON P.preID = GA.preID WHERE GA.groupID=".$row["groupID"]." AND GA.userID=2";
+			$sql3 =  "SELECT name FROM PRESCHOOLER P JOIN GROUPASSIGNMENT GA ON P.preID = GA.preID WHERE GA.groupID=".$row["groupID"]." AND GA.userID=".$userID;
 			$result3 = $conn->query($sql3);
 			$names = array();
 			while($row3 = mysqli_fetch_assoc($result3)){

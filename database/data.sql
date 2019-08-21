@@ -1,5 +1,13 @@
 /*USERS*/
 SET
+@username = "admin",
+@password = "21232f297a57a5a743894a0e4a801fc3",
+@email = "admin@gmail.com",
+@accountType = true,
+@fullName = "admin";
+INSERT INTO USERS(username, password, email, accountType, fullName) VALUES (@username, @password, @email, @accountType, @fullName);
+
+SET
 @username = "holly",
 @password = "holly",
 @email = "holly@gmail.com",
@@ -96,70 +104,55 @@ SET
 @gender = "Male";
 INSERT INTO PRESCHOOLER(name, age, gender) VALUES (@name, @age, @gender);
 
-/*
-SET 
-@name = "Caroline",
-@age = 6,
-@gender = "Female";
-INSERT INTO PRESCHOOLER(name, age, gender) VALUES (@name, @age, @gender);
-*/
-
 /*GROUPASSIGNMENT*/
 SET
 @groupID = 1,
 @preID = 1,
-@userID = 2;
+@userID = 1;
 INSERT INTO GROUPASSIGNMENT(groupID, preID, userID) VALUES (@groupID, @preID, @userID);
 
 SET
 @groupID = 1,
 @preID = 2,
-@userID = 2;
+@userID = 1;
 INSERT INTO GROUPASSIGNMENT(groupID, preID, userID) VALUES (@groupID, @preID, @userID);
 
 SET
 @groupID = 1,
 @preID = 3,
-@userID = 2;
+@userID = 1;
 INSERT INTO GROUPASSIGNMENT(groupID, preID, userID) VALUES (@groupID, @preID, @userID);
-/*
-SET
-@groupID = 1,
-@preID = 4,
-@userID = 3;
-INSERT INTO GROUPASSIGNMENT(groupID, preID, userID) VALUES (@groupID, @preID, @userID);
-*/
 
 /*Group 2*/
 SET
 @groupID = 2,
 @preID = 1,
-@userID = 3;
+@userID = 1;
 INSERT INTO GROUPASSIGNMENT(groupID, preID, userID) VALUES (@groupID, @preID, @userID);
 
 SET
 @groupID = 2,
 @preID = 4,
-@userID = 3;
+@userID = 1;
 INSERT INTO GROUPASSIGNMENT(groupID, preID, userID) VALUES (@groupID, @preID, @userID);
 
 SET
 @groupID = 2,
 @preID = 3,
-@userID = 2;
+@userID = 1;
 INSERT INTO GROUPASSIGNMENT(groupID, preID, userID) VALUES (@groupID, @preID, @userID);
 
 /*Group 4*/
 SET
 @groupID = 4,
 @preID = 2,
-@userID = 2;
+@userID = 1;
 INSERT INTO GROUPASSIGNMENT(groupID, preID, userID) VALUES (@groupID, @preID, @userID);
 
 SET
 @groupID = 4,
 @preID = 5,
-@userID = 3;
+@userID = 1;
 INSERT INTO GROUPASSIGNMENT(groupID, preID, userID) VALUES (@groupID, @preID, @userID);
 
 
@@ -206,7 +199,7 @@ INSERT INTO LOCATIONASSIGNMENT(locationID, userID) VALUES (@locationID, @userID)
 
 SET
 @locationID = 2,
-@userID = 3;
+@userID = 1;
 INSERT INTO LOCATIONASSIGNMENT(locationID, userID) VALUES (@locationID, @userID);
 
 SET
@@ -217,19 +210,19 @@ INSERT INTO LOCATIONASSIGNMENT(locationID, userID) VALUES (@locationID, @userID)
 
 /*TESTASSIGNMENT*/
 SET
-@userID = 2,
+@userID = 1,
 @testID = 1,
 @status = "Not conducted yet";
 INSERT INTO TESTASSIGNMENT(userID, testID, status) VALUES (@userID, @testID, @status);
 
 SET
-@userID = 2,
+@userID = 1,
 @testID = 2,
 @status = "Not conducted yet";
 INSERT INTO TESTASSIGNMENT(userID, testID, status) VALUES (@userID, @testID, @status);
 
 SET
-@userID = 3,
+@userID = 1,
 @testID = 3,
 @status = "Not conducted yet";
 INSERT INTO TESTASSIGNMENT(userID, testID, status) VALUES (@userID, @testID, @status);
@@ -294,12 +287,6 @@ SET
 @imgType = true,
 @taskID = 3;
 INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);
-
-/*SET
-@address = "images/Puff.png",
-@imgType = true,
-@taskID = 4;
-INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);*/
 
 SET
 @address = "images/orbi.jpg",
@@ -368,32 +355,3 @@ SET
 @taskID = 1,
 @preID = 5;
 INSERT INTO RESULTS(happy, testID, taskID, preID) VALUES (@happy, @testID, @taskID, @preID);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

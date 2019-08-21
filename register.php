@@ -45,7 +45,7 @@
                 errorElement : 'div',
                 errorClass: 'invalid',
                 errorPlacement: function(error, element) {
-                    if(element.attr('type') == "text"){
+                    if(element.attr('type') == "text" || element.attr('type') == "email"){
                         $(element)
                         .closest("form")
                         .find("label[for='" + element.attr("id") + "']")
@@ -68,6 +68,7 @@
 					},
 					email: {
                         required: true,
+						email: true,
                         remote: {
                             url: "checkEmail.php",
                             type: "post"
@@ -83,6 +84,7 @@
                     },
                     email: {
                         required: "Enter an email.",
+						email: "Enter a valid email address.",
                         remote: jQuery.validator.format("The email {0} is already being used by another account.")
                     }
                 }
@@ -101,17 +103,11 @@
 			document.getElementById("submit").disabled = true;
 			}
 		}
-		
-		
-	   
-   
-
-		
     </script>
 	<script>
 	 function chg(obj)
     {
-	if(obj.options[obj.selectedIndex].value =="hi")
+	if(obj.options[obj.selectedIndex].value =="educator")
         document.getElementById("10").style.display="";
     else
         document.getElementById("10").style.display="none";
@@ -155,8 +151,14 @@
 									<div class="input-field col s12">
 										<select  onchange="chg(this)" name="accountType" required">
 										    <option value="admin">Admin</option>
-											<option value="hi">Educator</option>
+											<option value="educator">Educator</option>
 										</select>
+									</div>
+								</div>
+								<div class="row">
+									<div class="input-field col s12">
+										<input id="fullname" name="fullname" type="text" class="validate">
+										<label for="fullname">Full Name</label>
 									</div>
 								</div>
 								<div class="row">
@@ -167,17 +169,16 @@
 								</div>
 								<div class="row">
 									<div name="email" class="input-field col s12">
-										<input name="email" type="text" class="validate">
+										<input name="email" type="email" class="validate">
 										<label for="email">Email</label>
 									</div>
 								</div>
 								<div class="row">
 									<div class="input-field col s12">
-										<input id="password1" type="password" class="validate">
+										<input id="password1" name="password1" type="password" class="validate">
 										<label for="password1">Password</label>
 									</div>
 								</div>
-								
 								<div class="row">
 									<div class="input-field col s12">
 										<input id="password2" type="password" class="validate" onkeyup="validate()">
@@ -185,13 +186,11 @@
 										<span id="tishi"></span>
 									</div>
 								</div>
-								
 								<div class="row valign-wrapper" >
 									<div class="input-field col s12" style="display:none"  id="10">
-										<select name="location"   id="location"  class="materialSelect" required multiple>
+										<select name="location[]" id="location" class="materialSelect" required multiple>
 											<option value=""disabled selected >Location</option>
 										</select>
-										
 									</div>
 								</div>
 								<div class="row">
@@ -199,7 +198,6 @@
 									<input type="submit" value="Register" class="btn blue darken-4" id="submit"/>
 								</div>
 								</div>
-								
 							</form>
 						</div>
 					</div>
