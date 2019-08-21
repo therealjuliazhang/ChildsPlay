@@ -1,23 +1,23 @@
 <html>
 <?php
-//these should be gotten from somewhere else, not hard coded.
-		$userID = 2;
-		$testID = 1;
-		//connect to database
-		include 'db_connection.php';
-		$conn = OpenCon();
-		
-		$tasks = array();
-		$sql = "SELECT taskID FROM TASKASSIGNMENT WHERE testID = " .$testID;
-		$result = $conn->query($sql);
-		while($row = mysqli_fetch_assoc($result)){
-			//get tasks
-			$sql1 = "SELECT * FROM TASK WHERE taskID=".$row["taskID"];
-			$result1 = $conn->query($sql1);
-			while($row1 = mysqli_fetch_assoc($result1)){
-				array_push($tasks, $row1);
-			}
-		}
+//connect to database
+include 'db_connection.php';
+$conn = OpenCon();
+session_start();
+if(isset($_SESSION['userID']))
+	$userID = $_SESSION['userID'];
+// if(isset($_SESSION['testID']))
+// 	$testID = $_SESSION['testID'];
+$tasks = array();
+// $sql = "SELECT taskID FROM TASKASSIGNMENT WHERE testID = " .$testID;
+// $result = $conn->query($sql);
+//while($row = mysqli_fetch_assoc($result)){
+	//get tasks
+	$sql1 = "SELECT * FROM TASK";// WHERE taskID=".$row["taskID"];
+	$result1 = $conn->query($sql1);
+	while($row1 = mysqli_fetch_assoc($result1))
+		array_push($tasks, $row1);
+//}
 ?>
     <head>
         <title>Child'sPlay</title>
@@ -52,7 +52,6 @@
             </div>
         </div>
         <!--end header-->
-
         <!--side bar-->
 		<ul id="sidebar" class="sidenav sidenav-fixed" >
 			<li><h5><a href="#" data-target="slide-out" class="sidenav-trigger">More Tests</a></h5></li><!--button to activate more tests-->
@@ -187,7 +186,6 @@
 							</div> <!--end container-->
 						</div>
 						<?php
-						$rankingResults = array();
 						$countSad = 0;
 						$countHappy = 0;
 						foreach($tasks as $value){							
@@ -305,10 +303,7 @@
 			<!--end sort result form-->
 		</ul>
         <!--end side bar-->
-
-		
 		<?php
-		
 		/*
 		//get task results
 		$rankingResults = array();
@@ -390,27 +385,6 @@
 				$images[] = $row3;
 		}
 	?>
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
         <!-- body content -->
         <div id="body">
             <!--the slide out menu-->
@@ -651,6 +625,14 @@
 					return number + "th";
 				}
 			}
+			function getTaskRankingResults(taskID){
+				var taskRankingResults = [];
+				rankingResults.forEach(function(result){ 
+					if(result.taskID == taskID)
+						taskRankingResults.push(result);
+				});
+				return taskRankingResults;
+			}
 		}
 		//display likert scale task results
 		function displayPreferredMechanics(task){
@@ -694,14 +676,6 @@
 					taskImages.push(image);
 			});
 			return taskImages;
-		}
-		function getTaskRankingResults(taskID){
-			var taskRankingResults = [];
-			rankingResults.forEach(function(result){ 
-				if(result.taskID == taskID)
-					taskRankingResults.push(result);
-			});
-			return taskRankingResults;
 		}
 		function backToTop()
 		{
