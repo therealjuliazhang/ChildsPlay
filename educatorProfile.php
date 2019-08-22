@@ -31,9 +31,6 @@
 
     <!--end header-->
 <!--Body part-->
-    <!--
-    Need to be modified : Table border,position aberration between icon and <h>tag
-    -->
     <div class="navbar-fixed">
     <table id="infoTable" height="200px" class="white-text">
       <tbody class="#1565c0 blue darken-3">
@@ -67,8 +64,8 @@
 
     <!--main contents-->
 
-<div class="container" id="userDetail">
-   <div class="row">
+<div class="container" >
+   <div class="row" id="userDetail">
      <div class="col s12 blue-text darken-2"><h5>Account Information</h5></div>
      <div class="col s2 column01"><p>Username:<p/></div>
      <div class='input-field col s10'>
@@ -84,7 +81,9 @@
      <div class='input-field col s10'>
       <input id="email" disabled value='ash@gmail.com' type='text' class='validate'>
      </div>
-     <div class="col s2">Location:</div>
+     <div class="col s12">Location:</div>
+     <div class="removable">
+     <div class="col s2"></div>
      <div class="input-field col s9 locationCell">
        <select class="selectLocation" disabled>
        <option value="">KU Gwynneville Preschool</option>
@@ -92,18 +91,20 @@
        <option value="3">Keiraville Community Preschool</option>
        </select>
      </div>
-     <div class="col s1 right"><a class="waves-effect waves-light btn right" id="removeButton" onclick="removeRow()"><i class="material-icons">remove</i></a></div>
+     <div class='col s1'><a class='waves-effect waves-light btn removeButton'><i class='material-icons'>remove</i></a></div>
+   </div>
    </div>
  </div>
 
-   <div class="container" id="buttonsContainer">
-     <div class="row">
-       <div class="col s9"></div>
-       <div class="col s1"><a class="waves-effect waves-light btn #2196f3 blue right" id="editButton">Edit</a></div>
-       <div class="col s1"><a class="waves-effect waves-light btn blue darken-2 right" id="saveButton">Save</a></div>
-       <div class="col s1"><a class="waves-effect waves-light btn blue darken-4 right" id="addButton" onclick="appendSelect()"><i class="material-icons">add</i></a></div>
-     </div>
+
+  <div class="container" id="buttonsContainer">
+   <div class="row">
+     <div class="col s9"></div>
+     <div class="col s1"><a class="waves-effect waves-light btn #2196f3 blue right" id="editButton">Edit</a></div>
+     <div class="col s1"><a class="waves-effect waves-light btn blue darken-2 right" id="saveButton">Save</a></div>
+     <div class="col s1"><a class="waves-effect waves-light btn blue darken-4 right" id="addButton" onclick="appendSelect()"><i class="material-icons">add</i></a></div>
    </div>
+  </div>
 
 
   </body>
@@ -138,10 +139,9 @@
             var location01 = "KU Gwynneville Preschool";
             var location02 = "Wollongong Preschool";
             var location03 = "Keiraville Community Preschool";
-            var removeButton = "<a class='waves-effect waves-light btn right' id='removeButton'><i class='material-icons'>remove</i></a>";
+            var removeButton = "<a class='waves-effect waves-light btn removeButton'><i class='material-icons' >remove</i></a>";
 
-
-            var locations = "<div class='row'><div class='col s2'></div><div class='input-field col s9'><select class='selectLocation' disabled><option value='1' disabled selected>Choose location<option>"
+            var locations = "<div class='removable'><div class='col s2'></div><div class='input-field col s9 locationCell'><select class='selectLocation' disabled><option value='1' disabled selected>Choose location<option>"
                           + location01 + "</option><option>"
                           + location02 + "</option><option>"
                           + location03 + "</option></select></div><div class='col s1'>"
@@ -149,31 +149,16 @@
             $("#userDetail").append(locations);
             $('select').formSelect();
 
+            //remove a row
+            $('.removeButton').click(function() {
+              $(this).closest('.removable').remove();
+            });
     };
-
-    function removeRow(){
-      var rowsDiv = document.getElementById("userDetail");
-      iconDiv.addEventListener("click", function() {
-          rowsDiv.removeChild(newRow);
-      }, false);
-
-      $(".locationCell").remove();
-    }
-    /*
-        var rowsDiv = document.getElementById("rows");
-        iconDiv.addEventListener("click", function() {
-            rowsDiv.removeChild(newRow);
-        }, false);
-    */
-
 
     //Initialization for selector
     $(document).ready(function(){
     $('select').formSelect();
     });
-
-
-
     </script>
 
 
@@ -235,8 +220,8 @@
   }
   #userDetail{
     margin-top:150px;
-    margin-left:400px;
-    width:800px;
+    margin-left:200px;
+
   }
 
   .column01{
@@ -244,8 +229,7 @@
     vertical-align: middle;
   }
   #buttonsContainer{
-    margin-left:400px;
-    width:800px;
+
   }
   #userType{
     font-size:40px;
