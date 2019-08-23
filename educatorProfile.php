@@ -67,31 +67,30 @@
 <div class="container" >
    <div class="row" id="userDetail">
      <div class="col s12 blue-text darken-2"><h5>Account Information</h5></div>
-     <div class="col s2 column01">Username:</div>
-     <div class='input-field col s10'>
+     <div class="col s3 column01"><h5 class="hInCol">Username:</h5></div>
+     <div class='input-field col s9'>
        <input id="uName" disabled value='Alex Satoru' type='text' class='validate inputInCol'>
      </div>
 
-     <div class="col s2 column01">Password:</div>
-     <div class='input-field col s10'>
+     <div class="col s3 column01"><h5 class="hInCol">Password:</h5></div>
+     <div class='input-field col s9'>
        <input id="password" disabled value='********' type='text' class='validate inputInCol'>
      </div>
      <div class="col s12 blue-text darken-2"><h5>Personal Information</h5></div>
-     <div class="col s2 valign-wrapper column01">Email:</div>
-     <div class='input-field col s10'>
+     <div class="col s3 valign-wrapper column01"><h5 class="hInCol">Email:</h5></div>
+     <div class='input-field col s9'>
       <input id="email" disabled value='ash@gmail.com' type='text' class='validate inputInCol'>
      </div>
-     <div class="col s12 column01">Location:</div>
+     <div class="col s3 column01"><h5 class="hInCol">Location:</h5></div>
      <div class="removable">
-     <div class="col s2"></div>
-     <div class="input-field col s9 locationCell">
+     <div class="input-field col s8 locationCell">
        <select class="selectLocation" disabled>
        <option value="">KU Gwynneville Preschool</option>
        <option value="2" selected>Wollongong Preschool</option>
        <option value="3">Keiraville Community Preschool</option>
        </select>
      </div>
-     <div class='col s1'><a class='waves-effect waves-light btn removeButton'><i class='material-icons'>remove</i></a></div>
+     <div class='col s1 hide removeCell'><a class='waves-effect waves-light btn removeButton'><i class='material-icons'>remove</i></a></div>
    </div>
    </div>
  </div>
@@ -99,11 +98,11 @@
 
   <div class="container" id="buttonsContainer">
    <div class="row">
-     <div class="col s9"></div>
+     <div class="col s1 offset-s11"><a class="waves-effect waves-light btn blue darken-4 addCell hide right" id="addButton" onclick="appendSelect()"><i class="material-icons">add</i></a></div>
+     <div class="col s10"></div>
      <div class="col s1"><a class="waves-effect waves-light btn #2196f3 blue right" id="editButton">Edit</a></div>
      <div class="col s1"><a class="waves-effect waves-light btn blue darken-2 right" id="saveButton">Save</a></div>
-     <div class="col s1"><a class="waves-effect waves-light btn blue darken-4 right" id="addButton" onclick="appendSelect()"><i class="material-icons">add</i></a></div>
-   </div>
+    </div>
   </div>
 
 
@@ -118,6 +117,8 @@
         $("#password").prop( "disabled", false );
         $("#email").prop( "disabled", false );
         $(".selectLocation").prop('disabled', false);
+        $(".removeCell").removeClass("hide");
+        $(".addCell").removeClass("hide");
         $('select').formSelect();
       })
     });
@@ -128,6 +129,8 @@
         $("#password").prop( "disabled", true );
         $("#email").prop( "disabled", true );
         $(".selectLocation").prop('disabled', true);
+        $(".removeCell").addClass("hide");
+        $(".addCell").addClass("hide");
         $('select').formSelect();
       })
     });
@@ -141,10 +144,10 @@
             var location03 = "Keiraville Community Preschool";
             var removeButton = "<a class='waves-effect waves-light btn removeButton'><i class='material-icons' >remove</i></a>";
 
-            var locations = "<div class='removable'><div class='col s2'></div><div class='input-field col s9 locationCell'><select class='selectLocation' disabled><option value='1' disabled selected>Choose location<option>"
+            var locations = "<div class='removable'><div class='col s3'></div><div class='input-field col s8 locationCell'><select class='selectLocation'><option value='1' disabled selected>Choose location<option>"
                           + location01 + "</option><option>"
                           + location02 + "</option><option>"
-                          + location03 + "</option></select></div><div class='col s1'>"
+                          + location03 + "</option></select></div><div class='col s1 removeCell'>"
                           + removeButton + "</div></div>";
             $("#userDetail").append(locations);
             $('select').formSelect();
@@ -164,9 +167,9 @@
 
 
   <style>
-#body {
-  padding-left: 330px;
-}
+  #body {
+    padding-left: 330px;
+  }
   @media only screen and (max-width : 992px) {
       #body{
           padding-left: 0;
@@ -191,22 +194,12 @@
   .image{
       margin-top: 10px;
   }
-  #tableDiv{
-      width: 400px;
-  }
-.sortButton{
-  margin-bottom: 80px;
-  }
 
-  #bodyPart{
-    margin-left: 10%;
-    margin-right: 10%;
-  }
+/*CSS for the table under the header*/
   #userType{
   font-size:40px;
   vertical-align: top;
   }
-
   #infoTable{
   background-color:black;
   position: fixed;
@@ -223,18 +216,33 @@
     font-size:20px;
     vertical-align: top;
   }
-  .active{
-    color:white;
-  }
+/*CSS for Account Info and Personal Info Container*/
   #userDetail{
     margin-top:150px;
     margin-left:200px;
-  }
-  .column01{
-    font-size: 20px;
+    margin-bottom: 0px;
   }
   .removeButton{
     margin-top:20px;
   }
+  #addButton{
+    margin-right: -3px;
+    margin-top: 10px;
+  }
+  #editButton{
+    margin-top: 30px;
+  }
+  #saveButton{
+    margin-top: 30px;
+  }
+  .hInCol{
+    margin-top: 30px;
+    margin-bottom: -10px;
+  }
+
+
+
+
+
   </style>
 </html>
