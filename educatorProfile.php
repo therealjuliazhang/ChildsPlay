@@ -219,6 +219,10 @@
     width:230px;
     margin-left: 100px;
   }
+  #mailInCell{
+    font-size:20px;
+    vertical-align: top;
+  }
   .active{
     color:white;
   }
