@@ -4,7 +4,7 @@ Get all IDs of preschoolers who pass filter checks and put inside filteredPreIDs
 $preIDsForQuery = join("','",$filteredPreIDs); - https://stackoverflow.com/questions/907806/passing-an-array-to-a-query-using-a-where-clause
 
 // for likert scale  
-$sql = "SELECT imageID, address, happy, count(DISTINCT happy) AS likertCount            
+$sql = "SELECT R.imageID, address, happy, count(DISTINCT happy) AS likertCount            
         FROM RESULTS R INNER JOIN IMAGE I ON R.taskID = I.taskID
         WHERE preID IN ('$preIDsForQuery')"
         GROUP BY imageID; 

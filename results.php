@@ -14,7 +14,35 @@ while($row1 = mysqli_fetch_assoc($result1))
 	array_push($tasks, $row1);
 
 //Get all IDs of preschoolers who pass filter checks and put inside filteredPreIDs[]; 
-
+$filteredPreIDs = [1, 2, 3, 4, 5];
+$preIDsForQuery = join("','",$filteredPreIDs);
+// get results for likert scale  
+$sql = "SELECT imageID, address, happy, count(DISTINCT happy) AS likertCount            
+        FROM RESULTS R INNER JOIN IMAGE I ON R.taskID = I.taskID
+        WHERE preID IN ('$preIDsForQuery')
+		GROUP BY imageID"; 
+$result = $conn->query($sql);
+$likertResults = array();
+while($row = mysqli_fetch_assoc($result))
+	array_push($likertResults, $row);
+// get results for identify body parts
+$sql = "SELECT R.taskID, imageID, address, x, y 
+        FROM RESULTS R INNER JOIN IMAGE I ON R.taskID = I.taskID
+		WHERE x IS NOT NULL AND preID IN ('$preIDsForQuery')";
+$result = $conn->query($sql);
+$bodyPartsResults = array();
+while($row = mysqli_fetch_assoc($result))
+	array_push($bodyPartsResults, $row);
+// get results for character ranking
+$sql = "SELECT R.imageID, address, sum(score) AS totalScore
+        FROM RANKING R INNER JOIN IMAGE I ON R.imageID = I.imageID
+        WHERE preID IN ('$preIDsForQuery')
+        GROUP BY imageID
+		ORDER BY totalScore DESC";
+$result = $conn->query($sql);
+$rankingResults = array();
+while($row = mysqli_fetch_assoc($result))
+	array_push($rankingResults, $row);
 ?>
     <head>
         <title>Child'sPlay</title>
@@ -452,10 +480,6 @@ while($row1 = mysqli_fetch_assoc($result1))
 		<!--end body content-->
 		</body>
 	<script>
-		//get all images for all tasks in this test
-		var testImages = <?php echo json_encode($images); ?>;
-		//get results for all character ranking tasks in this test
-		var rankingResults = <?php echo json_encode($rankingResults); ?>;
 		//identify body parts results
 		window.onload = function() {
 			//identify body parts results canvas
