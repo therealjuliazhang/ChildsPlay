@@ -3,7 +3,9 @@
 	session_start();
 	if(isset($_SESSION['userID']))
 		$userID = $_SESSION['userID'];
-	if(isset($_GET['testID']))
+	if(isset($_SESSION['testID']))
+		$testID = $_SESSION['testID'];
+	else if(isset($_GET['testID']))
 		$testID = $_GET['testID'];
 	include 'db_connection.php';
 	$conn = OpenCon();
@@ -79,8 +81,8 @@
 			echo '</td><td><a href="instruction.php?testID=', $testID, '&groupID=', $row["groupID"], '" class="waves-effect waves-light btn blue darken-2">Select</a></td></tr>';			
 		}
 		
-		if($_GET['mode'] == "start")
-			$_SESSION['mode'] = "start";
+		// if($_GET['mode'] == "start")
+		// 	$_SESSION['mode'] = "start";
 		
 		/*
 		//get groups from database
