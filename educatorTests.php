@@ -1,7 +1,7 @@
 <html>
-	<?php 
+	<?php
 	//send user to login if not logged in
-	session_start(); 
+	session_start();
 	include 'db_connection.php';
 	$conn = OpenCon();
 	if (isset($_SESSION['userID']))
@@ -26,8 +26,9 @@
 					<div class="col s10">
 						<a href="educatorTests.php" class="brand-logo"><img src="images/logo1.png" height="200px"></a>
 					</div>
-					<div class="col s2 offset-s10">
-						<a class="waves-effect waves-light btn blue darken-2" id="profileLink" href="adminProfile.php">Profile</a>
+					<div class="col s2 offset-s10 ">
+						<a class="waves-effect waves-light btn blue darken-2 center-align" id="profileLink" href="adminProfile.php"> <i class="material-icons" id="profileIcon">account_box</i></a>
+						<!--<a class="waves-effect waves-light btn blue darken-2" id="profileLink" href="adminProfile.php"><i class="material-icons">account_box</i></a>-->
 					</div>
 				</div>
             </div>
@@ -89,7 +90,7 @@
 					<tbody class="grey-text text-darken-1">
 					<?php
 					//get groups from database
-					$sql = "SELECT groupID FROM GROUPASSIGNMENT WHERE userID=".$userID." GROUP BY groupID"; 
+					$sql = "SELECT groupID FROM GROUPASSIGNMENT WHERE userID=".$userID." GROUP BY groupID";
 					$result = $conn->query($sql);
 					while($row = mysqli_fetch_assoc($result)){
 						$sql2 = "SELECT name FROM GROUPTEST WHERE groupID=".$row["groupID"];
@@ -133,6 +134,12 @@
 	}
 	#profileLink{
 		margin-top: 15px;
+	}
+	#profileIcon{
+		position: absolute;
+		top: -14px;
+		left: 15px;
+
 	}
     </style>
 </html>
