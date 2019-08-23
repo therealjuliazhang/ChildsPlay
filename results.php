@@ -6,18 +6,15 @@ $conn = OpenCon();
 session_start();
 if(isset($_SESSION['userID']))
 	$userID = $_SESSION['userID'];
-// if(isset($_SESSION['testID']))
-// 	$testID = $_SESSION['testID'];
-$tasks = array();
-// $sql = "SELECT taskID FROM TASKASSIGNMENT WHERE testID = " .$testID;
-// $result = $conn->query($sql);
-//while($row = mysqli_fetch_assoc($result)){
-	//get tasks
-	$sql1 = "SELECT * FROM TASK";// WHERE taskID=".$row["taskID"];
-	$result1 = $conn->query($sql1);
-	while($row1 = mysqli_fetch_assoc($result1))
-		array_push($tasks, $row1);
-//}
+// $tasks = array();
+//get tasks
+// $sql1 = "SELECT * FROM TASK";
+// $result1 = $conn->query($sql1);
+// while($row1 = mysqli_fetch_assoc($result1))
+// 	array_push($tasks, $row1);
+
+//Get all IDs of preschoolers who pass filter checks and put inside filteredPreIDs[]; 
+
 ?>
     <head>
         <title>Child'sPlay</title>
