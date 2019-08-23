@@ -82,6 +82,9 @@
 			right:0px;
 			left:0px
 		}
+		.faceCol{
+			height: 150px;
+		}
 
 		</style>
     </head>
@@ -96,10 +99,8 @@
 		<div class="bottom">
 			<div id="participant" class="row" style="font-size:18px;font-weight:bold">
 				<div class="bottomInBottom">
-				<div class="row faces">
-					<img id="happy" src="images/happy.png" onclick="happyClicked()" width="10%"></img>
-					<img id="sad" src="images/sad.png" onclick="sadClicked()" width="10%"></img>
-				</div>
+				<div class="col s6 faceCol"><img id="happy" class="right" src="images/happy.png" onclick="happyClicked()" width="150px"></img></div>
+				<div class="col s6 faceCol"><img id="sad"  src="images/sad.png" onclick="sadClicked()" width="150px"></img></div>
 				<div class="center-align">
 					<span id="preschoolerName">
 					</span>'s Turn
