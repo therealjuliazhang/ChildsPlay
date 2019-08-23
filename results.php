@@ -6,12 +6,12 @@ $conn = OpenCon();
 session_start();
 if(isset($_SESSION['userID']))
 	$userID = $_SESSION['userID'];
-// $tasks = array();
+$tasks = array();
 //get tasks
-// $sql1 = "SELECT * FROM TASK";
-// $result1 = $conn->query($sql1);
-// while($row1 = mysqli_fetch_assoc($result1))
-// 	array_push($tasks, $row1);
+$sql1 = "SELECT * FROM TASK";
+$result1 = $conn->query($sql1);
+while($row1 = mysqli_fetch_assoc($result1))
+	array_push($tasks, $row1);
 
 //Get all IDs of preschoolers who pass filter checks and put inside filteredPreIDs[]; 
 
@@ -24,7 +24,6 @@ if(isset($_SESSION['userID']))
 		<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
-
 	</head>
     <!--the stuff in the head is all the linking things to Materialize-->
     <!--all the linking's been done, so you shouldn't need to download anything from Materialise-->
