@@ -61,54 +61,36 @@
     <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 
     <!--main contents-->
-    <div id="userDetail">
-      <table id="userInfo">
-       <thead>
-         <tr>
-             <th colspan="3" class="blue-text darken-2">Account Information</th>
-         </tr>
-       </thead>
 
-       <tbody>
-         <tr>
-           <td class="row1">Username:</td>
-           <td class="row2" id="uNameCell">
-              <div class='input-field col s6'>
-                <input id="uName" disabled value='Holly' type='text' class='validate'>
-              </div>
-           </td>
-         </tr>
-         <tr>
-           <td class="row1">Password:</td>
-           <td class="row2" id="passwordCell">
-              <div class='input-field col s6'>
-                <input id="password" disabled value='********' type='text' class='validate'>
-              </div>
-            </td>
-         </tr>
+    <div class="container" >
+       <div class="row" id="userDetail">
+         <div class="col s12 blue-text darken-2"><h5>Account Information</h5></div>
+         <div class="col s2 column01">Username:</div>
+         <div class='input-field col s10'>
+           <input id="uName" disabled value='Holly Tootel' type='text' class='validate inputInCol'>
+         </div>
 
-         <thead>
-           <tr>
-               <th colspan="3" class="blue-text darken-2">Personal Information</th>
-           </tr>
-         </thead>
-
-         <tbody>
-           <tr>
-             <td class="row1">Email:</td>
-             <td class="row2" id="emailCell">
-               <div class='input-field col s6'>
-                <input id="email" disabled value='mfin@gmail.com' type='text' class='validate'>
-               </div>
-             </td>
-           </tr>
-
-       </tbody>
-     </table>
-     <a class="waves-effect waves-light btn blue darken-2 right" id="saveButton">Save</a>
-     <a class="waves-effect waves-light btn #2196f3 blue right" id="editButton">Edit</a>
+         <div class="col s2 column01">Password:</div>
+         <div class='input-field col s10'>
+           <input id="password" disabled value='********' type='text' class='validate inputInCol'>
+         </div>
+         <div class="col s12 blue-text darken-2"><h5>Personal Information</h5></div>
+         <div class="col s2 valign-wrapper column01">Email:</div>
+         <div class='input-field col s10'>
+          <input id="email" disabled value='mfin@gmail.com' type='text' class='validate inputInCol'>
+         </div>
+       </div>
      </div>
-    </div>
+
+
+      <div class="container" id="buttonsContainer">
+       <div class="row">
+         <div class="col s10"></div>
+         <div class="col s1"><a class="waves-effect waves-light btn #2196f3 blue right" id="editButton">Edit</a></div>
+         <div class="col s1"><a class="waves-effect waves-light btn blue darken-2 right" id="saveButton">Save</a></div>
+       </div>
+      </div>
+
 
 
   </body>
@@ -197,25 +179,11 @@
   }
   #userDetail{
     margin-top:150px;
-    margin-left:400px;
-    width:500px;
+    margin-left:200px;
   }
-  .row1{
-    width:20%;
-  }
-  .row2{
-    width:40%;
-  }
-  .row3{
-    text-align:right;
-  }
-  #editButton{
-    margin-top: 15px;
-    margin-right: 10px;
-  }
-  #saveButton{
-    margin-top: 15px;
-  }
+
+
+
 
   </style>
 </html>

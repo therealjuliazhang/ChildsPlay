@@ -67,21 +67,21 @@
 <div class="container" >
    <div class="row" id="userDetail">
      <div class="col s12 blue-text darken-2"><h5>Account Information</h5></div>
-     <div class="col s2 column01"><p>Username:<p/></div>
+     <div class="col s2 column01">Username:</div>
      <div class='input-field col s10'>
-       <input id="uName" disabled value='Alex Satoru' type='text' class='validate'>
+       <input id="uName" disabled value='Alex Satoru' type='text' class='validate inputInCol'>
      </div>
 
      <div class="col s2 column01">Password:</div>
      <div class='input-field col s10'>
-       <input id="password" disabled value='********' type='text' class='validate'>
+       <input id="password" disabled value='********' type='text' class='validate inputInCol'>
      </div>
-     <div class="col s12 blue-text darken-2 column01"><h5>Personal Information</h5></div>
-     <div class="col s2"><p>Email:</p></div>
+     <div class="col s12 blue-text darken-2"><h5>Personal Information</h5></div>
+     <div class="col s2 valign-wrapper column01">Email:</div>
      <div class='input-field col s10'>
-      <input id="email" disabled value='ash@gmail.com' type='text' class='validate'>
+      <input id="email" disabled value='ash@gmail.com' type='text' class='validate inputInCol'>
      </div>
-     <div class="col s12">Location:</div>
+     <div class="col s12 column01">Location:</div>
      <div class="removable">
      <div class="col s2"></div>
      <div class="input-field col s9 locationCell">
@@ -202,6 +202,10 @@
     margin-left: 10%;
     margin-right: 10%;
   }
+  #userType{
+  font-size:40px;
+  vertical-align: top;
+  }
 
   #infoTable{
   background-color:black;
@@ -221,20 +225,12 @@
   #userDetail{
     margin-top:150px;
     margin-left:200px;
-
   }
-
   .column01{
-    height: 80px;
-    vertical-align: middle;
+    font-size: 20px;
   }
-  #buttonsContainer{
-
+  .removeButton{
+    margin-top:20px;
   }
-  #userType{
-    font-size:40px;
-    vertical-align: top;
-  }
-
   </style>
 </html>
