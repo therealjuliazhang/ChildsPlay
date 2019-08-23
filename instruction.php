@@ -2,8 +2,11 @@
 <?php
 session_start();
 if(isset($_SESSION["testID"])){
-//	$_SESSION["testID"] = $_SESSION["testID"];
 	$testID = $_SESSION["testID"];
+}
+else if(isset($_GET["testID"])){
+	$testID = $_GET["testID"];
+	$_SESSION['testID'] = $testID;
 }
 $groupID = isset($_GET['groupID']) ? $_GET['groupID'] : 4;
 //index of task in array

@@ -1,6 +1,12 @@
 <html>
 	<?php
-	$testID = htmlspecialchars($_GET["testID"]);
+	session_start();
+	if(isset($_SESSION['userID']))
+		$userID = $_SESSION['userID'];
+	if(isset($_GET['testID']))
+		$testID = $_GET['testID'];
+	include 'db_connection.php';
+	$conn = OpenCon();
 	?>
     <head>
         <title>Select Group For Task</title>
@@ -9,7 +15,6 @@
         <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
         <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
-		<script type="text/javascript" src="javascript/scripts.js"></script>
     </head>
     <!--the stuff in the head is all the linking things to Materialize-->
     <!--all the linking's been done, so you shouldn't need to download anything from Materialise-->
@@ -46,11 +51,8 @@
 				</thead>
 				<tbody class="grey-text text-darken-1">
 		<?php
-		session_start();
-		include 'db_connection.php';
-		$conn = OpenCon();
 		//get groups from database
-		$sql = "SELECT groupID FROM GROUPASSIGNMENT WHERE userID=2 GROUP BY groupID"; //Need to fix value of userID after Login page is implemented
+		$sql = "SELECT groupID FROM GROUPASSIGNMENT WHERE userID=".$userID." GROUP BY groupID";
 		$result = $conn->query($sql); 
 					
 		while($row = mysqli_fetch_assoc($result)){
