@@ -84,8 +84,6 @@ while($row = mysqli_fetch_assoc($result))
 		});
 		</script>
 	</head>
-    <!--the stuff in the head is all the linking things to Materialize-->
-    <!--all the linking's been done, so you shouldn't need to download anything from Materialise-->
     <body>
         <!--header-->
         <div class="row">
@@ -253,13 +251,6 @@ while($row = mysqli_fetch_assoc($result))
         <!--end side bar-->
         <!-- body content -->
         <div id="body">
-            <!--the slide out menu-->
-            <!-- <ul id="slide-out" class="sidenav">
-                <li><a href="">Wollongong Preschool Test 1</a></li>
-                <li><a href="">Wollongong Preschool Test 2</a></li>
-                <li><a href="">Wollongong Preschool Test 3</a></li>
-                <li><a href="">Wollongong Preschool Test 4</a></li>
-            </ul> -->
 			<!--end slide out menu-->
 			<div id="results">
 				<!-- IDENTIFY BODY PARTS TASK -->
@@ -315,148 +306,56 @@ while($row = mysqli_fetch_assoc($result))
 			// ctx.stroke();
 			// ctx.fill();
 		//}
-		//displays all the task results
-		// function displayTaskResults(){
-		// 	var tasks = <php echo json_encode($tasks); ?>;
-		// 	//for each task
-		// 	tasks.forEach(function(task){
-		// 		//check the task type
-		// 		switch(task.taskType) {
-		// 		case "Likert Scale":
-		// 			displayLikertScale(task);
-		// 			break;
-		// 		case "Identify Body Parts":
-		// 			displayIdentifyBodyParts(task);
-		// 			break;
-		// 		case "Character Ranking":
-		// 			displayCharacterRanking(task);
-		// 			break;
-		// 		case "Preferred Mechanics":
-		// 			displayPreferredMechanics(task);
-		// 			break;
-		// 		default:
-		// 		}
-		// 	});
-		// };
-		// function displayIdentifyBodyParts(task){
-		
-		// }
 		//display Character ranking task results
-		function displayCharacterRanking(task){
-			//get images for this task
-			var taskImages = getTaskImages(task.taskID);
-			//get ranking results for this task
-			var taskRankingResults = getTaskRankingResults(task.taskID);
-			//calculate total scores and rankings
-			var rankedImages = rankImages(taskImages, taskRankingResults);
-			//create html
-			var header = "<h5 class=\"blue-text darken-2 header\">" + task.taskType + " (Test ID: " + task.testID + ", Task ID: " + task.taskID + ")</h5\>";
-			var resultsHeader = "<h5 class=\"blue-text darken-2 header\">Results:</h5>";
-			var tableHeader = "<div id=\"tableDiv\"><table class=\"centered\"><thead><tr><th>Rank: </th><th>Points: </th><th>Image: </th></tr></thead>";
-			var tableBody = "<tbody>" + createTableRows(rankedImages) + "</tbody></table></div>";
-			var table = tableHeader + tableBody;
-			var commentsDiv = "<div class=\"row\"><form class=\"col s12\"><div class=\"input-field col s8\">";
-			var textArea = "<textarea id=\"textarea1\" class=\"materialize-textarea\"";
-			if(task.comments != null){
-				textArea += " value=" + task.comments;
-			}
-			textArea += "></textarea><label for=\"textarea1\">Comments</label></div></form></div><div class=\"row\"><form class=\"col s12\"><div class=\"input-field col s8\>";
-			commentsDiv += textArea;
-			$("#results").append(header, task.instruction, resultsHeader, table, commentsDiv);
-			//adds score attribute to images and sorts them from highest score to lowest score
-			// function rankImages(images, results){
-			// 	//calculate total scores and set it to image.score
-			// 	images.forEach(function(image){ 
-			// 		image.score = 0;
-			// 		results.forEach(function(result){
-			// 			if (parseInt(image.imageID) == parseInt(result.imageID)){
-			// 				image.score += parseInt(result.score);
-			// 			}
-			// 		});	
-			// 	});	
-			// 	//sorts images by score
-			// 	images.sort((a, b) => (a.score < b.score) ? 1 : -1);
-			// 	return images;
-			// }
-			//returns the html for the table rows based on the ranked images
-			function createTableRows(rankedImages){
-				var rankNumber = 0;
-				var html = "";
-				rankedImages.forEach(function(rankedImage){
-					rankNumber++;
-					var rank = rank_of(rankNumber);
-					html += "<tr><td>" + rank + "</td>";
-					html += "<td>" + rankedImage.score + "</td>";
-					html += "<td><img class=\"image\" src=\"" + rankedImage.address + "\" style=\"width:15%;\"></td></tr>";
-				});
-				return html;
-				//convert rank number to ordinal suffix e.g. 1 to 1st
-				function rank_of(number) {
-					var j = number % 10,
-						k = number % 100;
-					if (j == 1 && k != 11) {
-						return number + "st";
-					}
-					if (j == 2 && k != 12) {
-						return number + "nd";
-					}
-					if (j == 3 && k != 13) {
-						return number + "rd";
-					}
-					return number + "th";
-				}
-		 	}
-		// 	function getTaskRankingResults(taskID){
-		// 		var taskRankingResults = [];
-		// 		rankingResults.forEach(function(result){ 
-		// 			if(result.taskID == taskID)
-		// 				taskRankingResults.push(result);
+		// function displayCharacterRanking(task){
+		// 	//get images for this task
+		// 	var taskImages = getTaskImages(task.taskID);
+		// 	//get ranking results for this task
+		// 	var taskRankingResults = getTaskRankingResults(task.taskID);
+		// 	//calculate total scores and rankings
+		// 	var rankedImages = rankImages(taskImages, taskRankingResults);
+		// 	//create html
+		// 	var header = "<h5 class=\"blue-text darken-2 header\">" + task.taskType + " (Test ID: " + task.testID + ", Task ID: " + task.taskID + ")</h5\>";
+		// 	var resultsHeader = "<h5 class=\"blue-text darken-2 header\">Results:</h5>";
+		// 	var tableHeader = "<div id=\"tableDiv\"><table class=\"centered\"><thead><tr><th>Rank: </th><th>Points: </th><th>Image: </th></tr></thead>";
+		// 	var tableBody = "<tbody>" + createTableRows(rankedImages) + "</tbody></table></div>";
+		// 	var table = tableHeader + tableBody;
+		// 	var commentsDiv = "<div class=\"row\"><form class=\"col s12\"><div class=\"input-field col s8\">";
+		// 	var textArea = "<textarea id=\"textarea1\" class=\"materialize-textarea\"";
+		// 	if(task.comments != null){
+		// 		textArea += " value=" + task.comments;
+		// 	}
+		// 	textArea += "></textarea><label for=\"textarea1\">Comments</label></div></form></div><div class=\"row\"><form class=\"col s12\"><div class=\"input-field col s8\>";
+		// 	commentsDiv += textArea;
+		// 	$("#results").append(header, task.instruction, resultsHeader, table, commentsDiv);
+		// 	//returns the html for the table rows based on the ranked images
+		// 	function createTableRows(rankedImages){
+		// 		var rankNumber = 0;
+		// 		var html = "";
+		// 		rankedImages.forEach(function(rankedImage){
+		// 			rankNumber++;
+		// 			var rank = rank_of(rankNumber);
+		// 			html += "<tr><td>" + rank + "</td>";
+		// 			html += "<td>" + rankedImage.score + "</td>";
+		// 			html += "<td><img class=\"image\" src=\"" + rankedImage.address + "\" style=\"width:15%;\"></td></tr>";
 		// 		});
-		// 		return taskRankingResults;
-		// 	}
-		 }
-		//display likert scale task results
-		// function displayPreferredMechanics(task){
-
-		// }
-		//drag and drop task results
-		// var ctx = document.getElementById("dragAndDropChart").getContext('2d');
-		// var likertChart = new Chart(ctx, {
-		// 	type: "horizontalBar", // Make the graph horizontal
-		// 	data: {
-		// 	labels:  ["Successful", "Unsuccessful"],
-		// 	datasets: [{
-		// 	   label: "Number of Answers",
-		// 	   data: [6, 2],
-		// 	   backgroundColor: ["green", "yellow"]
-		// 	}]},
-		// 	options: {
-		// 		responsive: false,
-		// 		title: {
-		// 		display: true,
-		// 		fontSize: 10,
-		// 		text: "Results"
-		// 		},
-		// 		legend: {
-		// 		display: false,
-		// 		},
-		// 		scales: {
-		// 			xAxes: [{ // Ｘ Axes Option
-		// 				ticks: {
-		// 					min: 0
-		// 				}}],
-		// 			yAxes: []
+		// 		return html;
+		// 		//convert rank number to ordinal suffix e.g. 1 to 1st
+		// 		function rank_of(number) {
+		// 			var j = number % 10,
+		// 				k = number % 100;
+		// 			if (j == 1 && k != 11) {
+		// 				return number + "st";
+		// 			}
+		// 			if (j == 2 && k != 12) {
+		// 				return number + "nd";
+		// 			}
+		// 			if (j == 3 && k != 13) {
+		// 				return number + "rd";
+		// 			}
+		// 			return number + "th";
 		// 		}
-		// 	}
-		// });
-		// function getTaskImages(taskID){
-		// 	var taskImages = [];
-		// 	testImages.forEach(function(image){ 
-		// 		if(image.taskID == taskID)
-		// 			taskImages.push(image);
-		// 	});
-		// 	return taskImages;
-		// }
+		//  	}
 		//function to scroll back to top of page
 		function backToTop(){
 			document.body.scrollTop = 0;

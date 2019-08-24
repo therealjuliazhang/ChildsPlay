@@ -1,22 +1,16 @@
 //display results for character ranking
 function displayRanking(rankingResults){
-    //get all unique task IDs from results
     taskIDs = getUniqueIDs(rankingResults);
-    // display results, false for no image or canvas to display
     displayResults(rankingResults, taskIDs, "ranking");
 }
 // display results for likert scale
 function displayLikert(likertResults){
-    //get all unique task IDs from results
     taskIDs = getUniqueIDs(likertResults);
-    // for each unique task ID, display its results in a separate section
     displayResults(likertResults, taskIDs, "likertScale");
 }
 //display results for preferred mechanics
 function displayMechanics(mechanicResults){
-    //get all unique task IDs from results
     taskIDs = getUniqueIDs(mechanicResults);
-    // for each unique task ID, display its results in a separate section
     displayResults(mechanicResults, taskIDs, "mechanics");
 }
 //get all unique task IDs from results
@@ -24,6 +18,7 @@ function getUniqueIDs(results){
     taskIDs = [...new Set(results.map(item => item.taskID))];
     return taskIDs;
 }
+//display results for task
 function displayResults(results, taskIDs, taskType){
     taskIDs.forEach(function(taskID){
         //get only the results for this task ID
