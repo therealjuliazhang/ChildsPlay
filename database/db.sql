@@ -107,7 +107,7 @@ CREATE TABLE IMAGE(
 );
 
 CREATE TABLE RESULTS(
-	success					BOOLEAN			NULL,
+	mechanic				VARCHAR(20)		NULL,
 	x						DECIMAL(5,2)	NULL,
 	y						DECIMAL(5,2)	NULL,
 	happy					BOOLEAN			NULL,

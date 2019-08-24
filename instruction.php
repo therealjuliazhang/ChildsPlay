@@ -89,10 +89,10 @@ if(count($tasks) > 0){
 			echo $tasks[$taskIndex]['instruction'];
 			$taskTypeUrl = "characterRankingTask.php?" . $info;
 			break;
-		/*case "Drag and Drop":
+		case "Preferred Mechanic":
 			echo $tasks[$taskIndex]['instruction'];
-			$taskTypeUrl = "dragAndDropTask.php?" . $info;
-			break;*/
+			$taskTypeUrl = "preferredMechanicsTask.php?" . $info;
+			break;
 	}
 }
 CloseCon($conn);

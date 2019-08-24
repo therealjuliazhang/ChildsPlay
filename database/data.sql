@@ -242,11 +242,11 @@ SET
 @instruction = "Select the monsters in order of your favourite to least favourite.",
 @taskType = "Character Ranking";
 INSERT INTO TASK(instruction, taskType) VALUES (@instruction, @taskType);
-/*
+
 SET
-@instruction = "Drag the monster into the box.",
-@taskType = "Drag and Drop";
-INSERT INTO TASK(instruction, taskType) VALUES (@instruction, @taskType);*/
+@instruction = "How would you make the monster bigger?",
+@taskType = "Preferred Mechanic";
+INSERT INTO TASK(instruction, taskType) VALUES (@instruction, @taskType);
 
 /*TASKASSIGNMENT*/
 SET
@@ -261,6 +261,11 @@ INSERT INTO TASKASSIGNMENT(taskID, testID) VALUES (@taskID, @testID);
 
 SET
 @taskID = 3,
+@testID = 1;
+INSERT INTO TASKASSIGNMENT(taskID, testID) VALUES (@taskID, @testID);
+
+SET
+@taskID = 4,
 @testID = 1;
 INSERT INTO TASKASSIGNMENT(taskID, testID) VALUES (@taskID, @testID);
 
@@ -312,6 +317,11 @@ SET
 @taskID = 3;
 INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);
 
+SET
+@address = "images/spike.jpg",
+@imgType = true,
+@taskID = 4;
+INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);
 
 /*RESULTS*/
 SET 
@@ -355,3 +365,24 @@ SET
 @taskID = 1,
 @preID = 5;
 INSERT INTO RESULTS(happy, testID, taskID, preID) VALUES (@happy, @testID, @taskID, @preID);
+
+SET
+@mechanic = "Press",
+@testID = 1,
+@taskID = 4,
+@preID = 1;
+INSERT INTO RESULTS(mechanic, testID, taskID, preID) VALUES (@mechanic, @testID, @taskID, @preID);
+
+SET
+@mechanic = "Zoom/Pinch",
+@testID = 1,
+@taskID = 4,
+@preID = 2;
+INSERT INTO RESULTS(mechanic, testID, taskID, preID) VALUES (@mechanic, @testID, @taskID, @preID);
+
+SET
+@mechanic = "Swipe/Drag",
+@testID = 1,
+@taskID = 4,
+@preID = 3;
+INSERT INTO RESULTS(mechanic, testID, taskID, preID) VALUES (@mechanic, @testID, @taskID, @preID);

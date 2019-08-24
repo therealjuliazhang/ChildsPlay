@@ -12,7 +12,7 @@
 
 <body>
 <!--Header-->
-    <div class="navbar-fixed">
+    <!-- <div class="navbar-fixed">
     <nav class="nav-extended blue darken-4">
     <div class="nav-wrapper">
     <a href="#" class="brand-logo left"><img src="images/logo1.png" ></a>
@@ -24,7 +24,7 @@
     </ul>
     </div>
     </nav>
-    </div>
+    </div> -->
 <!--End Header-->
 <!--Sidebar-->
 <div>

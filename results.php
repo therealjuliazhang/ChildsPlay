@@ -7,6 +7,7 @@ session_start();
 if(isset($_SESSION['userID']))
 	$userID = $_SESSION['userID'];
 $tasks = array();
+
 //get tasks
 $sql1 = "SELECT * FROM TASK";
 $result1 = $conn->query($sql1);
@@ -16,6 +17,7 @@ while($row1 = mysqli_fetch_assoc($result1))
 //Get all IDs of preschoolers who pass filter checks and put inside filteredPreIDs[]; 
 $filteredPreIDs = [1, 2, 3, 4, 5];
 $preIDsForQuery = join("','",$filteredPreIDs);
+
 // get results for likert scale  
 $sql = "SELECT imageID, address, happy, count(DISTINCT happy) AS likertCount            
         FROM RESULTS R INNER JOIN IMAGE I ON R.taskID = I.taskID
@@ -25,6 +27,7 @@ $result = $conn->query($sql);
 $likertResults = array();
 while($row = mysqli_fetch_assoc($result))
 	array_push($likertResults, $row);
+
 // get results for identify body parts
 $sql = "SELECT R.taskID, imageID, address, x, y 
         FROM RESULTS R INNER JOIN IMAGE I ON R.taskID = I.taskID
@@ -33,6 +36,16 @@ $result = $conn->query($sql);
 $bodyPartsResults = array();
 while($row = mysqli_fetch_assoc($result))
 	array_push($bodyPartsResults, $row);
+
+// get results for preferred mechanics
+$sql = "SELECT R.taskID, imageID, address, mechanic
+FROM RESULTS R INNER JOIN IMAGE I ON R.taskID = I.taskID
+WHERE mechanic IS NOT NULL AND preID IN ('$preIDsForQuery')";
+$result = $conn->query($sql);
+$mechanicResults = array();
+while($row = mysqli_fetch_assoc($result))
+	array_push($mechanicResults, $row);
+
 // get results for character ranking
 $sql = "SELECT R.imageID, address, sum(score) AS totalScore
         FROM RANKING R INNER JOIN IMAGE I ON R.imageID = I.imageID
@@ -52,6 +65,35 @@ while($row = mysqli_fetch_assoc($result))
 		<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+		<script>
+		$(document).ready(function(){
+			$('.sidenav').sidenav();
+			$('.collapsible').collapsible();
+			//get mechanicResults from php
+			var mechanicResults = <?php echo json_encode($mechanicResults); ?>;
+			//get all unique task IDs from results
+			taskIDs = [...new Set(mechanicResults.map(item => item.taskID))];
+			// for each unique task ID, display its results in a separate section
+			taskIDs.forEach(function(taskID){
+				//get only the results for this task ID
+				var taskResults = mechanicResults.filter(function(result){
+					return result['taskID'] == taskID;
+				});
+				//display results for task
+				$('<h5/>', {
+					class: "blue-text darken-2 header",
+					text: "Preferred Mechanics - Task ID: " + taskID
+				}).appendTo('#results');   
+				console.log(taskResults);
+				// <h5 class="blue-text darken-2 header">Likert Scale:</h5>
+				// <!--Do you like this monster?
+				// <br>
+				// <img class="image" src="images/Puff.jpg" style="width:15%;">
+				// <br>-->
+				// <h5 class="blue-text darken-2 header">Results:</h5> 
+			});
+		});
+		</script>
 	</head>
     <!--the stuff in the head is all the linking things to Materialize-->
     <!--all the linking's been done, so you shouldn't need to download anything from Materialise-->
@@ -119,7 +161,6 @@ while($row = mysqli_fetch_assoc($result))
 					</li>
 				</ul>
 			</li>
-
 			<li>
 				<ul class="collapsible">
 					<li>
@@ -181,7 +222,6 @@ while($row = mysqli_fetch_assoc($result))
 					</li>
 				</ul>
 			</li>
-			
 			<li>
 				<ul class="collapsible">
 					<li>
@@ -275,7 +315,7 @@ while($row = mysqli_fetch_assoc($result))
 											echo $val."<br/>";
 											
 										}*/
-									}
+									 }
 									
 									if(isset($_POST["group"])){
 										$i = 0;
@@ -401,13 +441,13 @@ while($row = mysqli_fetch_assoc($result))
 		}
 		*/
 		//get images for each task
-		$images = array();
-		foreach($tasks as $task){
-			$sql3 = "SELECT * FROM image WHERE taskID = " .$task['taskID'];
-			$result3 = $conn->query($sql3);
-			while($row3 = mysqli_fetch_assoc($result3))
-				$images[] = $row3;
-		}
+		// $images = array();
+		// foreach($tasks as $task){
+		// 	$sql3 = "SELECT * FROM image WHERE taskID = " .$task['taskID'];
+		// 	$result3 = $conn->query($sql3);
+		// 	while($row3 = mysqli_fetch_assoc($result3))
+		// 		$images[] = $row3;
+		// }
 	?>
         <!-- body content -->
         <div id="body">
@@ -420,13 +460,24 @@ while($row = mysqli_fetch_assoc($result))
             </ul>
 			<!--end slide out menu-->
 			<div id="results">
+				<!-- CHARACTER RANKING TASK -->
+				<h5 class="blue-text darken-2 header">Character Ranking:</h5>
+				<h5 class="blue-text darken-2 header">Results:</h5>
+				<div class="row">
+					<form class="col s12">
+						<div class="input-field col s8">
+							<textarea id="textarea1" class="materialize-textarea"></textarea>
+							<label for="textarea1">Comments</label>
+						</div>
+					</form>
+				</div>
 				<!-- LIKERT SCALE TASK -->
-				<h5 class="blue-text darken-2 header">Likert Scale:</h5>
-				Do you like this monster?
+				 <h5 class="blue-text darken-2 header">Likert Scale:</h5>
+				<!--Do you like this monster?
 				<br>
 				<img class="image" src="images/Puff.jpg" style="width:15%;">
-				<br>
-				<h5 class="blue-text darken-2 header">Results:</h5>
+				<br>-->
+				<h5 class="blue-text darken-2 header">Results:</h5> 
 				<!-- Chart.JS -->
 				<canvas id="likertChart" width="800px;">CanvasNotSupported</canvas>
 				<div class="row">
@@ -438,7 +489,7 @@ while($row = mysqli_fetch_assoc($result))
 					</form>
 				</div>
 				<!-- IDENTIFY BODY PARTS TASK -->
-				<h5 class="blue-text darken-2 header">Identify Eye Task:</h5>
+				<!-- <h5 class="blue-text darken-2 header">Identify Eye Task:</h5>
 				Can you point to the monster's eyes?
 				</br>
 				<img class="image" src="images/Puff.jpg" style="width:15%;">
@@ -454,90 +505,65 @@ while($row = mysqli_fetch_assoc($result))
 							<label for="textarea1">Comments</label>
 						</div>
 					</form>
-				</div>
-				
-				<!-- DRAG AND DROP TASK -->
-				<!-- <h5 class="blue-text darken-2 header">Drag and Drop Task:</h5>
-				Testing their ability to drag and drop the monsters.
-				<br>
-				<img class="image" src="images/Puff.jpg" style="width:15%;">
-				<h5 class="blue-text darken-2 header">Results:</h5>
-				<canvas id="dragAndDropChart" width="800px;">CanvasNotSupported</canvas>
-				<div class="row">
-					<form class="col s12">
-						<div class="input-field col s8">
-							<textarea id="textarea1" class="materialize-textarea"></textarea>
-							<label for="textarea1">Comments</label>
-						</div>
-					</form>
-				</div>
-				<div class="center-align">
-					<a class="waves-effect waves-light btn blue darken-4" id="backToTopButton" onclick="backToTop()">Back To Top</a>
-				</div>
-				<br/> -->
+				</div> -->
 			</div>
 		</div>
 		<!--end body content-->
 		</body>
 	<script>
 		//identify body parts results
-		window.onload = function() {
+		//window.onload = function() {
 			//identify body parts results canvas
-			var c = document.getElementById("myCanvas");
-			var ctx = c.getContext("2d");
-			var img = new Image(240, 297);
-			img.src = 'images/Puff.jpg';
-			ctx.drawImage(img, 0, 0, img.width, img.height);
+			// var c = document.getElementById("myCanvas");
+			// var ctx = c.getContext("2d");
+			// var img = new Image(240, 297);
+			// img.src = 'images/Puff.jpg';
+			// ctx.drawImage(img, 0, 0, img.width, img.height);
 			//circles on canvas
-			ctx.fillStyle = 'red';
-			ctx.beginPath();
-			ctx.arc(100, 75, 5, 0, 2 * Math.PI);
-			ctx.stroke();
-			ctx.fill();
-			ctx.fillStyle = 'blue';
-			ctx.beginPath();
-			ctx.arc(150, 50, 5, 0, 2 * Math.PI);
-			ctx.stroke();
-			ctx.fill();
-			ctx.fillStyle = 'green';
-			ctx.beginPath();
-			ctx.arc(90, 60, 5, 0, 2 * Math.PI);
-			ctx.stroke();
-			ctx.fill();
-			ctx.fillStyle = 'yellow';
-			ctx.beginPath();
-			ctx.arc(110, 85, 5, 0, 2 * Math.PI);
-			ctx.stroke();
-			ctx.fill();
-		}
-		$(document).ready(function(){
-			$('.sidenav').sidenav();
-			$('.collapsible').collapsible();
-			displayTaskResults();
-		});
+			// ctx.fillStyle = 'red';
+			// ctx.beginPath();
+			// ctx.arc(100, 75, 5, 0, 2 * Math.PI);
+			// ctx.stroke();
+			// ctx.fill();
+			// ctx.fillStyle = 'blue';
+			// ctx.beginPath();
+			// ctx.arc(150, 50, 5, 0, 2 * Math.PI);
+			// ctx.stroke();
+			// ctx.fill();
+			// ctx.fillStyle = 'green';
+			// ctx.beginPath();
+			// ctx.arc(90, 60, 5, 0, 2 * Math.PI);
+			// ctx.stroke();
+			// ctx.fill();
+			// ctx.fillStyle = 'yellow';
+			// ctx.beginPath();
+			// ctx.arc(110, 85, 5, 0, 2 * Math.PI);
+			// ctx.stroke();
+			// ctx.fill();
+		//}
 		//displays all the task results
-		function displayTaskResults(){
-			var tasks = <?php echo json_encode($tasks); ?>;
-			//for each task
-			tasks.forEach(function(task){
-				//check the task type
-				switch(task.taskType) {
-				case "Likert Scale":
-					displayLikertScale(task);
-					break;
-				case "Identify Body Parts":
-					displayIdentifyBodyParts(task);
-					break;
-				case "Character Ranking":
-					displayCharacterRanking(task);
-					break;
-				case "Preferred Mechanics":
-					displayPreferredMechanics(task);
-					break;
-				default:
-				}
-			});
-		};
+		// function displayTaskResults(){
+		// 	var tasks = <php echo json_encode($tasks); ?>;
+		// 	//for each task
+		// 	tasks.forEach(function(task){
+		// 		//check the task type
+		// 		switch(task.taskType) {
+		// 		case "Likert Scale":
+		// 			displayLikertScale(task);
+		// 			break;
+		// 		case "Identify Body Parts":
+		// 			displayIdentifyBodyParts(task);
+		// 			break;
+		// 		case "Character Ranking":
+		// 			displayCharacterRanking(task);
+		// 			break;
+		// 		case "Preferred Mechanics":
+		// 			displayPreferredMechanics(task);
+		// 			break;
+		// 		default:
+		// 		}
+		// 	});
+		// };
 		//likert scale task results
 		function displayLikertScale(task){
 			var ctx = document.getElementById("likertChart").getContext('2d');
@@ -547,7 +573,7 @@ while($row = mysqli_fetch_assoc($result))
 				labels:  ["Happy", "Sad"],
 				datasets: [{
 				label: "Number of Answers",
-				data: [<?php echo $countHappy;?>, <?php echo $countSad;?>],
+				//data: [<php echo $countHappy;?>, <php echo $countSad;?>],
 				backgroundColor: ['rgba(255, 159, 64, 0.2)',
                 'rgba(153, 102, 255, 0.2)'],
 				borderColor:['rgba(255, 159, 64, 1)',
@@ -575,7 +601,7 @@ while($row = mysqli_fetch_assoc($result))
 					}
 				}
 			});
-		};
+		}
 		//display likert scale task results
 		function displayIdentifyBodyParts(task){
 		
@@ -594,7 +620,7 @@ while($row = mysqli_fetch_assoc($result))
 			var tableHeader = "<div id=\"tableDiv\"><table class=\"centered\"><thead><tr><th>Rank: </th><th>Points: </th><th>Image: </th></tr></thead>";
 			var tableBody = "<tbody>" + createTableRows(rankedImages) + "</tbody></table></div>";
 			var table = tableHeader + tableBody;
-			var commentsDiv = "<div class=\"row\"><form class=\"col s12\"><div class=\"input-field col s8\">"
+			var commentsDiv = "<div class=\"row\"><form class=\"col s12\"><div class=\"input-field col s8\">";
 			var textArea = "<textarea id=\"textarea1\" class=\"materialize-textarea\"";
 			if(task.comments != null){
 				textArea += " value=" + task.comments;
@@ -603,20 +629,20 @@ while($row = mysqli_fetch_assoc($result))
 			commentsDiv += textArea;
 			$("#results").append(header, task.instruction, resultsHeader, table, commentsDiv);
 			//adds score attribute to images and sorts them from highest score to lowest score
-			function rankImages(images, results){
-				//calculate total scores and set it to image.score
-				images.forEach(function(image){ 
-					image.score = 0;
-					results.forEach(function(result){
-						if (parseInt(image.imageID) == parseInt(result.imageID)){
-							image.score += parseInt(result.score);
-						}
-					});	
-				});	
-				//sorts images by score
-				images.sort((a, b) => (a.score < b.score) ? 1 : -1);
-				return images;
-			}
+			// function rankImages(images, results){
+			// 	//calculate total scores and set it to image.score
+			// 	images.forEach(function(image){ 
+			// 		image.score = 0;
+			// 		results.forEach(function(result){
+			// 			if (parseInt(image.imageID) == parseInt(result.imageID)){
+			// 				image.score += parseInt(result.score);
+			// 			}
+			// 		});	
+			// 	});	
+			// 	//sorts images by score
+			// 	images.sort((a, b) => (a.score < b.score) ? 1 : -1);
+			// 	return images;
+			// }
 			//returns the html for the table rows based on the ranked images
 			function createTableRows(rankedImages){
 				var rankNumber = 0;
@@ -644,20 +670,20 @@ while($row = mysqli_fetch_assoc($result))
 					}
 					return number + "th";
 				}
-			}
-			function getTaskRankingResults(taskID){
-				var taskRankingResults = [];
-				rankingResults.forEach(function(result){ 
-					if(result.taskID == taskID)
-						taskRankingResults.push(result);
-				});
-				return taskRankingResults;
-			}
-		}
+		 	}
+		// 	function getTaskRankingResults(taskID){
+		// 		var taskRankingResults = [];
+		// 		rankingResults.forEach(function(result){ 
+		// 			if(result.taskID == taskID)
+		// 				taskRankingResults.push(result);
+		// 		});
+		// 		return taskRankingResults;
+		// 	}
+		 }
 		//display likert scale task results
-		function displayPreferredMechanics(task){
+		// function displayPreferredMechanics(task){
 
-		}
+		// }
 		//drag and drop task results
 		// var ctx = document.getElementById("dragAndDropChart").getContext('2d');
 		// var likertChart = new Chart(ctx, {
@@ -688,17 +714,16 @@ while($row = mysqli_fetch_assoc($result))
 		// 		}
 		// 	}
 		// });
+		// function getTaskImages(taskID){
+		// 	var taskImages = [];
+		// 	testImages.forEach(function(image){ 
+		// 		if(image.taskID == taskID)
+		// 			taskImages.push(image);
+		// 	});
+		// 	return taskImages;
+		// }
 		//function to scroll back to top of page
-		function getTaskImages(taskID){
-			var taskImages = [];
-			testImages.forEach(function(image){ 
-				if(image.taskID == taskID)
-					taskImages.push(image);
-			});
-			return taskImages;
-		}
-		function backToTop()
-		{
+		function backToTop(){
 			document.body.scrollTop = 0;
 			document.documentElement.scrollTop = 0;
 		}
