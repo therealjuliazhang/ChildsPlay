@@ -230,17 +230,20 @@ INSERT INTO TESTASSIGNMENT(userID, testID, status) VALUES (@userID, @testID, @st
 /*TASK*/
 SET
 @instruction = "Touch the smiley face if you like it and touch the sad face if you don't like it.",
-@taskType = "Likert Scale";
-INSERT INTO TASK(instruction, taskType) VALUES (@instruction, @taskType);
+@taskType = "Likert Scale",
+@activity = "Do you like this monster?";
+INSERT INTO TASK(instruction, taskType, activity) VALUES (@instruction, @taskType, @activity);
 
 SET
 @instruction = "Touch the monster's eyes.",
 @taskType = "Identify Body Parts";
+@activity = "Touch the monster's eyes.";
 INSERT INTO TASK(instruction, taskType) VALUES (@instruction, @taskType);
 
 SET
 @instruction = "Select the monsters in order of your favourite to least favourite.",
 @taskType = "Character Ranking";
+@activity = "Select the monsters in order of your favourite to least favourite.";
 INSERT INTO TASK(instruction, taskType) VALUES (@instruction, @taskType);
 
 SET

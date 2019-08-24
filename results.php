@@ -19,8 +19,8 @@ $filteredPreIDs = [1, 2, 3, 4, 5];
 $preIDsForQuery = join("','",$filteredPreIDs);
 
 // get results for likert scale  
-$sql = "SELECT DISTINCT happy, count(happy) AS likertCount, imageID, address            
-        FROM RESULTS R INNER JOIN IMAGE I ON R.taskID = I.taskID
+$sql = "SELECT DISTINCT happy, count(happy) AS likertCount, R.taskID, T.activity, imageID, address       
+        FROM RESULTS R INNER JOIN IMAGE I ON R.taskID = I.taskID INNER JOIN TASK T ON R.taskID = T.taskID
         WHERE happy IS NOT NULL AND preID IN ('$preIDsForQuery')
 		GROUP BY happy"; 
 $result = $conn->query($sql);
@@ -48,8 +48,8 @@ while($row = mysqli_fetch_assoc($result))
 	array_push($mechanicResults, $row);
 
 // get results for character ranking
-$sql = "SELECT R.imageID, address, sum(score) AS totalScore
-        FROM RANKING R INNER JOIN IMAGE I ON R.imageID = I.imageID
+$sql = "SELECT R.imageID, address, sum(score) AS totalScore, R.taskID, R.preID, T.activity
+        FROM RANKING R INNER JOIN IMAGE I ON R.imageID = I.imageID INNER JOIN TASK T ON R.taskID = T.taskID
         WHERE preID IN ('$preIDsForQuery')
         GROUP BY imageID
 		ORDER BY totalScore DESC";
@@ -66,86 +66,21 @@ while($row = mysqli_fetch_assoc($result))
 		<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+		<script src="displayResults.js"></script>
 		<script>
 		$(document).ready(function(){
+			//initialize materialize sidenav
 			$('.sidenav').sidenav();
 			$('.collapsible').collapsible();
-			//get mechanicResults from php
+			//get results from php 
+			var rankingResults = <?php echo json_encode($rankingResults); ?>;
+			var likertResults = <?php echo json_encode($likertResults); ?>;
+			var bodyPartsResults = <?php echo json_encode($bodyPartsResults); ?>;
 			var mechanicResults = <?php echo json_encode($mechanicResults); ?>;
-			//get all unique task IDs from results
-			taskIDs = [...new Set(mechanicResults.map(item => item.taskID))];
-			// for each unique task ID, display its results in a separate section
-			taskIDs.forEach(function(taskID){
-				//get only the results for this task ID
-				var taskResults = mechanicResults.filter(function(result){
-					return result['taskID'] == taskID;
-				});
-				//display results for task
-				$('<h5/>', {
-					class: "blue-text darken-2 header",
-					text: "Preferred Mechanics - Task ID: " + taskID 
-				}).appendTo('#results');   
-				$('<h6/>', {
-					class: "blue-text darken-2 header",
-					text: "Activity: " + taskResults[0]['activity']
-				}).appendTo('#results');   
-				$('<img/>', {
-					class: "image",
-					src: taskResults[0]['address'],
-					style: "width:15%;"
-				}).appendTo('#results'); 
-				$('<h5/>', {
-					class: "blue-text darken-2 header",
-					text: "Results"
-				}).appendTo('#results');  
-				$('<canvas/>', {
-					width: "800px",
-					text: "CanvasNotSupported"
-				}).appendTo('#results'); 
-				var ctx = $("canvas").last()[0].getContext('2d');
-				//create labels and data
-				var labels = []; 
-				var data = [];
-				$.each(taskResults, function( index, value ) {
-					//console.log(index + " " + value)
-					labels.push(value['mechanic']);
-					data.push(value['mechanicCount']);
-				});
-				var likertChart = new Chart(ctx, {
-					type: "horizontalBar", // Make the graph horizontal
-					data: {
-					labels:  labels,
-					datasets: [{
-					label: "Number of Answers",
-					data: data,
-					backgroundColor: ['rgba(255, 159, 64, 0.2)',
-					'rgba(153, 102, 255, 0.2)'],
-					borderColor:['rgba(255, 159, 64, 1)',
-					'rgba(153, 102, 255, 1)'],
-					borderWidth: 1
-					}]},
-					options: {
-						responsive: false,
-						title: {
-						display: true,
-						fontSize: 15,
-						text: "Results"
-						},
-						legend: {
-							//position: 'right',
-						display: false,
-						},
-						scales: {
-							xAxes: [{ // Ｘ Axes Option
-								ticks: {
-									beginAtZero: true,
-									stepSize: 1
-								}}],
-							yAxes: []
-						}
-					}
-				});
-			});
+			//display results
+			displayRanking(rankingResults);
+			displayLikert(likertResults);
+			displayMechanics(mechanicResults);
 		});
 		</script>
 	</head>
@@ -174,8 +109,8 @@ while($row = mysqli_fetch_assoc($result))
         <!--end header-->
         <!--side bar-->
 		<ul id="sidebar" class="sidenav sidenav-fixed" >
-			<li><h5><a href="#" data-target="slide-out" class="sidenav-trigger">More Tests</a></h5></li><!--button to activate more tests-->
-			<li><h5>Sort Results By</h5></li>
+			<!-- <li><h5><a href="#" data-target="slide-out" class="sidenav-trigger">More Tests</a></h5></li>button to activate more tests -->
+			<li><h5>Filter Results By</h5></li>
 			<form action="" method="post">
 			<li>
 				<ul class="collapsible">
@@ -303,111 +238,6 @@ while($row = mysqli_fetch_assoc($result))
 								<!--end checkbox-->
 							</div> <!--end container-->
 						</div>
-						<?php
-						$countSad = 0;
-						$countHappy = 0;
-						foreach($tasks as $value){							
-							if($value['taskType'] == "Likert Scale"){
-								if(isset($_POST["action"])){
-									$countSad = 0;
-									$countHappy = 0;
-									//echo "Submitted!!";
-									if(isset($_POST["location"])){
-										$i = 0;
-										$countIDs = count($_POST["location"]);
-										$selected = "";
-										//$locationIDs = $_POST["location"];
-										$locationSql = "SELECT groupID FROM GROUPTEST WHERE locationID IN (";
-										
-										while($i < $countIDs){
-											$selected .= $_POST["location"][$i];
-											if($i < $countIDs - 1){
-												$selected .= ",";
-											}
-											$i++;
-										}
-										echo $selected;
-										
-										$locationSql .= $selected.")";
-										
-										if(isset($_POST["group"])){
-											$i = 0;
-											$countIDs = count($_POST["group"]);
-											$selected = "";
-											
-											while($i < $countIDs){
-												$selected .= $_POST["group"][$i];
-												if($i < $countIDs - 1){
-													$selected .= ",";
-												}
-												$i++;
-											}
-											echo $selected;
-											$locationSql .= " AND groupID IN (".$selected.")";
-										}
-										
-										$locationResult = $conn->query($locationSql);
-										while($row = mysqli_fetch_assoc($locationResult)){
-											$sql1 = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$row["groupID"];
-											$result1 = $conn->query($sql1);
-											while($v=mysqli_fetch_assoc($result1)){
-												$resultQuery = "SELECT happy FROM RESULTS WHERE testID=".$testID." AND taskID=".$value["taskID"]." AND preID=".$v["preID"];
-												$result2 = $conn->query($resultQuery);
-												while($row2 = mysqli_fetch_assoc($result2)){
-													if($row2["happy"] == false){
-														$countSad++;
-													}
-													else if($row2["happy"] == true){
-														$countHappy++;
-													}
-												}			
-											}
-										}
-										/*
-										foreach($locationIDs as $val){
-											$id .= $val.", ";
-											echo $val."<br/>";
-											
-										}*/
-									 }
-									
-									if(isset($_POST["group"])){
-										$i = 0;
-										$countIDs = count($_POST["group"]);
-										$selected = "";											
-										while($i < $countIDs){
-											$selected .= $_POST["group"][$i];
-											if($i < $countIDs - 1){
-												$selected .= ",";
-											}
-											$i++;
-										}
-										echo $selected;
-										
-										$locationSql = "SELECT * FROM GROUPTEST WHERE groupID IN (".$selected.")";
-										
-										$locationResult = $conn->query($locationSql);
-										while($row = mysqli_fetch_assoc($locationResult)){
-											$sql1 = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$row["groupID"];
-											$result1 = $conn->query($sql1);
-											while($v=mysqli_fetch_assoc($result1)){
-												$resultQuery = "SELECT happy FROM RESULTS WHERE testID=".$testID." AND taskID=".$value["taskID"]." AND preID=".$v["preID"];
-												$result2 = $conn->query($resultQuery);
-												while($row2 = mysqli_fetch_assoc($result2)){
-													if($row2["happy"] == false){
-														$countSad++;
-													}
-													else if($row2["happy"] == true){
-														$countHappy++;
-													}
-												}			
-											}
-										}
-									}
-								}
-							}
-						}
-						?>
 					</li>
 				</ul>
 			</li>
@@ -418,130 +248,20 @@ while($row = mysqli_fetch_assoc($result))
 				</div>
 			</li>
 			</form>
-			<!--end sort result form-->
+			<!--end filter result form-->
 		</ul>
         <!--end side bar-->
-		<?php
-		/*
-		//get task results
-		$rankingResults = array();
-		$countSad = 0;
-		$countHappy = 0;
-		foreach($tasks as $value){
-			//get character ranking task results
-			if($value['taskType']=="Character Ranking"){
-				if(isset($_POST["action"])){
-					
-				}
-				else{
-					$sql = "SELECT * FROM ranking WHERE testID = " .$testID. " AND taskID = " .$value['taskID'];
-					$result = $conn->query($sql);
-					while($row = mysqli_fetch_assoc($result))
-						$rankingResults[] = $row;
-				}
-			}
-			else if($value['taskType'] == "Likert Scale"){
-				/*if(isset($_POST["action"])){
-					if(isset($_POST["location"])){
-					$locationIDs = $_POST["location"];
-					echo "Please trying to check for the location IDs: ".$locationIDs[1];
-					}
-					//echo "Check".$_POST["location"][1];
-				}
-				else{
-					$resultQuery = "SELECT happy FROM RESULTS WHERE testID=".$testID." AND taskID=".$value["taskID"]; //can retrieve preID as well if Holly cares about result of each kid
-					$result2 = $conn->query($resultQuery);
-					while($row2 = mysqli_fetch_assoc($result2)){
-						if($row2["happy"] == false){
-							$countSad++;
-						}
-						else if($row2["happy"] == true){
-							$countHappy++;
-						}
-					}	
-				}*/
-				
-				/*
-				if(isset($_POST["action"])){
-					if(isset($_POST["2"])){
-						$locationID = $_POST["2"];
-						$sql = "SELECT groupID FROM GROUPTEST WHERE locationID=".$locationID;
-						$result = $conn->query($sql);
-						while($row=mysqli_fetch_assoc($result)){
-							echo "GroupID: ".$row["groupID"];
-							$sql1 = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$row["groupID"];
-							$result1 = $conn->query($sql1);
-							while($v=mysqli_fetch_assoc($result1)){
-								$resultQuery = "SELECT happy FROM RESULTS WHERE testID=".$testID." AND taskID=".$value["taskID"]." AND preID=".$v["preID"];
-								$result2 = $conn->query($resultQuery);
-								while($row2 = mysqli_fetch_assoc($result2)){
-									if($row2["happy"] == false){
-										$countSad++;
-									}
-									else if($row2["happy"] == true){
-										$countHappy++;
-									}
-								}			
-							}
-						}
-					}
-					/*else{
-						echo "None";
-					}*/
-			/*}
-			else if ($value['taskType'] == "Identify Body Parts"){
-				
-			}	
-		}
-		*/
-		//get images for each task
-		// $images = array();
-		// foreach($tasks as $task){
-		// 	$sql3 = "SELECT * FROM image WHERE taskID = " .$task['taskID'];
-		// 	$result3 = $conn->query($sql3);
-		// 	while($row3 = mysqli_fetch_assoc($result3))
-		// 		$images[] = $row3;
-		// }
-	?>
         <!-- body content -->
         <div id="body">
             <!--the slide out menu-->
-            <ul id="slide-out" class="sidenav">
+            <!-- <ul id="slide-out" class="sidenav">
                 <li><a href="">Wollongong Preschool Test 1</a></li>
                 <li><a href="">Wollongong Preschool Test 2</a></li>
                 <li><a href="">Wollongong Preschool Test 3</a></li>
                 <li><a href="">Wollongong Preschool Test 4</a></li>
-            </ul>
+            </ul> -->
 			<!--end slide out menu-->
 			<div id="results">
-				<!-- CHARACTER RANKING TASK -->
-				<h5 class="blue-text darken-2 header">Character Ranking:</h5>
-				<h5 class="blue-text darken-2 header">Results:</h5>
-				<div class="row">
-					<form class="col s12">
-						<div class="input-field col s8">
-							<textarea id="textarea1" class="materialize-textarea"></textarea>
-							<label for="textarea1">Comments</label>
-						</div>
-					</form>
-				</div>
-				<!-- LIKERT SCALE TASK -->
-				 <h5 class="blue-text darken-2 header">Likert Scale:</h5>
-				<!--Do you like this monster?
-				<br>
-				<img class="image" src="images/Puff.jpg" style="width:15%;">
-				<br>-->
-				<h5 class="blue-text darken-2 header">Results:</h5> 
-				<!-- Chart.JS -->
-				<canvas id="likertChart" width="800px;">CanvasNotSupported</canvas>
-				<div class="row">
-					<form class="col s12">
-						<div class="input-field col s8">
-							<textarea id="textarea1" class="materialize-textarea"></textarea>
-							<label for="textarea1">Comments</label>
-						</div>
-					</form>
-				</div>
 				<!-- IDENTIFY BODY PARTS TASK -->
 				<!-- <h5 class="blue-text darken-2 header">Identify Eye Task:</h5>
 				Can you point to the monster's eyes?
@@ -618,48 +338,9 @@ while($row = mysqli_fetch_assoc($result))
 		// 		}
 		// 	});
 		// };
-		//likert scale task results
-		function displayLikertScale(task){
-			var ctx = document.getElementById("likertChart").getContext('2d');
-			var likertChart = new Chart(ctx, {
-				type: "horizontalBar", // Make the graph horizontal
-				data: {
-				labels:  ["Happy", "Sad"],
-				datasets: [{
-				label: "Number of Answers",
-				//data: [<php echo $countHappy;?>, <php echo $countSad;?>],
-				backgroundColor: ['rgba(255, 159, 64, 0.2)',
-                'rgba(153, 102, 255, 0.2)'],
-				borderColor:['rgba(255, 159, 64, 1)',
-                'rgba(153, 102, 255, 1)'],
-				borderWidth: 1
-				}]},
-				options: {
-					responsive: false,
-					title: {
-					display: true,
-					fontSize: 15,
-					text: "Results"
-					},
-					legend: {
-						//position: 'right',
-					display: false,
-					},
-					scales: {
-						xAxes: [{ // Ｘ Axes Option
-							ticks: {
-								beginAtZero: true,
-								stepSize: 1
-							}}],
-						yAxes: []
-					}
-				}
-			});
-		}
-		//display likert scale task results
-		function displayIdentifyBodyParts(task){
+		// function displayIdentifyBodyParts(task){
 		
-		}
+		// }
 		//display Character ranking task results
 		function displayCharacterRanking(task){
 			//get images for this task

@@ -10,7 +10,7 @@ if($_REQUEST["x"] && $_REQUEST["y"] && $_REQUEST["taskID"] && $_REQUEST["testID"
 	$testID = $_REQUEST["testID"];
 	$preID = $_REQUEST["preID"];
 	$dateCollected = date('Y-m-d');
-	$sql = "INSERT INTO RESULTS VALUES (NULL, ".$x.", ".$y.", CURRENT_TIMESTAMP, ".$testID.", ".$taskID.", ".$preID.")";
+	$sql = "INSERT INTO RESULTS(x, y, testID, taskID, preID) VALUES (".$x.", ".$y.", ".$testID.", ".$taskID.", ".$preID.")";
 	if ($conn->query($sql) === TRUE) {
 		echo "New record created successfully";
 	} else {

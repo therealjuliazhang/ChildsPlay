@@ -24,11 +24,11 @@ GROUP BY mechanic, R.taskID";
 put results in mechanicResults[];
         
 // for character ranking
-$sql = "SELECT imageID, address, sum(score) AS totalScore
-        FROM RANKING R INNER JOIN IMAGE I ON R.imageID = I.imageID 
-        WHERE preID IN ('$preIDsForQuery')"
+$sql = "SELECT R.imageID, address, sum(score) AS totalScore, R.taskID, R.preID
+        FROM RANKING R INNER JOIN IMAGE I ON R.imageID = I.imageID
+        WHERE preID IN ('$preIDsForQuery')
         GROUP BY imageID
-        ORDER BY totalScore DESC
+	ORDER BY totalScore DESC";
 put results in rankingResults[];
 ?>
 <script>

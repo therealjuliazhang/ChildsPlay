@@ -30,7 +30,6 @@ while($row = mysqli_fetch_assoc($result)){
 		$preschoolers[] = $value;
 	}
 }
-
 //fetch images
 $sql = "SELECT * FROM IMAGE WHERE TASKID = '$taskID'";
 $result = $conn->query($sql);
@@ -74,7 +73,6 @@ mysqli_close($conn);?>
 		document.getElementById("preschoolerName").innerHTML = preschoolers[0]['name'];
 		document.getElementById("participant").className = 'row ' + colours[preschoolerIndex % colours.length];
 	}
-
 	function mouseDown(e) {
 		if (!e)
 			var e = event;
@@ -89,7 +87,6 @@ mysqli_close($conn);?>
 				 data: { x : canX, y : canY , testID : testID, taskID : taskID, preID : preschoolers[preschoolerIndex]['preID']}
 		});
 	}
-
 	function touchDown(e) {
 		if (!e)
 			var e = event;
@@ -137,7 +134,6 @@ mysqli_close($conn);?>
 		document.getElementById("preschoolerName").innerHTML = preschoolers[preschoolerIndex]['name'];
 		document.getElementById("participant").className = 'row ' + colours[preschoolerIndex % colours.length];
 	}
-
 	function displayCharacter(imageIndex){
 		document.getElementById("myCanvas").style.background = "url(" + images[imageIndex]['address'] + ")";
 		document.getElementById("myCanvas").style.backgroundRepeat = 'no-repeat';
