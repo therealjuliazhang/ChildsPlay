@@ -19,18 +19,18 @@ $filteredPreIDs = [1, 2, 3, 4, 5];
 $preIDsForQuery = join("','",$filteredPreIDs);
 
 // get results for likert scale  
-$sql = "SELECT imageID, address, happy, count(DISTINCT happy) AS likertCount            
+$sql = "SELECT DISTINCT happy, count(happy) AS likertCount, imageID, address            
         FROM RESULTS R INNER JOIN IMAGE I ON R.taskID = I.taskID
-        WHERE preID IN ('$preIDsForQuery')
-		GROUP BY imageID"; 
+        WHERE happy IS NOT NULL AND preID IN ('$preIDsForQuery')
+		GROUP BY happy"; 
 $result = $conn->query($sql);
 $likertResults = array();
 while($row = mysqli_fetch_assoc($result))
 	array_push($likertResults, $row);
 
 // get results for identify body parts
-$sql = "SELECT R.taskID, imageID, address, x, y 
-        FROM RESULTS R INNER JOIN IMAGE I ON R.taskID = I.taskID
+$sql = "SELECT R.taskID, imageID, address, x, y, T.activity
+        FROM RESULTS R INNER JOIN IMAGE I ON R.taskID = I.taskID INNER JOIN TASK T ON R.taskID = T.taskID
 		WHERE x IS NOT NULL AND preID IN ('$preIDsForQuery')";
 $result = $conn->query($sql);
 $bodyPartsResults = array();
@@ -38,9 +38,10 @@ while($row = mysqli_fetch_assoc($result))
 	array_push($bodyPartsResults, $row);
 
 // get results for preferred mechanics
-$sql = "SELECT R.taskID, imageID, address, mechanic
-FROM RESULTS R INNER JOIN IMAGE I ON R.taskID = I.taskID
-WHERE mechanic IS NOT NULL AND preID IN ('$preIDsForQuery')";
+$sql = "SELECT DISTINCT mechanic, count(mechanic) AS mechanicCount, T.activity, R.taskID, imageID, address
+FROM RESULTS R INNER JOIN IMAGE I ON R.taskID = I.taskID INNER JOIN TASK T ON R.taskID = T.taskID
+WHERE mechanic IS NOT NULL AND preID IN ('$preIDsForQuery')
+GROUP BY mechanic, R.taskID";
 $result = $conn->query($sql);
 $mechanicResults = array();
 while($row = mysqli_fetch_assoc($result))
@@ -82,15 +83,68 @@ while($row = mysqli_fetch_assoc($result))
 				//display results for task
 				$('<h5/>', {
 					class: "blue-text darken-2 header",
-					text: "Preferred Mechanics - Task ID: " + taskID
+					text: "Preferred Mechanics - Task ID: " + taskID 
 				}).appendTo('#results');   
-				console.log(taskResults);
-				// <h5 class="blue-text darken-2 header">Likert Scale:</h5>
-				// <!--Do you like this monster?
-				// <br>
-				// <img class="image" src="images/Puff.jpg" style="width:15%;">
-				// <br>-->
-				// <h5 class="blue-text darken-2 header">Results:</h5> 
+				$('<h6/>', {
+					class: "blue-text darken-2 header",
+					text: "Activity: " + taskResults[0]['activity']
+				}).appendTo('#results');   
+				$('<img/>', {
+					class: "image",
+					src: taskResults[0]['address'],
+					style: "width:15%;"
+				}).appendTo('#results'); 
+				$('<h5/>', {
+					class: "blue-text darken-2 header",
+					text: "Results"
+				}).appendTo('#results');  
+				$('<canvas/>', {
+					width: "800px",
+					text: "CanvasNotSupported"
+				}).appendTo('#results'); 
+				var ctx = $("canvas").last()[0].getContext('2d');
+				//create labels and data
+				var labels = []; 
+				var data = [];
+				$.each(taskResults, function( index, value ) {
+					//console.log(index + " " + value)
+					labels.push(value['mechanic']);
+					data.push(value['mechanicCount']);
+				});
+				var likertChart = new Chart(ctx, {
+					type: "horizontalBar", // Make the graph horizontal
+					data: {
+					labels:  labels,
+					datasets: [{
+					label: "Number of Answers",
+					data: data,
+					backgroundColor: ['rgba(255, 159, 64, 0.2)',
+					'rgba(153, 102, 255, 0.2)'],
+					borderColor:['rgba(255, 159, 64, 1)',
+					'rgba(153, 102, 255, 1)'],
+					borderWidth: 1
+					}]},
+					options: {
+						responsive: false,
+						title: {
+						display: true,
+						fontSize: 15,
+						text: "Results"
+						},
+						legend: {
+							//position: 'right',
+						display: false,
+						},
+						scales: {
+							xAxes: [{ // Ｘ Axes Option
+								ticks: {
+									beginAtZero: true,
+									stepSize: 1
+								}}],
+							yAxes: []
+						}
+					}
+				});
 			});
 		});
 		</script>

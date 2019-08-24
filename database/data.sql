@@ -245,8 +245,15 @@ INSERT INTO TASK(instruction, taskType) VALUES (@instruction, @taskType);
 
 SET
 @instruction = "How would you make the monster bigger?",
-@taskType = "Preferred Mechanic";
-INSERT INTO TASK(instruction, taskType) VALUES (@instruction, @taskType);
+@taskType = "Preferred Mechanic",
+@activity = "Make the monster bigger.";
+INSERT INTO TASK(instruction, taskType, activity) VALUES (@instruction, @taskType, @activity);
+
+SET
+@instruction = "How would you move the monster into the box?",
+@taskType = "Preferred Mechanic",
+@activity = "Move the monster.";
+INSERT INTO TASK(instruction, taskType, activity) VALUES (@instruction, @taskType, @activity);
 
 /*TASKASSIGNMENT*/
 SET
@@ -323,6 +330,12 @@ SET
 @taskID = 4;
 INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);
 
+SET
+@address = "images/spike.jpg",
+@imgType = true,
+@taskID = 5;
+INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);
+
 /*RESULTS*/
 SET 
 @happy = true,
@@ -386,3 +399,34 @@ SET
 @taskID = 4,
 @preID = 3;
 INSERT INTO RESULTS(mechanic, testID, taskID, preID) VALUES (@mechanic, @testID, @taskID, @preID);
+
+SET
+@mechanic = "Swipe/Drag",
+@testID = 2,
+@taskID = 5,
+@preID = 3;
+INSERT INTO RESULTS(mechanic, testID, taskID, preID) VALUES (@mechanic, @testID, @taskID, @preID);
+
+SET
+@x = 410.00,
+@y = 155.00,
+@testID = 1,
+@taskID = 2,
+@preID = 1;
+INSERT INTO RESULTS(x, y, testID, taskID, preID) VALUES (@x, @y, @testID, @taskID, @preID);
+
+SET
+@x = 375.00,
+@y = 107.00,
+@testID = 1,
+@taskID = 2,
+@preID = 2;
+INSERT INTO RESULTS(x, y, testID, taskID, preID) VALUES (@x, @y, @testID, @taskID, @preID);
+
+SET
+@x = 440.00,
+@y = 125.00,
+@testID = 1,
+@taskID = 2,
+@preID = 3;
+INSERT INTO RESULTS(x, y, testID, taskID, preID) VALUES (@x, @y, @testID, @taskID, @preID);
