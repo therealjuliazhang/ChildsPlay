@@ -65,7 +65,7 @@ mysqli_close($conn);
 		if(preschoolerNumber == preschoolers.length){
 			var groupID = <?php echo $groupID ?>;
 			var taskIndex = <?php echo $taskIndex ?>;
-			window.location.href = "comments.php?groupID=" + groupID + "&taskIndex=" + taskIndex;
+			window.location.href = "comments.php?taskIndex=" + taskIndex;
 		}
 		var previousPreschoolerName = document.getElementById("preschoolerName").innerHTML;
 		document.getElementById("preschoolerName").innerHTML = preschoolers[preschoolerNumber]['name'];;
@@ -77,7 +77,6 @@ mysqli_close($conn);
 		}
 		pointsToGive = images.length * 5;
 	}
-
 	function displayCharacters(){
 		var width = 170;
 		for(var i = 0; i < images.length; i++){

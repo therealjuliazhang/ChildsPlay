@@ -2,21 +2,18 @@
 <html>
 	<?php
 	session_start();
-	$testID = $_SESSION["testID"];
 	include 'db_connection.php';
 	$conn = OpenCon();
-	$groupID = $_GET["groupID"];
-	$taskIndex = $_GET['taskIndex'];
-	//fetch task
-	$query = "SELECT taskID FROM TASKASSIGNMENT WHERE testID=".$testID;
-	$result = $conn->query($query);
-	$tasks = array();
-	while($value = mysqli_fetch_assoc($result)){
-		$taskQuery = "SELECT * FROM TASK WHERE taskID=".$value["taskID"];
-		$result2 = $conn->query($taskQuery);
-		while($row = mysqli_fetch_assoc($result2))
-			$tasks[] = $row;
-	}
+	if(isset($_SESSION["userID"]))
+		$userID = $_SESSION["userID"];
+	else
+		header('login.php');
+	if(isset($_SESSION["groupID"]))
+		$groupID = $_SESSION["groupID"];
+	if(isset($_SESSION["tasks"]))
+		$tasks = $_SESSION['tasks'];
+	if(isset($_GET["taskIndex"]))
+		$taskIndex = $_GET['taskIndex'];
 	$taskID = $tasks[$taskIndex]['taskID'];
 	CloseCon($conn);
 	?>

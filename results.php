@@ -242,7 +242,7 @@ while($row = mysqli_fetch_assoc($result))
 			<li>
 				<br/>
 				<div class="center-align">
-					<button class="btn waves-effect waves-light blue darken-4 sortButton" type="submit" name="action">Sort</button>
+					<button class="btn waves-effect waves-light blue darken-4 sortButton" type="submit" name="action">Filter</button>
 				</div>
 			</li>
 			</form>

@@ -32,7 +32,6 @@
 			$preschoolers[] = $value;
 		}
 	}
-
     mysqli_close($conn);
 	?>
 	<head>
@@ -61,7 +60,6 @@
 		#sad{
 			margin-left: 5%;
 		}
-
 		#participant{
 			height: 220px;
 			position:absolute;
@@ -78,10 +76,8 @@
 		.faceCol{
 			height: 150px;
 		}
-
 		</style>
     </head>
-
     <body>
         <!-- body content -->
 		<img src="images/greyCircle.png" width="7%" align="right" onclick="goNext();"></img>
@@ -116,24 +112,21 @@
 		var colours = ['amber accent-4', 'red', 'deep-purple', 'deep-orange', ' blue accent-4', 'teal', 'indigo accent-4', 'light-green accent-4', 'green', 'lime'];
 		document.getElementById("preschoolerName").innerHTML = preschoolers[0]['name'];
 		document.getElementById("participant").className = 'row ' + colours[preschoolerIndex % colours.length];
-
 		function goNext(){
 			preschoolerIndex++;
 			if(preschoolerIndex == preschoolers.length){
 				var groupID = <?php echo $groupID ?>;
 				var taskIndex = <?php echo $taskIndex ?>;
-				window.location.href = "comments.php?groupID=" + groupID + "&taskIndex=" + taskIndex;
+				window.location.href = "comments.php?taskIndex=" + taskIndex;
 			}
 			document.getElementById("preschoolerName").innerHTML = preschoolers[preschoolerIndex]['name'];
 			document.getElementById("participant").className = 'row ' + colours[preschoolerIndex % colours.length];
 			document.getElementById("sad").src="images/sad.png";
 			document.getElementById("happy").src="images/happy.png";
 		}
-
 		function sadClicked(){
             document.getElementById("sad").src="images/transparent.png";
 		}
-
 		function happyClicked(){
 			document.getElementById("happy").src="images/transparent.png";
 		}

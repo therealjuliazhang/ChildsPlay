@@ -118,7 +118,7 @@ mysqli_close($conn);?>
 			if(imageIndex == images.length){
 				var groupID = <?php echo $groupID ?>;
 				var taskIndex = <?php echo $taskIndex ?>;
-				window.location.href = "comments.php?groupID=" + groupID + "&taskIndex=" + taskIndex;
+				window.location.href = "comments.php?taskIndex=" + taskIndex;
 			}
 			preschoolerIndex = 0;
 			displayCharacter(imageIndex);
