@@ -1,3 +1,6 @@
+//needed for not putting padding-top on first header
+var firstHeader = true;
+
 //display results for character ranking
 function displayRanking(rankingResults){
     taskIDs = getUniqueIDs(rankingResults);
@@ -36,10 +39,20 @@ function displayResults(results, taskIDs, taskType){
 }
 //displays headers for results and image if likert or mechanics task
 function displayHeaders(taskID, taskResults, taskType){
-    $('<h5/>', {
-        class: "blue-text darken-2 header",
-        text: taskType + " - Task ID: " + taskID
-    }).appendTo('#results');   
+    //if first header dont add padding-top, else put padding
+    if(firstHeader){
+        $('<h5/>', {
+            class: "blue-text darken-2 header",
+            text: taskType + " - Task ID: " + taskID
+        }).appendTo('#results');  
+        firstHeader = false; 
+    }
+    else{
+        $('<h5/>', {
+            class: "blue-text darken-2 header topPadding",
+            text: taskType + " - Task ID: " + taskID
+        }).appendTo('#results');   
+    }
     $('<h6/>', {
         class: "blue-text darken-2 header",
         text: "Activity: " + taskResults[0]['activity']
@@ -141,6 +154,7 @@ function displayRankingTable(results){
     $("#results").append(table); 
 }
 
+//create html for the ranking results table rows
 function createTableRows(results){
     var rankNumber = 0;
     var html = "";

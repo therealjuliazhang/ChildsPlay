@@ -347,5 +347,8 @@ while($row = mysqli_fetch_assoc($result))
 	.sortButton{
 		margin-bottom: 80px;
 	}
+	.topPadding{
+		padding-top: 50px;
+	}
     </style>
 </html>
