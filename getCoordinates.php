@@ -3,14 +3,14 @@ header('Access-Control-Allow-Origin: *');
 include 'db_connection.php';
 $conn = OpenCon();
 //results for Identify body parts task
-if($_REQUEST["x"] && $_REQUEST["y"] && $_REQUEST["taskID"] && $_REQUEST["testID"] && $_REQUEST["preID"]){
+if($_REQUEST["x"] && $_REQUEST["y"] && $_REQUEST["taskID"] && $_REQUEST["preID"]){
 	$x = $_REQUEST["x"];
 	$y = $_REQUEST["y"];
 	$taskID = $_REQUEST["taskID"];
 	$testID = $_REQUEST["testID"];
 	$preID = $_REQUEST["preID"];
 	$dateCollected = date('Y-m-d');
-	$sql = "INSERT INTO RESULTS(x, y, testID, taskID, preID) VALUES (".$x.", ".$y.", ".$testID.", ".$taskID.", ".$preID.")";
+	$sql = "INSERT INTO RESULTS(x, y, taskID, preID) VALUES (".$x.", ".$y.", ".$taskID.", ".$preID.")";
 	if ($conn->query($sql) === TRUE) {
 		echo "New record created successfully";
 	} else {

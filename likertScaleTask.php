@@ -1,26 +1,19 @@
 <html>
 	<?php
-	//if there is no groupId then it is a preview and groupID is set to 4 (preview group)
-	$groupID = isset($_GET['groupID']) ? $_GET['groupID'] : 4;
-	$taskIndex = $_GET['taskIndex'];
 	header('Access-Control-Allow-Origin: *');
 	session_start();
-	$testID = $_SESSION["testID"];
-	$userID = $_SESSION['userID'];
+	if(isset($_SESSION["userID"]))
+		$userID = $_SESSION["userID"];
+	else
+		header('login.php');
+	if(isset($_SESSION["groupID"]))
+		$groupID = $_SESSION["groupID"];
+	if(isset($_SESSION["tasks"]))
+		$tasks = $_SESSION['tasks'];
+	if(isset($_GET["taskIndex"]))
+		$taskIndex = $_GET['taskIndex'];
 	include 'db_connection.php';
 	$conn = OpenCon();
-	//fetch task
-	$query = "SELECT taskID FROM TASKASSIGNMENT WHERE testID=".$testID;
-	$result = $conn->query($query);
-
-	$tasks = array();
-	while($value = mysqli_fetch_assoc($result)){
-		$taskQuery = "SELECT * FROM TASK WHERE taskID=".$value["taskID"];
-		$result2 = $conn->query($taskQuery);
-		while($row = mysqli_fetch_assoc($result2))
-			$tasks[] = $row;
-	}
-
 	$taskID = $tasks[$taskIndex]['taskID'];
 	//fetch images
 	$sql = "SELECT * FROM IMAGE WHERE TASKID = '$taskID'";
@@ -127,7 +120,6 @@
 		function goNext(){
 			preschoolerIndex++;
 			if(preschoolerIndex == preschoolers.length){
-				var testID = <?php echo $testID ?>;
 				var groupID = <?php echo $groupID ?>;
 				var taskIndex = <?php echo $taskIndex ?>;
 				window.location.href = "comments.php?groupID=" + groupID + "&taskIndex=" + taskIndex;

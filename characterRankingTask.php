@@ -1,29 +1,22 @@
 <html>
 <?php
 //get information
-$groupID = $_GET["groupID"];
-$taskIndex = $_GET['taskIndex'];
 session_start();
-if (isset($_SESSION['userID']))
-	$userID = $_SESSION['userID'];
-if (isset($_SESSION['testID']))
-	$testID = $_SESSION['testID'];
+if(isset($_SESSION["userID"]))
+	$userID = $_SESSION["userID"];
+else
+	header('login.php');
+if (isset($_SESSION['groupID']))
+	$groupID = $_SESSION['groupID'];
+if (isset($_SESSION['tasks']))
+	$tasks = $_SESSION['tasks'];
+if (isset($_GET['taskIndex']))
+	$taskIndex = $_GET['taskIndex'];
 include 'db_connection.php';
 $conn = OpenCon();
-//fetch task
-$query = "SELECT taskID FROM TASKASSIGNMENT WHERE testID=".$testID;
-$result = $conn->query($query);
-$tasks = array();
-while($value = mysqli_fetch_assoc($result)){
-	$taskQuery = "SELECT * FROM TASK WHERE taskID=".$value["taskID"];
-	$result2 = $conn->query($taskQuery);
-	while($row = mysqli_fetch_assoc($result2))
-		$tasks[] = $row;
-}
 $taskID = $tasks[$taskIndex]['taskID'];
 //fetch preschoolers from database
-$sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$groupID." AND userID=".$userID; ////Need to fix value of userID after Login page is implemented
-//$sql = "SELECT * FROM PRESCHOOLER WHERE GROUPID = '$groupID'";
+$sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$groupID." AND userID=".$userID;
 $result = $conn->query($sql);
 $preschoolers = array();
 while($row = mysqli_fetch_assoc($result)){
@@ -41,7 +34,6 @@ while($row = mysqli_fetch_assoc($result))
    $images[] = $row;
 mysqli_close($conn);
 ?>
-
 <head>
 	<title>Character Ranking Task</title>
 	<!--links for Materialize-->
@@ -51,9 +43,7 @@ mysqli_close($conn);
 	<script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
 	<script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
 	<script>
-	var testID = <?php echo(json_encode($testID)); ?>;
 	var taskID = <?php echo(json_encode($taskID)); ?>;
-
 	//preschoolerNumber determines whos turn it is
 	var preschoolerNumber = 0;
 	//gets preschoolers array from php
@@ -73,12 +63,10 @@ mysqli_close($conn);
 	function goNext(){
 		preschoolerNumber++;
 		if(preschoolerNumber == preschoolers.length){
-			var testID = <?php echo $testID ?>;
 			var groupID = <?php echo $groupID ?>;
 			var taskIndex = <?php echo $taskIndex ?>;
 			window.location.href = "comments.php?groupID=" + groupID + "&taskIndex=" + taskIndex;
 		}
-
 		var previousPreschoolerName = document.getElementById("preschoolerName").innerHTML;
 		document.getElementById("preschoolerName").innerHTML = preschoolers[preschoolerNumber]['name'];;
 		document.getElementById("participant").className = 'row ' + colours[preschoolerNumber % colours.length];
@@ -110,7 +98,7 @@ mysqli_close($conn);
 				$.ajax({
 						 type: 'POST',
 						 url: 'http://localhost/getRanking.php/',
-						 data: { imageID : this.getAttribute("imageID"), score : this.getAttribute("points"), testID : testID, taskID : taskID, preID : preschoolers[preschoolerNumber]['preID']},
+						 data: { imageID : this.getAttribute("imageID"), score : this.getAttribute("points"), taskID : taskID, preID : preschoolers[preschoolerNumber]['preID']},
 				});
 			};
 			div.onTouchStart = function(){
@@ -121,7 +109,7 @@ mysqli_close($conn);
 				$.ajax({
 						 type: 'POST',
 						 url: 'http://localhost/getRanking.php/',
-						 data: { imageID : this.getAttribute("imageID"), score : this.getAttribute("points"), testID : testID, taskID : taskID, preID : preschoolers[preschoolerNumber]['preID']}
+						 data: { imageID : this.getAttribute("imageID"), score : this.getAttribute("points"), taskID : taskID, preID : preschoolers[preschoolerNumber]['preID']}
 				});
 			};
 			document.getElementById("container").appendChild(div);

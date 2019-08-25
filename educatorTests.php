@@ -67,14 +67,6 @@
 						echo '</td><td><a href="selectGroupForTask.php?testID=' . $value['testID'] .'&mode=start'. '" class="waves-effect waves-light btn blue darken-2 ">Start</a></td></tr>';
 					}
 				}
-				/*
-				if(isset($_GET['mode'])){
-					if($_GET['mode'] == "preview"){
-						$_SESSION['mode'] = "preview";
-					}
-					else
-						$_SESSION['mode'] = "start";
-				}*/
 				?>
 				</tbody>
 			</table>

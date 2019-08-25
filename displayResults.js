@@ -5,6 +5,7 @@ var firstHeader = true;
 function displayRanking(rankingResults){
     taskIDs = getUniqueIDs(rankingResults);
     displayResults(rankingResults, taskIDs, "Character Ranking", );
+    console.log(rankingResults);
 }
 // display results for likert scale
 function displayLikert(likertResults){

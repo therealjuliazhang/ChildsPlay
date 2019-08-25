@@ -32,8 +32,8 @@ $sql = "SELECT R.imageID, address, sum(score) AS totalScore, R.taskID, R.preID
 put results in rankingResults[];
 ?>
 <script>
-display likertCounts for happy=1 and happy=0 in likertResults[]
-display each ranking in rankingResults[]
+display likertCounts for happy=1 and happy=0 in likertResults[] (one section for each task)
+display each ranking in rankingResults[] (one section for each task)
 display results in mechanicResults[] (one section for each task)
 display results in identifyBodyPartsResults[] on chart (one section for each task);
 </script>

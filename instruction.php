@@ -1,20 +1,37 @@
 <html>
 <?php
 session_start();
-if(isset($_SESSION["testID"])){
+include 'db_connection.php';
+$conn = OpenCon();
+if(isset($_SESSION["tasks"]))
+	$tasks = $_SESSION["tasks"];
+else
+	$tasks = array();
+if(isset($_SESSION["testID"]))
 	$testID = $_SESSION["testID"];
+if(isset($_SESSION["groupID"]))
+	$groupID = $_SESSION["groupID"];
+else if(isset($_GET["groupID"])){
+	$groupID = $_GET["groupID"];
+	$_SESSION['groupID'] = $groupID;
+	//set tasks to session
+	$query = "SELECT taskID FROM TASKASSIGNMENT WHERE testID=".$testID;
+	$result = $conn->query($query);
+	while($value = mysqli_fetch_assoc($result)){
+		$taskQuery = "SELECT * FROM TASK WHERE taskID=".$value["taskID"];
+		$result2 = $conn->query($taskQuery);
+		while($row = mysqli_fetch_assoc($result2))
+			$tasks[] = $row;
+	}
+	$taskID = $tasks[0]['taskID'];
+	$_SESSION['tasks'] = $tasks;
 }
-else if(isset($_GET["testID"])){
-	$testID = $_GET["testID"];
-	$_SESSION['testID'] = $testID;
-}
-$groupID = isset($_GET['groupID']) ? $_GET['groupID'] : 4;
 //index of task in array
 $taskIndex = isset($_GET['taskIndex']) ? $_GET['taskIndex'] : 0;
 $bodyPart = "eye";
 ?>
     <head>
-        <title>Likert Scale Instructions</title>
+        <title>Instructions</title>
         <meta name = "viewport" content = "width = device-width, initial-scale = 1">
         <link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
@@ -49,54 +66,52 @@ $bodyPart = "eye";
 					<div style="font-size:18px">
 <?php
 //Display instructions for task
-include 'db_connection.php';
-$conn = OpenCon();
 $taskTypeUrl;
 //$testQuery = "SELECT * FROM TASK WHERE testID=" . $testID;
-$query = "SELECT taskID FROM TASKASSIGNMENT WHERE testID=".$testID;
-$result = $conn->query($query);
+// $query = "SELECT taskID FROM TASKASSIGNMENT WHERE testID=".$testID;
+// $result = $conn->query($query);
 
-$tasks = array();
-while($value = mysqli_fetch_assoc($result)){
-	$taskQuery = "SELECT * FROM TASK WHERE taskID=".$value["taskID"];
-	$result2 = $conn->query($taskQuery);
-	while($row = mysqli_fetch_assoc($result2))
-		$tasks[] = $row;
-}
-
-$info = "groupID=" . $groupID . "&taskIndex=" . $taskIndex;
-$taskTypeUrl = "likertScaleTask.php?" . $info;
+// $tasks = array();
+// while($value = mysqli_fetch_assoc($result)){
+// 	$taskQuery = "SELECT * FROM TASK WHERE taskID=".$value["taskID"];
+// 	$result2 = $conn->query($taskQuery);
+// 	while($row = mysqli_fetch_assoc($result2))
+// 		$tasks[] = $row;
+// }
+// $nextTaskIndex = "taskIndex=" . $taskIndex;
 if(count($tasks) > 0){
 	switch($tasks[$taskIndex]["taskType"]){
 		case "Likert Scale":
-      echo "<h4 class='blue-text text-darken-2'>Likert Scale</h4><br>";
-      echo "<h5 class='blue-text text-darken-2'>Task Instructions:</h5>";
+      		echo "<h4 class='blue-text text-darken-2'>Likert Scale</h4><br>";
+      		echo "<h5 class='blue-text text-darken-2'>Task Instructions:</h5>";
 			echo $tasks[$taskIndex]['instruction'] .
 			"</br>
 				<img src=\"images/happy.png\" width=\"75px\"><img src=\"images/sad.png\" width=\"75px\">
 			</br>";
-			$taskTypeUrl = "likertScaleTask.php?" . $info;
+			$taskTypeUrl = "likertScaleTask.php?taskIndex=" . $taskIndex;
 			break;
 		case "Identify Body Parts":
-      echo "<h4 class='blue-text text-darken-2'>Identify Body Parts</h4><br>";
-      echo "<h5 class='blue-text text-darken-2'>Task Instructions:</h5>";
+      		echo "<h4 class='blue-text text-darken-2'>Identify Body Parts</h4><br>";
+      		echo "<h5 class='blue-text text-darken-2'>Task Instructions:</h5>";
 			echo $tasks[$taskIndex]['instruction'];
-			$taskTypeUrl = "identifyBodyPartsTask.php?" . $info;
+			$taskTypeUrl = "identifyBodyPartsTask.php?taskIndex=" . $taskIndex;
 			break;
 		case "Character Ranking":
-      echo "<h4 class='blue-text text-darken-2'>Character Ranking</h4><br>";
-      echo "<h5 class='blue-text text-darken-2'>Task Instructions:</h5>";
+      		echo "<h4 class='blue-text text-darken-2'>Character Ranking</h4><br>";
+      		echo "<h5 class='blue-text text-darken-2'>Task Instructions:</h5>";
 			echo $tasks[$taskIndex]['instruction'];
-			$taskTypeUrl = "characterRankingTask.php?" . $info;
+			$taskTypeUrl = "characterRankingTask.php?taskIndex=" . $taskIndex;
 			break;
 		case "Preferred Mechanic":
+			echo "<h4 class='blue-text text-darken-2'>Preferred Mechanics</h4><br>";
+			echo "<h5 class='blue-text text-darken-2'>Task Instructions:</h5>";
 			echo $tasks[$taskIndex]['instruction'];
-			$taskTypeUrl = "preferredMechanicsTask.php?" . $info;
+			$taskTypeUrl = "preferredMechanicsTask.php?taskIndex=" . $taskIndex;
 			break;
 	}
 }
 CloseCon($conn);
-$_SESSION["url"] = $taskTypeUrl;
+// $_SESSION["url"] = $taskTypeUrl;
 ?>
 						After the participant has completed their task, select the grey, quarter-circle button on the top right
 						of the screen to go to the next participant's turn.
@@ -126,13 +141,13 @@ foreach ($imageAdresses as $value)
 						<?php //$mode=isset($_GET['mode']);
 						//echo $_SESSION['mode'];
 
-						if(isset($_GET['mode'])){
-							if($_GET['mode'] == "preview"){
-								$_SESSION['mode'] = "preview";
-							}
-							else
-								$_SESSION['mode'] = "start";
-						}
+						// if(isset($_GET['mode'])){
+						// 	if($_GET['mode'] == "preview"){
+						// 		$_SESSION['mode'] = "preview";
+						// 	}
+						// 	else
+						// 		$_SESSION['mode'] = "start";
+						// }
 
 						if($_SESSION['mode'] == "preview"){
 							echo "Start Preview";

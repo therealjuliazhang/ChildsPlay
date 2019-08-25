@@ -1,5 +1,31 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<?php
+//get information
+session_start();
+if(isset($_SESSION["userID"]))
+	$userID = $_SESSION["userID"];
+else
+	header('login.php');
+if (isset($_SESSION['groupID']))
+  $groupID = $_SESSION['groupID'];
+if(isset($_SESSION["tasks"]))
+  $tasks = $_SESSION['tasks'];
+if(isset($_GET["taskIndex"]))
+  $taskIndex = $_GET['taskIndex'];
+include 'db_connection.php';
+$conn = OpenCon();
+//fetch preschoolers from database
+$sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$groupID." AND userID=".$userID;
+$result = $conn->query($sql);
+$preschoolers = array();
+while($row = mysqli_fetch_assoc($result)){
+	$sql2 = "SELECT * FROM PRESCHOOLER WHERE preID=".$row["preID"];
+	$result2 = $conn->query($sql2);
+	while($value = mysqli_fetch_assoc($result2)){
+		$preschoolers[] = $value;
+	}
+}
+?>
+<html>
   <head>
     <title>ProfilePage</title>
     <meta name = "viewport" content = "width = device-width, initial-scale = 1">
@@ -8,8 +34,20 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+    <script>
+      $(document).ready(function(){
+        var preschoolers = <?php echo json_encode($preschoolers); ?>;
+        var firstLi = true;
+        preschoolers.foreach(function(preschooler){
+          if(firstLi)
+            var li = "<li class="tab is-active"><a>" + preschooler.name + "</a></li>";
+          else
+            var li = "<li class="tab"><a>" + preschooler.name + "</a></li>";
+          $("#sidebar").append(li);
+        });
+      }); 
+    </script>
   </head>
-
 <body>
 <!--Header-->
     <!-- <div class="navbar-fixed">
@@ -29,9 +67,9 @@
 <!--Sidebar-->
 <div>
 <ul id="sidebar" class="sidenav sidenav-fixed #ffffff white tab-group">
-      <li class="tab is-active"><a>Ren</a></li>
+      <!-- <li class="tab is-active"><a>Ren</a></li>
       <li class="tab"><a>Alex</a></li>
-      <li class="tab"><a>Julia</a></li>
+      <li class="tab"><a>Julia</a></li> -->
 </ul>
 <a class="waves-effect waves-light btn blue darken-2" id="submitButton">Submit</a>
 
