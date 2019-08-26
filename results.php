@@ -13,51 +13,8 @@ $sql1 = "SELECT * FROM TASK";
 $result1 = $conn->query($sql1);
 while($row1 = mysqli_fetch_assoc($result1))
 	array_push($tasks, $row1);
-
-//Get all IDs of preschoolers who pass filter checks and put inside filteredPreIDs[]; 
-$filteredPreIDs = [1, 2, 3, 4, 5];
-$preIDsForQuery = join("','",$filteredPreIDs);
-
-// get results for likert scale  
-$sql = "SELECT DISTINCT happy, count(happy) AS likertCount, R.taskID, T.activity, imageID, address       
-        FROM RESULTS R INNER JOIN IMAGE I ON R.taskID = I.taskID INNER JOIN TASK T ON R.taskID = T.taskID
-        WHERE happy IS NOT NULL AND preID IN ('$preIDsForQuery')
-		GROUP BY happy"; 
-$result = $conn->query($sql);
-$likertResults = array();
-while($row = mysqli_fetch_assoc($result))
-	array_push($likertResults, $row);
-
-// get results for identify body parts
-$sql = "SELECT R.taskID, imageID, address, x, y, T.activity
-        FROM RESULTS R INNER JOIN IMAGE I ON R.taskID = I.taskID INNER JOIN TASK T ON R.taskID = T.taskID
-		WHERE x IS NOT NULL AND preID IN ('$preIDsForQuery')";
-$result = $conn->query($sql);
-$bodyPartsResults = array();
-while($row = mysqli_fetch_assoc($result))
-	array_push($bodyPartsResults, $row);
-
-// get results for preferred mechanics
-$sql = "SELECT DISTINCT mechanic, count(mechanic) AS mechanicCount, T.activity, R.taskID, imageID, address
-FROM RESULTS R INNER JOIN IMAGE I ON R.taskID = I.taskID INNER JOIN TASK T ON R.taskID = T.taskID
-WHERE mechanic IS NOT NULL AND preID IN ('$preIDsForQuery')
-GROUP BY mechanic, R.taskID";
-$result = $conn->query($sql);
-$mechanicResults = array();
-while($row = mysqli_fetch_assoc($result))
-	array_push($mechanicResults, $row);
-
-// get results for character ranking
-$sql = "SELECT R.imageID, address, sum(score) AS totalScore, R.taskID, R.preID, T.activity
-        FROM RANKING R INNER JOIN IMAGE I ON R.imageID = I.imageID INNER JOIN TASK T ON R.taskID = T.taskID
-        WHERE preID IN ('$preIDsForQuery')
-        GROUP BY imageID
-		ORDER BY totalScore DESC";
-$result = $conn->query($sql);
-$rankingResults = array();
-while($row = mysqli_fetch_assoc($result))
-	array_push($rankingResults, $row);
 ?>
+
     <head>
         <title>Child'sPlay</title>
     <meta name = "viewport" content = "width = device-width, initial-scale = 1">
@@ -68,7 +25,7 @@ while($row = mysqli_fetch_assoc($result))
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
 		<script src="displayResults.js"></script>
 		<script>
-		$(document).ready(function(){
+		/*$(document).ready(function(){
 			//initialize materialize sidenav
 			$('.sidenav').sidenav();
 			$('.collapsible').collapsible();
@@ -81,7 +38,7 @@ while($row = mysqli_fetch_assoc($result))
 			displayRanking(rankingResults);
 			displayLikert(likertResults);
 			displayMechanics(mechanicResults);
-		});
+		});*/
 		</script>
 	</head>
     <body>
@@ -134,14 +91,6 @@ while($row = mysqli_fetch_assoc($result))
 									     "<span>".$row["name"]."</span></label></p>";
 								}
 								?>
-								<!--end checkbox-->
-								<!--start checkbox-->
-								<p>
-								<label>
-									<input type="checkbox" name="3" class="filled-in"/>
-									<span>Location 2</span>
-								</label>
-								</p>
 								<!--end checkbox-->
 							</div> <!--end container-->
 						</div>
@@ -236,6 +185,194 @@ while($row = mysqli_fetch_assoc($result))
 								<!--end checkbox-->
 							</div> <!--end container-->
 						</div>
+<?php
+$rankingResults = array();
+$countSad = 0;
+$countHappy = 0;
+$likertResults = array();
+$identifyResults = array();
+$rankingResults = array();
+
+	if(isset($_POST["action"])){
+		$locationQuery = "SELECT groupID FROM GROUPTEST";
+		$groupList = array();
+		//check if any location option is selected
+		if(isset($_POST["location"])){
+			$i = 0;
+			$countIDs = count($_POST["location"]);
+			$selected = "";
+			while($i < $countIDs){
+				$selected .= $_POST["location"][$i];
+				if($i < $countIDs - 1){
+					$selected .= ",";
+				}
+				$i++;
+			}
+			$locationQuery .= " WHERE locationID IN (".$selected.")";
+		}
+		$locationResult = $conn->query($locationQuery);
+		while ($row = mysqli_fetch_assoc($locationResult)){
+			$groupList[] = $row["groupID"];
+			//array_push($groupList, $row["groupID"]); //get a list of groupIDs from selected locations
+		}
+		
+		$groupQuery = "SELECT preID FROM GROUPASSIGNMENT";
+		$subQuery = "";
+		$selectedGroups = array();
+		//check if any group option is selected
+		$selected = "";
+		if(isset($_POST["group"])){
+			$i = 0;
+			$countIDs = count($_POST["group"]);
+			//$selected = "";
+			while($i < $countIDs){
+				$selected .= $_POST["group"][$i];
+				if($i < $countIDs - 1){
+					$selected .= ",";
+				}
+				array_push($selectedGroups, $_POST["group"][$i]);
+				$i++;
+			}
+			//$subQuery = " WHERE groupID IN (".$selected.")";
+		}
+		
+		//get common groupID from selected locations and selected groups
+		$groupIntersection = array();
+		if(count($selectedGroups) > 0 && count($groupList) > 0){ //check if any group is selected
+			$groupIntersection = (array_intersect($selectedGroups, $groupList));
+			if(count($groupIntersection) > 0){
+				$ids = join(",",$groupIntersection);
+				//echo "Check intersection: ".$ids;
+				$subQuery = " WHERE groupID IN (".$ids.")";
+			}
+			else{
+				echo "No results found!";
+			}
+		}
+		else if(count($selectedGroups) == 0 && count($groupList) > 0){ //no group is selected
+			$ids = join(",",$groupList);
+			//echo "Check join: ".$ids;
+			$subQuery = " WHERE groupID IN (".$ids.")"; //get list of groupIDs from selected locations
+			//echo "Group is not selected!";
+		}
+		/*else{
+			echo "This task has not been tested yet!" OR
+			 "No results found!";
+		}*/
+		
+		$groupQuery .= $subQuery;
+		$groupResult = $conn->query($groupQuery);
+		$preList1 = array();
+		while($row = mysqli_fetch_assoc($groupResult)){
+			$preList1[] = $row["preID"];
+			//echo "Check array1: ".$row["preID"];
+		}
+		
+		$genderQuery = "SELECT preID FROM PRESCHOOLER";
+		//check if any gender option is selected
+		if(isset($_POST["gender"])){
+			$i = 0;
+			$countIDs = count($_POST["gender"]);
+			$selected = "'";
+			while($i < $countIDs){
+				$selected .= $_POST["gender"][$i]."'";
+				if($i < $countIDs - 1){
+					$selected .= ",";
+				}
+				$i++;
+			}
+			$genderQuery .= " WHERE gender IN (".$selected.")";
+		}
+		$genderResult = $conn->query($genderQuery);
+		$preList2 = array();
+		while($row = mysqli_fetch_assoc($genderResult)){
+			$preList2[] = $row["preID"];
+			//echo "Check array2: ".$row["preID"];
+		}
+		
+		$ageQuery = "SELECT preID FROM PRESCHOOLER";
+		//check if any age option is selected
+		if(isset($_POST["age"])){
+			$i = 0;
+			$countIDs = count($_POST["age"]);
+			$selected = "";
+			while($i < $countIDs){
+				$selected .= $_POST["age"][$i];
+				if($i < $countIDs - 1){
+					$selected .= ",";
+				}
+				$i++;
+			}
+			$ageQuery .= " WHERE age IN (".$selected.")";
+		}
+		$ageResult = $conn->query($ageQuery);
+		$preList3 = array();
+		while($row = mysqli_fetch_assoc($ageResult)){
+			$preList3[] = $row["preID"];
+		}
+		
+		$filteredPreIDs = array_intersect($preList1, $preList2, $preList3);
+		/*foreach ($filteredPreIDs as $value){
+			echo "Check array: ".$value;
+		}*/
+		
+		if(count($filteredPreIDs) == 0){
+			echo "No results found!";
+		}
+		else{
+		$preIDList = join(",", $filteredPreIDs);
+		//$likertResults = array();
+		//$identifyResults = array();
+		//$rankingResults = array();
+		foreach ($tasks as $value){
+			if($value["taskType"] == "Likert Scale"){
+				//Likert Scale
+				$countHappy = 0;
+				$countSad = 0;
+				$likertSql = "SELECT imageID, address, happy FROM RESULTS R JOIN IMAGE I ON R.taskID = I.taskID".
+				" WHERE preID IN (".$preIDList.") AND testID=".$testID." AND R.taskID=".$value["taskID"];
+				//, COUNT(DISTINCT happy) AS countHappy
+				$likert = $conn->query($likertSql);
+				while ($row = mysqli_fetch_array($likert)){
+					if($row["happy"] == 1) $countHappy++;
+					else $countSad++;
+				}	
+				$task = new stdClass();
+				$task->countHappy = $countHappy;
+				$task->countSad = $countSad;
+				$likertResults[$value["taskID"]] = $task;
+				//echo "Count: ".$row["countHappy"];
+				
+			}
+			else if($value["taskType"] == "Identify Body Parts"){
+				//Identify body parts
+				$identifySql = "SELECT imageID, address, x, y FROM RESULTS R JOIN IMAGE I ON R.taskID = I.taskID".
+				" WHERE x IS NOT NULL AND preID IN (".$preIDList.") AND testID=".$testID." GROUP BY R.taskID";
+				$identify = $conn->query($identifySql);
+				while ($row = mysqli_fetch_array($identify)){
+					$task = new stdClass();
+					$task->x = $row['x'];
+					$task->y = $row['y'];
+					$identifyResults[$value["taskID"]] = $task;
+				}
+			}
+			else{
+				//Character ranking 
+				$rankingSql = "SELECT R.imageID, address, SUM(score) AS totalScore FROM RANKING R JOIN IMAGE I ON R.taskID = I.taskID".
+				" WHERE preID IN (".$preIDList.") AND testID=".$testID." GROUP BY R.imageID ORDER BY totalScore DESC";
+				$ranking = $conn->query($rankingSql);
+				while ($row = mysqli_fetch_array($ranking)){
+					$task = new stdClass();
+					$task->image = $row["address"];
+					$task->score = $row["totalScore"];
+					$rankingResults[$value["taskID"]] = $task;
+				}
+			}
+		}
+		echo "Check results: ".$likertResults[1]->countSad;
+	}
+	}
+?>
 					</li>
 				</ul>
 			</li>
@@ -249,6 +386,17 @@ while($row = mysqli_fetch_assoc($result))
 			<!--end filter result form-->
 		</ul>
         <!--end side bar-->
+		
+		<?php
+		//get images for each task
+		$images = array();
+		foreach($tasks as $task){
+			$sql3 = "SELECT * FROM image WHERE taskID = " .$task['taskID'];
+			$result3 = $conn->query($sql3);
+			while($row3 = mysqli_fetch_assoc($result3))
+				$images[] = $row3;
+		}
+	?>
         <!-- body content -->
         <div id="body">
 			<!--end slide out menu-->
@@ -285,27 +433,210 @@ while($row = mysqli_fetch_assoc($result))
 			// img.src = 'images/Puff.jpg';
 			// ctx.drawImage(img, 0, 0, img.width, img.height);
 			//circles on canvas
-			// ctx.fillStyle = 'red';
-			// ctx.beginPath();
-			// ctx.arc(100, 75, 5, 0, 2 * Math.PI);
-			// ctx.stroke();
-			// ctx.fill();
-			// ctx.fillStyle = 'blue';
-			// ctx.beginPath();
-			// ctx.arc(150, 50, 5, 0, 2 * Math.PI);
-			// ctx.stroke();
-			// ctx.fill();
-			// ctx.fillStyle = 'green';
-			// ctx.beginPath();
-			// ctx.arc(90, 60, 5, 0, 2 * Math.PI);
-			// ctx.stroke();
-			// ctx.fill();
-			// ctx.fillStyle = 'yellow';
-			// ctx.beginPath();
-			// ctx.arc(110, 85, 5, 0, 2 * Math.PI);
-			// ctx.stroke();
-			// ctx.fill();
-		//}
+			ctx.fillStyle = 'red';
+			ctx.beginPath();
+			ctx.arc(100, 75, 5, 0, 2 * Math.PI);
+			ctx.stroke();
+			ctx.fill();
+			ctx.fillStyle = 'blue';
+			ctx.beginPath();
+			ctx.arc(150, 50, 5, 0, 2 * Math.PI);
+			ctx.stroke();
+			ctx.fill();
+			ctx.fillStyle = 'green';
+			ctx.beginPath();
+			ctx.arc(90, 60, 5, 0, 2 * Math.PI);
+			ctx.stroke();
+			ctx.fill();
+			ctx.fillStyle = 'yellow';
+			ctx.beginPath();
+			ctx.arc(110, 85, 5, 0, 2 * Math.PI);
+			ctx.stroke();
+			ctx.fill();
+		}
+		$(document).ready(function(){
+			$('.sidenav').sidenav();
+			$('.collapsible').collapsible();
+			displayTaskResults();
+		});
+		//displays all the task results
+		function displayTaskResults(){
+			var tasks = <?php echo json_encode($tasks); ?>;
+			//for each task
+			tasks.forEach(function(task){
+				//check the task type
+				switch(task.taskType) {
+				case "Likert Scale":
+					displayLikertScale(task.taskID);
+					break;
+				case "Identify Body Parts":
+					displayIdentifyBodyParts(task);
+					break;
+				case "Character Ranking":
+					displayCharacterRanking(task);
+					break;
+				case "Preferred Mechanics":
+					displayPreferredMechanics(task);
+					break;
+				default:
+				}
+			});
+		};
+		//likert scale task results
+		function displayLikertScale(taskID){
+			var likertResults = <?php echo json_encode($likertResults); ?>;
+			var countHappy = 0;
+			var countSad = 0;
+			for(var key in likertResults) {
+				var value = likertResults[key];
+				if(key == (taskID.toString())){
+					countHappy = value["countHappy"];
+					countSad = value["countSad"];
+				} 
+			}
+			
+			var ctx = document.getElementById("likertChart").getContext('2d');
+			var likertChart = new Chart(ctx, {
+				type: "horizontalBar", // Make the graph horizontal
+				data: {
+				labels:  ["Happy", "Sad"],
+				datasets: [{
+				label: "Number of Answers",
+				data: [countHappy, countSad],
+				//data: [<?php echo $countHappy;?>, <?php echo $countSad;?>],
+				backgroundColor: ['rgba(255, 159, 64, 0.2)',
+                'rgba(153, 102, 255, 0.2)'],
+				borderColor:['rgba(255, 159, 64, 1)',
+                'rgba(153, 102, 255, 1)'],
+				borderWidth: 1
+				}]},
+				options: {
+					responsive: false,
+					title: {
+					display: true,
+					fontSize: 15,
+					text: "Results"
+					},
+					legend: {
+						//position: 'right',
+					display: false,
+					},
+					scales: {
+						xAxes: [{ // Ｘ Axes Option
+							ticks: {
+								beginAtZero: true,
+								stepSize: 1
+							}}],
+						yAxes: []
+					}
+				}
+			});
+		};
+		//display likert scale task results
+		function displayIdentifyBodyParts(task){
+		
+		}
+		//display Character ranking task results
+		function displayCharacterRanking(task){
+			//get images for this task
+			var taskImages = getTaskImages(task.taskID);
+			//get ranking results for this task
+			var taskRankingResults = getTaskRankingResults(task.taskID);
+			//calculate total scores and rankings
+			var rankedImages = rankImages(taskImages, taskRankingResults);
+			//create html
+			var header = "<h5 class=\"blue-text darken-2 header\">" + task.taskType + " (Test ID: " + task.testID + ", Task ID: " + task.taskID + ")</h5\>";
+			var resultsHeader = "<h5 class=\"blue-text darken-2 header\">Results:</h5>";
+			var tableHeader = "<div id=\"tableDiv\"><table class=\"centered\"><thead><tr><th>Rank: </th><th>Points: </th><th>Image: </th></tr></thead>";
+			var tableBody = "<tbody>" + createTableRows(rankedImages) + "</tbody></table></div>";
+			var table = tableHeader + tableBody;
+			var commentsDiv = "<div class=\"row\"><form class=\"col s12\"><div class=\"input-field col s8\">"
+			var textArea = "<textarea id=\"textarea1\" class=\"materialize-textarea\"";
+			if(task.comments != null){
+				textArea += " value=" + task.comments;
+			}
+			textArea += "></textarea><label for=\"textarea1\">Comments</label></div></form></div><div class=\"row\"><form class=\"col s12\"><div class=\"input-field col s8\>";
+			commentsDiv += textArea;
+			$("#results").append(header, task.instruction, resultsHeader, table, commentsDiv);
+			//adds score attribute to images and sorts them from highest score to lowest score
+			function rankImages(images, results){
+				//calculate total scores and set it to image.score
+				images.forEach(function(image){ 
+					image.score = 0;
+					results.forEach(function(result){
+						if (parseInt(image.imageID) == parseInt(result.imageID)){
+							image.score += parseInt(result.score);
+						}
+					});	
+				});	
+				//sorts images by score
+				images.sort((a, b) => (a.score < b.score) ? 1 : -1);
+				return images;
+			}
+			//returns the html for the table rows based on the ranked images
+			function createTableRows(rankedImages){
+				var rankNumber = 0;
+				var html = "";
+				rankedImages.forEach(function(rankedImage){
+					rankNumber++;
+					var rank = rank_of(rankNumber);
+					html += "<tr><td>" + rank + "</td>";
+					html += "<td>" + rankedImage.score + "</td>";
+					html += "<td><img class=\"image\" src=\"" + rankedImage.address + "\" style=\"width:15%;\"></td></tr>";
+				});
+				return html;
+				//convert rank number to ordinal suffix e.g. 1 to 1st
+				function rank_of(number) {
+					var j = number % 10,
+						k = number % 100;
+					if (j == 1 && k != 11) {
+						return number + "st";
+					}
+					if (j == 2 && k != 12) {
+						return number + "nd";
+					}
+					if (j == 3 && k != 13) {
+						return number + "rd";
+					}
+					return number + "th";
+				}
+			}
+		}
+		//display likert scale task results
+		function displayPreferredMechanics(task){
+
+		}
+		//drag and drop task results
+		// var ctx = document.getElementById("dragAndDropChart").getContext('2d');
+		// var likertChart = new Chart(ctx, {
+		// 	type: "horizontalBar", // Make the graph horizontal
+		// 	data: {
+		// 	labels:  ["Successful", "Unsuccessful"],
+		// 	datasets: [{
+		// 	   label: "Number of Answers",
+		// 	   data: [6, 2],
+		// 	   backgroundColor: ["green", "yellow"]
+		// 	}]},
+		// 	options: {
+		// 		responsive: false,
+		// 		title: {
+		// 		display: true,
+		// 		fontSize: 10,
+		// 		text: "Results"
+		// 		},
+		// 		legend: {
+		// 		display: false,
+		// 		},
+		// 		scales: {
+		// 			xAxes: [{ // Ｘ Axes Option
+		// 				ticks: {
+		// 					min: 0
+		// 				}}],
+		// 			yAxes: []
+		// 		}
+		// 	}
+		// });
+
 		//function to scroll back to top of page
 		function backToTop(){
 			document.body.scrollTop = 0;
