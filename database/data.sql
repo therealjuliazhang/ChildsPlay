@@ -1,5 +1,13 @@
 /*USERS*/
 SET
+@username = "admin",
+@password = "21232f297a57a5a743894a0e4a801fc3",
+@email = "admin@gmail.com",
+@accountType = true,
+@fullName = "admin";
+INSERT INTO USERS(username, password, email, accountType, fullName) VALUES (@username, @password, @email, @accountType, @fullName);
+
+SET
 @username = "holly",
 @password = "holly",
 @email = "holly@gmail.com",
@@ -96,71 +104,55 @@ SET
 @gender = "Male";
 INSERT INTO PRESCHOOLER(name, age, gender) VALUES (@name, @age, @gender);
 
-/*
-SET 
-@name = "Caroline",
-@age = 6,
-@gender = "Female";
-INSERT INTO PRESCHOOLER(name, age, gender) VALUES (@name, @age, @gender);
-*/
-
 /*GROUPASSIGNMENT*/
 SET
 @groupID = 1,
 @preID = 1,
-@userID = 2;
+@userID = 1;
 INSERT INTO GROUPASSIGNMENT(groupID, preID, userID) VALUES (@groupID, @preID, @userID);
 
 SET
 @groupID = 1,
 @preID = 2,
-@userID = 2;
+@userID = 1;
 INSERT INTO GROUPASSIGNMENT(groupID, preID, userID) VALUES (@groupID, @preID, @userID);
 
 SET
 @groupID = 1,
 @preID = 3,
-@userID = 2;
+@userID = 1;
 INSERT INTO GROUPASSIGNMENT(groupID, preID, userID) VALUES (@groupID, @preID, @userID);
-/*
-SET
-@groupID = 1,
-@preID = 4,
-@userID = 3;
-INSERT INTO GROUPASSIGNMENT(groupID, preID, userID) VALUES (@groupID, @preID, @userID);
-*/
 
 /*Group 2*/
-/*
 SET
 @groupID = 2,
 @preID = 1,
-@userID = 3;
+@userID = 1;
 INSERT INTO GROUPASSIGNMENT(groupID, preID, userID) VALUES (@groupID, @preID, @userID);
-*/
+
 SET
 @groupID = 2,
 @preID = 4,
-@userID = 3;
+@userID = 1;
 INSERT INTO GROUPASSIGNMENT(groupID, preID, userID) VALUES (@groupID, @preID, @userID);
 
 SET
 @groupID = 2,
 @preID = 3,
-@userID = 2;
+@userID = 1;
 INSERT INTO GROUPASSIGNMENT(groupID, preID, userID) VALUES (@groupID, @preID, @userID);
 
 /*Group 4*/
 SET
 @groupID = 4,
 @preID = 2,
-@userID = 2;
+@userID = 1;
 INSERT INTO GROUPASSIGNMENT(groupID, preID, userID) VALUES (@groupID, @preID, @userID);
 
 SET
 @groupID = 4,
 @preID = 5,
-@userID = 3;
+@userID = 1;
 INSERT INTO GROUPASSIGNMENT(groupID, preID, userID) VALUES (@groupID, @preID, @userID);
 
 
@@ -207,7 +199,7 @@ INSERT INTO LOCATIONASSIGNMENT(locationID, userID) VALUES (@locationID, @userID)
 
 SET
 @locationID = 2,
-@userID = 3;
+@userID = 1;
 INSERT INTO LOCATIONASSIGNMENT(locationID, userID) VALUES (@locationID, @userID);
 
 SET
@@ -218,19 +210,19 @@ INSERT INTO LOCATIONASSIGNMENT(locationID, userID) VALUES (@locationID, @userID)
 
 /*TESTASSIGNMENT*/
 SET
-@userID = 2,
+@userID = 1,
 @testID = 1,
 @status = "Not conducted yet";
 INSERT INTO TESTASSIGNMENT(userID, testID, status) VALUES (@userID, @testID, @status);
 
 SET
-@userID = 2,
+@userID = 1,
 @testID = 2,
 @status = "Not conducted yet";
 INSERT INTO TESTASSIGNMENT(userID, testID, status) VALUES (@userID, @testID, @status);
 
 SET
-@userID = 3,
+@userID = 1,
 @testID = 3,
 @status = "Not conducted yet";
 INSERT INTO TESTASSIGNMENT(userID, testID, status) VALUES (@userID, @testID, @status);
@@ -238,23 +230,33 @@ INSERT INTO TESTASSIGNMENT(userID, testID, status) VALUES (@userID, @testID, @st
 /*TASK*/
 SET
 @instruction = "Touch the smiley face if you like it and touch the sad face if you don't like it.",
-@taskType = "Likert Scale";
-INSERT INTO TASK(instruction, taskType) VALUES (@instruction, @taskType);
+@taskType = "Likert Scale",
+@activity = "Do you like this monster?";
+INSERT INTO TASK(instruction, taskType, activity) VALUES (@instruction, @taskType, @activity);
 
 SET
 @instruction = "Touch the monster's eyes.",
-@taskType = "Identify Body Parts";
-INSERT INTO TASK(instruction, taskType) VALUES (@instruction, @taskType);
+@taskType = "Identify Body Parts",
+@activity = "Touch the monster's eyes.";
+INSERT INTO TASK(instruction, taskType, activity) VALUES (@instruction, @taskType, @activity);
 
 SET
 @instruction = "Select the monsters in order of your favourite to least favourite.",
-@taskType = "Character Ranking";
-INSERT INTO TASK(instruction, taskType) VALUES (@instruction, @taskType);
-/*
+@taskType = "Character Ranking",
+@activity = "Select the monsters in order of your favourite to least favourite.";
+INSERT INTO TASK(instruction, taskType, activity) VALUES (@instruction, @taskType, @activity);
+
 SET
-@instruction = "Drag the monster into the box.",
-@taskType = "Drag and Drop";
-INSERT INTO TASK(instruction, taskType) VALUES (@instruction, @taskType);*/
+@instruction = "How would you make the monster bigger?",
+@taskType = "Preferred Mechanic",
+@activity = "Make the monster bigger.";
+INSERT INTO TASK(instruction, taskType, activity) VALUES (@instruction, @taskType, @activity);
+
+SET
+@instruction = "How would you move the monster into the box?",
+@taskType = "Preferred Mechanic",
+@activity = "Move the monster.";
+INSERT INTO TASK(instruction, taskType, activity) VALUES (@instruction, @taskType, @activity);
 
 /*TASKASSIGNMENT*/
 SET
@@ -269,6 +271,11 @@ INSERT INTO TASKASSIGNMENT(taskID, testID) VALUES (@taskID, @testID);
 
 SET
 @taskID = 3,
+@testID = 1;
+INSERT INTO TASKASSIGNMENT(taskID, testID) VALUES (@taskID, @testID);
+
+SET
+@taskID = 4,
 @testID = 1;
 INSERT INTO TASKASSIGNMENT(taskID, testID) VALUES (@taskID, @testID);
 
@@ -296,12 +303,6 @@ SET
 @taskID = 3;
 INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);
 
-/*SET
-@address = "images/Puff.png",
-@imgType = true,
-@taskID = 4;
-INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);*/
-
 SET
 @address = "images/orbi.jpg",
 @imgType = true,
@@ -326,75 +327,195 @@ SET
 @taskID = 3;
 INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);
 
+SET
+@address = "images/spike.jpg",
+@imgType = true,
+@taskID = 4;
+INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);
+
+SET
+@address = "images/spike.jpg",
+@imgType = true,
+@taskID = 5;
+INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);
 
 /*RESULTS*/
 SET 
 @happy = true,
-@testID = 1,
 @taskID = 1,
 @preID = 1;
-INSERT INTO RESULTS(happy, testID, taskID, preID) VALUES (@happy, @testID, @taskID, @preID);
+INSERT INTO RESULTS(happy, taskID, preID) VALUES (@happy, @taskID, @preID);
 
 SET
 @happy = false,
-@testID = 1,
 @taskID = 1,
 @preID = 2;
-INSERT INTO RESULTS(happy, testID, taskID, preID) VALUES (@happy, @testID, @taskID, @preID);
+INSERT INTO RESULTS(happy, taskID, preID) VALUES (@happy, @taskID, @preID);
 
 SET
 @happy = true,
-@testID = 1,
 @taskID = 1,
 @preID = 3;
-INSERT INTO RESULTS(happy, testID, taskID, preID) VALUES (@happy, @testID, @taskID, @preID);
-
-SET
-@happy = false,
-@testID = 1,
-@taskID = 1,
-@preID = 4;
-INSERT INTO RESULTS(happy, testID, taskID, preID) VALUES (@happy, @testID, @taskID, @preID);
+INSERT INTO RESULTS(happy, taskID, preID) VALUES (@happy, @taskID, @preID);
 
 SET
 @happy = true,
-@testID = 2,
 @taskID = 1,
 @preID = 4;
-INSERT INTO RESULTS(happy, testID, taskID, preID) VALUES (@happy, @testID, @taskID, @preID);
+INSERT INTO RESULTS(happy, taskID, preID) VALUES (@happy, @taskID, @preID);
 
 SET
 @happy = true,
-@testID = 1,
 @taskID = 1,
 @preID = 5;
-INSERT INTO RESULTS(happy, testID, taskID, preID) VALUES (@happy, @testID, @taskID, @preID);
+INSERT INTO RESULTS(happy, taskID, preID) VALUES (@happy, @taskID, @preID);
 
+SET
+@mechanic = "Press",
+@taskID = 4,
+@preID = 1;
+INSERT INTO RESULTS(mechanic, taskID, preID) VALUES (@mechanic, @taskID, @preID);
 
+SET
+@mechanic = "Zoom/Pinch",
+@taskID = 4,
+@preID = 2;
+INSERT INTO RESULTS(mechanic, taskID, preID) VALUES (@mechanic, @taskID, @preID);
 
+SET
+@mechanic = "Swipe/Drag",
+@taskID = 4,
+@preID = 3;
+INSERT INTO RESULTS(mechanic, taskID, preID) VALUES (@mechanic, @taskID, @preID);
 
+SET
+@mechanic = "Swipe/Drag",
+@taskID = 5,
+@preID = 3;
+INSERT INTO RESULTS(mechanic, taskID, preID) VALUES (@mechanic, @taskID, @preID);
 
+SET
+@x = 410.00,
+@y = 155.00,
+@taskID = 2,
+@preID = 1;
+INSERT INTO RESULTS(x, y, taskID, preID) VALUES (@x, @y, @taskID, @preID);
 
+SET
+@x = 375.00,
+@y = 107.00,
+@taskID = 2,
+@preID = 2;
+INSERT INTO RESULTS(x, y, taskID, preID) VALUES (@x, @y, @taskID, @preID);
 
+SET
+@x = 440.00,
+@y = 125.00,
+@taskID = 2,
+@preID = 3;
+INSERT INTO RESULTS(x, y, taskID, preID) VALUES (@x, @y, @taskID, @preID);
 
+SET
+@imageID = 3,
+@score = 5,
+@taskID = 3,
+@preID = 1;
+INSERT INTO RANKING(imageID, score, taskID, preID) VALUES (@imageID, @score, @taskID, @preID);
 
+SET
+@imageID = 3,
+@score = 10,
+@taskID = 3,
+@preID = 2;
+INSERT INTO RANKING(imageID, score, taskID, preID) VALUES (@imageID, @score, @taskID, @preID);
 
+SET
+@imageID = 3,
+@score = 10,
+@taskID = 3,
+@preID = 3;
+INSERT INTO RANKING(imageID, score, taskID, preID) VALUES (@imageID, @score, @taskID, @preID);
 
+SET
+@imageID = 4,
+@score = 10,
+@taskID = 3,
+@preID = 1;
+INSERT INTO RANKING(imageID, score, taskID, preID) VALUES (@imageID, @score, @taskID, @preID);
 
+SET
+@imageID = 4,
+@score = 5,
+@taskID = 3,
+@preID = 2;
+INSERT INTO RANKING(imageID, score, taskID, preID) VALUES (@imageID, @score, @taskID, @preID);
 
+SET
+@imageID = 4,
+@score = 5,
+@taskID = 3,
+@preID = 3;
+INSERT INTO RANKING(imageID, score, taskID, preID) VALUES (@imageID, @score, @taskID, @preID);
 
+SET
+@imageID = 5,
+@score = 15,
+@taskID = 3,
+@preID = 1;
+INSERT INTO RANKING(imageID, score, taskID, preID) VALUES (@imageID, @score, @taskID, @preID);
 
+SET
+@imageID = 5,
+@score = 15,
+@taskID = 3,
+@preID = 2;
+INSERT INTO RANKING(imageID, score, taskID, preID) VALUES (@imageID, @score, @taskID, @preID);
 
+SET
+@imageID = 5,
+@score = 20,
+@taskID = 3,
+@preID = 3;
+INSERT INTO RANKING(imageID, score, taskID, preID) VALUES (@imageID, @score, @taskID, @preID);
 
+SET
+@imageID = 6,
+@score = 20,
+@taskID = 3,
+@preID = 1;
+INSERT INTO RANKING(imageID, score, taskID, preID) VALUES (@imageID, @score, @taskID, @preID);
 
+SET
+@imageID = 6,
+@score = 20,
+@taskID = 3,
+@preID = 2;
+INSERT INTO RANKING(imageID, score, taskID, preID) VALUES (@imageID, @score, @taskID, @preID);
 
+SET
+@imageID = 6,
+@score = 15,
+@taskID = 3,
+@preID = 3;
+INSERT INTO RANKING(imageID, score, taskID, preID) VALUES (@imageID, @score, @taskID, @preID);
 
+SET
+@imageID = 7,
+@score = 25,
+@taskID = 3,
+@preID = 1;
+INSERT INTO RANKING(imageID, score, taskID, preID) VALUES (@imageID, @score, @taskID, @preID);
 
+SET
+@imageID = 7,
+@score = 25,
+@taskID = 3,
+@preID = 2;
+INSERT INTO RANKING(imageID, score, taskID, preID) VALUES (@imageID, @score, @taskID, @preID);
 
-
-
-
-
-
-
-
+SET
+@imageID = 7,
+@score = 25,
+@taskID = 3,
+@preID = 3;
+INSERT INTO RANKING(imageID, score, taskID, preID) VALUES (@imageID, @score, @taskID, @preID);

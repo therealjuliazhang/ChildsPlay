@@ -1,0 +1,39 @@
+Results page:
+<?php
+Get all IDs of preschoolers who pass filter checks and put inside filteredPreIDs[]; 
+$preIDsForQuery = join("','",$filteredPreIDs); - https://stackoverflow.com/questions/907806/passing-an-array-to-a-query-using-a-where-clause
+
+// for likert scale  
+$sql = $sql = "SELECT DISTINCT happy, count(happy) AS likertCount, imageID, address            
+        FROM RESULTS R INNER JOIN IMAGE I ON R.taskID = I.taskID
+        WHERE happy IS NOT NULL AND preID IN ('$preIDsForQuery')
+	GROUP BY happy"; 
+put in likertResults[];
+
+// for identify body parts
+$sql = "SELECT R.taskID, imageID, address, x, y, T.activity
+        FROM RESULTS R INNER JOIN IMAGE I ON R.taskID = I.taskID INNER JOIN TASK T ON R.taskID = T.taskID
+        WHERE x IS NOT NULL AND preID IN ('$preIDsForQuery')"
+put in identifyResults[];
+
+// get results for preferred mechanics
+$sql = "SELECT DISTINCT mechanic, count(mechanic) AS mechanicCount, T.activity, R.taskID, imageID, address
+FROM RESULTS R INNER JOIN IMAGE I ON R.taskID = I.taskID INNER JOIN TASK T ON R.taskID = T.taskID
+WHERE mechanic IS NOT NULL AND preID IN ('$preIDsForQuery')
+GROUP BY mechanic, R.taskID";
+put results in mechanicResults[];
+        
+// for character ranking
+$sql = "SELECT R.imageID, address, sum(score) AS totalScore, R.taskID, R.preID
+        FROM RANKING R INNER JOIN IMAGE I ON R.imageID = I.imageID
+        WHERE preID IN ('$preIDsForQuery')
+        GROUP BY imageID
+	ORDER BY totalScore DESC";
+put results in rankingResults[];
+?>
+<script>
+display likertCounts for happy=1 and happy=0 in likertResults[] (one section for each task)
+display each ranking in rankingResults[] (one section for each task)
+display results in mechanicResults[] (one section for each task)
+display results in identifyBodyPartsResults[] on chart (one section for each task);
+</script>

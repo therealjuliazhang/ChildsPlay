@@ -22,15 +22,12 @@
         $sql2 = "SELECT locationID FROM LOCATIONASSIGNMENT WHERE userID=".$userID;
         $result2 = $conn->query($sql2);
         $locations = array();
-		
 		while($row = mysqli_fetch_assoc($result2)){
 			$query = "SELECT * FROM LOCATION WHERE locationID=".$row["locationID"];
 			$qResult = $conn->query($query);
 			while($value = mysqli_fetch_assoc($qResult))
 				$locations[] = $value;
 		}
-		
-        
         //fetch preschoolerIDs from groupassignment table
         $sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID = " . $groupID ." AND userID=".$userID;
         $result = $conn->query($sql);
@@ -86,7 +83,7 @@
                     <div class="row">
                         <div class="input-field col s12">
                             <select id="locationSelect" class="materialSelect" name="locationSelect" required>
-                            <option id="currentLocation"></option>
+                            <!-- <option id="currentLocation"></option> -->
                             </select>
                             <label id="locationLabel" for="locationSelect" >Group Location</label>
                         </div>
@@ -189,168 +186,6 @@
         for(var i=0; i<preschoolers.length; i++){
             addRow(preschoolers[i]);
         }
-        // function addRow(preschooler){
-        //     var newRow = document.createElement("div");
-        //     newRow.className = ("row");
-        //     addInput("name", newRow, preschooler);
-        //     addInput("age", newRow, preschooler);
-        //     addRadio("male", newRow, preschooler);
-        //     addRadio("female", newRow, preschooler);
-        //     var iconDiv = document.createElement("div");
-        //     //implements remove row
-        //     iconDiv.addEventListener("click", function() {
-        //         rowsDiv.removeChild(newRow);
-        //     }, false);
-        //     iconDiv.classList.add("col", "s1", "changeCursor");
-        //     var removeIcon = document.createElement("i");
-        //     removeIcon.classList.add("material-icons", "medium", "icon-red", "tooltipped"); 
-        //     removeIcon.innerHTML = "remove";
-        //     removeIcon.setAttribute("data-position", "right");
-        //     removeIcon.setAttribute("data-tooltip", "Remove row");
-        //     iconDiv.appendChild(removeIcon);
-        //     newRow.appendChild(iconDiv);
-        //     rowsDiv.appendChild(newRow);
-        //     num++;
-        // }
-        // //creates text field input
-        // function addInput(type, row, preschooler){
-        //     var newDiv = document.createElement("div");
-        //     var newInput = document.createElement("input");
-        //     var newLabel = document.createElement("label");
-        //     newInput.className = "validate";
-        //     newInput.setAttribute('required', "");
-        //     newInput.setAttribute('aria-disabled', true);
-        //     if (type == "name"){
-        //         newDiv.classList.add("input-field", "col", "s5");
-        //         newInput.id = "name" + num;
-        //         newInput.name = "name" + num;
-        //         newInput.value = preschooler['name'];
-        //         newInput.type = "text";
-        //         newLabel.innerHTML = "Name";
-        //     }
-        //     else if(type == "age"){
-        //         newDiv.classList.add("input-field", "col", "s2");
-        //         newInput.id = "age" + num;
-        //         newInput.name = "age" + num;
-        //         newInput.value = preschooler['age'];
-        //         newInput.type = "number";
-        //         newLabel.innerHTML = "Age";
-        //     }
-        //     newLabel.htmlFor = newInput.id;
-        //     newDiv.appendChild(newInput);
-        //     newDiv.appendChild(newLabel);
-        //     row.appendChild(newDiv);
-        // }
-        // // //creates radio button
-        // function addRadio(gender, row, preschooler){
-        //     var newDiv = document.createElement("div");
-        //     var newP = document.createElement("p");
-        //     var newInput = document.createElement("input");
-        //     var newLabel = document.createElement("label");
-        //     newDiv.classList.add("col", "s2");
-        //     newInput.type = 'radio';
-        //     newInput.required = true;
-        //     if (gender == "male"){
-        //         newInput.id = "genderM" + num;
-        //         newInput.name = "gender" + num;
-        //         newInput.value = "Male";
-        //         if(preschooler['gender']=="Male")
-        //             newInput.checked = true;
-        //         newLabel.innerHTML = "Male";
-        //     }
-        //     else if(gender == "female"){
-        //         newInput.id = "genderF" + num;
-        //         newInput.name = "gender" + num;
-        //         newInput.value = "Female";
-        //         if(preschooler['gender']=="Female")
-        //             newInput.checked = true;
-        //         newLabel.innerHTML = "Female";
-        //     }
-        //     newLabel.htmlFor = newInput.id;
-        //     newP.appendChild(newInput);
-        //     newP.appendChild(newLabel);
-        //     newDiv.appendChild(newP);
-        //     row.appendChild(newDiv);
-        // }
-        //creates empty row for inputing for preschool data
-        // function addEmptyRow(){
-        //     var newRow = document.createElement("div");
-        //     newRow.className = ("row");
-        //     addEmptyInput("name", newRow);
-        //     addEmptyInput("age", newRow);
-        //     addUncheckedRadio("male", newRow);
-        //     addUncheckedRadio("female", newRow);
-        //     var iconDiv = document.createElement("div");
-        //     //implements remove row
-        //     iconDiv.addEventListener("click", function() {
-        //         rowsDiv.removeChild(newRow);
-        //     }, false);
-        //     iconDiv.classList.add("col", "s1", "changeCursor");
-        //     var removeIcon = document.createElement("i");
-        //     removeIcon.classList.add("material-icons", "medium", "icon-red", "tooltipped"); 
-        //     removeIcon.innerHTML = "remove";
-        //     removeIcon.setAttribute("data-position", "right");
-        //     removeIcon.setAttribute("data-tooltip", "Remove row");
-        //     iconDiv.appendChild(removeIcon);
-        //     newRow.appendChild(iconDiv);
-        //     rowsDiv.appendChild(newRow);
-        //     num++;
-        // }
-        
-        // //creates empty text field input
-        // function addEmptyInput(type, row){
-        //     var newDiv = document.createElement("div");
-        //     var newInput = document.createElement("input");
-        //     var newLabel = document.createElement("label");
-        //     newInput.className = "validate";
-        //     newInput.setAttribute('required', "");
-        //     newInput.setAttribute('aria-disabled', true);
-        //     if (type == "name"){
-        //         newDiv.classList.add("input-field", "col", "s5");
-        //         newInput.id = "name" + num;
-        //         newInput.name = "name" + num;
-        //         newInput.type = "text";
-        //         newLabel.innerHTML = "Name";
-        //     }
-        //     else if(type == "age"){
-        //         newDiv.classList.add("input-field", "col", "s2");
-        //         newInput.id = "age" + num;
-        //         newInput.name = "age" + num;
-        //         newInput.type = "number";
-        //         newLabel.innerHTML = "Age";
-        //     }
-        //     newLabel.htmlFor = newInput.id;
-        //     newDiv.appendChild(newInput);
-        //     newDiv.appendChild(newLabel);
-        //     row.appendChild(newDiv);
-        // }
-        // //creates unchecked radio button
-        // function addUncheckedRadio(gender, row){
-        //     var newDiv = document.createElement("div");
-        //     var newP = document.createElement("p");
-        //     var newInput = document.createElement("input");
-        //     var newLabel = document.createElement("label");
-        //     newDiv.classList.add("col", "s2");
-        //     newInput.type = 'radio';
-        //     newInput.required = true;
-        //     if (gender == "male"){
-        //         newInput.id = "genderM" + num;
-        //         newInput.name = "gender" + num;
-        //         newInput.value = "Male";
-        //         newLabel.innerHTML = "Male";
-        //     }
-        //     else if(gender == "female"){
-        //         newInput.id = "genderF" + num;
-        //         newInput.name = "gender" + num;
-        //         newInput.value = "Female";
-        //         newLabel.innerHTML = "Female";
-        //     }
-        //     newLabel.htmlFor = newInput.id;
-        //     newP.appendChild(newInput);
-        //     newP.appendChild(newLabel);
-        //     newDiv.appendChild(newP);
-        //     row.appendChild(newDiv);
-        // }
     </script>
     <style>
 	.brand-logo{

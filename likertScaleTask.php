@@ -1,25 +1,19 @@
 <html>
 	<?php
-	$testID = $_GET["testID"];
-	//if there is no groupId then it is a preview and groupID is set to 4 (preview group)
-	$groupID = isset($_GET['groupID']) ? $_GET['groupID'] : 4;
-	$taskIndex = $_GET['taskIndex'];
 	header('Access-Control-Allow-Origin: *');
 	session_start();
+	if(isset($_SESSION["userID"]))
+		$userID = $_SESSION["userID"];
+	else
+		header('login.php');
+	if(isset($_SESSION["groupID"]))
+		$groupID = $_SESSION["groupID"];
+	if(isset($_SESSION["tasks"]))
+		$tasks = $_SESSION['tasks'];
+	if(isset($_GET["taskIndex"]))
+		$taskIndex = $_GET['taskIndex'];
 	include 'db_connection.php';
 	$conn = OpenCon();
-	//fetch task
-	$query = "SELECT taskID FROM TASKASSIGNMENT WHERE testID=".$testID;
-	$result = $conn->query($query);
-
-	$tasks = array();
-	while($value = mysqli_fetch_assoc($result)){
-		$taskQuery = "SELECT * FROM TASK WHERE taskID=".$value["taskID"];
-		$result2 = $conn->query($taskQuery);
-		while($row = mysqli_fetch_assoc($result2))
-			$tasks[] = $row;
-	}
-
 	$taskID = $tasks[$taskIndex]['taskID'];
 	//fetch images
 	$sql = "SELECT * FROM IMAGE WHERE TASKID = '$taskID'";
@@ -28,7 +22,7 @@
 	while($row = mysqli_fetch_assoc($result))
 	   $images[] = $row;
 	//fetch preschoolers
-	$sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$groupID." AND userID=2"; ////Need to fix value of userID after Login page is implemented
+	$sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$groupID." AND userID=".$userID;
 	$result = $conn->query($sql);
 	$preschoolers = array();
 	while($row = mysqli_fetch_assoc($result)){
@@ -38,7 +32,6 @@
 			$preschoolers[] = $value;
 		}
 	}
-
     mysqli_close($conn);
 	?>
 	<head>
@@ -67,7 +60,6 @@
 		#sad{
 			margin-left: 5%;
 		}
-
 		#participant{
 			height: 220px;
 			position:absolute;
@@ -81,30 +73,23 @@
 			right:0px;
 			left:0px
 		}
-
+		.faceCol{
+			height: 150px;
+		}
 		</style>
     </head>
-
     <body>
-        <!--no header needed for test pages-->
         <!-- body content -->
-
 		<img src="images/greyCircle.png" width="7%" align="right" onclick="goNext();"></img>
-
 		<div class="container">
 			<div class="center-align"><img id="image" width="28%"></img></div>
 			<!--all container does is create padding on the left & right sides.-->
 			</div>
-
 		<div class="bottom">
 			<div id="participant" class="row" style="font-size:18px;font-weight:bold">
-
 				<div class="bottomInBottom">
-				<div class="row faces">
-					<img id="happy" src="images/happy.png" onclick="happyClicked()" width="10%"></img>
-					<img id="sad" src="images/sad.png" onclick="sadClicked()" width="10%"></img>
-				</div>
-
+				<div class="col s6 faceCol"><img id="happy" class="right" src="images/happy.png" onclick="happyClicked()" width="150px"></img></div>
+				<div class="col s6 faceCol"><img id="sad"  src="images/sad.png" onclick="sadClicked()" width="150px"></img></div>
 				<div class="center-align">
 					<span id="preschoolerName">
 					</span>'s Turn
@@ -112,9 +97,7 @@
 				</div>
 			</div>
 		</div>
-
         <!--end body content-->
-
     </body>
 	<script>
 		var taskIndex = <?php echo(json_encode($taskIndex)); ?>;
@@ -129,25 +112,21 @@
 		var colours = ['amber accent-4', 'red', 'deep-purple', 'deep-orange', ' blue accent-4', 'teal', 'indigo accent-4', 'light-green accent-4', 'green', 'lime'];
 		document.getElementById("preschoolerName").innerHTML = preschoolers[0]['name'];
 		document.getElementById("participant").className = 'row ' + colours[preschoolerIndex % colours.length];
-
 		function goNext(){
 			preschoolerIndex++;
 			if(preschoolerIndex == preschoolers.length){
-				var testID = <?php echo $testID ?>;
 				var groupID = <?php echo $groupID ?>;
 				var taskIndex = <?php echo $taskIndex ?>;
-				window.location.href = "comments.php?testID=" + testID + "&groupID=" + groupID + "&taskIndex=" + taskIndex;
+				window.location.href = "comments.php?taskIndex=" + taskIndex;
 			}
 			document.getElementById("preschoolerName").innerHTML = preschoolers[preschoolerIndex]['name'];
 			document.getElementById("participant").className = 'row ' + colours[preschoolerIndex % colours.length];
 			document.getElementById("sad").src="images/sad.png";
 			document.getElementById("happy").src="images/happy.png";
 		}
-
 		function sadClicked(){
             document.getElementById("sad").src="images/transparent.png";
 		}
-
 		function happyClicked(){
 			document.getElementById("happy").src="images/transparent.png";
 		}

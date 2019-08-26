@@ -1,7 +1,13 @@
 <!DOCTYPE html>
 
 <html>
-	
+	<?php
+    session_start();
+    unset($_SESSION['testID']);
+    unset($_SESSION['groupID']);
+    unset($_SESSION['tasks']);
+    unset($_SESSION['mode']);
+    ?>
     <head>
         <title>Thank You</title>
         <meta name = "viewport" content = "width = device-width, initial-scale = 1">

@@ -31,9 +31,6 @@
 
     <!--end header-->
 <!--Body part-->
-    <!--
-    Need to be modified : Table border,position aberration between icon and <h>tag
-    -->
     <div class="navbar-fixed">
     <table id="infoTable" height="200px" class="white-text">
       <tbody class="#1565c0 blue darken-3">
@@ -66,88 +63,47 @@
     <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 
     <!--main contents-->
-    <div id="userDetail">
-      <table id="userInfo">
-       <thead>
-         <tr>
-             <th colspan="3" class="blue-text darken-2">Account Information</th>
-         </tr>
-       </thead>
 
-       <tbody>
-         <tr>
-           <td class="row1">Username:</td>
-           <td class="row2" id="uNameCell">
-              <div class='input-field col s6'>
-                <input id="uName" disabled value='Alex Satoru' type='text' class='validate'>
-              </div>
-           </td>
-         </tr>
-         <tr>
-           <td class="row1">Password:</td>
-           <td class="row2" id="passwordCell">
-              <div class='input-field col s6'>
-                <input id="password" disabled value='********' type='text' class='validate'>
-              </div>
-            </td>
-         </tr>
+<div class="container" >
+   <div class="row" id="userDetail">
+     <div class="col s12 blue-text darken-2"><h5>Account Information</h5></div>
+     <div class="col s3 column01"><h5 class="hInCol">Username:</h5></div>
+     <div class='input-field col s9'>
+       <input id="uName" disabled value='Alex Satoru' type='text' class='validate inputInCol'>
+     </div>
 
-         <thead>
-           <tr>
-               <th colspan="3" class="blue-text darken-2">Personal Information</th>
-           </tr>
-         </thead>
+     <div class="col s3 column01"><h5 class="hInCol">Password:</h5></div>
+     <div class='input-field col s9'>
+       <input id="password" disabled value='********' type='text' class='validate inputInCol'>
+     </div>
+     <div class="col s12 blue-text darken-2"><h5>Personal Information</h5></div>
+     <div class="col s3 valign-wrapper column01"><h5 class="hInCol">Email:</h5></div>
+     <div class='input-field col s9'>
+      <input id="email" disabled value='ash@gmail.com' type='text' class='validate inputInCol'>
+     </div>
+     <div class="col s3 column01"><h5 class="hInCol">Location:</h5></div>
+     <div class="removable">
+     <div class="input-field col s8 locationCell">
+       <select class="selectLocation" disabled>
+       <option value="">KU Gwynneville Preschool</option>
+       <option value="2" selected>Wollongong Preschool</option>
+       <option value="3">Keiraville Community Preschool</option>
+       </select>
+     </div>
+     <div class='col s1 hide removeCell'><a class='waves-effect waves-light btn removeButton'><i class='material-icons'>remove</i></a></div>
+   </div>
+   </div>
+ </div>
 
-         <tbody>
-           <tr>
-             <td class="row1">Email:</td>
-             <td class="row2" id="emailCell">
-               <div class='input-field col s6'>
-                <input id="email" disabled value='ash@gmail.com' type='text' class='validate'>
-               </div>
-             </td>
-           </tr>
-           <tr>
-             <td class="row1">Location:</td>
-             <td class="row2" id="selectorCell">
-              <div class="input-field col s12">
-                <select id="selectLocation">
-                <option value="">KU Gwynneville Preschool</option>
-                <option value="2" selected>Wollongong Preschool</option>
-                <option value="3">Keiraville Community Preschool</option>
-                </select>
-              </div>
-              <div class="input-field col s12">
-                <select disabled>
-                <option value=""selected>KU Gwynneville Preschool</option>
-                <option value="2">Wollongong Preschool</option>
-                <option value="3">Keiraville Community Preschool</option>
-                </select>
-              </div>
-              <div class="input-field col s12">
-                <select disabled>
-                <option value="">KU Gwynneville Preschool</option>
-                <option value="2">Wollongong Preschool</option>
-                <option value="3" selected>Keiraville Community Preschool</option>
-                </select>
-              </div>
-            </td>
-           </tr>
-           <tr>
-             <td class="row1"></td>
-             <td class="row2" id="buttonInTable">
-               <a class="waves-effect waves-light btn blue darken-4" id="addButton"><i class="material-icons">add</i></a>
-             </td>
-           </tr>
-       </tbody>
-     </table>
-     <a class="waves-effect waves-light btn blue darken-2 right" id="saveButton">Save</a>
-     <a class="waves-effect waves-light btn #2196f3 blue right" id="editButton">Edit</a>
+
+  <div class="container" id="buttonsContainer">
+   <div class="row">
+     <div class="col s1 offset-s11"><a class="waves-effect waves-light btn blue darken-4 addCell hide right" id="addButton" onclick="appendSelect()"><i class="material-icons">add</i></a></div>
+     <div class="col s10"></div>
+     <div class="col s1"><a class="waves-effect waves-light btn #2196f3 blue right" id="editButton">Edit</a></div>
+     <div class="col s1"><a class="waves-effect waves-light btn blue darken-2 right" id="saveButton">Save</a></div>
     </div>
-
-
-
-
+  </div>
 
 
   </body>
@@ -160,6 +116,10 @@
         $("#uName").prop( "disabled", false );
         $("#password").prop( "disabled", false );
         $("#email").prop( "disabled", false );
+        $(".selectLocation").prop('disabled', false);
+        $(".removeCell").removeClass("hide");
+        $(".addCell").removeClass("hide");
+        $('select').formSelect();
       })
     });
     //disable inputs
@@ -168,28 +128,48 @@
         $("#uName").prop( "disabled", true );
         $("#password").prop( "disabled", true );
         $("#email").prop( "disabled", true );
-        $("#selectLocation").prop('disabled', true);
+        $(".selectLocation").prop('disabled', true);
+        $(".removeCell").addClass("hide");
+        $(".addCell").addClass("hide");
+        $('select').formSelect();
       })
     });
+
     //Add new selector
-    $(document).ready(function(){
-    $("#addButton").click(function(){
-      $("#selectorCell").append("<div class='input-field col s12'><select disabled><option>KU Gwynneville Preschool</option></select></div>");
-      });
-    });
+
+    function appendSelect() {
+            //insert locations into variable
+            var location01 = "KU Gwynneville Preschool";
+            var location02 = "Wollongong Preschool";
+            var location03 = "Keiraville Community Preschool";
+            var removeButton = "<a class='waves-effect waves-light btn removeButton'><i class='material-icons' >remove</i></a>";
+
+            var locations = "<div class='removable'><div class='col s3'></div><div class='input-field col s8 locationCell'><select class='selectLocation'><option value='1' disabled selected>Choose location<option>"
+                          + location01 + "</option><option>"
+                          + location02 + "</option><option>"
+                          + location03 + "</option></select></div><div class='col s1 removeCell'>"
+                          + removeButton + "</div></div>";
+            $("#userDetail").append(locations);
+            $('select').formSelect();
+
+            //remove a row
+            $('.removeButton').click(function() {
+              $(this).closest('.removable').remove();
+            });
+    };
+
     //Initialization for selector
     $(document).ready(function(){
     $('select').formSelect();
     });
-
     </script>
 
 
 
   <style>
-#body {
-  padding-left: 330px;
-}
+  #body {
+    padding-left: 330px;
+  }
   @media only screen and (max-width : 992px) {
       #body{
           padding-left: 0;
@@ -214,18 +194,12 @@
   .image{
       margin-top: 10px;
   }
-  #tableDiv{
-      width: 400px;
-  }
-.sortButton{
-  margin-bottom: 80px;
-  }
 
-  #bodyPart{
-    margin-left: 10%;
-    margin-right: 10%;
+/*CSS for the table under the header*/
+  #userType{
+  font-size:40px;
+  vertical-align: top;
   }
-
   #infoTable{
   background-color:black;
   position: fixed;
@@ -234,46 +208,41 @@
     text-align:right;
     margin-right: 100px;
   }
-
-  #mailInCell{
-    font-size:20px;
-    vertical-align: top;
-  }
   #user{
     width:230px;
     margin-left: 100px;
   }
-  #userType{
-    font-size:40px;
+  #mailInCell{
+    font-size:20px;
     vertical-align: top;
   }
-  .active{
-    color:white;
-  }
+/*CSS for Account Info and Personal Info Container*/
   #userDetail{
     margin-top:150px;
-    margin-left:400px;
-    width:500px;
+    margin-left:200px;
+    margin-bottom: 0px;
   }
-  .row1{
-    width:20%;
+  .removeButton{
+    margin-top:20px;
   }
-  .row2{
-    width:40%;
-  }
-  .row3{
-    text-align:right;
+  #addButton{
+    margin-right: -3px;
+    margin-top: 10px;
   }
   #editButton{
-    margin-top: 15px;
-    margin-right: 10px;
+    margin-top: 30px;
   }
   #saveButton{
-    margin-top: 15px;
+    margin-top: 30px;
   }
-  #buttonInTable{
-    text-align: right;
+  .hInCol{
+    margin-top: 30px;
+    margin-bottom: -10px;
   }
+
+
+
+
 
   </style>
 </html>

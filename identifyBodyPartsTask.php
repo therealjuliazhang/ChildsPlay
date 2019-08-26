@@ -1,28 +1,22 @@
 <html>
 <?php
-$testID = $_GET["testID"];
-$groupID = $_GET["groupID"];
-$taskIndex = $_GET['taskIndex'];
-header('Access-Control-Allow-Origin: *');
 session_start();
+if(isset($_SESSION["userID"]))
+	$userID = $_SESSION["userID"];
+else
+	header('login.php');
+if (isset($_SESSION['groupID']))
+	$groupID = $_SESSION['groupID'];
+if (isset($_SESSION['tasks']))
+	$tasks = $_SESSION['tasks'];
+if (isset($_GET['taskIndex']))
+	$taskIndex = $_GET['taskIndex'];
+header('Access-Control-Allow-Origin: *');
 include 'db_connection.php';
 $conn = OpenCon();
-
-//fetch task
-$query = "SELECT taskID FROM TASKASSIGNMENT WHERE testID=".$testID;
-$result = $conn->query($query);
-
-$tasks = array();
-while($value = mysqli_fetch_assoc($result)){
-	$taskQuery = "SELECT * FROM TASK WHERE taskID=".$value["taskID"];
-	$result2 = $conn->query($taskQuery);
-	while($row = mysqli_fetch_assoc($result2))
-		$tasks[] = $row;
-}
 $taskID = $tasks[$taskIndex]['taskID'];
-
 //fetch names of preschoolers
-$sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$groupID." AND userID=2"; ////Need to fix value of userID after Login page is implemented
+$sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$groupID." AND userID=".$userID; 
 $result = $conn->query($sql);
 $preschoolers = array();
 while($row = mysqli_fetch_assoc($result)){
@@ -32,7 +26,6 @@ while($row = mysqli_fetch_assoc($result)){
 		$preschoolers[] = $value;
 	}
 }
-
 //fetch images
 $sql = "SELECT * FROM IMAGE WHERE TASKID = '$taskID'";
 $result = $conn->query($sql);
@@ -48,11 +41,9 @@ mysqli_close($conn);?>
 	<link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
 	<script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
 	<script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
-	<script type="text/javascript" src="javascript/scripts.js"></script>
 	<script>
-	var testID = <?php echo(json_encode($testID)); ?>;
+	// var testID = <php echo(json_encode($testID)); ?>;
 	var taskID = <?php echo(json_encode($taskID)); ?>;
-
 	//canX is canvas x coordinate, canY is y coordinate
 	var canvas, ctx, canX, canY = 0;
 	var opacity = 1;
@@ -65,7 +56,6 @@ mysqli_close($conn);?>
 	var preschoolerIndex = 0;
 	//colour of backround of preschoolers names at bottom
 	var colours = ['amber accent-4', 'red', 'deep-purple', 'deep-orange', ' blue accent-4', 'teal', 'indigo accent-4', 'light-green accent-4', 'green', 'lime'];
-
 	//creates canvas and displays preschoolers name
 	window.onload = function() {
 		canvas = document.getElementById("myCanvas");
@@ -76,7 +66,6 @@ mysqli_close($conn);?>
 		document.getElementById("preschoolerName").innerHTML = preschoolers[0]['name'];
 		document.getElementById("participant").className = 'row ' + colours[preschoolerIndex % colours.length];
 	}
-
 	function mouseDown(e) {
 		if (!e)
 			var e = event;
@@ -88,10 +77,9 @@ mysqli_close($conn);?>
 		$.ajax({
 				 type: 'POST',
 				 url: 'http://localhost/getCoordinates.php',
-				 data: { x : canX, y : canY , testID : testID, taskID : taskID, preID : preschoolers[preschoolerIndex]['preID']}
+				 data: { x : canX, y : canY , taskID : taskID, preID : preschoolers[preschoolerIndex]['preID']}
 		});
 	}
-
 	function touchDown(e) {
 		if (!e)
 			var e = event;
@@ -104,7 +92,7 @@ mysqli_close($conn);?>
 		$.ajax({
 				 type: 'POST',
 				 url: 'http://localhost/getCoordinates.php',
-				 data: { x : canX, y : canY , testID : testID, taskID : taskID, preID : preschoolers[preschoolerIndex]['preID']}
+				 data: { x : canX, y : canY , taskID : taskID, preID : preschoolers[preschoolerIndex]['preID']}
 		});
 	}
 	//draws circle
@@ -128,10 +116,9 @@ mysqli_close($conn);?>
 		if(preschoolerIndex == preschoolers.length){
 			imageIndex++;
 			if(imageIndex == images.length){
-				var testID = <?php echo $testID ?>;
 				var groupID = <?php echo $groupID ?>;
 				var taskIndex = <?php echo $taskIndex ?>;
-				window.location.href = "comments.php?testID=" + testID + "&groupID=" + groupID + "&taskIndex=" + taskIndex;
+				window.location.href = "comments.php?taskIndex=" + taskIndex;
 			}
 			preschoolerIndex = 0;
 			displayCharacter(imageIndex);
@@ -139,7 +126,6 @@ mysqli_close($conn);?>
 		document.getElementById("preschoolerName").innerHTML = preschoolers[preschoolerIndex]['name'];
 		document.getElementById("participant").className = 'row ' + colours[preschoolerIndex % colours.length];
 	}
-
 	function displayCharacter(imageIndex){
 		document.getElementById("myCanvas").style.background = "url(" + images[imageIndex]['address'] + ")";
 		document.getElementById("myCanvas").style.backgroundRepeat = 'no-repeat';
