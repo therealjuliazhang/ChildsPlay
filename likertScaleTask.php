@@ -101,6 +101,8 @@
     </body>
 	<script>
 		var taskIndex = <?php echo(json_encode($taskIndex)); ?>;
+		var tasks = <?php echo(json_encode($tasks)); ?>;
+		var taskID = tasks[taskIndex]['taskID'];
 		var images = <?php echo(json_encode($images)); ?>;
 		var imageURL = images[0]['address'];
 		document.getElementById("image").src = imageURL;
@@ -108,6 +110,7 @@
 		var preschoolers = <?php echo(json_encode($preschoolers)); ?>;
 		//preschoolerIndex determines whos turn it is
 		var preschoolerIndex = 0;
+		var preID;
 		//colour of backround of preschoolers names at bottom
 		var colours = ['amber accent-4', 'red', 'deep-purple', 'deep-orange', ' blue accent-4', 'teal', 'indigo accent-4', 'light-green accent-4', 'green', 'lime'];
 		document.getElementById("preschoolerName").innerHTML = preschoolers[0]['name'];
@@ -119,6 +122,7 @@
 				var taskIndex = <?php echo $taskIndex ?>;
 				window.location.href = "comments.php?taskIndex=" + taskIndex;
 			}
+			preID = preschoolers[preschoolerIndex]['preID'];
 			document.getElementById("preschoolerName").innerHTML = preschoolers[preschoolerIndex]['name'];
 			document.getElementById("participant").className = 'row ' + colours[preschoolerIndex % colours.length];
 			document.getElementById("sad").src="images/sad.png";
@@ -126,9 +130,21 @@
 		}
 		function sadClicked(){
             document.getElementById("sad").src="images/transparent.png";
+			//insert data
+			$.ajax({
+				type: 'POST',
+				url: 'http://localhost/insertLikertResults.php',
+				data: { happy : 0, taskID : taskID, preID : preID}
+			});
 		}
 		function happyClicked(){
 			document.getElementById("happy").src="images/transparent.png";
+			//insert data
+			$.ajax({
+				type: 'POST',
+				url: 'http://localhost/insertLikertResults.php',
+				data: { happy : 1, taskID : taskID, preID : preID}
+			});
 		}
 	</script>
 </html>
