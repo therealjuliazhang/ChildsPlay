@@ -8,6 +8,9 @@ if(isset($_SESSION['userID']))
 	$userID = $_SESSION['userID'];
 $tasks = array();
 
+//get the selected testID from the dropdown list
+$testID = 1; //NEEDS TO BE CHANGED ACCORDINGLY
+
 //get tasks
 $sql1 = "SELECT * FROM TASK";
 $result1 = $conn->query($sql1);
@@ -15,48 +18,216 @@ while($row1 = mysqli_fetch_assoc($result1))
 	array_push($tasks, $row1);
 
 //Get all IDs of preschoolers who pass filter checks and put inside filteredPreIDs[]; 
-$filteredPreIDs = [1, 2, 3, 4, 5];
-$preIDsForQuery = join("','",$filteredPreIDs);
+	//$filteredPreIDs = [1, 2, 3, 4, 5];
+//COPY
+if(isset($_POST["action"])){
+	$locationQuery = "SELECT groupID FROM GROUPTEST";
+	$groupList = array();
+	//check if any location option is selected
+	if(isset($_POST["location"])){
+		$i = 0;
+		$countIDs = count($_POST["location"]);
+		$selected = "";
+		while($i < $countIDs){
+			$selected .= $_POST["location"][$i];
+			if($i < $countIDs - 1){
+				$selected .= ",";
+			}
+			$i++;
+		}
+		$locationQuery .= " WHERE locationID IN (".$selected.")";
+	}
+	$locationResult = $conn->query($locationQuery);
+	while ($row = mysqli_fetch_assoc($locationResult)){
+		$groupList[] = $row["groupID"]; //get a list of groupIDs from selected locations
+	}
+	
+	$groupQuery = "SELECT preID FROM GROUPASSIGNMENT";
+	$subQuery = "";
+	$selectedGroups = array();
+	//check if any group option is selected
+	$selected = "";
+	if(isset($_POST["group"])){
+		$i = 0;
+		$countIDs = count($_POST["group"]);
+		while($i < $countIDs){
+			$selected .= $_POST["group"][$i];
+			if($i < $countIDs - 1){
+				$selected .= ",";
+			}
+			array_push($selectedGroups, $_POST["group"][$i]);
+			$i++;
+		}
+		//$subQuery = " WHERE groupID IN (".$selected.")";
+	}
+	
+	//get common groupID from selected locations and selected groups
+	$groupIntersection = array();
+	if(count($selectedGroups) > 0 && count($groupList) > 0){ //check if any group is selected
+		$groupIntersection = (array_intersect($selectedGroups, $groupList));
+		if(count($groupIntersection) > 0){
+			$ids = join(",",$groupIntersection);
+			$subQuery = " WHERE groupID IN (".$ids.")";
+		}
+		else{
+			echo "No results found!";
+		}
+	}
+	else if(count($selectedGroups) == 0 && count($groupList) > 0){ //no group is selected
+		$ids = join(",",$groupList);
+		$subQuery = " WHERE groupID IN (".$ids.")"; //get list of groupIDs from selected locations
+	}
+	/*else{
+		echo "This task has not been tested yet!" OR
+		 "No results found!";
+	}*/
+	
+	$groupQuery .= $subQuery;
+	$groupResult = $conn->query($groupQuery);
+	$preList1 = array();
+	while($row = mysqli_fetch_assoc($groupResult)){
+		$preList1[] = $row["preID"];
+	}
+	
+	$genderQuery = "SELECT preID FROM PRESCHOOLER";
+	//check if any gender option is selected
+	if(isset($_POST["gender"])){
+		$i = 0;
+		$countIDs = count($_POST["gender"]);
+		$selected = "'";
+		while($i < $countIDs){
+			$selected .= $_POST["gender"][$i]."'";
+			if($i < $countIDs - 1){
+				$selected .= ",";
+			}
+			$i++;
+		}
+		$genderQuery .= " WHERE gender IN (".$selected.")";
+	}
+	$genderResult = $conn->query($genderQuery);
+	$preList2 = array();
+	while($row = mysqli_fetch_assoc($genderResult)){
+		$preList2[] = $row["preID"];
+	}
+	
+	$ageQuery = "SELECT preID FROM PRESCHOOLER";
+	//check if any age option is selected
+	if(isset($_POST["age"])){
+		$i = 0;
+		$countIDs = count($_POST["age"]);
+		$selected = "";
+		while($i < $countIDs){
+			$selected .= $_POST["age"][$i];
+			if($i < $countIDs - 1){
+				$selected .= ",";
+			}
+			$i++;
+		}
+		$ageQuery .= " WHERE age IN (".$selected.")";
+	}
+	$ageResult = $conn->query($ageQuery);
+	$preList3 = array();
+	while($row = mysqli_fetch_assoc($ageResult)){
+		$preList3[] = $row["preID"];
+	}
+	
+	$filteredPreIDs = array_intersect($preList1, $preList2, $preList3);
+	/*foreach ($filteredPreIDs as $value){
+		echo "Check array: ".$value;
+	}*/
+	
+	if(count($filteredPreIDs) == 0){
+		echo "No results found!";
+	}
+	else{
+		$preIDsForQuery = join("','",$filteredPreIDs);
 
-// get results for likert scale  
-$sql = "SELECT DISTINCT happy, count(happy) AS likertCount, R.taskID, T.activity, imageID, address       
-        FROM RESULTS R INNER JOIN IMAGE I ON R.taskID = I.taskID INNER JOIN TASK T ON R.taskID = T.taskID
-        WHERE happy IS NOT NULL AND preID IN ('$preIDsForQuery')
-		GROUP BY happy"; 
-$result = $conn->query($sql);
-$likertResults = array();
-while($row = mysqli_fetch_assoc($result))
-	array_push($likertResults, $row);
+		// get results for likert scale  
+		$sql = "SELECT DISTINCT happy, count(happy) AS likertCount, R.taskID, T.activity, imageID, address       
+				FROM RESULTS R INNER JOIN IMAGE I ON R.taskID = I.taskID INNER JOIN TASK T ON R.taskID = T.taskID
+				WHERE happy IS NOT NULL AND preID IN ('$preIDsForQuery')
+				GROUP BY happy"; 
+		$result = $conn->query($sql);
+		$likertResults = array();
+		while($row = mysqli_fetch_assoc($result))
+			array_push($likertResults, $row);
 
-// get results for identify body parts
-$sql = "SELECT R.taskID, imageID, address, x, y, T.activity
-        FROM RESULTS R INNER JOIN IMAGE I ON R.taskID = I.taskID INNER JOIN TASK T ON R.taskID = T.taskID
-		WHERE x IS NOT NULL AND preID IN ('$preIDsForQuery')";
-$result = $conn->query($sql);
-$bodyPartsResults = array();
-while($row = mysqli_fetch_assoc($result))
-	array_push($bodyPartsResults, $row);
+		// get results for identify body parts
+		$sql = "SELECT R.taskID, imageID, address, x, y, T.activity
+				FROM RESULTS R INNER JOIN IMAGE I ON R.taskID = I.taskID INNER JOIN TASK T ON R.taskID = T.taskID
+				WHERE x IS NOT NULL AND preID IN ('$preIDsForQuery')";
+		$result = $conn->query($sql);
+		$bodyPartsResults = array();
+		while($row = mysqli_fetch_assoc($result))
+			array_push($bodyPartsResults, $row);
 
-// get results for preferred mechanics
-$sql = "SELECT DISTINCT mechanic, count(mechanic) AS mechanicCount, T.activity, R.taskID, imageID, address
-FROM RESULTS R INNER JOIN IMAGE I ON R.taskID = I.taskID INNER JOIN TASK T ON R.taskID = T.taskID
-WHERE mechanic IS NOT NULL AND preID IN ('$preIDsForQuery')
-GROUP BY mechanic, R.taskID";
-$result = $conn->query($sql);
-$mechanicResults = array();
-while($row = mysqli_fetch_assoc($result))
-	array_push($mechanicResults, $row);
+		// get results for preferred mechanics
+		$sql = "SELECT DISTINCT mechanic, count(mechanic) AS mechanicCount, T.activity, R.taskID, imageID, address
+		FROM RESULTS R INNER JOIN IMAGE I ON R.taskID = I.taskID INNER JOIN TASK T ON R.taskID = T.taskID
+		WHERE mechanic IS NOT NULL AND preID IN ('$preIDsForQuery')
+		GROUP BY mechanic, R.taskID";
+		$result = $conn->query($sql);
+		$mechanicResults = array();
+		while($row = mysqli_fetch_assoc($result))
+			array_push($mechanicResults, $row);
 
-// get results for character ranking
-$sql = "SELECT R.imageID, address, sum(score) AS totalScore, R.taskID, R.preID, T.activity
-        FROM RANKING R INNER JOIN IMAGE I ON R.imageID = I.imageID INNER JOIN TASK T ON R.taskID = T.taskID
-        WHERE preID IN ('$preIDsForQuery')
-        GROUP BY imageID
-		ORDER BY totalScore DESC";
-$result = $conn->query($sql);
-$rankingResults = array();
-while($row = mysqli_fetch_assoc($result))
-	array_push($rankingResults, $row);
+		// get results for character ranking
+		$sql = "SELECT R.imageID, address, sum(score) AS totalScore, R.taskID, R.preID, T.activity
+				FROM RANKING R INNER JOIN IMAGE I ON R.imageID = I.imageID INNER JOIN TASK T ON R.taskID = T.taskID
+				WHERE preID IN ('$preIDsForQuery')
+				GROUP BY imageID
+				ORDER BY totalScore DESC";
+		$result = $conn->query($sql);
+		$rankingResults = array();
+		while($row = mysqli_fetch_assoc($result))
+			array_push($rankingResults, $row);
+	}
+}
+//PASTE
+//display all the results when none of the 
+//if(!(isset($_POST["location"]) && isset($_POST["group"]) && isset($_POST["age"]) && isset($_POST["gender"])))
+else{ 
+	// get results for likert scale  
+	$sql = "SELECT DISTINCT happy, count(happy) AS likertCount, R.taskID, T.activity, imageID, address       
+			FROM RESULTS R INNER JOIN IMAGE I ON R.taskID = I.taskID INNER JOIN TASK T ON R.taskID = T.taskID
+			WHERE happy IS NOT NULL AND testID=".$testID.
+			" GROUP BY happy"; 
+	$result = $conn->query($sql);
+	$likertResults = array();
+	while($row = mysqli_fetch_assoc($result))
+		array_push($likertResults, $row);
+
+	// get results for identify body parts
+	$sql = "SELECT R.taskID, imageID, address, x, y, T.activity
+			FROM RESULTS R INNER JOIN IMAGE I ON R.taskID = I.taskID INNER JOIN TASK T ON R.taskID = T.taskID
+			WHERE x IS NOT NULL AND testID=".$testID;
+	$result = $conn->query($sql);
+	$bodyPartsResults = array();
+	while($row = mysqli_fetch_assoc($result))
+		array_push($bodyPartsResults, $row);
+
+	// get results for preferred mechanics
+	$sql = "SELECT DISTINCT mechanic, count(mechanic) AS mechanicCount, T.activity, R.taskID, imageID, address
+	FROM RESULTS R INNER JOIN IMAGE I ON R.taskID = I.taskID INNER JOIN TASK T ON R.taskID = T.taskID
+	WHERE mechanic IS NOT NULL AND testID=".$testID.
+	" GROUP BY mechanic, R.taskID";
+	$result = $conn->query($sql);
+	$mechanicResults = array();
+	while($row = mysqli_fetch_assoc($result))
+		array_push($mechanicResults, $row);
+
+	// get results for character ranking
+	$sql = "SELECT R.imageID, address, sum(score) AS totalScore, R.taskID, R.preID, T.activity
+			FROM RANKING R INNER JOIN IMAGE I ON R.imageID = I.imageID INNER JOIN TASK T ON R.taskID = T.taskID
+			WHERE testID=".$testID.
+			" GROUP BY imageID
+			ORDER BY totalScore DESC";
+	$result = $conn->query($sql);
+	$rankingResults = array();
+	while($row = mysqli_fetch_assoc($result))
+		array_push($rankingResults, $row);
+}
+
 ?>
     <head>
         <title>Child'sPlay</title>
@@ -117,15 +288,6 @@ while($row = mysqli_fetch_assoc($result))
 						<div class="collapsible-body">
 							<div class="container">
 								<!--start checkbox-->
-								<p>
-								<label>
-									<input type="checkbox" name="location[]" class="filled-in"/>
-									<span>All Locations</span>
-								</label>
-								</p>
-								<!--end checkbox-->
-								<h6>OR</h6>
-								<!--start checkbox-->
 								<?php
 								$locationQuery = "SELECT * FROM LOCATION";
 								$locationResult = $conn->query($locationQuery);
@@ -134,14 +296,6 @@ while($row = mysqli_fetch_assoc($result))
 									     "<span>".$row["name"]."</span></label></p>";
 								}
 								?>
-								<!--end checkbox-->
-								<!--start checkbox-->
-								<p>
-								<label>
-									<input type="checkbox" name="3" class="filled-in"/>
-									<span>Location 2</span>
-								</label>
-								</p>
 								<!--end checkbox-->
 							</div> <!--end container-->
 						</div>
@@ -154,14 +308,6 @@ while($row = mysqli_fetch_assoc($result))
 						<div class="collapsible-header"><h6>Group</h6></div>
 						<div class="collapsible-body">
 							<div class="container">
-								<!--start checkbox-->
-								<p>
-								<label>
-									<input type="checkbox" class="filled-in"/>
-									<span>All Groups</span>
-								</label>
-								</p>
-								<!--end checkbox-->
 								<h6>OR</h6>
 								<!--start checkbox-->
 								<?php
@@ -186,15 +332,6 @@ while($row = mysqli_fetch_assoc($result))
 						<div class="collapsible-body">
 							<div class="container">
 								<!--start checkbox-->
-								<p>
-								<label>
-									<input type="checkbox" class="filled-in"/>
-									<span>All Genders</span>
-								</label>
-								</p>
-								<!--end checkbox-->
-								<h6>OR</h6>
-								<!--start checkbox-->
 								<?php
 								$genderQuery = "SELECT DISTINCT gender FROM PRESCHOOLER";
 								$genderResult = $conn->query($genderQuery);
@@ -215,16 +352,6 @@ while($row = mysqli_fetch_assoc($result))
 						<div class="collapsible-header"><h6>Age</h6></div>
 						<div class="collapsible-body">
 							<div class="container">
-								<!--start checkbox-->
-								<p>
-								<label>
-									<input type="checkbox" class="filled-in"/>
-									<span>All Ages</span>
-								</label>
-								</p>
-								<!--end checkbox-->
-								<h6>OR</h6>
-								<!--start checkbox-->
 								<?php
 								$ageQuery = "SELECT DISTINCT age FROM PRESCHOOLER";
 								$ageResult = $conn->query($ageQuery);
