@@ -73,7 +73,7 @@
         <!-- body content -->
         <div class="container grey-text text-darken-1" style="font-size:18px">
                 <h5 class="blue-text darken-2">Edit Group</h5>
-                 <form id="form" style="font-size:18px" action='updateGroup.php?userID=<?php echo json_encode($userID); ?>&&groupID=<?php echo json_encode($groupID); ?>' method="post">
+                 <form id="form" style="font-size:18px" action='updateGroup.php?userID=<?php echo json_encode($userID); ?>&groupID=<?php echo json_encode($groupID); ?>' method="post">
                     <div class="row">
                         <div class="input-field col s12">
                             <input class="validate" id="groupName" type="text" name="groupName" value="<?php echo $groupName;?>" />

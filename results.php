@@ -7,7 +7,6 @@ session_start();
 if(isset($_SESSION['userID']))
 	$userID = $_SESSION['userID'];
 $tasks = array();
-
 //get tasks
 $sql1 = "SELECT * FROM TASK";
 $result1 = $conn->query($sql1);
@@ -22,7 +21,7 @@ $preIDsForQuery = join("','",$filteredPreIDs);
 $sql = "SELECT DISTINCT happy, count(happy) AS likertCount, R.taskID, T.activity, imageID, address       
         FROM RESULTS R INNER JOIN IMAGE I ON R.taskID = I.taskID INNER JOIN TASK T ON R.taskID = T.taskID
         WHERE happy IS NOT NULL AND preID IN ('$preIDsForQuery')
-		GROUP BY happy"; 
+		GROUP BY happy, R.taskID"; 
 $result = $conn->query($sql);
 $likertResults = array();
 while($row = mysqli_fetch_assoc($result))
@@ -107,7 +106,7 @@ while($row = mysqli_fetch_assoc($result))
         <!--end header-->
         <!--side bar-->
 		<ul id="sidebar" class="sidenav sidenav-fixed" >
-			<!-- <li><h5><a href="#" data-target="slide-out" class="sidenav-trigger">More Tests</a></h5></li>button to activate more tests -->
+			<li><h5><a href="#" data-target="slide-out" class="sidenav-trigger">More Tests</a></h5></li>button to activate more tests
 			<li><h5>Filter Results By</h5></li>
 			<form action="" method="post">
 			<li>

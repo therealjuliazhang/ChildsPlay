@@ -110,7 +110,7 @@
 		var preschoolers = <?php echo(json_encode($preschoolers)); ?>;
 		//preschoolerIndex determines whos turn it is
 		var preschoolerIndex = 0;
-		var preID;
+		var preID = preschoolers[preschoolerIndex]['preID'];
 		//colour of backround of preschoolers names at bottom
 		var colours = ['amber accent-4', 'red', 'deep-purple', 'deep-orange', ' blue accent-4', 'teal', 'indigo accent-4', 'light-green accent-4', 'green', 'lime'];
 		document.getElementById("preschoolerName").innerHTML = preschoolers[0]['name'];
