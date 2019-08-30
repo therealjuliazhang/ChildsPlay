@@ -143,15 +143,15 @@ if(isset($_POST["action"])){
 	else{
 		$preIDsForQuery = join("','",$filteredPreIDs);
 
-		// get results for likert scale  
-		$sql = "SELECT DISTINCT happy, count(happy) AS likertCount, R.taskID, T.activity, imageID, address       
-				FROM RESULTS R INNER JOIN IMAGE I ON R.taskID = I.taskID INNER JOIN TASK T ON R.taskID = T.taskID
-				WHERE happy IS NOT NULL AND preID IN ('$preIDsForQuery')
-				GROUP BY happy"; 
-		$result = $conn->query($sql);
-		$likertResults = array();
-		while($row = mysqli_fetch_assoc($result))
-			array_push($likertResults, $row);
+// get results for likert scale  
+$sql = "SELECT DISTINCT happy, count(happy) AS likertCount, R.taskID, T.activity, imageID, address       
+        FROM RESULTS R INNER JOIN IMAGE I ON R.taskID = I.taskID INNER JOIN TASK T ON R.taskID = T.taskID
+        WHERE happy IS NOT NULL AND preID IN ('$preIDsForQuery')
+		GROUP BY happy, R.taskID"; 
+$result = $conn->query($sql);
+$likertResults = array();
+while($row = mysqli_fetch_assoc($result))
+	array_push($likertResults, $row);
 
 		// get results for identify body parts
 		$sql = "SELECT R.taskID, imageID, address, x, y, T.activity
@@ -279,7 +279,7 @@ else{
         <!--end header-->
         <!--side bar-->
 		<ul id="sidebar" class="sidenav sidenav-fixed" >
-			<!-- <li><h5><a href="#" data-target="slide-out" class="sidenav-trigger">More Tests</a></h5></li>button to activate more tests -->
+			<li><h5><a href="#" data-target="slide-out" class="sidenav-trigger">More Tests</a></h5></li>button to activate more tests
 			<li><h5>Filter Results By</h5></li>
 			<form action="" method="post">
 			<li>

@@ -227,6 +227,19 @@ SET
 @status = "Not conducted yet";
 INSERT INTO TESTASSIGNMENT(userID, testID, status) VALUES (@userID, @testID, @status);
 
+SET
+@userID = 2,
+@testID = 1,
+@status = "Not conducted yet";
+INSERT INTO TESTASSIGNMENT(userID, testID, status) VALUES (@userID, @testID, @status);
+
+SET
+@userID = 2,
+@testID = 2,
+@status = "Conducted",
+@dateConducted = "2019-08-14";
+INSERT INTO TESTASSIGNMENT(userID, testID, dateConducted) VALUES (@userID, @testID, @dateConducted);
+
 /*TASK*/
 SET
 @instruction = "Touch the smiley face if you like it and touch the sad face if you don't like it.",
