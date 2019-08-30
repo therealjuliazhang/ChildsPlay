@@ -228,7 +228,7 @@ else{
 	while($row = mysqli_fetch_assoc($result))
 		array_push($rankingResults, $row);
 }
-
+CloseCon($conn);
 ?>
     <head>
         <title>Child'sPlay</title>

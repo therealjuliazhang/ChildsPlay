@@ -82,28 +82,42 @@
 							<th>Name</th>
 							<th>Email</th>
 							<th>Organisation</th>
-              <th>Accessible Tests</th>
+							<th>Accessible Tests</th>
 						</tr>
 					</thead>
 					<tbody class="grey-text text-darken-1">
-            <tr>
-              <td>Josh Mcartney</td>
-              <td>Josh55@gmail.com</td>
-              <td>Mullberry hill preschool</td>
-              <td><a class="waves-effect waves-light btn #0d47a1 blue darken-4">Tests</a></td>
-            </tr>
-            <tr>
-              <td>Jasmine Flores</td>
-              <td>jezz1@hotmail.com</td>
-              <td>Smith preschool</td>
-              <td><a class="waves-effect waves-light btn #0d47a1 blue darken-4">Tests</a></td>
-            </tr>
-            <tr>
-              <td>Natalie Read</td>
-              <td>nr79@gmail.com</td>
-              <td>Miranda kindergarden</td>
-              <td><a class="waves-effect waves-light btn #0d47a1 blue darken-4">Tests</a></td>
-            </tr>
+<?php
+include 'db_connection.php';
+$conn = OpenCon();
+/*
+$sql = "SELECT fullName, email, LOCATION.name FROM LOCATIONASSIGNMENT LA JOIN USERS U ON U.userID = LA.userID ".
+		"JOIN LOCATION L ON LA.locationID = L.locationID WHERE accountType = 0";*/
+$sql = "SELECT * FROM USERS WHERE accountType = 0";
+$sqlResult = $conn->query($sql);
+$educators = array();
+while($row = mysqli_fetch_assoc($sqlResult)){
+	$educators[] = $row;
+}
+
+foreach ($educators as $educator){
+	echo "<tr><td>".$educator["fullName"]."</td>".
+		"<td>".$educator["email"]."</td>";
+	$query = "SELECT L.name FROM LOCATION L JOIN LOCATIONASSIGNMENT LA ON L.locationID = LA.locationID WHERE LA.userID=".$educator["userID"];
+	$result = $conn->query($query);
+	$rowcount = mysqli_num_rows($result);
+	$location = "<td>";
+	$i = 0;
+	while($row = mysqli_fetch_assoc($result)){
+		$location .= $row["name"];
+		if($i < $rowcount - 1){
+			$location .= ", ";
+		}
+		$i++;
+	}
+	echo $location."</td>";
+	echo '<td><a class="waves-effect waves-light btn #0d47a1 blue darken-4" href="accessibleTest.php?userID='.$educator["userID"].'">Tests</a></td></tr>';
+}
+?>
 					</tbody>
 				</table>
 			</div>
@@ -118,7 +132,23 @@
 						</tr>
 					</thead>
           <tbody class="grey-text text-darken-1">
-            <tr>
+<?php
+$sql = "SELECT * FROM USERS WHERE accountType = 1";
+$sqlResult = $conn->query($sql);
+$admins = array();
+while($row = mysqli_fetch_assoc($sqlResult)){
+	$query = "SELECT L.name FROM LOCATION L JOIN LOCATIONASSIGNMENT LA ON L.locationID = LA.locationID WHERE userID=".$row["userID"];
+	$result = $conn->query($query);
+	$location = mysqli_fetch_array($result);
+	echo "<tr><td>".$row["fullName"]."</td>".
+		"<td>".$row["email"]."</td>".
+		"<td>".$location["name"]."</td></tr>";
+}
+	//$admins[] = $row;
+
+?>
+            <!--
+			<tr>
 							<td>Holly Tootell</td>
 							<td>holly@gmail.com</td>
 							<td>University of Wollongong</td>
@@ -133,6 +163,7 @@
 							<td>gh356@uowmail.edu.au</td>
 							<td>University of Wollongong</td>
 						</tr>
+			--->
           </tbody>
 
         </table>

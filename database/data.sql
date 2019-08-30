@@ -41,6 +41,10 @@ INSERT INTO USERS(username, password, email, accountType, fullName) VALUES (@use
 
 /*LOCATION*/
 SET
+@name = "University of Wollongong";
+INSERT INTO LOCATION(name) VALUES (@name);
+
+SET
 @name = "Mulberry Hill Preschool";
 INSERT INTO LOCATION(name) VALUES (@name);
 
@@ -193,50 +197,56 @@ SET
 INSERT INTO LOCATIONASSIGNMENT(locationID, userID) VALUES (@locationID, @userID);
 
 SET
-@locationID = 2,
-@userID = 2;
+@locationID = 1,
+@userID = 3;
+INSERT INTO LOCATIONASSIGNMENT(locationID, userID) VALUES (@locationID, @userID);
+
+SET
+@locationID = 1,
+@userID = 4;
 INSERT INTO LOCATIONASSIGNMENT(locationID, userID) VALUES (@locationID, @userID);
 
 SET
 @locationID = 2,
-@userID = 1;
+@userID = 3;
+INSERT INTO LOCATIONASSIGNMENT(locationID, userID) VALUES (@locationID, @userID);
+
+SET
+@locationID = 2,
+@userID = 5;
 INSERT INTO LOCATIONASSIGNMENT(locationID, userID) VALUES (@locationID, @userID);
 
 SET
 @locationID = 3,
-@userID = 4;
+@userID = 5;
 INSERT INTO LOCATIONASSIGNMENT(locationID, userID) VALUES (@locationID, @userID);
 
 
 /*TESTASSIGNMENT*/
 SET
 @userID = 1,
-@testID = 1,
-@status = "Not conducted yet";
-INSERT INTO TESTASSIGNMENT(userID, testID, status) VALUES (@userID, @testID, @status);
+@testID = 1;
+INSERT INTO TESTASSIGNMENT(userID, testID) VALUES (@userID, @testID);
 
 SET
 @userID = 1,
 @testID = 2,
-@status = "Not conducted yet";
-INSERT INTO TESTASSIGNMENT(userID, testID, status) VALUES (@userID, @testID, @status);
+@dateConducted = "2019-07-04";
+INSERT INTO TESTASSIGNMENT(userID, testID, dateConducted) VALUES (@userID, @testID, @dateConducted);
 
 SET
 @userID = 1,
-@testID = 3,
-@status = "Not conducted yet";
-INSERT INTO TESTASSIGNMENT(userID, testID, status) VALUES (@userID, @testID, @status);
+@testID = 3;
+INSERT INTO TESTASSIGNMENT(userID, testID) VALUES (@userID, @testID);
 
 SET
 @userID = 2,
-@testID = 1,
-@status = "Not conducted yet";
-INSERT INTO TESTASSIGNMENT(userID, testID, status) VALUES (@userID, @testID, @status);
+@testID = 1;
+INSERT INTO TESTASSIGNMENT(userID, testID) VALUES (@userID, @testID);
 
 SET
 @userID = 2,
 @testID = 2,
-@status = "Conducted",
 @dateConducted = "2019-08-14";
 INSERT INTO TESTASSIGNMENT(userID, testID, dateConducted) VALUES (@userID, @testID, @dateConducted);
 

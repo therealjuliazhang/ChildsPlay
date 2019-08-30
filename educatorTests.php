@@ -105,6 +105,7 @@
 						}
 						echo '</td><td><a href="educatorEditGroup.php?userID='.$userID.'&groupID=', $row["groupID"] ,'" class="waves-effect waves-light btn blue darken-4 ">Edit</a></td></tr>';
 					}
+					CloseCon($conn);
 					?>
 					</tbody>
 				</table>
