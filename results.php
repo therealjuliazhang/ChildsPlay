@@ -118,6 +118,7 @@ if(isset($_POST["action"])){
 		$selected = "";
 		while($i < $countIDs){
 			$selected .= $_POST["age"][$i];
+			echo "Select age: ".$selected;
 			if($i < $countIDs - 1){
 				$selected .= ",";
 			}
@@ -336,7 +337,7 @@ else{
 								$genderQuery = "SELECT DISTINCT gender FROM PRESCHOOLER";
 								$genderResult = $conn->query($genderQuery);
 								while($row = mysqli_fetch_assoc($genderResult)){
-									echo "<p><label><input type='checkbox' name='gender[]' class='filled-in' />".
+									echo "<p><label><input type='checkbox' name='gender[]' value='".$row["gender"]."' class='filled-in' />".
 									     "<span>".$row["gender"]."</span></label></p>";
 								}
 								?>
@@ -356,7 +357,7 @@ else{
 								$ageQuery = "SELECT DISTINCT age FROM PRESCHOOLER";
 								$ageResult = $conn->query($ageQuery);
 								while($row = mysqli_fetch_assoc($ageResult)){
-									echo "<p><label><input type='checkbox' name='age[]' class='filled-in' />".
+									echo "<p><label><input type='checkbox' name='age[]' value='".$row["age"]."' class='filled-in' />".
 									     "<span>".$row["age"]."</span></label></p>";
 								}
 								?>
