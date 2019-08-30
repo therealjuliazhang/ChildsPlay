@@ -135,7 +135,6 @@ foreach ($educators as $educator){
 <?php
 $sql = "SELECT * FROM USERS WHERE accountType = 1";
 $sqlResult = $conn->query($sql);
-$admins = array();
 while($row = mysqli_fetch_assoc($sqlResult)){
 	$query = "SELECT L.name FROM LOCATION L JOIN LOCATIONASSIGNMENT LA ON L.locationID = LA.locationID WHERE userID=".$row["userID"];
 	$result = $conn->query($query);
@@ -143,27 +142,9 @@ while($row = mysqli_fetch_assoc($sqlResult)){
 	echo "<tr><td>".$row["fullName"]."</td>".
 		"<td>".$row["email"]."</td>".
 		"<td>".$location["name"]."</td></tr>";
+	CloseCon($conn);
 }
-	//$admins[] = $row;
-
 ?>
-            <!--
-			<tr>
-							<td>Holly Tootell</td>
-							<td>holly@gmail.com</td>
-							<td>University of Wollongong</td>
-						</tr>
-            <tr>
-							<td>Mark Freeman</td>
-							<td>mark@gmail.com</td>
-							<td>University of Wollongong</td>
-						</tr>
-            <tr>
-							<td>Geff Smith</td>
-							<td>gh356@uowmail.edu.au</td>
-							<td>University of Wollongong</td>
-						</tr>
-			--->
           </tbody>
 
         </table>

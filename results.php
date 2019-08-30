@@ -17,9 +17,6 @@ $result1 = $conn->query($sql1);
 while($row1 = mysqli_fetch_assoc($result1))
 	array_push($tasks, $row1);
 
-//Get all IDs of preschoolers who pass filter checks and put inside filteredPreIDs[]; 
-	//$filteredPreIDs = [1, 2, 3, 4, 5];
-//COPY
 if(isset($_POST["action"])){
 	$locationQuery = "SELECT groupID FROM GROUPTEST";
 	$groupList = array();
@@ -184,8 +181,8 @@ while($row = mysqli_fetch_assoc($result))
 			array_push($rankingResults, $row);
 	}
 }
-//PASTE
-//display all the results when none of the 
+
+//display all the results when none of the options is selected
 //if(!(isset($_POST["location"]) && isset($_POST["group"]) && isset($_POST["age"]) && isset($_POST["gender"])))
 else{ 
 	// get results for likert scale  
@@ -228,7 +225,6 @@ else{
 	while($row = mysqli_fetch_assoc($result))
 		array_push($rankingResults, $row);
 }
-CloseCon($conn);
 ?>
     <head>
         <title>Child'sPlay</title>
@@ -290,7 +286,7 @@ CloseCon($conn);
 							<div class="container">
 								<!--start checkbox-->
 								<?php
-								$locationQuery = "SELECT * FROM LOCATION";
+								$locationQuery = "SELECT * FROM LOCATION WHERE locationID <> 1";
 								$locationResult = $conn->query($locationQuery);
 								while($row = mysqli_fetch_assoc($locationResult)){
 									echo "<p><label><input type='checkbox' name='location[]' value='".$row["locationID"]."' class='filled-in' />".
@@ -309,7 +305,6 @@ CloseCon($conn);
 						<div class="collapsible-header"><h6>Group</h6></div>
 						<div class="collapsible-body">
 							<div class="container">
-								<h6>OR</h6>
 								<!--start checkbox-->
 								<?php
 								$groupQuery = "SELECT * FROM GROUPTEST";
@@ -360,6 +355,7 @@ CloseCon($conn);
 									echo "<p><label><input type='checkbox' name='age[]' value='".$row["age"]."' class='filled-in' />".
 									     "<span>".$row["age"]."</span></label></p>";
 								}
+								CloseCon($conn);
 								?>
 								<!--end checkbox-->
 							</div> <!--end container-->
