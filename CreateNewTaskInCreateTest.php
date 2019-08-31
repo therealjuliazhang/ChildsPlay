@@ -56,7 +56,7 @@
         <!-- body content -->
         <div id="body" class="container">
 			<!--start form-->
-            <form action="insertTask.php?testID=<?php echo json_encode($testID);?>" method="post">
+            <form action="createTest.php" method="post">
 				<h5 class="blue-text darken-2 header">
 					<a class="tooltipped" data-position="left" data-tooltip="Choose activity style from list">
 						<i class="material-icons">help_outline</i>

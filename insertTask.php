@@ -1,6 +1,6 @@
 <?php
     //get user image directory
-	$imageDirectory = "C:\xampp\htdocs\images";
+	$imageDirectory = "C:/xampp/htdocs/images/";
     //get test ID
     if(isset($_GET['testID']))
         $testID = $_GET['testID'];
@@ -12,7 +12,7 @@
         $activity = $_POST['activity'];
     //get image address
     if(isset($_POST['imageFileName']))
-        $imageFileName = $imageDirectory . $_POST['imageFileName'];
+        $imageAddress = $imageDirectory . $_POST['imageFileName'];
     //open database connection
     include 'db_connection.php';
     $conn = OpenCon();
@@ -20,22 +20,21 @@
     $sql = "INSERT INTO TASK (taskType, activity)VALUES ('".$activityStyle."', '".$activity."')"; 
     if ($conn->query($sql) === TRUE){ 
         echo "New record created successfully";
-        $check = true;
+        //get ID of inserted task
+        $taskID = $conn->insert_id;
     }
-    else{
+    else
         echo "Error: " . $sql . "<br>" . $conn->error;
-        $check = false;
-    }	
-    //get new task ID
-    
     //insert image path into database
-    $sql = "INSERT INTO IMAGE (taskType, activity)VALUES ('".$activityStyle."', '".$activity."')"; 
-    if ($conn->query($sql) === TRUE){ 
+    $sql = "INSERT INTO IMAGE (address, imgType, taskID) VALUES ('".$imageAddress."', true, '".$taskID."')"; 
+    if ($conn->query($sql) === TRUE)
         echo "New record created successfully";
-        $check = true;
-    }
-    else{
+    else
         echo "Error: " . $sql . "<br>" . $conn->error;
-        $check = false;
-    }	
+    //insert into task assignment
+    $sql = "INSERT INTO TASKASSIGNMENT (testID, taskID) VALUES (".$testID.", ".$taskID.")"; 
+    if ($conn->query($sql) === TRUE)
+        echo "New record created successfully";
+    else
+        echo "Error: " . $sql . "<br>" . $conn->error;
 ?>
