@@ -57,7 +57,6 @@ if(isset($_POST["action"])){
 		}
 		//$subQuery = " WHERE groupID IN (".$selected.")";
 	}
-	
 	//get common groupID from selected locations and selected groups
 	$groupIntersection = array();
 	if(count($selectedGroups) > 0 && count($groupList) > 0){ //check if any group is selected
