@@ -11,7 +11,6 @@
   </head>
   <body>
     <!--header-->
-
         <div class="navbar-fixed">
             <nav class="nav-extended blue darken-4">
                 <div class="nav-wrapper">
@@ -25,7 +24,6 @@
                 </div>
             </nav>
         </div>
-
     <!--end header-->
 <!--Body part-->
     <div class="navbar-fixed">
@@ -114,9 +112,6 @@
     })
   });
   </script>
-
-
-
   <style>
   #body {
     padding-left: 330px;
@@ -185,9 +180,5 @@
     margin-top: 30px;
     margin-bottom: -10px;
   }
-
-
-
-
   </style>
 </html>

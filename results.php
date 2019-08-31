@@ -1,13 +1,14 @@
 <html>
 <?php
-//connect to database
-include 'db_connection.php';
-$conn = OpenCon();
 session_start();
 if(isset($_SESSION['userID']))
 	$userID = $_SESSION['userID'];
+else
+	header('login.php');
 $tasks = array();
-
+//connect to database
+include 'db_connection.php';
+$conn = OpenCon();
 //get the selected testID from the dropdown list
 $testID = 1; //NEEDS TO BE CHANGED ACCORDINGLY
 

@@ -68,7 +68,7 @@
                 <div class="nav-wrapper">
                     <a href="#" class="brand-logo left"><img src="images/logo1.png" ></a>
                     <ul id="nav-mobile" class="left hide-on-med-and-down">
-                        <li  class="active"><a href="">Tests</a></li>
+                        <li class="active"><a href="">Tests</a></li>
                         <li><a href="">Create</a></li>
                         <li><a href="" >Results</a></li>
                         <li><a href="">Users</a></li>
