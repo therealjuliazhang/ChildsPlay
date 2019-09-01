@@ -28,8 +28,8 @@ $query4 = "SELECT R.imageID, address, sum(score) AS totalScore, R.taskID, R.preI
 
 $testFilter = "";
 //get the selected testID from the list
-if(isset($testID)){	//NEEDS UPDATING WHEN THE TEST NAV BAR IS IMPLEMENTED
-	echo "Test ID:".$testID;
+if(isset($_SESSION["testID"])){	
+	$testID = $_SESSION["testID"];
 	$testFilter = "testID=".$testID;
 	$query1 .= " AND ".$testFilter;
 	$query2 .= " AND ".$testFilter;
@@ -184,5 +184,6 @@ if(!(isset($_POST["action"]) && count($filteredPreIDs) == 0)){
 		array_push($rankingResults, $row4);		
 
 	}
+	//unset($_SESSION["testID"]);
 ?>
 

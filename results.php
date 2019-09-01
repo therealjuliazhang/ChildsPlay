@@ -1,15 +1,23 @@
 <html>
 <?php
 session_start();
-include_once 'resultQueries.php';
+//include_once 'resultQueries.php';
 
 if(isset($_SESSION['userID']))
 	$userID = $_SESSION['userID'];
 else
 	header('login.php');
 
-//get the selected testID from the dropdown list
-//$testID = 1; //NEEDS TO BE CHANGED ACCORDINGLY
+if(isset($_SESSION["testID"])){
+	//session_destroy();
+	unset($_SESSION["testID"]);
+}
+
+if(isset($_GET["testID"])){
+	$testID = $_GET["testID"];
+	$_SESSION["testID"] = $testID;
+}
+include_once 'resultQueries.php';
 ?>
     <head>
         <title>Child'sPlay</title>
@@ -25,6 +33,7 @@ else
 			//initialize materialize sidenav
 			$('.sidenav').sidenav();
 			$('.collapsible').collapsible();
+			$('.dropdown-trigger').dropdown();
 			//get results from php 
 			var likertResults = <?php echo json_encode($likertResults); ?>;
 			var rankingResults = <?php echo json_encode($rankingResults); ?>;
@@ -72,7 +81,18 @@ else
         <!--end header-->
         <!--side bar-->
 		<ul id="sidebar" class="sidenav sidenav-fixed" >
-			<li><h5><a href="#" data-target="slide-out" class="sidenav-trigger">More Tests</a></h5></li>button to activate more tests
+			<li><h5><a href="#" data-target="slide-out" class="dropdown-trigger">More Tests</a></h5></li>button to activate more tests
+			<ul class="dropdown-content" id="slide-out">
+			<?php 
+			$testQuery = "SELECT testID, title FROM TEST";
+			$result = $conn->query($testQuery);
+			while($row = mysqli_fetch_assoc($result))
+				//echo "<li><a href='#'>".$row["title"]."</a></li>";
+				echo "<li><a href='?testID=".$row["testID"]."'>".$row["title"]."</a></li>";
+			
+			?>
+			</ul>
+			
 			<li><h5>Filter Results By</h5></li>
 			<form action="" method="post">
 			<li>
@@ -271,6 +291,10 @@ else
 	}
 	.topPadding{
 		padding-top: 50px;
+	}
+	#slide-out{
+		width: 300px !important;
+		top: 50px !important;
 	}
     </style>
 </html>
