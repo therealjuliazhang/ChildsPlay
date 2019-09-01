@@ -165,27 +165,24 @@ $query3 .= " GROUP BY mechanic, R.taskID";
 $query4 .= " GROUP BY imageID ORDER BY totalScore DESC";
 
 
-if(isset($_POST["action"]) && count($filteredPreIDs) == 0){
-	echo "No results found!";
-}
-else{
+if(!(isset($_POST["action"]) && count($filteredPreIDs) == 0)){
 	// get results for likert scale
-$result1 = $conn->query($query1);
-while($row1 = mysqli_fetch_assoc($result1))
-	array_push($likertResults, $row1);
-// get results for identify body parts
-$result2 = $conn->query($query2);
-while($row2 = mysqli_fetch_assoc($result2))
-	array_push($bodyPartsResults, $row2);	
-// get results for preferred mechanics
-$result3 = $conn->query($query3);
-while($row3 = mysqli_fetch_assoc($result3))
-	array_push($mechanicResults, $row3);	
-// get results for character ranking
-$result4 = $conn->query($query4);
-while($row4 = mysqli_fetch_assoc($result4))
-	array_push($rankingResults, $row4);		
+	$result1 = $conn->query($query1);
+	while($row1 = mysqli_fetch_assoc($result1))
+		array_push($likertResults, $row1);
+	// get results for identify body parts
+	$result2 = $conn->query($query2);
+	while($row2 = mysqli_fetch_assoc($result2))
+		array_push($bodyPartsResults, $row2);	
+	// get results for preferred mechanics
+	$result3 = $conn->query($query3);
+	while($row3 = mysqli_fetch_assoc($result3))
+		array_push($mechanicResults, $row3);	
+	// get results for character ranking
+	$result4 = $conn->query($query4);
+	while($row4 = mysqli_fetch_assoc($result4))
+		array_push($rankingResults, $row4);		
 
-}
+	}
 ?>
 

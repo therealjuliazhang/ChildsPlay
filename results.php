@@ -31,6 +31,16 @@ else
 			//var likertResults = <?php echo json_encode($likertResults); ?>;
 			var bodyPartsResults = <?php echo json_encode($bodyPartsResults); ?>;
 			var mechanicResults = <?php echo json_encode($mechanicResults); ?>;
+			
+			//print out "Result not found" if all results arrays are empty
+			if(likertResults.length == 0 && rankingResults.length == 0 && mechanicResults.length == 0 /*&& bodyPartsResults == 0*/){
+				var output = "No results match!";
+				var result = document.getElementById("results");
+				result.innerHTML = output;
+				result.style.color = "red";
+				result.style.fontStyle = "italic";
+			}
+			
 			//display results
 			displayLikert(likertResults);
 			displayRanking(rankingResults);
@@ -164,6 +174,7 @@ else
         <div id="body">
 			<!--end slide out menu-->
 			<div id="results">
+			
 				<!-- IDENTIFY BODY PARTS TASK -->
 				<!-- <h5 class="blue-text darken-2 header">Identify Eye Task:</h5>
 				Can you point to the monster's eyes?

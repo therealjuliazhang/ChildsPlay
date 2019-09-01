@@ -1,21 +1,33 @@
 //needed for not putting padding-top on first header
 var firstHeader = true;
+var isRankingEmpty = false;
+var isLikertEmpty = false;
+var isMechanicEmpty = false;
+//var isBodyPartsEmpty = false;
 
 //display results for character ranking
 function displayRanking(rankingResults){
+	if(rankingResults.length == 0) {isRankingEmpty = true; console.log("True check");}
+	else {isRankingEmpty = false;console.log("False check");}
     taskIDs = getUniqueIDs(rankingResults);
     displayResults(rankingResults, taskIDs, "Character Ranking", );
 }
+
 // display results for likert scale
 function displayLikert(likertResults){
+	if(likertResults.length == 0) isLikertEmpty = true;
+	else isLikertEmpty = false;
     taskIDs = getUniqueIDs(likertResults);
     displayResults(likertResults, taskIDs, "Likert Scale");
 }
 //display results for preferred mechanics
 function displayMechanics(mechanicResults){
+	if(mechanicResults.length == 0) isMechanicEmpty = true;
+	else isMechanicEmpty = false;
     taskIDs = getUniqueIDs(mechanicResults);
     displayResults(mechanicResults, taskIDs, "Preferred Mechanics");
 }
+
 //get all unique task IDs from results
 function getUniqueIDs(results){
     taskIDs = [...new Set(results.map(item => item.taskID))];
