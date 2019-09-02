@@ -7,12 +7,20 @@ if(isset($_SESSION["tasks"]))
 	$tasks = $_SESSION["tasks"];
 else
 	$tasks = array();
-if(isset($_SESSION["mode"]))
+/*
+if(isset($_SESSION["mode"])){
 	$mode = $_SESSION["mode"];
+}
 else if(isset($_GET["mode"])){
 	$mode = $_GET["mode"];
 	$_SESSION["mode"] = $mode;
 }
+*/
+$mode;
+if(isset($_SESSION["mode"])){
+	$mode = $_SESSION["mode"];
+}
+
 if(isset($_SESSION["testID"]))
 	$testID = $_SESSION["testID"];
 if(isset($_SESSION["groupID"]))
@@ -45,8 +53,21 @@ function getTasks($conn, $testID){
 	$_SESSION['tasks'] = $tasks;
 	return $tasks;
 }
+/*
+$taskIndex;
 //index of task in array
+if(isset($_GET['taskIndex'])){
+	$_SESSION['taskIndex'] = $_GET['taskIndex'];
+//	$taskIndex = $taskIndex;
+}
+if(!isset($_SESSION['taskIndex'])){
+	$taskIndex = 0;
+}
+else
+	$taskIndex = $_SESSION['taskIndex'];
+*/
 $taskIndex = isset($_GET['taskIndex']) ? $_GET['taskIndex'] : 0;
+echo "Task index: ".$taskIndex;
 $bodyPart = "eye";
 ?>
     <head>
@@ -149,19 +170,27 @@ foreach ($imageAdresses as $value)
 						<a href="?back=true" class="waves-effect waves-light btn blue darken-4">Back</a>
 						<?php
 							if(isset($_GET["back"])){
-								if($taskIndex == 0)
+								if($_SESSION['mode'] == "preview")
+										header("Location: educatorTests.php");
+									else
+										header("Location: selectGroupForTask.php");
+								/*
+								if($taskIndex == 0){
 									//if preview (group is preview group), go back to educator tests page
 									if($_SESSION['mode'] == "preview")
 										header("Location: educatorTests.php");
 									else
 										header("Location: selectGroupForTask.php?");
+								}
 								else{
 									--$taskIndex;
+									
 									if($_SESSION['mode'] == "preview")
 										header("Location: educatorTests.php");
 									else
 										header("Location: comments.php?groupID=".$groupID."&taskIndex=".$taskIndex);
-								}
+									
+								}*/
 							}
 						?>
 					</div>
