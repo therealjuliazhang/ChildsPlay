@@ -3,6 +3,7 @@
   <head>
     <title>ProfilePage</title>
     <meta name = "viewport" content = "width = device-width, initial-scale = 1">
+    <link rel="stylesheet" type="text/css" href="childsPlayStyle.css">
     <link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -11,23 +12,20 @@
   </head>
   <body>
     <!--header-->
-
-        <div class="navbar-fixed">
-            <nav class="nav-extended blue darken-4">
-                <div class="nav-wrapper">
-                    <a href="#" class="brand-logo left"><img src="images/logo1.png" ></a>
-                    <ul id="nav-mobile" class="left hide-on-med-and-down">
-                        <li  class="active"><a href="">Tests</a></li>
-                        <li><a href="">Create</a></li>
-                        <li><a href="" >Results</a></li>
-                        <li><a href="">Users</a></li>
-                    </ul>
-                </div>
-            </nav>
+    <div class="navbar-fixed">
+      <nav class="nav-extended blue darken-4">
+        <div class="nav-wrapper">
+          <a href="#" class="brand-logo left"><img src="images/logo1.png" ></a>
+          <ul id="nav-mobile" class="left hide-on-med-and-down">
+            <li  class="active"><a href="">Tests</a></li>
+            <li><a href="">Create</a></li>
+            <li><a href="" >Results</a></li>
+            <li><a href="">Users</a></li>
+          </ul>
         </div>
-
-    <!--end header-->
-<!--Body part-->
+      </nav>
+    </div>
+    <!--Content User Information under the header-->
     <div class="navbar-fixed">
     <table id="infoTable" height="200px" class="white-text">
       <tbody class="#1565c0 blue darken-3">
@@ -52,13 +50,15 @@
       </tbody>
     </table>
     </div>
+
     <!--Side Bar-->
     <ul id="sidebar" class="sidenav sidenav-fixed #ffffff white">
           <li class="tab is-active"><a href="#!">Profile</a></li>
           <li class="tab"><a>Location</a></li>
     </ul>
     <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-    <!--End Sidebar-->
+
+
     <!--Main contents-->
     <div class="panel-group">
     <!--html for profile tab-->
@@ -109,7 +109,6 @@
          <div class="col s2">
            31/08/2019
          </div>
-
 
          <div class="col s1">
            <div class='col s1 removeCell'><a class='waves-effect waves-light btn hide removeButtonB'><i class='material-icons'>remove</i></a></div>
@@ -267,95 +266,4 @@
 
   </script>
 
-
-
-  <style>
-  #body {
-    padding-left: 330px;
-  }
-  @media only screen and (max-width : 992px) {
-      #body{
-          padding-left: 0;
-      }
-  }
-  .brand-logo{
-      margin-top:-67px;
-  }
-  #sidebar{
-      margin-top: 264px;
-  }
-  .nav-wrapper > ul {
-      margin-left: 220px;
-  }
-  .header{
-      margin-top: 30px;
-  }
-  .image{
-      margin-top: 10px;
-  }
-  /*CSS for the table under the header*/
-  #infoTable{
-  background-color:black;
-  position: fixed;
-  }
-  .tableLeft{
-    text-align:right;
-    margin-right: 100px;
-  }
-  #mailInCell{
-    font-size:20px;
-    vertical-align: top;
-  }
-  #userIconCell{
-    width:200px;
-    margin-left: 100px;
-  }
-  #userType{
-    font-size:40px;
-    vertical-align: top;
-  }
-
-  /*CSS for Account info and Personal Info Container*/
-  #userDetail{
-    margin-top:150px;
-    margin-left:200px;
-  }
-  #locationInfo{
-    margin-top:150px;
-    margin-left:200px;
-  }
-  .column01{
-    height: 50px;
-  }
-  #addButtonB{
-    margin-right: -14px;
-    margin-top: 10px;
-  }
-  #editButtonB{
-    margin-top: 30px;
-  }
-  #saveButtonB{
-    margin-top: 30px;
-  }
-  .hInCol{
-    margin-top: 30px;
-    margin-bottom: -10px;
-  }
-/*CSS for switchin tabs*/
-  .panel{
-      display:none;
-  }
-  .panel.is-show{
-      display:block;
-  }
-  .is-active{
-    background-color: #eceff1;
-  }
-  .s2{
-    text-align: center;
-  }
-
-
-
-  </style>
 </html>
