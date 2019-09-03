@@ -8,10 +8,14 @@
 		$userID = $_SESSION["userID"];
 	else
 		header('login.php');
-	if(isset($_SESSION["groupID"]))
-		$groupID = $_SESSION["groupID"];
-	if(isset($_SESSION["tasks"]))
+	if(isset($_SESSION['groupID']))
+		$groupID = $_SESSION['groupID'];
+	if(isset($_SESSION['testID']))
+		$testID = $_SESSION['testID'];
+	if(isset($_SESSION['tasks']))
 		$tasks = $_SESSION['tasks'];
+	if(isset($_SESSION["testID"]))
+		$testID = $_SESSION['testID'];
 	if(isset($_GET["taskIndex"]))
 		$taskIndex = $_GET['taskIndex'];
 	$taskID = $tasks[$taskIndex]['taskID'];
@@ -56,7 +60,6 @@
 				<div class="col s12">
 					<h5 class="blue-text darken-2">Any Comments?</h5>
 					<div style="font-size:18px">
-						
 						Input any relevant information about anything that occurred during the test task:
 					</div>
 				</div>
@@ -86,6 +89,7 @@ header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1.
 header("Pragma: no-cache"); // HTTP 1.0.
 header("Expires: 0"); // Proxies.
 $conn = OpenCon();
+
 if(isset($_POST['nextButton'])){
 	function processText($text) {
 		$text = strip_tags($text);
@@ -104,7 +108,12 @@ if(isset($_POST['nextButton'])){
 	}
 	else{
 		if($comment != ""){
-			$sql = "UPDATE TASK SET comments = '". $comment ."' WHERE taskID = ".$taskID." AND testID=".$testID;
+			//check if comment already exists for task
+			$sql = "SELECT comments FROM TASKASSIGNMENT WHERE taskID = ".$taskID." AND testID=".$testID;
+			$result = $conn->query($sql);
+			$previousComments = mysqli_fetch_assoc($result)['comments'];
+			$comment = $previousComments . "\n" . $comment;
+			$sql = "UPDATE TASKASSIGNMENT SET comments = '". $comment ."' WHERE taskID = ".$taskID." AND testID=".$testID;
 			if(mysqli_query($conn,$sql)){ //check if the query is executed successfully
 				if($taskIndex == (sizeof($tasks)-1))
 					header("Location: thankyou.php");

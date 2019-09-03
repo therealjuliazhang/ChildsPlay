@@ -16,6 +16,7 @@
   <head>
     <title>ProfilePage</title>
     <meta name = "viewport" content = "width = device-width, initial-scale = 1">
+    <link rel="stylesheet" type="text/css" href="childsPlayStyle.css">
     <link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -24,23 +25,20 @@
   </head>
   <body>
     <!--header-->
-
-        <div class="navbar-fixed">
-            <nav class="nav-extended blue darken-4">
-                <div class="nav-wrapper">
-                    <a href="#" class="brand-logo left"><img src="images/logo1.png" ></a>
-                    <ul id="nav-mobile" class="left hide-on-med-and-down">
-                        <li  class="active"><a href="">Tests</a></li>
-                        <li><a href="">Create</a></li>
-                        <li><a href="" >Results</a></li>
-                        <li><a href="">Users</a></li>
-                    </ul>
-                </div>
-            </nav>
+    <div class="navbar-fixed">
+      <nav class="nav-extended blue darken-4">
+        <div class="nav-wrapper">
+          <a href="#" class="brand-logo left"><img src="images/logo1.png" ></a>
+          <ul id="nav-mobile" class="left hide-on-med-and-down">
+            <li  class="active"><a href="">Tests</a></li>
+            <li><a href="">Create</a></li>
+            <li><a href="" >Results</a></li>
+            <li><a href="">Users</a></li>
+          </ul>
         </div>
-
-    <!--end header-->
-<!--Body part-->
+      </nav>
+    </div>
+    <!--Content User Information under the header-->
     <div class="navbar-fixed">
     <table id="infoTable" height="200px" class="white-text">
       <tbody class="#1565c0 blue darken-3">
@@ -65,18 +63,20 @@
       </tbody>
     </table>
     </div>
+
     <!--Side Bar-->
     <ul id="sidebar" class="sidenav sidenav-fixed #ffffff white">
-          <li class="active #ffffff white"><a href="#!">Profile</a></li>
-          <li><a href="#!">Location</a></li>
-          <li><a href="#!">Tests</a></li>
+          <li class="tab is-active"><a href="#!">Profile</a></li>
+          <li class="tab"><a>Location</a></li>
     </ul>
     <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 
-    <!--main contents-->
 
-<form action = "updateAdmin.php" method="post">
-    <div class="container" >
+    <!--Main contents-->
+    <div class="panel-group">
+    <!--html for profile tab-->
+    <div class="panel  is-show">
+    <div class="container">
        <div class="row" id="userDetail">
          <div class="col s12 blue-text darken-2"><h5>Account Information</h5></div>
          <div class="col s3 column01"><h5 class="hInCol">Username:</h5></div>
@@ -96,7 +96,6 @@
        </div>
      </div>
 
-
       <div class="container">
        <div class="row">
          <div class="col s10"></div>
@@ -109,12 +108,104 @@
 
 
 
+    </div>
 
+    <!--html for Location tab-->
+    <div class="panel">
+    <div class="container">
+       <div class="row" id="locationInfo">
+         <div class="col s4 blue-text darken-2"><h5>Name</h5></div>
+         <div class="col s5 blue-text darken-2"><h5>Address</h5></div>
+         <div class="col s3 blue-text darken-2"><h5>Date added</h5></div>
+         <div class="removable">
+         <div class='col s4'>
+           <input disabled value='University of Wollongong' type='text' class='validate inputInColB'>
+         </div>
+         <div class="col s5">
+           <input disabled value='2 Northfields Ave, Wollongong NSW 2522' type='text' class='validate inputInColB'>
+         </div>
+         <div class="col s2">
+           31/08/2019
+         </div>
 
+         <div class="col s1">
+           <div class='col s1 removeCell'><a class='waves-effect waves-light btn hide removeButtonB'><i class='material-icons'>remove</i></a></div>
+         </div>
+        </div>
+
+        <div class="removable">
+         <div class='col s4'>
+           <input disabled value='Keiraville Community Preschool' type='text' class='validate inputInColB'>
+         </div>
+         <div class="col s5">
+           <input disabled value='36 Gooyong St, Keiraville NSW 2500' type='text' class='validate inputInColB'>
+         </div>
+         <div class="col s2">
+           12/08/2019
+         </div>
+         <div class="col s1">
+           <div class='col s1 removeCell'><a class='waves-effect waves-light btn hide removeButtonB'><i class='material-icons'>remove</i></a></div>
+         </div>
+       </div>
+
+       <div class="removable">
+         <div class='col s4'>
+           <input disabled value='KU Gwynneville Preschool' type='text' class='validate inputInColB'>
+         </div>
+         <div class="col s5">
+           <input disabled value='22 Berkeley Rd, Gwynneville NSW 2500' type='text' class='validate inputInColB'>
+         </div>
+         <div class="col s2">
+           12/08/2019
+         </div>
+         <div class="col s1">
+           <div class='col s1 removeCell'><a class='waves-effect waves-light btn hide removeButtonB'><i class='material-icons'>remove</i></a></div>
+         </div>
+       </div>
+
+       <div class="removable">
+         <div class='col s4'>
+           <input disabled value='Wollongong City Community Preschool' type='text' class='validate inputInColB'>
+         </div>
+         <div class="col s5">
+           <input disabled value='261 Keira St, Wollongong NSW 2500' type='text' class='validate inputInColB'>
+         </div>
+         <div class="col s2">
+           12/08/2019
+         </div>
+         <div class="col s1">
+           <div class='col s1 removeCell'><a class='waves-effect waves-light btn hide removeButtonB'><i class='material-icons'>remove</i></a></div>
+         </div>
+       </div>
+
+       <div class="removable">
+         <div class='col s4'>
+           <input disabled value='Balgownie Preschool' type='text' class='validate inputInColB'>
+         </div>
+         <div class="col s5">
+           <input disabled value='21A Ryan St, Balgownie NSW 2519' type='text' class='validate inputInColB'>
+         </div>
+         <div class="col s2">
+           12/08/2019
+         </div>
+         <div class="col s1">
+           <div class='col s1 removeCell'><a class='waves-effect waves-light btn hide removeButtonB'><i class='material-icons'>remove</i></a></div>
+         </div>
+       </div>
+     </div>
+
+       <div class="row">
+         <div class="col s1 offset-s11"><a class="waves-effect waves-light btn blue darken-4 addCell hide right" id="addButtonB" onclick="appendRow()"><i class="material-icons">add</i></a></div>
+         <div class="col s1 offset-s10"><a class="waves-effect waves-light btn #2196f3 blue right" id="editButtonB">Edit</a></div>
+         <div class="col s1"><a class="waves-effect waves-light btn blue darken-2 right" id="saveButtonB">Save</a></div>
+       </div>
+
+    </div>
+    </div>
+  </div><!--Div for panel group-->
 
   </body>
 
-<!--Edit and Save information function-->
   <script>
 //enable input
   $(document).ready(function(){
@@ -167,81 +258,82 @@
     
 
   }
+  
+
+//FUnction for switching tabs
+  $(function($){
+  	$('.tab').click(function(){
+    	$('.is-active').removeClass('is-active');
+    	$(this).addClass('is-active');
+    	$('.is-show').removeClass('is-show');
+      // Get the index number from user click
+    	const index = $(this).index();
+      // display the new content
+    	$('.panel').eq(index).addClass('is-show');
+    });
+  });
+
+  //enable input for profile tab
+    $(document).ready(function(){
+      $("#editButton").click(function(){
+        $("#uName").prop( "disabled", false );
+        $("#password").prop( "disabled", false );
+        $("#email").prop( "disabled", false );
+      })
+    });
+
+  //disable input for profile tab
+    $(document).ready(function(){
+      $("#saveButton").click(function(){
+        $("#uName").prop( "disabled", true );
+        $("#password").prop( "disabled", true );
+        $("#email").prop( "disabled", true );
+      })
+    });
+
+    //enable input for location tab
+      $(document).ready(function(){
+        $("#editButtonB").click(function(){
+          $(".inputInColB").prop( "disabled", false );
+          $(".removeButtonB").removeClass("hide");
+          $("#addButtonB").removeClass("hide");
+        })
+      });
+
+    //disable input for location tab
+      $(document).ready(function(){
+        $("#saveButtonB").click(function(){
+          $(".inputInColB").prop( "disabled", true );
+          $(".removeButtonB").addClass("hide");
+          $("#addButtonB").addClass("hide");
+        })
+      });
+
+      //Function for adding and deleting rows
+      function appendRow() {
+        //variables for a new row
+        var locationNameInput = "<div class='col s4'><input value='' type='text' class='validate inputInColB'></div>";
+        var addressInput = "<div class='col s5'><input value='' type='text' class='validate inputInColB'></div>";
+        var dateInput = "<div class='col s2'>12/08/2019</div>";
+        var removeButtonB = " <div class='col s1'><div class='col s1 removeCell'><a class='waves-effect waves-light btn removeButtonB'><i class='material-icons'>remove</i></a></div></div>";
+
+        //insert a new row
+        var locations = "<div class='removable'>" + locationNameInput + addressInput + dateInput + removeButtonB + "</div>";
+
+        $("#locationInfo").append(locations);
+
+
+        //remove added rows
+        $('.removeButtonB').click(function() {
+          $(this).closest('.removable').remove();
+        });
+
+      };
+      //remove existing rows
+      $('.removeButtonB').click(function() {
+        $(this).closest('.removable').remove();
+      });
+
   </script>
 
-
-
-  <style>
-  #body {
-    padding-left: 330px;
-  }
-  @media only screen and (max-width : 992px) {
-      #body{
-          padding-left: 0;
-      }
-  }
-  .brand-logo{
-      margin-top:-67px;
-  }
-  #sidebar{
-      margin-top: 264px;
-  }
-  .nav-wrapper > ul {
-      margin-left: 220px;
-  }
-  .header{
-      margin-top: 30px;
-  }
-  .image{
-      margin-top: 10px;
-  }
-  /*CSS for the table under the header*/
-  #infoTable{
-  background-color:black;
-  position: fixed;
-  }
-  .tableLeft{
-    text-align:right;
-    margin-right: 100px;
-  }
-  #mailInCell{
-    font-size:20px;
-    vertical-align: top;
-  }
-  #userIconCell{
-    width:200px;
-    margin-left: 100px;
-  }
-  #userType{
-    font-size:40px;
-    vertical-align: top;
-  }
-
-  /*CSS for Account info and Personal Info Container*/
-  #userDetail{
-    margin-top:150px;
-    margin-left:200px;
-  }
-  .column01{
-    height: 50px;
-  }
-  #addButton{
-    margin-right: -3px;
-    margin-top: 10px;
-  }
-  #editButton{
-    margin-top: 30px;
-  }
-  #saveButton{
-    margin-top: 30px;
-  }
-  .hInCol{
-    margin-top: 30px;
-    margin-bottom: -10px;
-  }
-
-
-
-
-  </style>
 </html>

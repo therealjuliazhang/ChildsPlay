@@ -1,0 +1,179 @@
+/*common style*/
+.brand-logo{
+    margin-top:-67px;
+}
+/*home*/
+nav ul a,
+nav .brand-logo {
+  color: #444;
+}
+
+p {
+  line-height: 2rem;
+}
+
+.sidenav-trigger {
+  color: #26a69a;
+}
+
+.icon-block {
+  padding: 0 15px;
+}
+.icon-block .material-icons {
+  font-size: inherit;
+}
+
+footer.page-footer {
+  margin: 0;
+}
+
+.login{
+  margin-top: 15px;
+  margin-right:15px;
+}
+.backgroundDiv{
+  position: relative;
+}
+.coolWords{
+  position: absolute;
+  z-index: 1000;
+  padding-top: 150px;
+  padding-left: 100px;
+}
+
+/*adminProfile*/
+
+#body {
+  padding-left: 330px;
+}
+@media only screen and (max-width : 992px) {
+    #body{
+        padding-left: 0;
+    }
+}
+#sidebar{
+    margin-top: 264px;
+}
+.nav-wrapper > ul {
+    margin-left: 220px;
+}
+.header{
+    margin-top: 30px;
+}
+.image{
+    margin-top: 10px;
+}
+
+#mailInCell{
+  font-size:20px;
+  vertical-align: top;
+}
+#userIconCell{
+  width:200px;
+  margin-left: 100px;
+}
+
+#userDetail{
+  margin-top:150px;
+  margin-left:200px;
+}
+#locationInfo{
+  margin-top:150px;
+  margin-left:200px;
+}
+.column01{
+  height: 50px;
+}
+#addButtonB{
+  margin-right: -14px;
+  margin-top: 10px;
+}
+#editButtonB{
+  margin-top: 30px;
+}
+#saveButtonB{
+  margin-top: 30px;
+}
+.hInCol{
+  margin-top: 30px;
+  margin-bottom: -10px;
+}
+
+.panel{
+    display:none;
+}
+.panel.is-show{
+    display:block;
+}
+.is-active{
+  background-color: #eceff1;
+}
+.s2{
+  text-align: center;
+}
+
+/*educator profile*/
+.logout{
+    margin-top: 15px;
+    margin-right:15px;
+}
+
+#userType{
+font-size:40px;
+vertical-align: top;
+}
+#infoTable{
+background-color:black;
+position: fixed;
+}
+.tableLeft{
+  text-align:right;
+  margin-right: 100px;
+}
+#user{
+  width:230px;
+  margin-left: 100px;
+}
+
+.removeButton{
+  margin-top:20px;
+}
+#addButton{
+  margin-right: -3px;
+  margin-top: 10px;
+}
+#editButton{
+  margin-top: 30px;
+}
+#saveButton{
+  margin-top: 30px;
+}
+
+/*user page*/
+
+.tabs .tab .active {
+background-color: rgba(38, 166, 154, 0.2);
+}
+#profileLink{
+margin-top: 15px;
+}
+#profileIcon{
+position: absolute;
+top: -14px;
+left: 15px;
+}
+td{
+height: 66px;
+}
+
+/*View Existng Tests*/
+
+#bodyPart{
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.dropdown-content{
+  width:max-content !important;
+  height:auto !important;
+}

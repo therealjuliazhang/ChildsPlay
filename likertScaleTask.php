@@ -79,6 +79,21 @@
 		</style>
     </head>
     <body>
+    <!--header-->
+        <div class="row">
+            <div class="navbar-fixed">
+            <nav class="nav-extended blue darken-4">
+            <div class="nav-wrapper">
+                <a href="#" class="brand-logo left"><img src="images/logo1.png" ></a>
+
+                <ul id="logoutButton" class="right hide-on-med-and-down logout">
+                    <li><a class="waves-effect waves-light btn blue darken-2 right" onclick="logout()">Profile</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    </div>
+    <!--end header-->
         <!-- body content -->
 		<img src="images/greyCircle.png" width="7%" align="right" onclick="goNext();"></img>
 		<div class="container">
@@ -91,8 +106,10 @@
 				<div class="col s6 faceCol"><img id="happy" class="right" src="images/happy.png" onclick="happyClicked()" width="150px"></img></div>
 				<div class="col s6 faceCol"><img id="sad"  src="images/sad.png" onclick="sadClicked()" width="150px"></img></div>
 				<div class="center-align">
+                    <div id="nameWrapper" style="font-size:40px;">
 					<span id="preschoolerName">
 					</span>'s Turn
+                    </div>
 				</div>
 				</div>
 			</div>
@@ -110,7 +127,7 @@
 		var preschoolers = <?php echo(json_encode($preschoolers)); ?>;
 		//preschoolerIndex determines whos turn it is
 		var preschoolerIndex = 0;
-		var preID;
+		var preID = preschoolers[preschoolerIndex]['preID'];
 		//colour of backround of preschoolers names at bottom
 		var colours = ['amber accent-4', 'red', 'deep-purple', 'deep-orange', ' blue accent-4', 'teal', 'indigo accent-4', 'light-green accent-4', 'green', 'lime'];
 		document.getElementById("preschoolerName").innerHTML = preschoolers[0]['name'];

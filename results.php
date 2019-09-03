@@ -1,62 +1,23 @@
 <html>
 <?php
-//connect to database
-include 'db_connection.php';
-$conn = OpenCon();
 session_start();
+//include_once 'resultQueries.php';
+
 if(isset($_SESSION['userID']))
 	$userID = $_SESSION['userID'];
-$tasks = array();
+else
+	header('login.php');
 
-//get tasks
-$sql1 = "SELECT * FROM TASK";
-$result1 = $conn->query($sql1);
-while($row1 = mysqli_fetch_assoc($result1))
-	array_push($tasks, $row1);
+if(isset($_SESSION["testID"])){
+	//session_destroy();
+	unset($_SESSION["testID"]);
+}
 
-//Get all IDs of preschoolers who pass filter checks and put inside filteredPreIDs[]; 
-$filteredPreIDs = [1, 2, 3, 4, 5];
-$preIDsForQuery = join("','",$filteredPreIDs);
-
-// get results for likert scale  
-$sql = "SELECT DISTINCT happy, count(happy) AS likertCount, R.taskID, T.activity, imageID, address       
-        FROM RESULTS R INNER JOIN IMAGE I ON R.taskID = I.taskID INNER JOIN TASK T ON R.taskID = T.taskID
-        WHERE happy IS NOT NULL AND preID IN ('$preIDsForQuery')
-		GROUP BY happy"; 
-$result = $conn->query($sql);
-$likertResults = array();
-while($row = mysqli_fetch_assoc($result))
-	array_push($likertResults, $row);
-
-// get results for identify body parts
-$sql = "SELECT R.taskID, imageID, address, x, y, T.activity
-        FROM RESULTS R INNER JOIN IMAGE I ON R.taskID = I.taskID INNER JOIN TASK T ON R.taskID = T.taskID
-		WHERE x IS NOT NULL AND preID IN ('$preIDsForQuery')";
-$result = $conn->query($sql);
-$bodyPartsResults = array();
-while($row = mysqli_fetch_assoc($result))
-	array_push($bodyPartsResults, $row);
-
-// get results for preferred mechanics
-$sql = "SELECT DISTINCT mechanic, count(mechanic) AS mechanicCount, T.activity, R.taskID, imageID, address
-FROM RESULTS R INNER JOIN IMAGE I ON R.taskID = I.taskID INNER JOIN TASK T ON R.taskID = T.taskID
-WHERE mechanic IS NOT NULL AND preID IN ('$preIDsForQuery')
-GROUP BY mechanic, R.taskID";
-$result = $conn->query($sql);
-$mechanicResults = array();
-while($row = mysqli_fetch_assoc($result))
-	array_push($mechanicResults, $row);
-
-// get results for character ranking
-$sql = "SELECT R.imageID, address, sum(score) AS totalScore, R.taskID, R.preID, T.activity
-        FROM RANKING R INNER JOIN IMAGE I ON R.imageID = I.imageID INNER JOIN TASK T ON R.taskID = T.taskID
-        WHERE preID IN ('$preIDsForQuery')
-        GROUP BY imageID
-		ORDER BY totalScore DESC";
-$result = $conn->query($sql);
-$rankingResults = array();
-while($row = mysqli_fetch_assoc($result))
-	array_push($rankingResults, $row);
+if(isset($_GET["testID"])){
+	$testID = $_GET["testID"];
+	$_SESSION["testID"] = $testID;
+}
+include_once 'resultQueries.php';
 ?>
     <head>
         <title>Child'sPlay</title>
@@ -72,14 +33,27 @@ while($row = mysqli_fetch_assoc($result))
 			//initialize materialize sidenav
 			$('.sidenav').sidenav();
 			$('.collapsible').collapsible();
+			$('.dropdown-trigger').dropdown();
 			//get results from php 
-			var rankingResults = <?php echo json_encode($rankingResults); ?>;
 			var likertResults = <?php echo json_encode($likertResults); ?>;
+			var rankingResults = <?php echo json_encode($rankingResults); ?>;
+			//var likertResults = <?php echo json_encode($likertResults); ?>;
 			var bodyPartsResults = <?php echo json_encode($bodyPartsResults); ?>;
 			var mechanicResults = <?php echo json_encode($mechanicResults); ?>;
+			
+			//print out "Result not found" if all results arrays are empty
+			if(likertResults.length == 0 && rankingResults.length == 0 && mechanicResults.length == 0 /*&& bodyPartsResults == 0*/){
+				var output = "No results match!";
+				var result = document.getElementById("results");
+				result.innerHTML = output;
+				result.style.color = "red";
+				result.style.fontStyle = "italic";
+			}
+			
 			//display results
-			displayRanking(rankingResults);
 			displayLikert(likertResults);
+			displayRanking(rankingResults);
+			//displayLikert(likertResults);
 			displayMechanics(mechanicResults);
 			displayBody(bodyPartsResults);
 		});
@@ -108,7 +82,18 @@ while($row = mysqli_fetch_assoc($result))
         <!--end header-->
         <!--side bar-->
 		<ul id="sidebar" class="sidenav sidenav-fixed" >
-			<!-- <li><h5><a href="#" data-target="slide-out" class="sidenav-trigger">More Tests</a></h5></li>button to activate more tests -->
+			<li><h5><a href="#" data-target="slide-out" class="dropdown-trigger">More Tests</a></h5></li>button to activate more tests
+			<ul class="dropdown-content" id="slide-out">
+			<?php 
+			$testQuery = "SELECT testID, title FROM TEST";
+			$result = $conn->query($testQuery);
+			while($row = mysqli_fetch_assoc($result))
+				//echo "<li><a href='#'>".$row["title"]."</a></li>";
+				echo "<li><a href='?testID=".$row["testID"]."'>".$row["title"]."</a></li>";
+			
+			?>
+			</ul>
+			
 			<li><h5>Filter Results By</h5></li>
 			<form action="" method="post">
 			<li>
@@ -118,31 +103,14 @@ while($row = mysqli_fetch_assoc($result))
 						<div class="collapsible-body">
 							<div class="container">
 								<!--start checkbox-->
-								<p>
-								<label>
-									<input type="checkbox" name="location[]" class="filled-in"/>
-									<span>All Locations</span>
-								</label>
-								</p>
-								<!--end checkbox-->
-								<h6>OR</h6>
-								<!--start checkbox-->
 								<?php
-								$locationQuery = "SELECT * FROM LOCATION";
+								$locationQuery = "SELECT * FROM LOCATION WHERE locationID != 1";
 								$locationResult = $conn->query($locationQuery);
 								while($row = mysqli_fetch_assoc($locationResult)){
 									echo "<p><label><input type='checkbox' name='location[]' value='".$row["locationID"]."' class='filled-in' />".
 									     "<span>".$row["name"]."</span></label></p>";
 								}
 								?>
-								<!--end checkbox-->
-								<!--start checkbox-->
-								<p>
-								<label>
-									<input type="checkbox" name="3" class="filled-in"/>
-									<span>Location 2</span>
-								</label>
-								</p>
 								<!--end checkbox-->
 							</div> <!--end container-->
 						</div>
@@ -155,15 +123,6 @@ while($row = mysqli_fetch_assoc($result))
 						<div class="collapsible-header"><h6>Group</h6></div>
 						<div class="collapsible-body">
 							<div class="container">
-								<!--start checkbox-->
-								<p>
-								<label>
-									<input type="checkbox" class="filled-in"/>
-									<span>All Groups</span>
-								</label>
-								</p>
-								<!--end checkbox-->
-								<h6>OR</h6>
 								<!--start checkbox-->
 								<?php
 								$groupQuery = "SELECT * FROM GROUPTEST";
@@ -187,20 +146,11 @@ while($row = mysqli_fetch_assoc($result))
 						<div class="collapsible-body">
 							<div class="container">
 								<!--start checkbox-->
-								<p>
-								<label>
-									<input type="checkbox" class="filled-in"/>
-									<span>All Genders</span>
-								</label>
-								</p>
-								<!--end checkbox-->
-								<h6>OR</h6>
-								<!--start checkbox-->
 								<?php
 								$genderQuery = "SELECT DISTINCT gender FROM PRESCHOOLER";
 								$genderResult = $conn->query($genderQuery);
 								while($row = mysqli_fetch_assoc($genderResult)){
-									echo "<p><label><input type='checkbox' name='gender[]' class='filled-in' />".
+									echo "<p><label><input type='checkbox' name='gender[]' value='".$row["gender"]."' class='filled-in' />".
 									     "<span>".$row["gender"]."</span></label></p>";
 								}
 								?>
@@ -216,23 +166,14 @@ while($row = mysqli_fetch_assoc($result))
 						<div class="collapsible-header"><h6>Age</h6></div>
 						<div class="collapsible-body">
 							<div class="container">
-								<!--start checkbox-->
-								<p>
-								<label>
-									<input type="checkbox" class="filled-in"/>
-									<span>All Ages</span>
-								</label>
-								</p>
-								<!--end checkbox-->
-								<h6>OR</h6>
-								<!--start checkbox-->
 								<?php
 								$ageQuery = "SELECT DISTINCT age FROM PRESCHOOLER";
 								$ageResult = $conn->query($ageQuery);
 								while($row = mysqli_fetch_assoc($ageResult)){
-									echo "<p><label><input type='checkbox' name='age[]' class='filled-in' />".
+									echo "<p><label><input type='checkbox' name='age[]' value='".$row["age"]."' class='filled-in' />".
 									     "<span>".$row["age"]."</span></label></p>";
 								}
+								CloseCon($conn);
 								?>
 								<!--end checkbox-->
 							</div> <!--end container-->
@@ -254,6 +195,7 @@ while($row = mysqli_fetch_assoc($result))
         <div id="body">
 			<!--end slide out menu-->
 			<div id="results">
+			
 				<!-- IDENTIFY BODY PARTS TASK -->
 				<!-- <h5 class="blue-text darken-2 header">Identify Eye Task:</h5>
 				Can you point to the monster's eyes?
@@ -350,6 +292,10 @@ while($row = mysqli_fetch_assoc($result))
 	}
 	.topPadding{
 		padding-top: 50px;
+	}
+	#slide-out{
+		width: 300px !important;
+		top: 50px !important;
 	}
     </style>
 </html>

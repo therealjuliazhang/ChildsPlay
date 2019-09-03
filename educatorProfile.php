@@ -3,6 +3,7 @@
   <head>
     <title>ProfilePage</title>
     <meta name = "viewport" content = "width = device-width, initial-scale = 1">
+    <link rel="stylesheet" type="text/css" href="childsPlayStyle.css">
     <link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -167,81 +168,6 @@
 
 
   <style>
-  #body {
-    padding-left: 330px;
-  }
-  @media only screen and (max-width : 992px) {
-      #body{
-          padding-left: 0;
-      }
-  }
-  .brand-logo{
-      margin-top:-67px;
-  }
-  .logout{
-      margin-top: 15px;
-      margin-right:15px;
-  }
-  #sidebar{
-      margin-top: 264px;
-  }
-  .nav-wrapper > ul {
-      margin-left: 220px;
-  }
-  .header{
-      margin-top: 30px;
-  }
-  .image{
-      margin-top: 10px;
-  }
-
-/*CSS for the table under the header*/
-  #userType{
-  font-size:40px;
-  vertical-align: top;
-  }
-  #infoTable{
-  background-color:black;
-  position: fixed;
-  }
-  .tableLeft{
-    text-align:right;
-    margin-right: 100px;
-  }
-  #user{
-    width:230px;
-    margin-left: 100px;
-  }
-  #mailInCell{
-    font-size:20px;
-    vertical-align: top;
-  }
-/*CSS for Account Info and Personal Info Container*/
-  #userDetail{
-    margin-top:150px;
-    margin-left:200px;
-    margin-bottom: 0px;
-  }
-  .removeButton{
-    margin-top:20px;
-  }
-  #addButton{
-    margin-right: -3px;
-    margin-top: 10px;
-  }
-  #editButton{
-    margin-top: 30px;
-  }
-  #saveButton{
-    margin-top: 30px;
-  }
-  .hInCol{
-    margin-top: 30px;
-    margin-bottom: -10px;
-  }
-
-
-
 
 
   </style>

@@ -160,6 +160,20 @@ mysqli_close($conn);?>
 </head>
 <body>
 	<!-- body content -->
+    <!--header-->
+    <div class="row">
+        <div class="navbar-fixed">
+            <nav class="nav-extended blue darken-4">
+            <div class="nav-wrapper">
+                <a href="#" class="brand-logo left"><img src="images/logo1.png" ></a>
+                <ul id="logoutButton" class="right hide-on-med-and-down logout">
+                    <li><a class="waves-effect waves-light btn blue darken-2 right" onclick="logout()">Profile</a></li>
+                </ul>
+            </div>
+            </nav>
+        </div>
+    </div>
+    <!--end header-->
 	<img id="button" src="images/greyCircle.png" alt= "image not workning" width="7%" onclick="goNext();"></img>
 
 	<canvas id="myCanvas" width="800" height="400">

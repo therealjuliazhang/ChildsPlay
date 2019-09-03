@@ -1,5 +1,9 @@
 //needed for not putting padding-top on first header
 var firstHeader = true;
+var isRankingEmpty = false;
+var isLikertEmpty = false;
+var isMechanicEmpty = false;
+//var isBodyPartsEmpty = false;
 
 // display results for identify body part 
 function displayBody(bodyResults){
@@ -8,19 +12,27 @@ function displayBody(bodyResults){
 }
 //display results for character ranking
 function displayRanking(rankingResults){
+	if(rankingResults.length == 0) {isRankingEmpty = true; console.log("True check");}
+	else {isRankingEmpty = false;console.log("False check");}
     taskIDs = getUniqueIDs(rankingResults);
     displayResults(rankingResults, taskIDs, "Character Ranking", );
 }
+
 // display results for likert scale
 function displayLikert(likertResults){
+	if(likertResults.length == 0) isLikertEmpty = true;
+	else isLikertEmpty = false;
     taskIDs = getUniqueIDs(likertResults);
     displayResults(likertResults, taskIDs, "Likert Scale");
 }
 //display results for preferred mechanics
 function displayMechanics(mechanicResults){
+	if(mechanicResults.length == 0) isMechanicEmpty = true;
+	else isMechanicEmpty = false;
     taskIDs = getUniqueIDs(mechanicResults);
     displayResults(mechanicResults, taskIDs, "Preferred Mechanics");
 }
+
 //get all unique task IDs from results
 function getUniqueIDs(results){
     taskIDs = [...new Set(results.map(item => item.taskID))];
@@ -43,6 +55,7 @@ function displayResults(results, taskIDs, taskType){
         //display image results for body parts 
         if(taskType == "Identify Body Parts")
             displayBodyPartResult(taskResults);
+        displayComments(taskResults);
     });
 }
 //displays headers for results and image if likert or mechanics task
@@ -151,14 +164,6 @@ function displayRankingTable(results){
     var tableHeader = "<div id=\"tableDiv\"><table class=\"centered\"><thead><tr><th>Rank: </th><th>Points: </th><th>Image: </th></tr></thead>";
     var tableBody = "<tbody>" + createTableRows(results) + "</tbody></table></div>";
     var table = tableHeader + tableBody;
-    // var commentsDiv = "<div class=\"row\"><form class=\"col s12\"><div class=\"input-field col s8\">";
-    // var textArea = "<textarea id=\"textarea1\" class=\"materialize-textarea\"";
-    // console.log(results);
-    // if(task.comments != null){
-    //     textArea += " value=" + task.comments;
-    // }
-    // textArea += "></textarea><label for=\"textarea1\">Comments</label></div></form></div><div class=\"row\"><form class=\"col s12\"><div class=\"input-field col s8\>";
-    // commentsDiv += textArea;
     $("#results").append(table); 
 }
 
@@ -251,3 +256,21 @@ function scaleToFill(img, ctx){
     
 }
 
+}
+
+//display the comments for the task
+function displayComments(taskResults){
+    $('<div/>', { class: "row" })
+    .append($('<form/>', { class: "col s12" }))
+    .append($('<div/>', { class: "input-field col s8" }))
+    .append([$('<textarea/>', { class: "materialize-textarea", id:"textarea1", text: taskResults[0].comments}), $('<label/>', { for: "textarea1", class:"materialize-textarea", text:"Comments" })])
+    .appendTo('#results'); 
+    M.textareaAutoResize($('#textarea1'));
+    // var commentsDiv = "<div class=\"row\"><form class=\"col s12\"><div class=\"input-field col s8\">";
+    // var textArea = "<textarea id=\"textarea1\" class=\"materialize-textarea\"";
+    // if(task.comments != null){
+    //     textArea += " value=" + task.comments;
+    // }
+    // textArea += "></textarea><label for=\"textarea1\">Comments</label></div></form></div><div class=\"row\"><form class=\"col s12\"><div class=\"input-field col s8\>";
+    // commentsDiv += textArea;
+}
