@@ -8,9 +8,11 @@
 		$userID = $_SESSION["userID"];
 	else
 		header('login.php');
-	if(isset($_SESSION["groupID"]))
-		$groupID = $_SESSION["groupID"];
-	if(isset($_SESSION["tasks"]))
+	if(isset($_SESSION['groupID']))
+		$groupID = $_SESSION['groupID'];
+	if(isset($_SESSION['testID']))
+		$testID = $_SESSION['testID'];
+	if(isset($_SESSION['tasks']))
 		$tasks = $_SESSION['tasks'];
 	if(isset($_SESSION["testID"]))
 		$testID = $_SESSION['testID'];
@@ -87,6 +89,7 @@ header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1.
 header("Pragma: no-cache"); // HTTP 1.0.
 header("Expires: 0"); // Proxies.
 $conn = OpenCon();
+
 if(isset($_POST['nextButton'])){
 	function processText($text) {
 		$text = strip_tags($text);

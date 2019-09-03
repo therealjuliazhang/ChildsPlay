@@ -9,10 +9,13 @@
 		$testID = $_GET['testID'];
 		$_SESSION['testID'] = $testID;
 	}
-	if($_GET['mode'] == "start")
-		$_SESSION['mode'] = "start";
-	else if($_GET['mode'] == "preview")
-		$_SESSION['mode'] = "preview";
+	if(isset($_GET['mode'])){
+		if($_GET['mode'] == "start")
+			$_SESSION['mode'] = "start";
+		else if($_GET['mode'] == "preview")
+			$_SESSION['mode'] = "preview";
+	}
+	
 	include 'db_connection.php';
 	$conn = OpenCon();
 	?>
@@ -65,7 +68,7 @@
 			while($row2 = mysqli_fetch_assoc($result2)){
 				echo '<tr><td>', $row2['name'], '</td>', '<td>'; //print out group name
 		    }
-			$sql3 =  "SELECT name FROM PRESCHOOLER P JOIN GROUPASSIGNMENT GA ON P.preID = GA.preID WHERE GA.groupID=".$row["groupID"]." AND GA.userID=2";
+			$sql3 =  "SELECT name FROM PRESCHOOLER P JOIN GROUPASSIGNMENT GA ON P.preID = GA.preID WHERE GA.groupID=".$row["groupID"]." AND GA.userID=".$userID;
 			$result3 = $conn->query($sql3);
 			$names = array();
 			while($row3 = mysqli_fetch_assoc($result3)){
@@ -83,12 +86,11 @@
 		?>
 				</tbody>
 			</table>
-			<a class="waves-effect waves-light btn right blue darken-4 " onclick="">Add New Group</a>
 			<br/><br/><br/>
 			<div class="row">
 				<div class="col s12">				
 					<div class="right-align">
-						<a class="waves-effect waves-light btn blue darken-4" onclick="">Cancel</a>
+						<a class="waves-effect waves-light btn blue darken-4" href="educatorTests.php#tests">Cancel</a>
 					</div>
 				</div>
 			</div>
