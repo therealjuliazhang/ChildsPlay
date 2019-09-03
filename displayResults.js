@@ -1,6 +1,11 @@
 //needed for not putting padding-top on first header
 var firstHeader = true;
 
+// display results for identify body part 
+function displayBody(bodyResults){
+    taskIDs = getUniqueIDs(bodyResults);
+    displayResults(bodyResults, taskIDs, "Identify Body Parts");
+}
 //display results for character ranking
 function displayRanking(rankingResults){
     taskIDs = getUniqueIDs(rankingResults);
@@ -35,6 +40,9 @@ function displayResults(results, taskIDs, taskType){
         //display ranking table if character ranking task
         if(taskType == "Character Ranking")
             displayRankingTable(taskResults);
+        //display image results for body parts 
+        if(taskType == "Identify Body Parts")
+            displayBodyPartResult(taskResults);
     });
 }
 //displays headers for results and image if likert or mechanics task
@@ -181,4 +189,65 @@ function createTableRows(results){
         }
         return number + "th";
     }
+    
 }
+
+function displayBodyPartResult(results){
+    //make canvas 
+    $('<canvas/>', {
+        //800 * 0.35
+        width: "400px",
+        //400 * 0.35
+        height: "200px",
+        text: "CanvasNotSupported"
+    }).appendTo('#results');
+    var ctx = $("canvas").last()[0].getContext('2d');
+    //draw image
+    var img = new Image();
+      img.src = results[0].address;
+      img.onload =function() {
+        scaleToFill(this, ctx);
+      };
+   // ctx.drawImage(img,0,0);
+    //draw point
+    
+   // ctx.fillRect(20,20,2,2);
+   // ctx.fillRect(50,50,2,2);
+  //  ctx.fillRect(200,200,2,2);
+    //ctx.arc(100,100, 1, 3, 2 * Math.PI, true);
+    //ctx.arc(90,120, 1, 3, 2 * Math.PI, true);
+    
+    console.log(results[0].address);
+    console.log(results[0].y / 15);
+    ctx.fill();
+    results.forEach(function(result){
+        //ctx.restore();
+        var xCoord = result.x * 0.5;
+        var yCoord = result.y * 0.5;
+        ctx.beginPath();
+        ctx.arc(xCoord, yCoord, 3, 0, Math.PI*2, true);
+        ctx.closePath();
+        ctx.fill();  
+        console.log(xCoord);
+        console.log(yCoord);
+    }); 
+    
+}
+
+function scaleToFill(img, ctx){
+
+   
+    // get the scale
+    var scale = Math.min($("canvas").last()[0].width / img.width, $("canvas").last()[0].height / img.height);
+    // get the top left position of the image
+    var x = ($("canvas").last()[0].width / 2) - (img.width / 2) * scale;
+    var y = ($("canvas").last()[0].height / 2) - (img.height / 2) * scale;
+
+    ctx.imageSmoothingEnabled = false; 
+    ctx.webkitImageSmoothingEnabled = false;
+    ctx.mozImageSmoothingEnabled = false;
+
+    ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
+    
+}
+

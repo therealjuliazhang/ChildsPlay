@@ -81,6 +81,7 @@ while($row = mysqli_fetch_assoc($result))
 			displayRanking(rankingResults);
 			displayLikert(likertResults);
 			displayMechanics(mechanicResults);
+			displayBody(bodyPartsResults);
 		});
 		</script>
 	</head>
