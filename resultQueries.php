@@ -11,20 +11,20 @@ $mechanicResults = array();
 $filteredPreIDs = array();
 
 //likert result query
-$query1 = "SELECT DISTINCT happy, count(happy) AS likertCount, R.taskID, T.activity, imageID, address       
-		FROM RESULTS R INNER JOIN IMAGE I ON R.taskID = I.taskID INNER JOIN TASK T ON R.taskID = T.taskID
+$query1 = "SELECT DISTINCT happy, count(happy) AS likertCount, R.taskID, T.activity, imageID, address, comments      
+		FROM RESULTS R INNER JOIN IMAGE I ON R.taskID = I.taskID INNER JOIN TASK T ON R.taskID = T.taskID INNER JOIN TASKASSIGNMENT TA ON TA.taskID = T.taskID
 		WHERE happy IS NOT NULL"; 
 //body parts result query				
-$query2 = "SELECT R.taskID, imageID, address, x, y, T.activity
-		FROM RESULTS R INNER JOIN IMAGE I ON R.taskID = I.taskID INNER JOIN TASK T ON R.taskID = T.taskID
+$query2 = "SELECT R.taskID, imageID, address, x, y, T.activity, comments   
+		FROM RESULTS R INNER JOIN IMAGE I ON R.taskID = I.taskID INNER JOIN TASK T ON R.taskID = T.taskID INNER JOIN TASKASSIGNMENT TA ON TA.taskID = T.taskID
 		WHERE x IS NOT NULL";
 //mechanic result query
-$query3 = "SELECT DISTINCT mechanic, count(mechanic) AS mechanicCount, T.activity, R.taskID, imageID, address
-		FROM RESULTS R INNER JOIN IMAGE I ON R.taskID = I.taskID INNER JOIN TASK T ON R.taskID = T.taskID
+$query3 = "SELECT DISTINCT mechanic, count(mechanic) AS mechanicCount, T.activity, R.taskID, imageID, address, comments   
+		FROM RESULTS R INNER JOIN IMAGE I ON R.taskID = I.taskID INNER JOIN TASK T ON R.taskID = T.taskID INNER JOIN TASKASSIGNMENT TA ON TA.taskID = T.taskID
 		WHERE mechanic IS NOT NULL";
 //character ranking result query		
-$query4 = "SELECT R.imageID, address, sum(score) AS totalScore, R.taskID, R.preID, T.activity
-		FROM RANKING R INNER JOIN IMAGE I ON R.imageID = I.imageID INNER JOIN TASK T ON R.taskID = T.taskID";		
+$query4 = "SELECT R.imageID, address, sum(score) AS totalScore, R.taskID, R.preID, T.activity, comments   
+		FROM RANKING R INNER JOIN IMAGE I ON R.imageID = I.imageID INNER JOIN TASK T ON R.taskID = T.taskID INNER JOIN TASKASSIGNMENT TA ON TA.taskID = T.taskID";		
 
 $testFilter = "";
 //get the selected testID from the list

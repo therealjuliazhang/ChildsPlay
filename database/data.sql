@@ -284,23 +284,27 @@ INSERT INTO TASK(instruction, taskType, activity) VALUES (@instruction, @taskTyp
 /*TASKASSIGNMENT*/
 SET
 @taskID = 1,
-@testID = 1;
-INSERT INTO TASKASSIGNMENT(taskID, testID) VALUES (@taskID, @testID);
+@testID = 1,
+@comments = "Alex changed his mind after pressing like.";
+INSERT INTO TASKASSIGNMENT(taskID, testID, comments) VALUES (@taskID, @testID, @comments);
 
 SET
 @taskID = 2,
-@testID = 1;
-INSERT INTO TASKASSIGNMENT(taskID, testID) VALUES (@taskID, @testID);
+@testID = 1,
+@comments = "Ren was not sure if she liked the monster.";
+INSERT INTO TASKASSIGNMENT(taskID, testID, comments) VALUES (@taskID, @testID, @comments);
 
 SET
 @taskID = 3,
-@testID = 1;
-INSERT INTO TASKASSIGNMENT(taskID, testID) VALUES (@taskID, @testID);
+@testID = 1,
+@comments = "Kate was not sure if she liked the monster.";
+INSERT INTO TASKASSIGNMENT(taskID, testID, comments) VALUES (@taskID, @testID, @comments);
 
 SET
 @taskID = 4,
-@testID = 1;
-INSERT INTO TASKASSIGNMENT(taskID, testID) VALUES (@taskID, @testID);
+@testID = 1,
+@comments = "Andre was not sure if she liked the monster.";
+INSERT INTO TASKASSIGNMENT(taskID, testID, comments) VALUES (@taskID, @testID, @comments);
 
 SET
 @taskID = 2,
