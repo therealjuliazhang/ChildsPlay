@@ -1,5 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+<?php
+  include 'db_connection.php';
+  $conn = OpenCon();
+
+  //need to change and make value hwo is currently logged in
+  $userID = 1;
+  //get userinfo from database
+  $sql = "SELECT * FROM users WHERE userID = " .$userID;
+  $users = array();
+  $result = $conn ->query($sql);
+  while($row = mysqli_fetch_assoc($result))
+      $users[] = $row;
+  ?>
   <head>
     <title>ProfilePage</title>
     <meta name = "viewport" content = "width = device-width, initial-scale = 1">
@@ -32,7 +45,7 @@
         <tr>
           <td width="50%">
           <div class="tableLeft">
-          <h3 class="">Michael Finley</h3>
+          <h3 class="" id="fullNameTop"></h3>
           <i class="small material-icons" id="mailIcon">email</i>
           <span id="mailInCell">mfin@gmail.com</span>
           </div>
@@ -68,17 +81,17 @@
          <div class="col s12 blue-text darken-2"><h5>Account Information</h5></div>
          <div class="col s3 column01"><h5 class="hInCol">Username:</h5></div>
          <div class='input-field col s9'>
-           <input id="uName" disabled value='Holly Tootel' type='text' class='validate inputInCol'>
+           <input id="uName" name="uName" disabled type='text' class='validate inputInCol'>
          </div>
 
          <div class="col s3 column01"><h5 class="hInCol">Password:</h5></div>
          <div class='input-field col s9'>
-           <input id="password" disabled value='********' type='text' class='validate inputInCol'>
+           <input id="password" name="password" disabled value='********' type='text' class='validate inputInCol'>
          </div>
          <div class="col s12 blue-text darken-2"><h5>Personal Information</h5></div>
          <div class="col s3 valign-wrapper column01"><h5 class="hInCol">Email:</h5></div>
          <div class='input-field col s9'>
-          <input id="email" disabled value='mfin@gmail.com' type='text' class='validate inputInCol'>
+          <input id="email" name="mailInput" disabled type='text' class='validate inputInCol'>
          </div>
        </div>
      </div>
@@ -87,9 +100,14 @@
        <div class="row">
          <div class="col s10"></div>
          <div class="col s1"><a class="waves-effect waves-light btn #2196f3 blue right" id="editButton">Edit</a></div>
-         <div class="col s1"><a class="waves-effect waves-light btn blue darken-2 right" id="saveButton">Save</a></div>
+         <div class="col s1"><button class="submit waves-effect waves-light btn blue darken-2 right" id="saveButton" type="submit" value="submit">Save</button>
+         </div>
        </div>
       </div>
+</form>
+
+
+
     </div>
 
     <!--html for Location tab-->
@@ -189,6 +207,58 @@
   </body>
 
   <script>
+//enable input
+  $(document).ready(function(){
+    $("#editButton").click(function(){
+      $("#uName").prop( "disabled", false );
+      $("#password").prop( "disabled", false );
+      $("#email").prop( "disabled", false )
+      testValues();
+    })
+    loadProfileInfo();
+  });
+//disable input
+  $(document).ready(function(){
+    $("#saveButton").click(function(){
+      $("#uName").prop( "disabled", true );
+      $("#password").prop( "disabled", true );
+      $("#email").prop( "disabled", true );
+    })
+  });
+
+
+
+  function loadProfileInfo()
+  {
+    var user = <?php echo json_encode($users); ?>;
+    var format = "apple";
+    //display fullname 
+    $("#fullNameTop").text(user[0].fullName);
+    $("#mailInCell").text(user[0].email);
+    $("#email").val(user[0].email);
+    $("#uNameCell").val(user[0].username);
+    $("#uName").val(user[0].username);
+    if (user[0].accountType == 1)
+    {
+      $("#userType").text("Admin");
+    }
+    else 
+    {
+      $("#userType").text("NotAdmin");
+    }
+  }
+
+
+
+
+  function testValues(){
+    val x = document.getElementById("uName");
+
+    console.log(x);
+    
+
+  }
+  
 
 //FUnction for switching tabs
   $(function($){
