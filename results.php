@@ -55,6 +55,7 @@ include_once 'resultQueries.php';
 			displayRanking(rankingResults);
 			//displayLikert(likertResults);
 			displayMechanics(mechanicResults);
+			displayBody(bodyPartsResults);
 		});
 		</script>
 	</head>
