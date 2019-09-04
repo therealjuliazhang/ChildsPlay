@@ -118,6 +118,15 @@ mysqli_close($conn);
 	<!--link for font awesome icons-->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<style>
+		.brand-logo
+		{
+			margin-top:-67px;
+		}
+		.logout
+		{
+			margin-top:15px;
+			margin-right:15px;
+		}
 		#button{
 			position: absolute;
 			right: 0px;
@@ -146,13 +155,6 @@ mysqli_close($conn);
 			margin-top: 100px;
 			font-size: 50px;
 		}
-		.brand-logo{
-            		margin-top:-67px;
-        	}
-	        .logout{
-        	    margin-top: 15px;
-	            margin-right:15px;
-        	}
 	</style>
 </head>
 <body>
