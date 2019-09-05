@@ -1,0 +1,120 @@
+<html>
+    <head>
+        <title>Accessible Test</title>
+        <meta name = "viewport" content = "width = device-width, initial-scale = 1">
+        <link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
+        <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+    </head>
+    <body>
+        <!--header-->
+          <div class="row">
+            <div class="navbar-fixed">
+                <nav class="nav-extended blue darken-4">
+                    <div class="nav-wrapper">
+                        <a href="#" class="brand-logo left"><img src="images/logo1.png" ></a>
+                        <ul id="nav-mobile" class="left hide-on-med-and-down">
+                            <li><a href="">Tests</a></li>
+                            <li><a href="">Create</a></li>
+                            <li><a href="">Users</a></li>
+                        </ul>
+                        <ul id="logoutButton" class="right hide-on-med-and-down logout">
+                            <li><a class="waves-effect waves-light btn blue darken-2 right" onclick="logout()"> <i class="material-icons" id="profileIcon">account_box</i></a></li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <!--end header-->
+
+        <!-- body content -->
+        
+		<div class="container">
+		<h5 class="blue-text darken-2 header">Tests accessible to Josh Mcartney</h5>
+			<table class="striped centered">
+					<thead class="blue-text darken-2">
+						<tr>
+							<th>Name</th>
+							<th>Description</th>
+							<th>Conducted</th>
+                            <th>Results</th>
+							<th>Remove</th>
+						</tr>
+					</thead>
+					<tbody class="grey-text text-darken-1">
+              <tr>
+              <td>Test 1</td>
+              <td>Testing of the new set of monsters with updated eye colours</td>
+              <td>11/04/19</td>
+			  <td><a class="waves-effect waves-light btn #0d47a1 blue darken-4">Results</a></td>
+              <td><a class="waves-effect waves-light btn #0d47a1 red darken-1">Remove</a></td>
+            </tr>
+            <tr>
+              <td>Test 2</td>
+              <td>Test for the updated monsters for the early start day care centre</td>
+              <td>12/04/19</td>
+			  <td><a class="waves-effect waves-light btn #0d47a1 blue darken-4">Results</a></td>
+              <td><a class="waves-effect waves-light btn #0d47a1 red darken-1">Remove</a></td>
+            </tr>
+            <tr>
+              <td>Test 3</td>
+              <td>Ranking test of the old monsters with the updated monsters</td>
+              <td>11/04/19</td>
+			  <td><a class="waves-effect waves-light btn #0d47a1 blue darken-4">Results</a></td>
+              <td><a class="waves-effect waves-light btn #0d47a1 red darken-1">Remove</a></td>
+            </tr>         
+			</tbody>
+		</table>
+	    <br/>
+		<a href="" class="waves-effect waves-light btn blue darken-2 right">Add Test</a><br/><br/><br/>
+	
+	   
+		<a href="" class="waves-effect waves-light btn blue darken-4 right">Cancel</a></td>
+		
+	</div>
+		
+        <!--end body content-->
+    </body>
+<script>
+//remove a declined row
+$('.declineButton').click(function() {
+  $(this).closest('tr').remove();
+});
+//remove an accepted row
+$('.acceptButton').click(function() {
+  $(this).closest('tr').remove();
+});
+
+</script>
+    <style>
+	#body {
+		padding-left: 330px;
+		padding-bottom: 50px;
+	}
+    @media only screen and (max-width : 992px) {
+        #body{
+            padding-left: 0;
+        }
+    }
+    .brand-logo{
+        margin-top:-67px;
+    }
+    .logout{
+        margin-top: 15px;
+        margin-right:15px;
+    }
+    .nav-wrapper > ul {
+        margin-left: 220px;
+    }
+    .header{
+        margin-top: 30px;
+    }
+	#profileIcon{
+		position: absolute;
+		top: -14px;
+		left: 15px;
+
+	}
+    </style>
+</html>
