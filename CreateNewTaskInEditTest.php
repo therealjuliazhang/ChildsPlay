@@ -53,31 +53,49 @@
         <div id="body" class="container">
 			<!--start form-->
             <form>
-			<br/>
-            <h5 class="blue-text darken-2 header">
-				Task Title:
-			</h5>
+
+            <div class="row">
+                <div class="col s6">
+                    <h5 class="blue-text darken-2 header">
+                        Task Title:
+                    </h5>
+                </div>
+                <div class="col s6">
+                    <h5 class="blue-text darken-2 header">
+                        Instruction
+                    </h5>
+                </div>
+            </div>
+
 			
 			<div class="row">
-				<div class="input-field col s12">
+				<div class="input-field col s6">
 					<input placeholder="Task 10" id="testTitle" type="text">
 				</div>
+
+
+                <div class="input-field col s6">
+                    <input placeholder="Identify the eyes of the monster" id="Activity" type="text">
+                </div>
 			</div>
             </br>
-            <h5 class="blue-text darken-2 header">
-				Instruction
-			</h5>
+
 			<div class="row">
-				<div class="input-field col s12">
-					<input placeholder="Identify the eyes of the monster" id="Activity" type="text">
-				</div>
-			</div>            </br>
-            <h5 class="blue-text darken-2 header">
-				Image
-			</h5>
+                <div class="col s6">
+                <h5 class="blue-text darken-2 header">
+                    Image
+                </h5>
+                </div>
+                <div class="col s6">
+                    <h5 class="blue-text darken-2 header">
+                        Activity Style:
+                    </h5>
+                </div>
+			</div>
+
 			
 			<div class="row">
-				<div class="col s12">
+				<div class="col s6">
 				<!--start upload button + path display-->
 				<div class="file-field input-field">
 					<div class="waves-effect waves-light btn blue darken-4">
@@ -90,27 +108,24 @@
 				</div>
 				<!--end upload button + path-->
 				</div>
+                <div class="col s6">
+                    <div class="input-field col s12">
+                        <select>
+                            <option value="" selected>Identify Body Part</option>
+                            <option value="1">Likert Scale</option>
+                            <option value="2">Character Ranking</option>
+                            <option value="3">Preferred Mechanics</option>
+                        </select>
+                    </div>
+                </div>
 			</div>
-            <img id="OriginalImage" class="image" src="images/Orbi.png" style="width:15%;">
-			<br/><br/><br/>
-			
-			<h5 class="blue-text darken-2 header">
-				Activity Style:
-			</h5>
 			<div class="row">
-			<div class="input-field col s12">
-				<select>
-					<option value="" selected>Identify Body Part</option>
-					<option value="1">Likert Scale</option>
-					<option value="2">Character Ranking</option>
-					<option value="3">Preferred Mechanics</option>
-				</select>
-			</div>
+                <img id="OriginalImage" class="image" src="images/Orbi.png" style="width:15%;">
 			</div>
 			
 			</form>
 			<!--end form-->
-			<br/><br/><br/>
+			<br/><br/>
 			<div class="row">
 			<div class="col s12">
 				<p align="right">
