@@ -6,15 +6,29 @@ if(isset($_SESSION["userID"]))
 	$userID = $_SESSION["userID"];
 else
 	header('login.php');
-if (isset($_SESSION['groupID']))
-	$groupID = $_SESSION['groupID'];
-if (isset($_SESSION['tasks']))
-	$tasks = $_SESSION['tasks'];
-if (isset($_GET['taskIndex']))
-	$taskIndex = $_GET['taskIndex'];
+//the group used for previewing tests
+$previewGroupID = 4;
+$isPreview = false;
+//task id in GET is set if task is being previewed
+if (isset($_GET['from'])){
+	$from = $_GET['from'];
+	if (isset($_GET['taskID']))
+		$taskID = $_GET['taskID'];
+	$groupID = $previewGroupID;
+	$isPreview = true;
+	$taskIndex = 0;
+}
+else{ //else if not preview
+	if (isset($_SESSION['groupID']))
+		$groupID = $_SESSION['groupID'];
+	if (isset($_SESSION['tasks']))
+		$tasks = $_SESSION['tasks'];
+	if (isset($_GET['taskIndex']))
+		$taskIndex = $_GET['taskIndex'];
+	$taskID = $tasks[$taskIndex]['taskID'];
+}
 include 'db_connection.php';
 $conn = OpenCon();
-$taskID = $tasks[$taskIndex]['taskID'];
 //fetch preschoolers from database
 $sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$groupID." AND userID=".$userID;
 $result = $conn->query($sql);
@@ -43,6 +57,11 @@ mysqli_close($conn);
 	<script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
 	<script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
 	<script>
+	//check whether it is in preview mode
+	var isPreview = <?php echo(json_encode($isPreview)); ?>;
+	var from; //if preview check if from edit page or available test page ect.
+	if(isPreview)
+		from = <?php echo(json_encode($from)); ?>; // checks from which page preview was opened
 	var taskID = <?php echo(json_encode($taskID)); ?>;
 	//preschoolerNumber determines whos turn it is
 	var preschoolerNumber = 0;
@@ -63,9 +82,14 @@ mysqli_close($conn);
 	function goNext(){
 		preschoolerNumber++;
 		if(preschoolerNumber == preschoolers.length){
-			var groupID = <?php echo $groupID ?>;
-			var taskIndex = <?php echo $taskIndex ?>;
-			window.location.href = "comments.php?taskIndex=" + taskIndex;
+			//if task was preview, go back to previous page
+			if(isPreview)
+				if(from = "edit")
+					window.location.href = "EditTest.php";
+			else{
+				var taskIndex = <?php echo $taskIndex ?>;
+				window.location.href = "comments.php?taskIndex=" + taskIndex;
+			}	
 		}
 		var previousPreschoolerName = document.getElementById("preschoolerName").innerHTML;
 		document.getElementById("preschoolerName").innerHTML = preschoolers[preschoolerNumber]['name'];;
