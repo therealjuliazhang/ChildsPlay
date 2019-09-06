@@ -179,6 +179,7 @@ mysqli_close($conn);?>
 		#button{
 			position: absolute;
 			right: 0px;
+			margin-top:-20px;
 		}
 		#participant{
 			height: 220px;
