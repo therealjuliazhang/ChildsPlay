@@ -1,6 +1,9 @@
 <?php
     //get user image directory
-	$imageDirectory = "C:/xampp/htdocs/images/";
+    $imageDirectory = "C:/xampp/htdocs/images/";
+    //check if editing or creating test
+    if(isset($_GET['from']))
+        $from = $_GET['from'];
     //get test ID
     if(isset($_GET['testID']))
         $testID = $_GET['testID'];
@@ -37,4 +40,7 @@
         echo "New record created successfully";
     else
         echo "Error: " . $sql . "<br>" . $conn->error;
+    //redirect back to page
+    if($from == "edit")
+        header("Location: EditTest.php?testID=".$testID);
 ?>

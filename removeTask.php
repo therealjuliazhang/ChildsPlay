@@ -22,5 +22,5 @@
     //close connection
     $conn->close();  
     //go back to edit Test page
-    header("Location: EditTest.php");
+    header("Location: EditTest.php?testID=".$testID);
 ?>

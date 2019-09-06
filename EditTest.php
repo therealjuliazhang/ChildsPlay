@@ -81,7 +81,7 @@
                             $('<a/>', {
                                 class: "waves-effect waves-light btn blue darken-4",
                                 text: "Edit",
-                                href: "EditTaskInEditTest.php"
+                                href: "EditTaskInEditTest.php?testID=" + testID + "&taskID=" + task.taskID
                             })
                         ),
                         $('<td/>').append(
@@ -137,8 +137,8 @@
             <br/>
             <div align="right">
                 <ul id = "dropdown" class = "dropdown-content">
-                    <li><a href = "EditExistingTaskInEditTest.php">Existing Tasks</a></li>
-                    <li><a href = "CreateNewTaskInEditTest.php">Create New Task</a></li>
+                    <li><a href = "EditExistingTaskInEditTest.php?testID=<?php echo json_encode($testID);?>">Existing Tasks</a></li>
+                    <li><a href = "CreateNewTaskInEditTest.php?testID=<?php echo json_encode($testID);?>">Create New Task</a></li>
                 </ul>
                 <a class = "btn dropdown-button blue darken-4" href = "#" data-activates = "dropdown">
                     <i class="large material-icons">add</i>
