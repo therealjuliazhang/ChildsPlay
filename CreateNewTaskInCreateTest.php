@@ -57,14 +57,26 @@
         <div id="body" class="container">
 			<!--start form-->
             <form action="createTest.php" method="post">
-				<h5 class="blue-text darken-2 header">
-					<a class="tooltipped" data-position="left" data-tooltip="Choose activity style from list">
-						<i class="material-icons">help_outline</i>
-					</a>
-					Activity Style:
-				</h5>
+                <div class="row">
+                    <div class="col s6">
+                    <h5 class="blue-text darken-2 header">
+                        <a class="tooltipped" data-position="left" data-tooltip="Choose activity style from list">
+                            <i class="material-icons">help_outline</i>
+                        </a>
+                        Activity Style:
+                    </h5>
+                    </div>
+                    <div class="col s6">
+                        <h5 class="blue-text darken-2 header">
+                            <a class="tooltipped" data-position="left" data-tooltip="Activity for Task">
+                                <i class="material-icons">help_outline</i>
+                            </a>
+                            Activity
+                        </h5>
+                    </div>
+                </div>
 				<div class="row">
-					<div class="input-field col s12">
+					<div class="input-field col s6">
 						<select name="activityStyle">
 							<option value="Identify Body Part" selected>Identify Body Part</option>
 							<option value="Likert Scale">Likert Scale</option>
@@ -72,18 +84,12 @@
 							<option value="Preferred Mechanics">Preferred Mechanics</option>
 						</select>
 					</div>
+                    <div class="input-field col s6">
+                        <input name="activity" placeholder="Identifying the [body part]" id="Activity" type="text">
+                    </div>
+
 				</div>
-				<h5 class="blue-text darken-2 header">
-					<a class="tooltipped" data-position="left" data-tooltip="Activity for Task">
-					<i class="material-icons">help_outline</i>
-					</a>
-					Activity
-				</h5>
-				<div class="row">
-					<div class="input-field col s12">
-						<input name="activity" placeholder="Identifying the [body part]" id="Activity" type="text">
-					</div>
-				</div>
+
 				<h5 class="blue-text darken-2 header">
 					<a class="tooltipped" data-position="left" data-tooltip="Click to upload image">
 						<i class="material-icons">help_outline</i>
