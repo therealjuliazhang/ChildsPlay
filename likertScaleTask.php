@@ -99,6 +99,9 @@
 		.faceCol{
 			height: 150px;
 		}
+		#button{
+			margin-top:-20px;
+		}
 		</style>
     </head>
     <body>
@@ -118,7 +121,7 @@
     </div>
     <!--end header-->
         <!-- body content -->
-		<img src="images/greyCircle.png" width="7%" align="right" onclick="goNext();"></img>
+		<img id="button" src="images/greyCircle.png" width="7%" align="right" onclick="goNext();"></img>
 		<div class="container">
 			<div class="center-align"><img id="image" width="28%"></img></div>
 			<!--all container does is create padding on the left & right sides.-->
