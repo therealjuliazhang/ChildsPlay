@@ -313,49 +313,86 @@ INSERT INTO TASKASSIGNMENT(taskID, testID) VALUES (@taskID, @testID);
 
 /*IMAGE*/
 SET
-@address = "images/Puff.png",
+@address = "images/Puff.png";
+INSERT INTO IMAGE(address) VALUES (@address);
+
+SET
+@address = "images/Puff.png";
+INSERT INTO IMAGE(address) VALUES (@address);
+
+SET
+@address = "images/Puff.png";
+INSERT INTO IMAGE(address) VALUES (@address);
+
+SET
+@address = "images/orbi.jpg";
+INSERT INTO IMAGE(address) VALUES (@address);
+
+SET
+@address = "images/peanut.jpg";
+INSERT INTO IMAGE(address) VALUES (@address);
+
+SET
+@address = "images/pod.jpg";
+INSERT INTO IMAGE(address) VALUES (@address);
+
+SET
+@address = "images/spike.jpg";
+INSERT INTO IMAGE(address) VALUES (@address);
+
+SET
+@address = "images/spike.jpg";
+INSERT INTO IMAGE(address) VALUES (@address);
+
+SET
+@address = "images/spike.jpg";
+INSERT INTO IMAGE(address) VALUES (@address);
+
+/*IMAGEASSIGNMENT*/
+SET
+@imageID = 1,
 @taskID = 1;
-INSERT INTO IMAGE(address, taskID) VALUES (@address, @taskID);
+INSERT INTO IMAGEASSIGNMENT VALUES (@imageID, @taskID);
 
 SET
-@address = "images/Puff.png",
+@imageID = 2,
 @taskID = 2;
-INSERT INTO IMAGE(address, taskID) VALUES (@address, @taskID);
+INSERT INTO IMAGEASSIGNMENT VALUES (@imageID, @taskID);
 
 SET
-@address = "images/Puff.png",
+@imageID = 3,
 @taskID = 3;
-INSERT INTO IMAGE(address, taskID) VALUES (@address, @taskID);
+INSERT INTO IMAGEASSIGNMENT VALUES (@imageID, @taskID);
 
 SET
-@address = "images/orbi.jpg",
+@imageID = 4,
 @taskID = 3;
-INSERT INTO IMAGE(address, taskID) VALUES (@address, @taskID);
+INSERT INTO IMAGEASSIGNMENT VALUES (@imageID, @taskID);
 
 SET
-@address = "images/peanut.jpg",
+@imageID = 5,
 @taskID = 3;
-INSERT INTO IMAGE(address, taskID) VALUES (@address, @taskID);
+INSERT INTO IMAGEASSIGNMENT VALUES (@imageID, @taskID);
 
 SET
-@address = "images/pod.jpg",
+@imageID = 6,
 @taskID = 3;
-INSERT INTO IMAGE(address, taskID) VALUES (@address, @taskID);
+INSERT INTO IMAGEASSIGNMENT VALUES (@imageID, @taskID);
 
 SET
-@address = "images/spike.jpg",
+@imageID = 7,
 @taskID = 3;
-INSERT INTO IMAGE(address, taskID) VALUES (@address, @taskID);
+INSERT INTO IMAGEASSIGNMENT VALUES (@imageID, @taskID);
 
 SET
-@address = "images/spike.jpg",
+@imageID = 8,
 @taskID = 4;
-INSERT INTO IMAGE(address, taskID) VALUES (@address, @taskID);
+INSERT INTO IMAGEASSIGNMENT VALUES (@imageID, @taskID);
 
 SET
-@address = "images/spike.jpg",
+@imageID = 9,
 @taskID = 5;
-INSERT INTO IMAGE(address, taskID) VALUES (@address, @taskID);
+INSERT INTO IMAGEASSIGNMENT VALUES (@imageID, @taskID);
 
 /*RESULTS*/
 SET 
