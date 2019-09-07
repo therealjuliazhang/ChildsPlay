@@ -50,7 +50,7 @@
                 <nav class="nav-extended blue darken-4">
                     <div class="nav-wrapper">
                         <a href="#" class="brand-logo left"><img src="images/logo1.png" ></a>
-                        <ul id="nav-mobile" class="left hide-on-med-and-down">
+                        <ul id="nav-mobile" class="hide-on-med-and-down">
                             <li><a href="">Tests</a></li>
                             <li><a href="">Create</a></li>
 							<li class="active"><a href="">Edit</a></li>
@@ -170,27 +170,38 @@
         <!-- body content -->
         <div id="body">
 			<!--start form-->
-            <form class="col s12">
+            <form>
 				
-				
-            <h5 class="blue-text darken-2 header">Test Title</h5>
+            <div class="row">
+                <div class="col s6">
+                    <h5 class="blue-text darken-2 header">Test Title</h5>
+                </div>
+                <div class="col s6">
+                    <h5 class="blue-text darken-2 header">Activity</h5>
+                </div>
+            </div>
+
 			<div class="row">
-				<div class="input-field col s11">
+				<div class="input-field col s6">
 					<input placeholder="Test 1" id="testTitle" type="text">
 				</div>
+                <div class="input-field col s6">
+                    <input placeholder="Identifying the eyes" id="Activity" type="text">
+                </div>
 			</div>
-            </br>
-            <h5 class="blue-text darken-2 header">Activity</h5>
+
 			<div class="row">
-				<div class="input-field col s11">
-					<input placeholder="Identifying the eyes" id="Activity" type="text">
-				</div>
-			</div>            </br>
-            <h5 class="blue-text darken-2 header">Image</h5>
+                <div class="col s6">
+                    <h5 class="blue-text darken-2 header">Image</h5>
+                </div>
+                <div class="col s6">
+                    <h5 class="blue-text darken-2 header">Activity Style:</h5>
+                </div>
+			</div>
+
 			
 			<div class="row">
-				<div class="col s11">
-				<div class="file-field input-field">
+				<div class="file-field input-field col s6">
 					<div class="waves-effect waves-light btn blue darken-4">
 						<span>Upload</span>
 						<input type="file">
@@ -199,28 +210,24 @@
 						<input class="file-path" type="text" placeholder="E:\Project 321\Instructions Page\images\testImage.jpg">
 					</div>
 				</div>
-				</div>
+
+                <div class="col s6">
+                    <select>
+                        <option value="" selected>Identify Body Part</option>
+                        <option value="1">Likert Scale</option>
+                        <option value="2">Character Ranking</option>
+                        <option value="3">Preferred Mechanics</option>
+                    </select>
+                </div>
 			</div>
             <img id="OriginalImage" class="image" src="images/Spike.png" style="width:15%;">
 			<br/><br/><br/>
-			
-			<h5 class="blue-text darken-2 header">Activity Style:</h5>
-			<div class="row">
-			<div class="input-field col s11">
-				<select>
-					<option value="" selected>Identify Body Part</option>
-					<option value="1">Likert Scale</option>
-					<option value="2">Character Ranking</option>
-					<option value="3">Preferred Mechanics</option>
-				</select>
-			</div>
-			</div>
+
 			
 			</form>
 			<!--end form-->
-			<br/><br/><br/>
 			<div class="row">
-			<div class="col s11">
+			<div class="col s12">
 				<p align="right">
 					<a class="waves-effect waves-light btn blue darken-2">Save Changes</a>
 					<a class="waves-effect waves-light btn red">Remove</a>
