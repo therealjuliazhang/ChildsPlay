@@ -310,57 +310,48 @@ INSERT INTO TASKASSIGNMENT(taskID, testID) VALUES (@taskID, @testID);
 /*IMAGE*/
 SET
 @address = "images/Puff.png",
-@imgType = true,
 @taskID = 1;
-INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);
+INSERT INTO IMAGE(address, taskID) VALUES (@address, @taskID);
 
 SET
 @address = "images/Puff.png",
-@imgType = true,
 @taskID = 2;
-INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);
+INSERT INTO IMAGE(address, taskID) VALUES (@address, @taskID);
 
 SET
 @address = "images/Puff.png",
-@imgType = true,
 @taskID = 3;
-INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);
+INSERT INTO IMAGE(address, taskID) VALUES (@address, @taskID);
 
 SET
 @address = "images/orbi.jpg",
-@imgType = true,
 @taskID = 3;
-INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);
+INSERT INTO IMAGE(address, taskID) VALUES (@address, @taskID);
 
 SET
 @address = "images/peanut.jpg",
-@imgType = true,
 @taskID = 3;
-INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);
+INSERT INTO IMAGE(address, taskID) VALUES (@address, @taskID);
 
 SET
 @address = "images/pod.jpg",
-@imgType = true,
 @taskID = 3;
-INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);
+INSERT INTO IMAGE(address, taskID) VALUES (@address, @taskID);
 
 SET
 @address = "images/spike.jpg",
-@imgType = true,
 @taskID = 3;
-INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);
+INSERT INTO IMAGE(address, taskID) VALUES (@address, @taskID);
 
 SET
 @address = "images/spike.jpg",
-@imgType = true,
 @taskID = 4;
-INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);
+INSERT INTO IMAGE(address, taskID) VALUES (@address, @taskID);
 
 SET
 @address = "images/spike.jpg",
-@imgType = true,
 @taskID = 5;
-INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);
+INSERT INTO IMAGE(address, taskID) VALUES (@address, @taskID);
 
 /*RESULTS*/
 SET 
