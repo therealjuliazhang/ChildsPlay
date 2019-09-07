@@ -57,15 +57,11 @@
     </table>
     </div>
     <!--Side Bar-->
-    <ul id="sidebar" class="sidenav sidenav-fixed #ffffff white">
-          <li class="active #ffffff white"><a href="#!">Profile</a></li>
-          <li><a href="#!">Tests</a></li>
-    </ul>
-    <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+
 
     <!--main contents-->
 
-<div class="container" >
+<div class="container" id="educatorProfileContainer">
    <div class="row" id="userDetail">
      <div class="col s12 blue-text darken-2"><h5>Account Information</h5></div>
      <div class="col s3 column01"><h5 class="hInCol">Username:</h5></div>
@@ -97,7 +93,7 @@
  </div>
 
 
-  <div class="container" id="buttonsContainer">
+  <div class="container" id="educatorProfileButtonsContainer">
    <div class="row">
      <div class="col s1 offset-s11"><a class="waves-effect waves-light btn blue darken-4 addCell hide right" id="addButton" onclick="appendSelect()"><i class="material-icons">add</i></a></div>
      <div class="col s10"></div>

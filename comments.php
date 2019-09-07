@@ -14,6 +14,8 @@
 		$testID = $_SESSION['testID'];
 	if(isset($_SESSION['tasks']))
 		$tasks = $_SESSION['tasks'];
+	if(isset($_SESSION["testID"]))
+		$testID = $_SESSION['testID'];
 	if(isset($_GET["taskIndex"]))
 		$taskIndex = $_GET['taskIndex'];
 	$taskID = $tasks[$taskIndex]['taskID'];
@@ -58,7 +60,6 @@
 				<div class="col s12">
 					<h5 class="blue-text darken-2">Any Comments?</h5>
 					<div style="font-size:18px">
-						
 						Input any relevant information about anything that occurred during the test task:
 					</div>
 				</div>
@@ -107,6 +108,11 @@ if(isset($_POST['nextButton'])){
 	}
 	else{
 		if($comment != ""){
+			//check if comment already exists for task
+			$sql = "SELECT comments FROM TASKASSIGNMENT WHERE taskID = ".$taskID." AND testID=".$testID;
+			$result = $conn->query($sql);
+			$previousComments = mysqli_fetch_assoc($result)['comments'];
+			$comment = $previousComments . "\n" . $comment;
 			$sql = "UPDATE TASKASSIGNMENT SET comments = '". $comment ."' WHERE taskID = ".$taskID." AND testID=".$testID;
 			if(mysqli_query($conn,$sql)){ //check if the query is executed successfully
 				if($taskIndex == (sizeof($tasks)-1))

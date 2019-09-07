@@ -6,15 +6,31 @@
 		$userID = $_SESSION["userID"];
 	else
 		header('login.php');
-	if(isset($_SESSION["groupID"]))
-		$groupID = $_SESSION["groupID"];
-	if(isset($_SESSION["tasks"]))
-		$tasks = $_SESSION['tasks'];
-	if(isset($_GET["taskIndex"]))
-		$taskIndex = $_GET['taskIndex'];
+
+	//the group used for previewing tests
+	$previewGroupID = 4;
+	$isPreview = false;
+	//task id in GET is set if task is being previewed
+	if (isset($_GET['from'])){
+		$from = $_GET['from'];
+		if (isset($_GET['taskID']))
+			$taskID = $_GET['taskID'];
+		$groupID = $previewGroupID;
+		$isPreview = true;
+		$taskIndex = 0;
+		$tasks = 0;
+	}
+	else{ //else if not preview
+		if (isset($_SESSION['groupID']))
+			$groupID = $_SESSION['groupID'];
+		if (isset($_SESSION['tasks']))
+			$tasks = $_SESSION['tasks'];
+		if (isset($_GET['taskIndex']))
+			$taskIndex = $_GET['taskIndex'];
+		$taskID = $tasks[$taskIndex]['taskID'];
+	}
 	include 'db_connection.php';
 	$conn = OpenCon();
-	$taskID = $tasks[$taskIndex]['taskID'];
 	//fetch images
 	$sql = "SELECT * FROM IMAGE WHERE TASKID = '$taskID'";
 	$result = $conn->query($sql);
@@ -45,6 +61,13 @@
 		<!--link for font awesome icons-->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<style>
+		.brand-logo{
+			margin-top:-67px;
+		}
+		.logout{
+			margin-top: 15px;
+			margin-right:15px;
+		}
 		.bottom{
 			position:absolute;
 			bottom: 0px;
@@ -76,6 +99,9 @@
 		.faceCol{
 			height: 150px;
 		}
+		#button{
+			margin-top:-20px;
+		}
 		</style>
     </head>
     <body>
@@ -95,7 +121,7 @@
     </div>
     <!--end header-->
         <!-- body content -->
-		<img src="images/greyCircle.png" width="7%" align="right" onclick="goNext();"></img>
+		<img id="button" src="images/greyCircle.png" width="7%" align="right" onclick="goNext();"></img>
 		<div class="container">
 			<div class="center-align"><img id="image" width="28%"></img></div>
 			<!--all container does is create padding on the left & right sides.-->
@@ -117,9 +143,14 @@
         <!--end body content-->
     </body>
 	<script>
+		//check whether it is in preview mode
+		var isPreview = <?php echo(json_encode($isPreview)); ?>;
+		var from; //if preview check if from edit page or available test page ect.
+		if(isPreview)
+			from = <?php echo(json_encode($from)); ?>; // checks from which page preview was opened
 		var taskIndex = <?php echo(json_encode($taskIndex)); ?>;
 		var tasks = <?php echo(json_encode($tasks)); ?>;
-		var taskID = tasks[taskIndex]['taskID'];
+		var taskID = <?php echo(json_encode($taskID)); ?>;
 		var images = <?php echo(json_encode($images)); ?>;
 		var imageURL = images[0]['address'];
 		document.getElementById("image").src = imageURL;
@@ -135,9 +166,14 @@
 		function goNext(){
 			preschoolerIndex++;
 			if(preschoolerIndex == preschoolers.length){
-				var groupID = <?php echo $groupID ?>;
-				var taskIndex = <?php echo $taskIndex ?>;
-				window.location.href = "comments.php?taskIndex=" + taskIndex;
+				//if task was preview, go back to edit test page
+				if(isPreview)
+					if(from = "edit")
+						window.location.href = "EditTest.php";
+				else{
+					var taskIndex = <?php echo $taskIndex ?>;
+					window.location.href = "comments.php?taskIndex=" + taskIndex;
+				}	
 			}
 			preID = preschoolers[preschoolerIndex]['preID'];
 			document.getElementById("preschoolerName").innerHTML = preschoolers[preschoolerIndex]['name'];

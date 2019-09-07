@@ -5,16 +5,31 @@ if(isset($_SESSION["userID"]))
 	$userID = $_SESSION["userID"];
 else
 	header('login.php');
-if (isset($_SESSION['groupID']))
-	$groupID = $_SESSION['groupID'];
-if (isset($_SESSION['tasks']))
-	$tasks = $_SESSION['tasks'];
-if (isset($_GET['taskIndex']))
-	$taskIndex = $_GET['taskIndex'];
+//the group used for previewing tests
+$previewGroupID = 4;
+$isPreview = false;
+//task id in GET is set if task is being previewed
+if (isset($_GET['from'])){
+	$from = $_GET['from'];
+	if (isset($_GET['taskID']))
+		$taskID = $_GET['taskID'];
+	$groupID = $previewGroupID;
+	$isPreview = true;
+	$taskIndex = 0;
+}
+else{ //else if not preview
+	if (isset($_SESSION['groupID']))
+		$groupID = $_SESSION['groupID'];
+	if (isset($_SESSION['tasks']))
+		$tasks = $_SESSION['tasks'];
+	if (isset($_GET['taskIndex']))
+		$taskIndex = $_GET['taskIndex'];
+	$taskID = $tasks[$taskIndex]['taskID'];
+}
 header('Access-Control-Allow-Origin: *');
 include 'db_connection.php';
 $conn = OpenCon();
-$taskID = $tasks[$taskIndex]['taskID'];
+
 //fetch names of preschoolers
 $sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$groupID." AND userID=".$userID; 
 $result = $conn->query($sql);
@@ -42,6 +57,11 @@ mysqli_close($conn);?>
 	<script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
 	<script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
 	<script>
+	//check whether it is in preview mode
+	var isPreview = <?php echo(json_encode($isPreview)); ?>;
+	var from; //if preview check if from edit page or available test page ect.
+	if(isPreview)
+		from = <?php echo(json_encode($from)); ?>; // checks from which page preview was opened 
 	// var testID = <php echo(json_encode($testID)); ?>;
 	var taskID = <?php echo(json_encode($taskID)); ?>;
 	//canX is canvas x coordinate, canY is y coordinate
@@ -117,8 +137,14 @@ mysqli_close($conn);?>
 			imageIndex++;
 			if(imageIndex == images.length){
 				var groupID = <?php echo $groupID ?>;
-				var taskIndex = <?php echo $taskIndex ?>;
-				window.location.href = "comments.php?taskIndex=" + taskIndex;
+				//if task was preview, go back to previous page
+				if(isPreview)
+					if(from = "edit")
+						window.location.href = "EditTest.php";
+				else{
+					var taskIndex = <?php echo $taskIndex ?>;
+					window.location.href = "comments.php?taskIndex=" + taskIndex;
+				}	
 			}
 			preschoolerIndex = 0;
 			displayCharacter(imageIndex);
@@ -136,6 +162,15 @@ mysqli_close($conn);?>
 	<!--link for font awesome icons-->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<style>
+		.brand-logo
+		{
+			margin-top:-67px;
+		}
+		.logout
+		{
+			margin-top: 15px;
+			margin-right: 15px;
+		}
 		#myCanvas{
 			padding: 0;
 			margin: auto;
@@ -144,6 +179,7 @@ mysqli_close($conn);?>
 		#button{
 			position: absolute;
 			right: 0px;
+			margin-top:-20px;
 		}
 		#participant{
 			height: 220px;
