@@ -2,7 +2,7 @@
     <head>
 		<?php
 			//get user ID
-			// session_start();
+			session_start();
 			// if(isset($_SESSION['userID']))
 			// 	$userID = $_SESSION['userID'];
 			// else
@@ -38,7 +38,7 @@
 				$.post("selectOption.php", {option_value: selected},
 					function(data){
 						var input = document.getElementById("file");
-						var button = document.getElementById("createTest");
+						var button = document.getElementById("upload");
 						if(data == "3"){
 							input.setAttribute("name", "files[]");
 							input.setAttribute("multiple", "multiple");
@@ -122,11 +122,10 @@
 				<div class="row">
 					<div class="col s12">
 						<!--start upload button + path display-->
-						
 						<div class="file-field input-field">
 							<div id="imgUpload" class="waves-effect waves-light btn blue darken-4">
-								<span>Upload</span>
-								<input id="file" type="file" name="file" />
+							<span>Choose</span>
+							<input id="file" type="file" name="file" />
 							</div>
 							<div class="file-path-wrapper">
 								<input class="file-path validate" type="text" webkitdirectory directory multiple/>
@@ -135,11 +134,19 @@
 						<!--end upload button + path-->
 					</div>
 				</div>
-            	<img id="OriginalImage" class="image" style="width:15%;">
+				<div class="row">
+					<div class="col s12">
+						<button id="upload" type="submit" class="submit waves-effect waves-light btn blue darken-4" style="height:45px" name="btnSubmit">Upload</button>
+					</div>
+				</div>
+<?php 
+include 'createTest.php';
+?>
+				<br/>
 				<div class="row">
 					<div class="col s12">
 						<p align="right">
-							<button id="createTest" type="submit" class="submit waves-effect waves-light btn blue darken-2" name="btnSubmit">Create Task</button>
+							<button name="createTask" type="submit" class="submit waves-effect waves-light btn blue darken-2">Create Task</button>
 							<a class="waves-effect waves-light btn blue darken-4">Cancel</a>
 						</p>
 					</div>
@@ -148,9 +155,6 @@
 			<!--end form-->
 		</div>
 		<!--end body content-->
-<?php 
-include 'createTest.php';
-?>
     </body>
     <style>
     .brand-logo{

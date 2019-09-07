@@ -256,7 +256,6 @@ function scaleToFill(img, ctx){
     
 }
 
-}
 
 //display the comments for the task
 function displayComments(taskResults){

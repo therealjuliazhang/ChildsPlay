@@ -1,6 +1,7 @@
 <?php
 include 'db_connection.php';
 $taskID = 2; //need to select taskID that is just added into database
+$UploadFolder = "images";
 
 if(isset($_POST["btnSubmit"])){
 	$errors = array();
@@ -10,12 +11,23 @@ if(isset($_POST["btnSubmit"])){
 	$name = basename($_FILES["file"]["name"]); // File upload path
 	$size = $_FILES["file"]["size"];
 	
-	uploadImage($temp, $size, $name, $uploadedFiles, $taskID, $errors);
-	displayResult($errors, $uploadedFiles, $counter);
+	if(empty($temp)){
+		$counter = 0;
+		displayResult($errors, $uploadedFiles, $counter);
+	}
+	else{
+		$value = uploadImage($temp, $size, $name, $uploadedFiles, $taskID, $errors);
+		$_SESSION["names"] = $value;
+		displayResult($errors, $uploadedFiles, $counter);
+	}
 }
 
 if(isset($_POST["multiSubmit"]))
 {
+	global $uploadedFiles;
+	global $errors;
+	$values = "";
+	
 	$errors = array();
 	$uploadedFiles = array();
 	//count the number of files in temporary directory
@@ -30,20 +42,70 @@ if(isset($_POST["multiSubmit"]))
 			break;
 		}
 		$counter++;
-		uploadImage($temp, $size, $name, $uploadedFiles, $taskID, $errors);
+		$value = uploadImage($temp, $size, $name, $uploadedFiles, $taskID, $errors);
+		$values .= $value;
+		if(counter < count($_FILES["files"]["tmp_name"]))
+            $values .= ",";
 	}
+	
+	$_SESSION["names"] = $values;
+	
 	displayResult($errors, $uploadedFiles, $counter);
 }
 
-function uploadImage(&$temp, &$size, &$name, &$uploadedFiles, &$taskID, &$errors){
-	//include 'db_connection.php';
+if(isset($_POST["createTask"])){
+	global $UploadFolder;
+	//global $uploadedFiles;
+	//global $errors;
+	
+	$names = $_SESSION["names"];
+	$files = explode(",", $names);
+	
 	$conn = OpenCon();
-	//temporary directory where PHP interpreter puts the uploaded file
+	foreach($files as $name)
+	{
+		if(file_exists($UploadFolder."/".$name) == true){
+			//get imageID of the existing image
+			$idSql = "SELECT imageID FROM IMAGE WHERE address='".$UploadFolder."/".$name."'";
+			$idResult = $conn->query($idSql);
+			if($id = mysqli_fetch_assoc($idResult)){
+				$insertValuesSQL = "('".$id["imageID"]."', ".$taskID.")";
+				// Insert image file name into database	
+				$insertQuery = "INSERT INTO IMAGEASSIGNMENT VALUES $insertValuesSQL";
+				$result = $conn->query($insertQuery);
+				if(!$result)
+					echo "Failed to add record";
+					//array_push($errors, "Failed to add record");
+			}
+			else{
+				$insertImgQuery = "INSERT INTO IMAGE(address) VALUES('images/".$name."')";
+				$result = $conn->query($insertImgQuery);
+				if($result){
+					$idSql = "SELECT imageID FROM IMAGE WHERE address='images/".$name."'";
+					$idResult = $conn->query($idSql);
+					if($id = mysqli_fetch_assoc($idResult)){
+						$insertValuesSQL = "('".$id["imageID"]."', ".$taskID.")";
+						// Insert image file name into database
+						$insertQuery = "INSERT INTO IMAGEASSIGNMENT VALUES $insertValuesSQL";
+						$result = $conn->query($insertQuery);
+						if(!$result)
+							echo "Failed to add record";
+						//array_push($errors, "Failed to add record");
+					}
+				}
+			}
+		}
+	}
+	CloseCon($conn);
+}
+
+function uploadImage(&$temp, &$size, &$name, &$uploadedFiles, &$taskID, &$errors){
+	$value ="";
 	$extension = array("jpeg","jpg","png","gif"); // File extensions accepted
 	$bytes = 1024;
 	$KB = 1024;
 	$totalBytes = $bytes * $KB * 5;
-	$UploadFolder = "images";
+	global $UploadFolder;
 	$UploadOk = true;
 	
 	//check the size of each uploaded image
@@ -64,39 +126,19 @@ function uploadImage(&$temp, &$size, &$name, &$uploadedFiles, &$taskID, &$errors
 	if(file_exists($UploadFolder."/".$name) == true){
 		$UploadOk = false;
 		array_push($uploadedFiles, $name);
-		//get imageID of the existing image
-		$idSql = "SELECT imageID FROM IMAGE WHERE address='images/".$name."'";
-		$idResult = $conn->query($idSql);
-		if($id = mysqli_fetch_assoc($idResult)){
-			$insertValuesSQL = "('".$id["imageID"]."', ".$taskID.")";
-			// Insert image file name into database	
-			$insertQuery = "INSERT INTO IMAGEASSIGNMENT VALUES $insertValuesSQL";
-			$result = $conn->query($insertQuery);
-			if(!$result)
-				array_push($errors, "Failed to add record");
-		}
+		
+		$value .= $name;
+		echo "<div style='float:left;margin:25px'><img id='OriginalImage' class='image' style='width:150px' src='images/".$name."'></div>";
 	}
 	
 	if($UploadOk == true){
 		move_uploaded_file($temp,$UploadFolder."/".$name); // Upload file to server
 		array_push($uploadedFiles, $name);
-
-		$insertImgQuery = "INSERT INTO IMAGE(address) VALUES('images/".$name."')";
-		$result = $conn->query($insertImgQuery);
-		if($result){
-			$idSql = "SELECT imageID FROM IMAGE WHERE address='images/".$name."'";
-			$idResult = $conn->query($idSql);
-			if($id = mysqli_fetch_assoc($idResult)){
-				$insertValuesSQL = "('".$id["imageID"]."', ".$taskID.")";
-				// Insert image file name into database
-				$insertQuery = "INSERT INTO IMAGEASSIGNMENT VALUES $insertValuesSQL";
-				$result = $conn->query($insertQuery);
-				if(!$result)
-					array_push($errors, "Failed to add record");
-			}
-		}
+		
+		$value .= $name;
+		echo "<div style='float:left;margin:25px'><img id='OriginalImage' class='image' style='width:150px' src='images/".$name."'></div>";
 	}
-	CloseCon($conn);
+	return $value;
 }
 
 function displayResult(&$errors, &$uploadedFiles, &$counter){
@@ -109,16 +151,16 @@ function displayResult(&$errors, &$uploadedFiles, &$counter){
 			{
 				echo "<li>".$error."</li>";
 			}
-				echo "</ul><br/>";
+				echo "</ul>";
 		}
 		else{
 			echo "<b>Uploaded Files:</b>";
 			echo "<br/><ul>";
 			foreach($uploadedFiles as $fileName)
-			{
+			{	
 				echo "<li>".$fileName."</li>";
 			}
-			echo "</ul><br/>";				
+			echo "</ul>";				
 			echo count($uploadedFiles)." file(s) are successfully uploaded.";
 		}
 	}
