@@ -39,7 +39,7 @@
                 <nav class="nav-extended blue darken-4">
                     <div class="nav-wrapper">
                         <a href="#" class="brand-logo left"><img src="images/logo1.png" ></a>
-                        <ul id="nav-mobile" class="left hide-on-med-and-down">
+                        <ul id="nav-mobile" class="hide-on-med-and-down">
                             <li><a href="">Tests</a></li>
                             <li><a href="">Create</a></li>
 							<li class="active"><a href="">Edit</a></li>
@@ -57,40 +57,51 @@
         <div id="body" class="container">
 			<!--start form-->
             <form action="insertTask.php?from=edit&testID=<?php echo json_encode($testID);?>" method="post">
-				<h5 class="blue-text darken-2 header">
-					Task Title:
-				</h5>
+                <div class="row">
+                    <div class="col s6">
+                        <h5 class="blue-text darken-2 header">
+                            Task Title:
+                        </h5>
+                    </div>
+                    <div class="col s6">
+                        <h5 class="blue-text darken-2 header">
+                            Activity Style:
+                        </h5>
+                    </div>
+                </div>
+
+
 				<div class="row">
-					<div class="input-field col s12">
+					<div class="input-field col s6">
 						<input id="taskTitle" type="text">
 					</div>
+                    <div class="input-field col s6">
+                        <select name="activityStyle" id="taskType">
+                            <option value="Identify Body Parts" selected>Identify Body Part</option>
+                            <option value="Likert Scale">Likert Scale</option>
+                            <option value="Character Ranking">Character Ranking</option>
+                            <option value="Preferred Mechanic">Preferred Mechanics</option>
+                        </select>
+                    </div>
 				</div>
-				<h5 class="blue-text darken-2 header">
-					Activity Style:
-				</h5>
+
 				<div class="row">
-					<div class="input-field col s12">
-						<select name="activityStyle" id="taskType">
-							<option value="Identify Body Parts" selected>Identify Body Part</option>
-							<option value="Likert Scale">Likert Scale</option>
-							<option value="Character Ranking">Character Ranking</option>
-							<option value="Preferred Mechanic">Preferred Mechanics</option>
-						</select>
-					</div>
+
 				</div>
-				<h5 class="blue-text darken-2 header">
-					Instruction
-				</h5>
+                <div class="row">
+                    <h5 class="blue-text darken-2 header col s6">
+                        Image
+                    </h5>
+                    <h5 class="blue-text darken-2 header col s6">
+                        Instruction
+                    </h5>
+                </div>
+
+
+
+
 				<div class="row">
-					<div class="input-field col s12">
-						<input name="activity"id="instruction" type="text">
-					</div>
-				</div>
-				<h5 class="blue-text darken-2 header">
-					Image
-				</h5>
-				<div class="row">
-					<div class="col s12">
+					<div class="col s6">
 					<!--start upload button + path display-->
 						<div class="file-field input-field">
 							<div class="waves-effect waves-light btn blue darken-4">
@@ -103,6 +114,11 @@
 						</div>
 					<!--end upload button + path-->
 					</div>
+                    <div class="input-field col s6">
+                        <input name="activity"id="instruction" type="text">
+                    </div>
+
+
 				</div>
 				<img id="OriginalImage" class="image" src="images/Orbi.png" style="width:15%;">
 				<div class="row">
@@ -119,6 +135,7 @@
     </body>
     <style>
 		.brand-logo{
+        position:absolute;
 			margin-top:-67px;
 		}
 		.logout{
