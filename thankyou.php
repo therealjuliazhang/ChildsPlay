@@ -20,22 +20,15 @@
     <!--all the linking's been done, so you shouldn't need to download anything from Materialise-->
     <body>
         <!--header-->
-        <div class="row">
-        <nav class="nav-extended blue darken-4">
-            <div class="nav-wrapper">
-				<div class="row">
-					<div class="col s10">
-						<a href="#" class="brand-logo"><img src="images/logo1.png" height="200px"></a>
-					</div>
-					<div class="col s2 offset-s10">
-						<a class="waves-effect waves-light btn blue darken-2 right logout" onclick="logout()">Logout</a>
-					</div>
-				</div>
-            </div>
-        </nav>
-        </div>
+				<div id="InsertHeader"></div>
+			  <script>
+			    //Read header
+			    $(function(){
+			      $("#InsertHeader").load("header.html");
+			    });
+			  </script>
         <!--end header-->
-        
+
         <!-- body content -->
 
         <div class="container grey-text text-darken-1 content">
@@ -43,7 +36,7 @@
 				<div class="col s12">
 					<h5 class="blue-text darken-2">Thank You!</h5>
 					<div style="font-size:18px">
-                    That was the last task, thank you very much for facilitating this test, select 
+                    That was the last task, thank you very much for facilitating this test, select
                     finish to go back to available tests.
 					</div>
                     </br>
@@ -52,7 +45,7 @@
 			</div>
         </div>
         <!--end body content-->
-        
+
     </body>
     <style>
 	.brand-logo{

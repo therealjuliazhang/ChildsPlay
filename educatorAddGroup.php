@@ -1,5 +1,7 @@
+<!DOCTYPE html>
+
 <html>
-    <?php 
+    <?php
         include 'db_connection.php';
         $conn = OpenCon();
 		session_start();
@@ -23,26 +25,19 @@
         <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script type = "text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
         <script type = "text/javascript" src = "https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
-        <script type = "text/javascript" src = "addPreschoolerRow.js"></script>  
+        <script type = "text/javascript" src = "addPreschoolerRow.js"></script>
     </head>
     <!--the stuff in the head is all the linking things to Materialize-->
     <!--all the linking's been done, so you shouldn't need to download anything from Materialise-->
     <body>
         <!--header-->
-        <div class="row">
-        <nav class="nav-extended blue darken-4">
-            <div class="nav-wrapper">
-				<div class="row">
-					<div class="col s10">
-						<a href="#" class="brand-logo"><img src="images/logo1.png" height="200px"></a>
-					</div>
-					<div class="col s2 offset-s10">
-						<a class="waves-effect waves-light btn blue darken-2 right logout" onclick="logout()">Logout</a>
-					</div>
-				</div>
-            </div>
-        </nav>
-        </div>
+        <div id="InsertHeader"></div>
+        <script>
+          //Read header
+          $(function(){
+            $("#InsertHeader").load("header.html");
+          });
+        </script>
         <!--end header-->
         <!-- body content -->
         <div class="container grey-text text-darken-1" style="font-size:18px">
@@ -68,9 +63,9 @@
 						<a class="waves-effect waves-light btn blue darken-4 tooltipped" data-position="right" data-tooltip="Add more" onclick="addRow(); updateToolTips()"><i class="material-icons"style="font-size:30px;">add</i></a>
 					</div>
 					<div class="row right-align">
-						<input type="submit" name="submit" id="saveButton" class="submit waves-effect waves-light btn blue darken-2" value="Save Changes">
+						<input type="submit" name="submit" class="submit waves-effect waves-light btn blue darken-2" value="Save Changes">
                         <a href="educatorTests.php#groups" class="waves-effect waves-light btn blue darken-4 ">Cancel</a>
-					</div>  
+					</div>
                 </form>
         </div>
         <!--end body content-->
@@ -113,10 +108,10 @@
                     }
                     else if(element.hasClass("materialSelect")){
                         element.after(error);
-                    }   
+                    }
                     else if(element.attr('type')=="radio"){
                         element.before(error);
-                    } 
+                    }
                 }
             })
             //set up rules and messages for errors
@@ -164,18 +159,16 @@
     .invalid{
         font-size: 12px;
         color: #EC453C;
-    } 
+    }
     /*for the red remove button*/
     .icon-red {
         color: #CA3433;
         padding-top: 10px;
-    } 
+    }
     /*changes cursor when hovring over remove button*/
-    .changeCursor { 
-        cursor: pointer; 
+    .changeCursor {
+        cursor: pointer;
     }
-    #saveButton{
-        padding-top: 7px;
-    }
+
     </style>
 </html>

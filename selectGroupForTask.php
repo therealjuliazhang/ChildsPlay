@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 <html>
 	<?php
 	session_start();
@@ -15,7 +17,7 @@
 		else if($_GET['mode'] == "preview")
 			$_SESSION['mode'] = "preview";
 	}
-	
+
 	include 'db_connection.php';
 	$conn = OpenCon();
 	?>
@@ -29,20 +31,13 @@
     </head>
     <body>
         <!--header-->
-        <div class="row">
-        <nav class="nav-extended blue darken-4">
-            <div class="nav-wrapper">
-				<div class="row">
-					<div class="col s10">
-						<a href="#" class="brand-logo"><img src="images/logo1.png" height="200px"></a>
-					</div>
-					<div class="col s2 offset-s10">
-						<a class="waves-effect waves-light btn blue darken-2 right logout" onclick="logout()">Logout</a>
-					</div>
-				</div>
-            </div>
-        </nav>
-        </div>
+				<div id="InsertHeader"></div>
+			  <script>
+			    //Read header
+			    $(function(){
+			      $("#InsertHeader").load("header.html");
+			    });
+			  </script>
         <!--end header-->
         <!-- body content -->
         <div class="container">
@@ -61,7 +56,7 @@
 		<?php
 		//get groups from database
 		$sql = "SELECT groupID FROM GROUPASSIGNMENT WHERE userID=".$userID." GROUP BY groupID";
-		$result = $conn->query($sql); 
+		$result = $conn->query($sql);
 		while($row = mysqli_fetch_assoc($result)){
 			$sql2 = "SELECT name FROM GROUPTEST WHERE groupID=".$row["groupID"];
 			$result2 = $conn->query($sql2);
@@ -72,7 +67,7 @@
 			$result3 = $conn->query($sql3);
 			$names = array();
 			while($row3 = mysqli_fetch_assoc($result3)){
-				$names[] = $row3; 
+				$names[] = $row3;
 			}
 			$count = 0;
 			foreach ($names as $value) {
@@ -81,14 +76,14 @@
 				if($count == sizeof($names)) break;
 				echo ", ";
 			}
-			echo '</td><td><a href="instruction.php?groupID=', $row["groupID"], '" class="waves-effect waves-light btn blue darken-2">Select</a></td></tr>';			
+			echo '</td><td><a href="instruction.php?groupID=', $row["groupID"], '" class="waves-effect waves-light btn blue darken-2">Select</a></td></tr>';
 		}
 		?>
 				</tbody>
 			</table>
 			<br/><br/><br/>
 			<div class="row">
-				<div class="col s12">				
+				<div class="col s12">
 					<div class="right-align">
 						<a class="waves-effect waves-light btn blue darken-4" href="educatorTests.php#tests">Cancel</a>
 					</div>
