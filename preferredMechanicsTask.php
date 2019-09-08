@@ -54,9 +54,10 @@ while($row = mysqli_fetch_assoc($result)){
       //check whether it is in preview mode
       var isPreview = <?php echo(json_encode($isPreview)); ?>;
       var from; //if preview check if from edit page or available test page ect.
-      if(isPreview)
+      /*if(isPreview)
         from = <?php echo(json_encode($from)); ?>; // checks from which page preview was opened
-      var preschoolers;
+      */
+	  var preschoolers;
       var results = [];
       var preIndex;
       var taskID = <?php echo json_encode($taskID); ?>;
@@ -132,9 +133,10 @@ while($row = mysqli_fetch_assoc($result)){
           });
         });
         //if task was preview, go back to previous page
-        if(isPreview)
+        if(isPreview){
           if(from = "edit")
             window.location.href = "EditTest.php";
+		}
         else{
           var taskIndex = <?php echo $taskIndex ?>;
           window.location.href = "comments.php?taskIndex=" + taskIndex;
