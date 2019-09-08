@@ -44,20 +44,15 @@ if(isset($_POST["multiSubmit"]))
 		$counter++;
 		$value = uploadImage($temp, $size, $name, $uploadedFiles, $taskID, $errors);
 		$values .= $value;
-		if(counter < count($_FILES["files"]["tmp_name"]))
+		if($counter < count($_FILES["files"]["tmp_name"]))
             $values .= ",";
 	}
-	
 	$_SESSION["names"] = $values;
-	
 	displayResult($errors, $uploadedFiles, $counter);
 }
 
 if(isset($_POST["createTask"])){
 	global $UploadFolder;
-	//global $uploadedFiles;
-	//global $errors;
-	
 	$names = $_SESSION["names"];
 	$files = explode(",", $names);
 	
@@ -74,8 +69,9 @@ if(isset($_POST["createTask"])){
 				$insertQuery = "INSERT INTO IMAGEASSIGNMENT VALUES $insertValuesSQL";
 				$result = $conn->query($insertQuery);
 				if(!$result)
-					echo "Failed to add record";
-					//array_push($errors, "Failed to add record");
+					echo "<span style='color:red'>Failed to add record!<br/>".mysqli_error($conn)."</span>";
+				else
+					echo "Successfully added record!";
 			}
 			else{
 				$insertImgQuery = "INSERT INTO IMAGE(address) VALUES('images/".$name."')";
@@ -89,8 +85,9 @@ if(isset($_POST["createTask"])){
 						$insertQuery = "INSERT INTO IMAGEASSIGNMENT VALUES $insertValuesSQL";
 						$result = $conn->query($insertQuery);
 						if(!$result)
-							echo "Failed to add record";
-						//array_push($errors, "Failed to add record");
+							echo "<span style='color:red'>Failed to add record!<br/>".mysqli_error($conn)."</span>";
+						else
+							echo "Successfully added record!";
 					}
 				}
 			}
@@ -141,31 +138,36 @@ function uploadImage(&$temp, &$size, &$name, &$uploadedFiles, &$taskID, &$errors
 	return $value;
 }
 
+//display message if successfully uploaded the file(s) or failed to upload or no file is selected
 function displayResult(&$errors, &$uploadedFiles, &$counter){
+	$count = 0;
 	if($counter>0){
+		echo "<br/><div style='clear:left;margin:25px'>";
 		if(count($errors)>0)
 		{
-			echo "<b>Errors:</b>";
+			echo "<span style='color:red;font-style:italic'><b>Errors:</b>";
 			echo "<br/><ul>";
 			foreach($errors as $error)
 			{
 				echo "<li>".$error."</li>";
 			}
-				echo "</ul>";
+				echo "</ul></span>";
 		}
 		else{
-			echo "<b>Uploaded Files:</b>";
-			echo "<br/><ul>";
+			echo "<b>Uploaded Files: </b>";
 			foreach($uploadedFiles as $fileName)
 			{	
-				echo "<li>".$fileName."</li>";
-			}
-			echo "</ul>";				
-			echo count($uploadedFiles)." file(s) are successfully uploaded.";
+				$count++;
+				echo $fileName;
+				if($count < count($uploadedFiles))
+					echo ", ";
+			}				
+			echo "<br/>".count($uploadedFiles)." file(s) are successfully uploaded.";
 		}
+		echo "</div>";
 	}
 	else{
-		echo "Please, Select file(s) to upload.";
+		echo "<span style='color:red;font-style:italic'>Please select file(s) to upload!</span>";
 	}
 }
 ?>
