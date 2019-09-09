@@ -45,6 +45,7 @@
         </script>
         <!--end header-->
         <!-- body content -->
+	<div class="container">
         <h5 class="blue-text darken-2 header">Tests accessible to <span id="fullName"></span></h5>
 		<div id="testsAccessible">
 			<table class="highlight centered">
@@ -61,6 +62,7 @@
             </table>
             <a id="addTest" class="right waves-effect waves-light btn blue darken-4" href="selectAccessibleTest.php">Add Test</a>
         </div>
+	</div>
         <!--end body content-->
     </body>
 <script>
