@@ -119,9 +119,7 @@
             <div class="nav-wrapper">
                 <a href="#" class="brand-logo left"><img src="images/logo1.png" ></a>
 
-                <ul id="logoutButton" class="right hide-on-med-and-down logout">
-                    <li><a class="waves-effect waves-light btn blue darken-2 right" onclick="logout()">Profile</a></li>
-                </ul>
+                
             </div>
         </nav>
     </div>
