@@ -1,36 +1,57 @@
 <html>
-	<?php 
-		//check if user logged in
-		session_start();
-		if(isset($_SESSION['userID']))
-			$userID = $_SESSION['userID'];
-		else
-			header('login.php');
-		//get test ID
-		if(isset($_GET['testID']))
-			$testID = (int)$_GET['testID'];
+<?php 
+	//check if user logged in
+	session_start();
+	if(isset($_SESSION['userID']))
+		$userID = $_SESSION['userID'];
+	else
+		header('login.php');
+	//get test ID
+	if(isset($_GET['testID']))
+		$testID = (int)$_GET['testID'];
+	
+	//check if editing or creating test
+    $from = "edit";
+    //get test ID
+    if(isset($_GET['testID']))
+        $testID = $_GET['testID'];
+		
+$testID=1; //NEED TO REMOVE LATER
 	?>
-    <head>
-        <title>Child'sPlay</title>
-        <meta name = "viewport" content = "width = device-width, initial-scale = 1">
-		<link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
-		<link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-		<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-		<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-		<script>             
-		document.addEventListener('DOMContentLoaded', function() {
-			var elems = document.querySelectorAll('select');
-			var instances = M.FormSelect.init(elems);
-		});
-		$(document).ready(function() {
-			//get input values
-			var taskTitle = $("#taskTitle").val();
-			var activityStyle = $("#taskType").val();
-			var instruction = $("#instruction").val();
-			var imageAddress = $("#imageAddress").val();
-		});
-		</script>
+<head>
+    <title>Child'sPlay</title>
+    <meta name = "viewport" content = "width = device-width, initial-scale = 1">
+	<link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="uploadImage.js"></script>
+	<script>
+	function createNewTask(){
+		var imageAddress = $("#imageAddress").val();
+		var instruction = $("#instruction").val();
+		var selected = $("#taskType option:selected").val();
+		var activity = $("#taskTitle").val();
+		var testID = <?php echo json_encode($testID);?>;
+		var from = <?php echo json_encode($from);?>;
+		
+		$.post("createTask.php", 
+			{	imageAddress: imageAddress,
+				instruction: instruction,
+				activityStyle: selected,
+				activity: activity,
+				testID: testID
+			},
+			function(data){
+				$("#results").html(data);
+			}
+		);
+		//redirect back to page
+		if(from == "edit")
+			window.location = "EditTest.php?testID=" + testID;
+	}
+	</script>
 	</head>
     <body>
         <!--header-->
@@ -56,7 +77,9 @@
         <!-- body content -->
         <div id="body" class="container">
 			<!--start form-->
-            <form action="insertTask.php?from=edit&testID=<?php echo json_encode($testID);?>" method="post">
+			
+			<!---<iframe name="votar" style="display:none;"></iframe>---->
+            <form method="post" action="">
                 <div class="row">
                     <div class="col s6">
                         <h5 class="blue-text darken-2 header">
@@ -76,11 +99,11 @@
 						<input id="taskTitle" type="text">
 					</div>
                     <div class="input-field col s6">
-                        <select name="activityStyle" id="taskType">
-                            <option value="Identify Body Parts" selected>Identify Body Part</option>
+                        <select name="activityStyle" id="taskType" onchange="loadContent()">
+                            <option value="Identify Body Part" selected>Identify Body Part</option>
                             <option value="Likert Scale">Likert Scale</option>
                             <option value="Character Ranking">Character Ranking</option>
-                            <option value="Preferred Mechanic">Preferred Mechanics</option>
+                            <option value="Preferred Mechanics">Preferred Mechanics</option>
                         </select>
                     </div>
 				</div>
@@ -96,39 +119,37 @@
                         Instruction
                     </h5>
                 </div>
-
-
-
-
 				<div class="row">
 					<div class="col s6">
 					<!--start upload button + path display-->
+					<form action="uploadImage.php" method="post" enctype="multipart/form-data">
 						<div class="file-field input-field">
-							<div class="waves-effect waves-light btn blue darken-4">
-								<span>Upload</span>
-								<input type="file">
+							<div id="imgUpload" class="waves-effect waves-light btn blue darken-4">
+							<span>Upload</span>
+							<input id="file" type="file" name="file" />
 							</div>
 							<div class="file-path-wrapper">
-								<input name="imageFileName" id="imageAddress" class="file-path" type="text">
+								<input class="file-path validate" type="text" name="imageFileName" id="imageAddress" webkitdirectory directory multiple/>
 							</div>
 						</div>
-					<!--end upload button + path-->
+					</form>
+						<!--end upload button + path-->
 					</div>
-                    <div class="input-field col s6">
-                        <input name="activity"id="instruction" type="text">
+					<div class="input-field col s6">
+                        <input name="activity" id="instruction" type="text">
                     </div>
-
-
 				</div>
-				<img id="OriginalImage" class="image" src="images/Orbi.png" style="width:15%;">
+				<!--Placeholder to display uploaded image(s)--->
+				<div id="imageUpload"></div>
 				<div class="row">
 					<div class="col s12">
 						<p align="right">
-							<button type="submit" class="waves-effect waves-light btn blue darken-2">Create Task</button>
+							<button name="createTaskBtn" id="submitBtn" class="waves-effect waves-light btn blue darken-2" onclick="createNewTask();">Create Task</button>
 							<a class="waves-effect waves-light btn blue darken-4">Cancel</a>
 						</p>
 					</div>
 				</div>
+				<div id="results"></div>
 			</form>
 		</div>
 		<!--end body content-->
