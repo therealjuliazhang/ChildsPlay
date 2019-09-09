@@ -31,6 +31,26 @@
 				var elem = document.querySelectorAll('.tooltipped');
 				var instance = M.Tooltip.init(elem);
 			});
+			$(document).ready(function(){
+				//set default activity instruction
+				$("#activityStyle").change(function(){
+					var activityStyle = $("#activityStyle").val();
+					switch(activityStyle){
+						case "Likert Scale":
+							$("#activity").val("Press the happy face if you like it, press the sad face if you don't like it.");
+							break;
+						case "Character Ranking":
+							$("#activity").val("Press your favourite character and then your next favourite until they are all pressed.");
+							break;
+						case "Identify Body Part":
+							$("#activity").val("Press the monster's [enter body part]");
+							break;
+						case "Preferred Mechanics":
+							$("#activity").val("");
+							break;
+					}
+				})
+			})	
 		</script>
 	</head>
     <body>
@@ -40,7 +60,7 @@
                 <nav class="nav-extended blue darken-4">
                     <div class="nav-wrapper">
                         <a href="#" class="brand-logo left"><img src="images/logo1.png" ></a>
-                        <ul id="nav-mobile" class="left hide-on-med-and-down">
+                        <ul id="nav-mobile" class="hide-on-med-and-down">
                             <li><a href="">Tests</a></li>
                             <li class="active"><a href="">Create</a></li>
                             <li><a href="">Users</a></li>
@@ -77,7 +97,7 @@
                 </div>
 				<div class="row">
 					<div class="input-field col s6">
-						<select name="activityStyle">
+						<select id="activityStyle" name="activityStyle">
 							<option value="Identify Body Part" selected>Identify Body Part</option>
 							<option value="Likert Scale">Likert Scale</option>
 							<option value="Character Ranking">Character Ranking</option>
@@ -85,7 +105,7 @@
 						</select>
 					</div>
                     <div class="input-field col s6">
-                        <input name="activity" placeholder="Identifying the [body part]" id="Activity" type="text">
+                        <input id="activity" name="activity" value="Press the character's [body part]" id="Activity" type="text">
                     </div>
 
 				</div>
