@@ -102,6 +102,13 @@
 		#button{
 			margin-top:-20px;
 		}
+		.center-align{
+			margin-top: 100px;
+			font-size: 50px;
+		}
+		.container{
+			margin-top:-85px;
+		}
 		</style>
     </head>
     <body>
@@ -112,9 +119,7 @@
             <div class="nav-wrapper">
                 <a href="#" class="brand-logo left"><img src="images/logo1.png" ></a>
 
-                <ul id="logoutButton" class="right hide-on-med-and-down logout">
-                    <li><a class="waves-effect waves-light btn blue darken-2 right" onclick="logout()">Profile</a></li>
-                </ul>
+                
             </div>
         </nav>
     </div>
@@ -123,7 +128,7 @@
         <!-- body content -->
 		<img id="button" src="images/greyCircle.png" width="7%" align="right" onclick="goNext();"></img>
 		<div class="container">
-			<div class="center-align"><img id="image" width="28%"></img></div>
+			<div class="center-align"><img id="image" height="45%"></img></div>
 			<!--all container does is create padding on the left & right sides.-->
 			</div>
 		<div class="bottom">

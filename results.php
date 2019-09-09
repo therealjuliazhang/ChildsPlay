@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 <html>
 <?php
 session_start();
@@ -34,13 +36,13 @@ include_once 'resultQueries.php';
 			$('.sidenav').sidenav();
 			$('.collapsible').collapsible();
 			$('.dropdown-trigger').dropdown();
-			//get results from php 
+			//get results from php
 			var likertResults = <?php echo json_encode($likertResults); ?>;
 			var rankingResults = <?php echo json_encode($rankingResults); ?>;
 			//var likertResults = <?php echo json_encode($likertResults); ?>;
 			var bodyPartsResults = <?php echo json_encode($bodyPartsResults); ?>;
 			var mechanicResults = <?php echo json_encode($mechanicResults); ?>;
-			
+
 			//print out "Result not found" if all results arrays are empty
 			if(likertResults.length == 0 && rankingResults.length == 0 && mechanicResults.length == 0 /*&& bodyPartsResults == 0*/){
 				var output = "No results match!";
@@ -49,7 +51,7 @@ include_once 'resultQueries.php';
 				result.style.color = "red";
 				result.style.fontStyle = "italic";
 			}
-			
+
 			//display results
 			displayLikert(likertResults);
 			displayRanking(rankingResults);
@@ -61,39 +63,28 @@ include_once 'resultQueries.php';
 	</head>
     <body>
         <!--header-->
-        <div class="row">
-            <div class="navbar-fixed">
-                <nav class="nav-extended blue darken-4">
-                    <div class="nav-wrapper">
-                        <a href="#" class="brand-logo left"><img src="images/logo1.png" ></a>
-                        <ul id="nav-mobile" class="left hide-on-med-and-down">
-                            <li><a href="">Tests</a></li>
-                            <li><a href="">Create</a></li>
-                            <li class="active"><a href="" >Results</a></li>
-                            <li><a href="">Users</a></li>
-                        </ul>
-                        <ul id="logoutButton" class="right hide-on-med-and-down logout">
-                            <li><a class="waves-effect waves-light btn blue darken-2 right" onclick="logout()">Logout</a></li>
-                        </ul>
-                    </div>
-                </nav>
-            </div>
-        </div>
+				<div id="InsertHeader"></div>
+			  <script>
+			    //Read header
+			    $(function(){
+			      $("#InsertHeader").load("header.html");
+			    });
+			  </script>
         <!--end header-->
         <!--side bar-->
 		<ul id="sidebar" class="sidenav sidenav-fixed" >
 			<li><h5><a href="#" data-target="slide-out" class="dropdown-trigger">More Tests</a></h5></li>button to activate more tests
 			<ul class="dropdown-content" id="slide-out">
-			<?php 
+			<?php
 			$testQuery = "SELECT testID, title FROM TEST";
 			$result = $conn->query($testQuery);
 			while($row = mysqli_fetch_assoc($result))
 				//echo "<li><a href='#'>".$row["title"]."</a></li>";
 				echo "<li><a href='?testID=".$row["testID"]."'>".$row["title"]."</a></li>";
-			
+
 			?>
 			</ul>
-			
+
 			<li><h5>Filter Results By</h5></li>
 			<form action="" method="post">
 			<li>
@@ -195,7 +186,7 @@ include_once 'resultQueries.php';
         <div id="body">
 			<!--end slide out menu-->
 			<div id="results">
-			
+
 				<!-- IDENTIFY BODY PARTS TASK -->
 				<!-- <h5 class="blue-text darken-2 header">Identify Eye Task:</h5>
 				Can you point to the monster's eyes?

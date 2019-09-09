@@ -111,6 +111,27 @@ while($row = mysqli_fetch_assoc($result)){
             }
           }
         });
+        //end task and submit if last preschooler
+        if($("li.is-active").next().length == 0){
+          results.forEach(function(result){
+            preID = preschoolers[result.preIndex]['preID'];
+            mechanic = result.mechanic;
+            $.ajax({
+              type: 'POST',
+              url: 'http://localhost/insertMechanicsResults.php',
+              data: { mechanic : mechanic, taskID : taskID, preID : preID}
+            });
+          });
+          //if task was preview, go back to previous page
+          if(isPreview){
+            if(from = "edit")
+              window.location.href = "EditTest.php";
+          }
+          else{
+            var taskIndex = <?php echo $taskIndex ?>;
+            window.location.href = "comments.php?taskIndex=" + taskIndex;
+          }	
+        };
         //go to next preschooler
         $("li.is-active").next().addClass('is-active');
         $('li.is-active').first().removeClass('is-active');
@@ -120,27 +141,6 @@ while($row = mysqli_fetch_assoc($result)){
         $('input:checkbox').each(function(){
           $(this).prop( "checked", false );
         });
-      }
-      //submit data into database and finish task
-      function submit(){
-        results.forEach(function(result){
-          preID = preschoolers[result.preIndex]['preID'];
-          mechanic = result.mechanic;
-          $.ajax({
-            type: 'POST',
-            url: 'http://localhost/insertMechanicsResults.php',
-            data: { mechanic : mechanic, taskID : taskID, preID : preID}
-          });
-        });
-        //if task was preview, go back to previous page
-        if(isPreview){
-          if(from = "edit")
-            window.location.href = "EditTest.php";
-		}
-        else{
-          var taskIndex = <?php echo $taskIndex ?>;
-          window.location.href = "comments.php?taskIndex=" + taskIndex;
-        }	
       }
     </script>
   </head>
@@ -158,7 +158,6 @@ while($row = mysqli_fetch_assoc($result)){
   <div>
     <ul id="sidebar" class="sidenav sidenav-fixed #ffffff white tab-group">
     </ul>
-    <a onclick="submit()" class="waves-effect waves-light btn blue darken-2" id="submitButton">Submit</a>
   </div>
   <!--End Sidebar-->
   <!--Main content-->
@@ -202,15 +201,7 @@ while($row = mysqli_fetch_assoc($result)){
             </form>
           </div>
     <!--4th and other row-->
-          <div class="col s12" id="commentCol"><h5 class="blue-text darken-2">Comment:</h5></div>
-          <div class="col s12">
-            <form class="col s12">
-              <div class="input-field col s12">
-              <textarea id="textarea1" class="materialize-textarea"></textarea>
-              </div>
-            </form>
-          </div>
-          <div class="col s12"><a onclick="save()" class="waves-effect waves-light btn blue darken-2 right" id="saveButton">save</a></div>
+          <div class="col s12"><a onclick="save()" class="waves-effect waves-light btn blue darken-2 right" id="saveButton">Next</a></div>
         </div>
       </div>
     </div>
@@ -261,7 +252,8 @@ padding-left: 330px;
   margin-right: 100px;
 }
 #saveButton{
-  margin-right: 21px;
+  margin-right: 50px;
+  margin-top: 100px;
 }
 #questionCol{
   height: 70px;

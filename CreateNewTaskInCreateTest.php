@@ -28,11 +28,11 @@
 		function createNewTask(){
 			var imageAddress = $("#imageAddress").val();
 			var instruction = $("#instruction").val();
-			var selected = $("#taskType option:selected").val();
-			var activity = $("#taskTitle").val();
+			var selected = $("#activityStyle option:selected").val();
+			var activity = $("#activity").val();
 			var testID = <?php echo json_encode($testID);?>;
 			var from = <?php echo json_encode($from);?>;
-			
+
 			$.post("createTask.php", 
 				{	imageAddress: imageAddress,
 					instruction: instruction,
@@ -97,7 +97,7 @@
                 </div>
 				<div class="row">
 					<div class="input-field col s6">
-						<select name="activityStyle" id="taskType" onchange="loadContent()">
+						<select name="activityStyle" id="activityStyle" onchange="loadContent()">
 							<option value="Identify Body Part">Identify Body Part</option>
 							<option value="Likert Scale">Likert Scale</option>
 							<option value="Character Ranking">Character Ranking</option>
@@ -105,7 +105,7 @@
 						</select>
 					</div>
                     <div class="input-field col s6">
-                        <input name="activity" placeholder="Identifying the [body part]" id="Activity" type="text">
+                        <input id="activity" name="activity" value="Press the character's [body part]" id="Activity" type="text">
                     </div>
 				</div>
 

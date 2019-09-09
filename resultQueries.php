@@ -11,16 +11,16 @@ $mechanicResults = array();
 $filteredPreIDs = array();
 
 //likert result query
-$query1 = "SELECT DISTINCT happy, count(happy) AS likertCount, R.taskID, T.activity, imageID, address, comments      
-		FROM RESULTS R INNER JOIN IMAGE I ON R.taskID = I.taskID INNER JOIN TASK T ON R.taskID = T.taskID INNER JOIN TASKASSIGNMENT TA ON TA.taskID = T.taskID
+$query1 = "SELECT DISTINCT happy, count(happy) AS likertCount, R.taskID, T.activity, I.imageID, address, comments      
+		FROM RESULTS R INNER JOIN IMAGEASSIGNMENT IA ON R.taskID = IA.taskID INNER JOIN IMAGE I ON IA.imageID = I.imageID INNER JOIN TASK T ON R.taskID = T.taskID INNER JOIN TASKASSIGNMENT TA ON TA.taskID = T.taskID
 		WHERE happy IS NOT NULL"; 
 //body parts result query				
-$query2 = "SELECT R.taskID, imageID, address, x, y, T.activity, comments   
-		FROM RESULTS R INNER JOIN IMAGE I ON R.taskID = I.taskID INNER JOIN TASK T ON R.taskID = T.taskID INNER JOIN TASKASSIGNMENT TA ON TA.taskID = T.taskID
+$query2 = "SELECT R.taskID, I.imageID, address, x, y, T.activity, comments   
+		FROM RESULTS R INNER JOIN IMAGEASSIGNMENT IA ON R.taskID = IA.taskID INNER JOIN IMAGE I ON IA.imageID = I.imageID INNER JOIN TASK T ON R.taskID = T.taskID INNER JOIN TASKASSIGNMENT TA ON TA.taskID = T.taskID
 		WHERE x IS NOT NULL";
 //mechanic result query
-$query3 = "SELECT DISTINCT mechanic, count(mechanic) AS mechanicCount, T.activity, R.taskID, imageID, address, comments   
-		FROM RESULTS R INNER JOIN IMAGE I ON R.taskID = I.taskID INNER JOIN TASK T ON R.taskID = T.taskID INNER JOIN TASKASSIGNMENT TA ON TA.taskID = T.taskID
+$query3 = "SELECT DISTINCT mechanic, count(mechanic) AS mechanicCount, T.activity, R.taskID, I.imageID, address, comments   
+		FROM RESULTS R INNER JOIN IMAGEASSIGNMENT IA ON R.taskID = IA.taskID INNER JOIN IMAGE I ON IA.imageID = I.imageID INNER JOIN TASK T ON R.taskID = T.taskID INNER JOIN TASKASSIGNMENT TA ON TA.taskID = T.taskID
 		WHERE mechanic IS NOT NULL";
 //character ranking result query		
 $query4 = "SELECT R.imageID, address, sum(score) AS totalScore, R.taskID, R.preID, T.activity, comments   
