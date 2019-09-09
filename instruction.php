@@ -166,7 +166,7 @@ foreach ($imageAdresses as $value)
 							echo "Start";
 						?>
 						</a>
-						<a href="?back=true" class="waves-effect waves-light btn blue darken-4">Back</a>
+						<!-- <a href="?back=true" class="waves-effect waves-light btn blue darken-4">Back</a> -->
 						<?php
 							if(isset($_GET["back"])){
 								if($_SESSION['mode'] == "preview")

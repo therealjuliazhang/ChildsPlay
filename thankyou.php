@@ -24,7 +24,7 @@
 			  <script>
 			    //Read header
 			    $(function(){
-			      $("#InsertHeader").load("header.html");
+			      $("#InsertHeader").load("educatorHeader.html");
 			    });
 			  </script>
         <!--end header-->

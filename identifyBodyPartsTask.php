@@ -184,14 +184,14 @@ mysqli_close($conn);?>
 			margin-top:-20px;
 		}
 		#participant{
-			height: 220px;
+			height: 100px;
 			position:absolute;
 			bottom: 0px;
 			right:0px;
 			left:0px
 		}
 		.center-align{
-			margin-top: 100px;
+			margin-top: 15px;
 			font-size: 50px;
 		}
 	</style>
