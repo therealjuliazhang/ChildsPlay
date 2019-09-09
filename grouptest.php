@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 <html>
     <head>
         <title>Preview Test</title>
@@ -13,29 +15,21 @@
     <body>
         <!--header-->
         <div class="row">
-        <nav class="nav-extended blue darken-4">
-            <div class="nav-wrapper">
-				<div class="row">
-					<div class="col s10">
-						<a href="#" class="brand-logo"><img src="images/logo1.png" height="200px"></a>
-					</div>
-					<div class="col s2 offset-s10">
-						<a class="waves-effect waves-light btn blue darken-2 right logout" onclick="logout()">Logout</a>
-					</div>
-					
-				</div>
-                
-				
-            </div>
-        </nav>
+          <div id="InsertHeader"></div>
+          <script>
+            //Read header
+            $(function(){
+              $("#InsertHeader").load("header.html");
+            });
+          </script>
         </div>
         <!--end header-->
-        
+
         <!-- body content -->
 
         <div class="container grey-text text-darken-1">
 			<div class="row">
-				<div class="col s12">				
+				<div class="col s12">
 					<div class="right-align">
 						<a class="waves-effect waves-light btn blue darken-2" onclick="backToGroupList()"> < < Back</a>
 						<a class="waves-effect waves-light btn blue darken-4" onclick="runTest()">Next > ></a>
@@ -70,10 +64,10 @@
 			</div>
 			<form style="font-size:18px">
 				<div class="row">
-				
+
 				<?php
 				session_start();
-				if(isset($_SESSION['childnames'])){                           
+				if(isset($_SESSION['childnames'])){
     foreach ($_SESSION['childnames'] as $arr) {
         echo "Tester: ". $arr . "<br />";
         unset($_SESSION['childnames']);
@@ -98,7 +92,7 @@
 						</p>
 					</div>
 				</div>
-				
+
 				<div class="row">
 					<div class="col s6">
 						<input value="Alex" id="name2" type="text" class="validate">
@@ -119,7 +113,7 @@
 						</p>
 					</div>
 				</div>
-				
+
 				<div class="row">
 					<div class="col s6">
 						<input value="Eric" id="name3" type="text" class="validate">
@@ -140,7 +134,7 @@
 						</p>
 					</div>
 				</div>
-				
+
 				<div class="row">
 					<div class="col s6">
 						<input value="Kate" id="name4" type="text" class="validate">
@@ -161,7 +155,7 @@
 						</p>
 					</div>
 				</div>
-				
+
 				<div class="row">
 					<div class="col s6">
 						<input value="Ren" id="name5" type="text" class="validate">
@@ -182,21 +176,21 @@
 						</p>
 					</div>
 				</div>
-				
+
 				<div class="row">
 					<div class="right-align">
 						<a class="waves-effect waves-light btn blue darken-4" onclick="addMore()">Add More</a>
 					</div>
 				</div>
 			</form>
-			
-			
-			
- 
+
+
+
+
         </div>
-        
+
         <!--end body content-->
-        
+
     </body>
 	<script>
 	</script>

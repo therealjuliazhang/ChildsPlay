@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 <html>
     <?php
         $baseURL = "localhost";
@@ -34,23 +36,13 @@
     </head>
     <body>
         <!--header-->
-          <div class="row">
-            <div class="navbar-fixed">
-                <nav class="nav-extended blue darken-4">
-                    <div class="nav-wrapper">
-                        <a href="#" class="brand-logo left"><img src="images/logo1.png" ></a>
-                        <ul id="nav-mobile" class="left hide-on-med-and-down">
-                            <li><a href="">Tests</a></li>
-                            <li><a href="">Create</a></li>
-                            <li><a href="">Users</a></li>
-                        </ul>
-                        <ul id="logoutButton" class="right hide-on-med-and-down logout">
-                            <li><a class="waves-effect waves-light btn blue darken-2 right" onclick="logout()"> <i class="material-icons" id="profileIcon">account_box</i></a></li>
-                        </ul>
-                    </div>
-                </nav>
-            </div>
-        </div>
+        <div id="InsertHeader"></div>
+        <script>
+          //Read header
+          $(function(){
+            $("#InsertHeader").load("header.html");
+          });
+        </script>
         <!--end header-->
         <!-- body content -->
         <h5 class="blue-text darken-2 header">Tests accessible to <span id="fullName"></span></h5>
@@ -115,7 +107,7 @@ $(document).ready(function() {
         margin-top:-67px;
     }
     .logout{
-        margin-top: 15px; 
+        margin-top: 15px;
         margin-right:15px;
     }
     .nav-wrapper > ul {

@@ -67,7 +67,6 @@ else
 	$taskIndex = $_SESSION['taskIndex'];
 */
 $taskIndex = isset($_GET['taskIndex']) ? $_GET['taskIndex'] : 0;
-echo "Task index: ".$taskIndex;
 $bodyPart = "eye";
 ?>
     <head>
@@ -144,7 +143,7 @@ if(count($tasks) > 0){
 <?php
 //display images under test
 if(count($tasks) > 0){
-$testQuery = "SELECT address FROM IMAGE WHERE taskID=" . $tasks[$taskIndex]["taskID"];
+$testQuery = "SELECT address FROM IMAGE I JOIN IMAGEASSIGNMENT IA ON I.imageID = IA.imageID WHERE IA.taskID=" . $tasks[$taskIndex]["taskID"];
 $result = $conn->query($testQuery);
 $imageAdresses = array();
 while($row = mysqli_fetch_assoc($result))

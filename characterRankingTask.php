@@ -41,7 +41,7 @@ while($row = mysqli_fetch_assoc($result)){
 	}
 }
 //fetch images
-$sql = "SELECT * FROM IMAGE WHERE TASKID = '$taskID'";
+$sql = "SELECT I.imageID, I.address, IA.taskID FROM IMAGE I JOIN IMAGEASSIGNMENT IA ON I.imageID = IA.imageID WHERE taskID = '$taskID'";
 $result = $conn->query($sql);
 $images = array();
 while($row = mysqli_fetch_assoc($result))
@@ -60,8 +60,9 @@ mysqli_close($conn);
 	//check whether it is in preview mode
 	var isPreview = <?php echo(json_encode($isPreview)); ?>;
 	var from; //if preview check if from edit page or available test page ect.
-	if(isPreview)
+	/*if(isPreview)
 		from = <?php echo(json_encode($from)); ?>; // checks from which page preview was opened
+	*/
 	var taskID = <?php echo(json_encode($taskID)); ?>;
 	//preschoolerNumber determines whos turn it is
 	var preschoolerNumber = 0;
@@ -83,9 +84,10 @@ mysqli_close($conn);
 		preschoolerNumber++;
 		if(preschoolerNumber == preschoolers.length){
 			//if task was preview, go back to previous page
-			if(isPreview)
+			if(isPreview){
 				if(from = "edit")
 					window.location.href = "EditTest.php";
+			}
 			else{
 				var taskIndex = <?php echo $taskIndex ?>;
 				window.location.href = "comments.php?taskIndex=" + taskIndex;

@@ -2,7 +2,7 @@
     <head>
 		<?php
 			//get user ID
-			// session_start();
+			session_start();
 			// if(isset($_SESSION['userID']))
 			// 	$userID = $_SESSION['userID'];
 			// else
@@ -14,6 +14,7 @@
 			$testID = 2; //remove after admin pages are linked up
 			//get user image directory
 			$imageDirectory = "C:\xampp\htdocs\images";
+			
 		?>
         <title>Child'sPlay</title>
         <meta name = "viewport" content = "width = device-width, initial-scale = 1">
@@ -51,9 +52,32 @@
 					}
 				})
 			})	
+			
+			function loadContent(){
+				var selected = $("#style option:selected").val();
+				$.post("selectOption.php", {option_value: selected},
+					function(data){
+						var input = document.getElementById("file");
+						var button = document.getElementById("upload");
+						if(data == "3"){
+							input.setAttribute("name", "files[]");
+							input.setAttribute("multiple", "multiple");
+							button.setAttribute("name", "multiSubmit");
+						}
+						else{
+							input.setAttribute("name", "file");
+							input.removeAttribute("multiple");
+							button.setAttribute("name", "btnSubmit");
+						}
+					}
+				);
+			}
 		</script>
 	</head>
     <body>
+	<?php
+	(isset($_POST["activityStyle"])) ? $activityStyle = $_POST["activityStyle"] : $activityStyle = 1;
+	?>
         <!--header-->
         <div class="row">
             <div class="navbar-fixed">
@@ -76,7 +100,7 @@
         <!-- body content -->
         <div id="body" class="container">
 			<!--start form-->
-            <form action="createTest.php" method="post">
+            <form action="" method="post" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col s6">
                     <h5 class="blue-text darken-2 header">
@@ -97,7 +121,7 @@
                 </div>
 				<div class="row">
 					<div class="input-field col s6">
-						<select id="activityStyle" name="activityStyle">
+						<select id="activityStyle" name="activityStyle" id="style" onchange="loadContent()">
 							<option value="Identify Body Part" selected>Identify Body Part</option>
 							<option value="Likert Scale">Likert Scale</option>
 							<option value="Character Ranking">Character Ranking</option>
@@ -107,7 +131,6 @@
                     <div class="input-field col s6">
                         <input id="activity" name="activity" value="Press the character's [body part]" id="Activity" type="text">
                     </div>
-
 				</div>
 
 				<h5 class="blue-text darken-2 header">
@@ -120,22 +143,30 @@
 					<div class="col s12">
 						<!--start upload button + path display-->
 						<div class="file-field input-field">
-							<div class="waves-effect waves-light btn blue darken-4">
-								<span>Upload</span>
-								<input type="file">
+							<div id="imgUpload" class="waves-effect waves-light btn blue darken-4">
+							<span>Choose</span>
+							<input id="file" type="file" name="file" />
 							</div>
 							<div class="file-path-wrapper">
-								<input name="imageFileName" class="file-path" type="text" webkitdirectory directory multiple>
+								<input class="file-path validate" type="text" webkitdirectory directory multiple/>
 							</div>
 						</div>
 						<!--end upload button + path-->
 					</div>
 				</div>
-            	<img id="OriginalImage" class="image" style="width:15%;">
+				<div class="row">
+					<div class="col s12">
+						<button id="upload" type="submit" class="submit waves-effect waves-light btn blue darken-4" style="height:45px" name="btnSubmit">Upload</button>
+					</div>
+				</div>
+<?php 
+include 'createTest.php';
+?>
+				<br/>
 				<div class="row">
 					<div class="col s12">
 						<p align="right">
-							<button type="submit" class="submit waves-effect waves-light btn blue darken-2">Create Task</button>
+							<button name="createTask" type="submit" class="submit waves-effect waves-light btn blue darken-2">Create Task</button>
 							<a class="waves-effect waves-light btn blue darken-4">Cancel</a>
 						</p>
 					</div>

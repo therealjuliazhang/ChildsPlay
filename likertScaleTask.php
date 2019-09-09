@@ -32,7 +32,7 @@
 	include 'db_connection.php';
 	$conn = OpenCon();
 	//fetch images
-	$sql = "SELECT * FROM IMAGE WHERE TASKID = '$taskID'";
+	$sql = "SELECT I.imageID, I.address, IA.taskID FROM IMAGE I JOIN IMAGEASSIGNMENT IA ON I.imageID = IA.imageID WHERE taskID = '$taskID'";
 	$result = $conn->query($sql);
 	$images = array();
 	while($row = mysqli_fetch_assoc($result))
@@ -145,9 +145,12 @@
 	<script>
 		//check whether it is in preview mode
 		var isPreview = <?php echo(json_encode($isPreview)); ?>;
-		var from; //if preview check if from edit page or available test page ect.
+		console.log("Is preview " + isPreview);
+		/*var from; //if preview check if from edit page or available test page ect.
 		if(isPreview)
 			from = <?php echo(json_encode($from)); ?>; // checks from which page preview was opened
+		console.log("From: " + fromTest);
+		*/
 		var taskIndex = <?php echo(json_encode($taskIndex)); ?>;
 		var tasks = <?php echo(json_encode($tasks)); ?>;
 		var taskID = <?php echo(json_encode($taskID)); ?>;
@@ -167,9 +170,10 @@
 			preschoolerIndex++;
 			if(preschoolerIndex == preschoolers.length){
 				//if task was preview, go back to edit test page
-				if(isPreview)
+				if(isPreview){
 					if(from = "edit")
 						window.location.href = "EditTest.php";
+				}
 				else{
 					var taskIndex = <?php echo $taskIndex ?>;
 					window.location.href = "comments.php?taskIndex=" + taskIndex;
