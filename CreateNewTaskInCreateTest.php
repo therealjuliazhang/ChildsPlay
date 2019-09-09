@@ -105,7 +105,7 @@
 						</select>
 					</div>
                     <div class="input-field col s6">
-                        <input id="activity" name="activity" value="Press the character's [body part]" id="Activity" type="text">
+                        <input id="instruction" name="activity" value="Press the character's [body part]" id="Activity" type="text">
                     </div>
 				</div>
 

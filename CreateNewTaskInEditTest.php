@@ -31,7 +31,7 @@ $testID=1; //NEED TO REMOVE LATER
 	function createNewTask(){
 		var imageAddress = $("#imageAddress").val();
 		var instruction = $("#instruction").val();
-		var selected = $("#taskType option:selected").val();
+		var selected = $("#activityStyle option:selected").val();
 		var activity = $("#taskTitle").val();
 		var testID = <?php echo json_encode($testID);?>;
 		var from = <?php echo json_encode($from);?>;
@@ -99,7 +99,7 @@ $testID=1; //NEED TO REMOVE LATER
 						<input id="taskTitle" type="text">
 					</div>
                     <div class="input-field col s6">
-                        <select name="activityStyle" id="taskType" onchange="loadContent()">
+                        <select name="activityStyle" id="activityStyle" onchange="loadContent()">
                             <option value="Identify Body Part" selected>Identify Body Part</option>
                             <option value="Likert Scale">Likert Scale</option>
                             <option value="Character Ranking">Character Ranking</option>
