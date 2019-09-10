@@ -4,40 +4,45 @@ SET
 @password = "21232f297a57a5a743894a0e4a801fc3",
 @email = "admin@gmail.com",
 @accountType = true,
-@fullName = "admin";
-INSERT INTO USERS(username, password, email, accountType, fullName) VALUES (@username, @password, @email, @accountType, @fullName);
+@fullName = "admin",
+@accepted = 1;
+INSERT INTO USERS(username, password, email, accountType, fullName, accepted) VALUES (@username, @password, @email, @accountType, @fullName, @accepted);
 
 SET
 @username = "holly",
 @password = "holly",
 @email = "holly@gmail.com",
 @accountType = true,
-@fullName = "Holly Tootell";
-INSERT INTO USERS(username, password, email, accountType, fullName) VALUES (@username, @password, @email, @accountType, @fullName);
+@fullName = "Holly Tootell",
+@accepted = 1;
+INSERT INTO USERS(username, password, email, accountType, fullName, accepted) VALUES (@username, @password, @email, @accountType, @fullName, @accepted);
 
 SET
 @username = "james",
 @password = "james",
 @email = "james@gmail.com",
 @accountType = false,
-@fullName = "James Bonds";
-INSERT INTO USERS(username, password, email, accountType, fullName) VALUES (@username, @password, @email, @accountType, @fullName);
+@fullName = "James Bonds",
+@accepted = 1;
+INSERT INTO USERS(username, password, email, accountType, fullName, accepted) VALUES (@username, @password, @email, @accountType, @fullName, @accepted);
 
 SET
 @username = "emma",
 @password = "emma",
 @email = "emma@gmail.com",
 @accountType = false,
-@fullName = "Emma Greens";
-INSERT INTO USERS(username, password, email, accountType, fullName) VALUES (@username, @password, @email, @accountType, @fullName);
+@fullName = "Emma Greens",
+@accepted = 0;
+INSERT INTO USERS(username, password, email, accountType, fullName, accepted) VALUES (@username, @password, @email, @accountType, @fullName, @accepted);
 
 SET
 @username = "jasmine",
 @password = "jasmine",
 @email = "jasmine@gmail.com",
 @accountType = false,
-@fullName = "Jasmine Flores";
-INSERT INTO USERS(username, password, email, accountType, fullName) VALUES (@username, @password, @email, @accountType, @fullName);
+@fullName = "Jasmine Flores",
+@accepted = 0;
+INSERT INTO USERS(username, password, email, accountType, fullName, accepted) VALUES (@username, @password, @email, @accountType, @fullName, @accepted);
 
 /*LOCATION*/
 SET
