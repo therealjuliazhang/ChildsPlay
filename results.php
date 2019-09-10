@@ -85,9 +85,18 @@ include_once 'resultQueries.php';
 			?>
 			</ul>
 
-			<li><h5>Filter Results By</h5></li>
+			<li><h5>Filter Results By:</h5></li>
 			<form action="" method="post">
-			<li>
+
+		<!--Collapsible group tab-->
+		<ul class="collapsible">
+		  <li>
+
+		   	<div class="collapsible-header"><i class="material-icons">group</i><h6>Group</h6></div>
+		    <div class="collapsible-body">
+
+
+
 				<ul class="collapsible">
 					<li>
 						<div class="collapsible-header"><h6>Location</h6></div>
@@ -107,8 +116,8 @@ include_once 'resultQueries.php';
 						</div>
 					</li>
 				</ul>
-			</li>
-			<li>
+
+
 				<ul class="collapsible">
 					<li>
 						<div class="collapsible-header"><h6>Group</h6></div>
@@ -128,9 +137,9 @@ include_once 'resultQueries.php';
 						</div>
 					</li>
 				</ul>
-			</li>
 
-			<li>
+
+
 				<ul class="collapsible">
 					<li>
 						<div class="collapsible-header"><h6>Gender</h6></div>
@@ -150,8 +159,8 @@ include_once 'resultQueries.php';
 						</div>
 					</li>
 				</ul>
-			</li>
-			<li>
+
+
 				<ul class="collapsible">
 					<li>
 						<div class="collapsible-header"><h6>Age</h6></div>
@@ -171,7 +180,8 @@ include_once 'resultQueries.php';
 						</div>
 					</li>
 				</ul>
-			</li>
+
+			<ul class="collapsible">
 			<li>
 				<br/>
 				<div class="center-align">
@@ -179,6 +189,53 @@ include_once 'resultQueries.php';
 				</div>
 			</li>
 			</form>
+			</ul>
+
+			</li>
+		</div>
+
+	</li>
+	</ul>
+	<!--End Collapsible group Tab-->
+
+	<!--Collapsible Individual Tab-->
+	<ul class="collapsible">
+		<li>
+
+
+			<div class="collapsible-header"><i class="material-icons">person</i><h6>Individual</h6></div>
+
+
+				<div class="collapsible-body">
+					<div class="container">
+						<p>
+		      		<label>
+		       			<input type="checkbox" />
+		       			<span>Alex</span>
+		     			</label>
+						</p>
+
+						<p>
+							<label>
+								<input type="checkbox" />
+								<span>Julia</span>
+							</label>
+						</p>
+
+						<br/>
+						<div class="center-align">
+							<button class="btn waves-effect waves-light blue darken-4 sortButton" type="submit" name="action">Filter</button>
+						</div>
+
+					</div>
+				</div>
+
+		</li>
+	</ul>
+
+	<!--End Collapsible Individual Tab-->
+
+
 			<!--end filter result form-->
 		</ul>
         <!--end side bar-->
