@@ -81,6 +81,8 @@ mysqli_close($conn);?>
 	window.onload = function() {
 		canvas = document.getElementById("myCanvas");
 		ctx = canvas.getContext("2d");
+		//change canvas width to match image scale
+		
 		displayCharacter(imageIndex);
 		canvas.addEventListener("mousedown", mouseDown, false);
 		canvas.addEventListener("touchstart", touchDown, false);
@@ -94,6 +96,9 @@ mysqli_close($conn);?>
 		 canY = e.pageY - canvas.offsetTop;
 		opacity = 1;
 		window.requestAnimationFrame(draw);
+		//change coordinates to percentage of image width/height
+			//get width and height of image
+
 		//send results to php file
 		$.ajax({
 				 type: 'POST',
