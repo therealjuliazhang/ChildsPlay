@@ -17,7 +17,7 @@
         <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
 		<script type = "text/javascript" src = "https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
-	<script> 
+	<script>
 		$(document).ready(function() {
 			//inititate select drop down
 			$('select').material_select();
@@ -53,7 +53,7 @@
                     }
                     else if(element.hasClass("materialSelect")){
                         element.after(error);
-                    }   
+                    }
                 }
             })
             //set up rules and messages for errors
@@ -90,7 +90,7 @@
                 }
             });
 		});
-		
+
 		function validate() {
 			var password1 = document.getElementById("password1").value;
 			var password2 = document.getElementById("password2").value;
@@ -122,16 +122,12 @@
             <div class="nav-wrapper">
 				<div class="row">
 					<div class="col s6">
-						<a href="#" class="brand-logo"><img src="images/logo1.png" height="200px"></a>
+						<a href="home.html" class="brand-logo"><img src="images/logo1.png" height="200px"></a>
 					</div>
-				<div class="col s6">	
-				<ul id="nav-mobile" class="right hide-on-med-and-down">
-					<li><a href="childsPlay.html">What is Child's Play?</a></li>
-					<li><a href="SupportandLearning.html">Support and Learning</a></li>
-				</ul>
+				<div class="col s6">
 				</div>
 					<div class="right col s2 offset-s2">
-						<a class="waves-effect waves-light btn blue darken-2 right login" href="login.html">Login</a>
+						<a class="waves-effect waves-light btn blue darken-2 right login" href="login.php">Login</a>
 					</div>
 				</div>
             </div>
@@ -210,7 +206,7 @@
     <style>
 		body{
 			background-image: url("images/loginBackground.jpg");
-			background-position: 0px 64px; 
+			background-position: 0px 64px;
 			background-repeat: no-repeat;
 			background-color: #E1E6E9;
 			background-size:100% 100%;

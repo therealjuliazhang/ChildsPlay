@@ -38,7 +38,7 @@
           <div id="user">
           <i class="medium material-icons" id="mailIcon">account_box</i>
           <span id="userType">Educator</span><br>
-          <a class="waves-effect waves-light btn #2196f3 blue right" id="logoutButton" onclick="logout()">Logout</a>
+          <a href="home.html" class="waves-effect waves-light btn #2196f3 blue right" id="logoutButton" onclick="logout()">Logout</a>
           </div>
 
           </td>

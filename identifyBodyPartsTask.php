@@ -31,7 +31,7 @@ include 'db_connection.php';
 $conn = OpenCon();
 
 //fetch names of preschoolers
-$sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$groupID." AND userID=".$userID; 
+$sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$groupID." AND userID=".$userID;
 $result = $conn->query($sql);
 $preschoolers = array();
 while($row = mysqli_fetch_assoc($result)){
@@ -152,7 +152,7 @@ mysqli_close($conn);?>
 				else{
 					var taskIndex = <?php echo $taskIndex ?>;
 					window.location.href = "comments.php?taskIndex=" + taskIndex;
-				}	
+				}
 			}
 			preschoolerIndex = 0;
 			displayCharacter(imageIndex);
@@ -220,9 +220,6 @@ mysqli_close($conn);?>
             <nav class="nav-extended blue darken-4">
             <div class="nav-wrapper">
                 <a href="#" class="brand-logo left"><img src="images/logo1.png" ></a>
-                <ul id="logoutButton" class="right hide-on-med-and-down logout">
-                    <li><a class="waves-effect waves-light btn blue darken-2 right" onclick="logout()">Profile</a></li>
-                </ul>
             </div>
             </nav>
         </div>
