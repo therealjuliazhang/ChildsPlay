@@ -88,7 +88,7 @@ while($row = mysqli_fetch_assoc($result)){
           activePreschooler = $("li.is-active").children("a").html();
           $("#nameSpan").html(activePreschooler);
         });
-      }); 
+      });
       //save results for preschooler into array
       function save(){
         preIndex = $("li.is-active").index();
@@ -130,7 +130,7 @@ while($row = mysqli_fetch_assoc($result)){
           else{
             var taskIndex = <?php echo $taskIndex ?>;
             window.location.href = "comments.php?taskIndex=" + taskIndex;
-          }	
+          }
         };
         //go to next preschooler
         $("li.is-active").next().addClass('is-active');
@@ -142,6 +142,19 @@ while($row = mysqli_fetch_assoc($result)){
           $(this).prop( "checked", false );
         });
       }
+
+			//hide or unhide comment section when 'other' is clicked
+				$(document).ready(function(){
+					$('#checkBoxOther').click(function(){
+						if($(this).prop("checked") == true){
+							$(".commentSection").removeClass("hide");
+						}
+						else if($(this).prop("checked") == false){
+							$(".commentSection").addClass("hide");
+					}
+			});
+			});
+
     </script>
   </head>
 <body>
@@ -195,12 +208,24 @@ while($row = mysqli_fetch_assoc($result)){
           </div>
           <div class="col s3 operationCol">
             <label>
-            <input type="checkbox" />
+            <input id="checkBoxOther" type="checkbox" />
             <span></span>
             </label>
             </form>
           </div>
-    <!--4th and other row-->
+
+				<!--Comment Section-->
+				<div class="hide commentSection">
+					<div class="col s12" id="commentCol"><h5 class="blue-text darken-2">Comment:</h5></div>
+							<div class="input-field col s11">
+									<textarea id="textarea1" class="materialize-textarea"></textarea>
+							</div>
+					</div>
+				</div>
+
+
+
+
           <div class="col s12"><a onclick="save()" class="waves-effect waves-light btn blue darken-2 right" id="saveButton">Next</a></div>
         </div>
       </div>
@@ -259,7 +284,7 @@ padding-left: 330px;
   height: 70px;
 }
 #commentCol{
-  margin-top: 100px;
+
 }
 
 .panel{

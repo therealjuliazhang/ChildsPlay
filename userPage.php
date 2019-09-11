@@ -24,9 +24,9 @@
         <!-- body content -->
         <div class="container">
 			<ul class="tabs">
-				<li class="tab col s3"><a class="blue-text darken-2" href="#pendingUsers">Pending Users</a></li>
-				<li class="tab col s3"><a class="blue-text darken-2" href="#educators">Educators</a></li>
-        <li class="tab col s3"><a class="blue-text darken-2" href="#admin">Admin</a></li>
+				<li class="tab col s3"><a class="blue-text darken-2" href="#pendingUsers"><h5>Pending Users</h5></a></li>
+				<li class="tab col s3"><a class="blue-text darken-2" href="#educators"><h5>Educators</h5></a></li>
+        <li class="tab col s3"><a class="blue-text darken-2" href="#admin"><h5>Admin</h5></a></li>
 				<div class="indicator blue darken-2" style="z-index:1"></div>
 			</ul>
       <!-- pending users tab-->

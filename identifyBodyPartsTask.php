@@ -31,7 +31,7 @@ include 'db_connection.php';
 $conn = OpenCon();
 
 //fetch names of preschoolers
-$sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$groupID." AND userID=".$userID; 
+$sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$groupID." AND userID=".$userID;
 $result = $conn->query($sql);
 $preschoolers = array();
 while($row = mysqli_fetch_assoc($result)){
@@ -61,7 +61,7 @@ mysqli_close($conn);?>
 	var isPreview = <?php echo(json_encode($isPreview)); ?>;
 	/*var from; //if preview check if from edit page or available test page ect.
 	if(isPreview)
-		from = <?php echo(json_encode($from)); ?>; // checks from which page preview was opened 
+		from = <?php echo(json_encode($from)); ?>; // checks from which page preview was opened
 	*/
 	// var testID = <php echo(json_encode($testID)); ?>;
 	var taskID = <?php echo(json_encode($taskID)); ?>;
@@ -82,7 +82,7 @@ mysqli_close($conn);?>
 		canvas = document.getElementById("myCanvas");
 		ctx = canvas.getContext("2d");
 		//change canvas width to match image scale
-		
+
 		displayCharacter(imageIndex);
 		canvas.addEventListener("mousedown", mouseDown, false);
 		canvas.addEventListener("touchstart", touchDown, false);
@@ -151,7 +151,7 @@ mysqli_close($conn);?>
 				else{
 					var taskIndex = <?php echo $taskIndex ?>;
 					window.location.href = "comments.php?taskIndex=" + taskIndex;
-				}	
+				}
 			}
 			preschoolerIndex = 0;
 			displayCharacter(imageIndex);
@@ -209,9 +209,6 @@ mysqli_close($conn);?>
             <nav class="nav-extended blue darken-4">
             <div class="nav-wrapper">
                 <a href="#" class="brand-logo left"><img src="images/logo1.png" ></a>
-                <ul id="logoutButton" class="right hide-on-med-and-down logout">
-                    <li><a class="waves-effect waves-light btn blue darken-2 right" onclick="logout()">Profile</a></li>
-                </ul>
             </div>
             </nav>
         </div>

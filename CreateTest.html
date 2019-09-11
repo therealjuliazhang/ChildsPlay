@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 <html>
     <head>
         <title>Child'sPlay</title>
@@ -13,36 +15,25 @@
                     <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
                 </head>
     <!--code for jquery-->
-    
+
     <!--the stuff in the head is all the linking things to Materialize-->
     <!--all the linking's been done, so you shouldn't need to download anything from Materialise-->
     <body>
         <!--header-->
-        <div class="row">
-            <div class="navbar-fixed">
-                <nav class="nav-extended blue darken-4">
-                    <div class="nav-wrapper">
-                        <a href="#" class="brand-logo left"><img src="images/logo1.png" ></a>
-                        <ul id="nav-mobile" class="left hide-on-med-and-down">
-                            <li><a href="">Tests</a></li>
-                            <li><a href="">Create</a></li>
-                            <li class="active"><a href="" >Edit</a></li>
-                            <li><a href="">Users</a></li>
-                        </ul>
-                        <ul id="logoutButton" class="right hide-on-med-and-down logout">
-                            <li><a class="waves-effect waves-light btn blue darken-2 right" onclick="">Profile</a></li>
-                        </ul>
-                    </div>
-                </nav>
-            </div>
-        </div>
+        <div id="InsertHeader"></div>
+        <script>
+          //Read header
+          $(function(){
+            $("#InsertHeader").load("header.html");
+          });
+        </script>
         <!--end header-->
         <!-- body content -->
         <div class="container">
-        
+
         <form class="col s12">
-            
-            
+
+
             <h5 class="blue-text darken-2 header">
                 <a class="tooltipped" data-position="left" data-tooltip="Title of Test">
                     <i class="material-icons">help_outline</i>
@@ -65,12 +56,12 @@
                     <input placeholder="Testing the new set of monsters with updated eye colours" id="Activity" type="text">
                         </div>
             </div>            </br>
-        
-        
+
+
         </form>
-        
-        
-        
+
+
+
         <h5 class="blue-text darken-2 header">
             <a class="tooltipped" data-position="left" data-tooltip="List of tasks in test">
                 <i class="material-icons">help_outline</i>
@@ -115,9 +106,9 @@
                     </tr>
                 </tbody>
             </table>
-            
+
             <br/>
-            
+
             <div align="right">
                 <ul id = "dropdown" class = "dropdown-content">
                     <li><a href = "">Existing Tasks</a></li>
@@ -133,15 +124,15 @@
                 <a class="waves-effect waves-light btn blue darken-2">Create Test</a>
                 <a class="waves-effect waves-light btn blue darken-4">Cancel</a>
             </p>
-            
-            
+
+
         </div>
         <!--end body content-->
     </body>
     <script>
-        
+
     </script>
-    
+
     <style>
         #body {
             padding-left: 330px;
@@ -158,7 +149,7 @@
         margin-top: 15px;
         margin-right:15px;
     }
-    
+
     .nav-wrapper > ul {
         margin-left: 220px;
     }
