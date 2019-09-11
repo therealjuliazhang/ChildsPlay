@@ -226,9 +226,9 @@ function displayBodyPartResult(results){
     context.fillStyle = 'red';
     //draw dots
     results.forEach(function(result){
-        console.log(result);
+        console.log(canvas.width * result.x);
         context.beginPath();
-        context.arc(result.x, result.y, 5, 0, 2 * Math.PI);
+        context.arc(canvas.width * result.x, canvas.height * result.y, 5, 0, 2 * Math.PI);
         context.stroke();
         context.fill();
     })

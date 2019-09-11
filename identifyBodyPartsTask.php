@@ -61,7 +61,7 @@ mysqli_close($conn);?>
 	var isPreview = <?php echo(json_encode($isPreview)); ?>;
 	/*var from; //if preview check if from edit page or available test page ect.
 	if(isPreview)
-		from = <?php echo(json_encode($from)); ?>; // checks from which page preview was opened 
+		from = <php echo(json_encode($from)); ?>; // checks from which page preview was opened 
 	*/
 	// var testID = <php echo(json_encode($testID)); ?>;
 	var taskID = <?php echo(json_encode($taskID)); ?>;
@@ -81,8 +81,6 @@ mysqli_close($conn);?>
 	window.onload = function() {
 		canvas = document.getElementById("myCanvas");
 		ctx = canvas.getContext("2d");
-		//change canvas width to match image scale
-		
 		displayCharacter(imageIndex);
 		canvas.addEventListener("mousedown", mouseDown, false);
 		canvas.addEventListener("touchstart", touchDown, false);
@@ -97,13 +95,13 @@ mysqli_close($conn);?>
 		opacity = 1;
 		window.requestAnimationFrame(draw);
 		//change coordinates to percentage of image width/height
-			//get width and height of image
-
+		var x = canX/canvas.width;
+		var y = canY/canvas.height;
 		//send results to php file
 		$.ajax({
 				 type: 'POST',
 				 url: 'http://localhost/getCoordinates.php',
-				 data: { x : canX, y : canY , taskID : taskID, preID : preschoolers[preschoolerIndex]['preID']}
+				 data: { x : x, y : y , taskID : taskID, preID : preschoolers[preschoolerIndex]['preID']}
 		});
 	}
 	function touchDown(e) {
@@ -114,11 +112,14 @@ mysqli_close($conn);?>
 		canY = e.targetTouches[0].pageY - canvas.offsetTop;
 		opacity = 1;
 		window.requestAnimationFrame(draw);
+		//change coordinates to percentage of image width/height
+		var x = canX/canvas.width;
+		var y = canY/canvas.height;
 		//send results to php file
 		$.ajax({
 				 type: 'POST',
 				 url: 'http://localhost/getCoordinates.php',
-				 data: { x : canX, y : canY , taskID : taskID, preID : preschoolers[preschoolerIndex]['preID']}
+				 data: { x : x, y : y , taskID : taskID, preID : preschoolers[preschoolerIndex]['preID']}
 		});
 	}
 	//draws circle
@@ -160,10 +161,20 @@ mysqli_close($conn);?>
 		document.getElementById("participant").className = 'row ' + colours[preschoolerIndex % colours.length];
 	}
 	function displayCharacter(imageIndex){
-		document.getElementById("myCanvas").style.background = "url(" + images[imageIndex]['address'] + ")";
-		document.getElementById("myCanvas").style.backgroundRepeat = 'no-repeat';
-		document.getElementById("myCanvas").style.backgroundSize = 'contain';
-		document.getElementById("myCanvas").style.backgroundPosition = 'center top';
+		var img = new Image();
+		img.src = images[imageIndex]['address'];
+		var canvas = document.getElementById("myCanvas");
+		context = canvas.getContext('2d');
+		img.onload = function() {
+			//get ratio of width to height of image
+			var ratio = img.width/img.height;
+			//set height of canvas so that canvas is to scale
+			canvas.width = canvas.height * ratio;
+		}
+		canvas.style.background = "url(" + images[imageIndex]['address'] + ")";
+		canvas.style.backgroundRepeat = 'no-repeat';
+		canvas.style.backgroundSize = 'contain';
+		canvas.style.backgroundPosition = 'center top';
 	}
 	</script>
 	<!--link for font awesome icons-->
@@ -219,7 +230,7 @@ mysqli_close($conn);?>
     <!--end header-->
 	<img id="button" src="images/greyCircle.png" alt= "image not workning" width="7%" onclick="goNext();"></img>
 
-	<canvas id="myCanvas" width="800" height="400">
+	<canvas id="myCanvas"  height="400">
 		Your browser does not support the HTML5 canvas tag.
 	</canvas>
 

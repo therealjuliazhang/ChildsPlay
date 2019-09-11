@@ -464,24 +464,24 @@ SET
 INSERT INTO RESULTS(mechanic, taskID, preID, testID) VALUES (@mechanic, @taskID, @preID, @testID);
 
 SET
-@x = 410.00,
-@y = 155.00,
+@x = 0.4119402985074626700000,
+@y = 0.2750000000000000000000,
 @taskID = 2,
 @preID = 1,
 @testID = 1;
 INSERT INTO RESULTS(x, y, taskID, preID, testID) VALUES (@x, @y, @taskID, @preID, @testID);
 
 SET
-@x = 375.00,
-@y = 107.00,
+@x = 0.6149253731343284000000,
+@y = 0.2750000000000000000000,
 @taskID = 2,
 @preID = 2,
 @testID = 1;
 INSERT INTO RESULTS(x, y, taskID, preID, testID) VALUES (@x, @y, @taskID, @preID, @testID);
 
 SET
-@x = 440.00,
-@y = 125.00,
+@x = 0.5044776119402985000000,
+@y = 0.5350000000000000000000,
 @taskID = 2,
 @preID = 3,
 @testID = 1;
