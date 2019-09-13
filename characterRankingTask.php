@@ -137,7 +137,7 @@ mysqli_close($conn);
 						 data: { imageID : this.getAttribute("imageID"), score : this.getAttribute("points"), taskID : taskID, preID : preschoolers[preschoolerNumber]['preID']}
 				});
 			};
-			document.getElementById("container").appendChild(div);
+			document.getElementById("characters").appendChild(div);
 		}
 	}
 	</script>
@@ -166,14 +166,15 @@ mysqli_close($conn);
 			left:0px
 		}
 		#container{
-			position: relative;
-			height: 100%;
-			width: 93%;
+			text-align:center;
+			width:100%;
+			height: 80pt;
 		}
 		.character {
-			position: absolute;
-			top: 150px;
-			transition: top 4000ms;
+			margin:1px;
+			width:18%;
+			text-align:left;
+			display:inline-block;  
 		}
 		.character.chosen {
 			display: none;
@@ -181,6 +182,12 @@ mysqli_close($conn);
 		.center-align{
 			margin-top: 13px;
 			font-size: 50px;
+		}
+		#characters{
+			text-align:center;
+			width:100%;
+			height: 80pt;
+			padding-top:125px;
 		}
 	</style>
 </head>
@@ -201,7 +208,7 @@ mysqli_close($conn);
     </div>
     <!--end header-->
 	<img id="button" src="images/greyCircle.png" alt= "image not workning" width="7%" onclick="goNext();"></img>
-	<div id="container"></div>
+	<div id="container"><div id ="characters">      </div></div>
 	<div id="participant" class="row" style="font-size:18px;font-weight:bold">
 		<div class="center-align">
 			<span id="preschoolerName">
