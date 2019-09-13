@@ -12,8 +12,8 @@ function displayBody(bodyResults){
 }
 //display results for character ranking
 function displayRanking(rankingResults){
-	if(rankingResults.length == 0) {isRankingEmpty = true; console.log("True check");}
-	else {isRankingEmpty = false;console.log("False check");}
+	if(rankingResults.length == 0) {isRankingEmpty = true;}
+	else {isRankingEmpty = false;}
     taskIDs = getUniqueIDs(rankingResults);
     displayResults(rankingResults, taskIDs, "Character Ranking", );
 }
@@ -198,21 +198,50 @@ function createTableRows(results){
 }
 
 function displayBodyPartResult(results){
+    //get scale of image
+
     //make canvas 
     $('<canvas/>', {
         //800 * 0.35
-        width: "400px",
+        width: "15%",
         //400 * 0.35
-        height: "200px",
-        text: "CanvasNotSupported"
+        // height: "297px",
+        text: "CanvasNotSupported",
+        stlye: "border:1px solid #d3d3d3;"
     }).appendTo('#results');
-    var ctx = $("canvas").last()[0].getContext('2d');
-    //draw image
+    //set image onto canvas
     var img = new Image();
-      img.src = results[0].address;
-      img.onload =function() {
-        scaleToFill(this, ctx);
-      };
+    img.src = results[0].address;
+    var canvas = $("canvas").last()[0];
+    context = canvas.getContext('2d');
+    img.onload = function() {
+        //get ratio of width to height of image
+        var ratio = img.height/img.width;
+        //set height of canvas so that canvas is to scale
+        canvas.height = canvas.width * ratio;
+        //draw image on canvas
+        context.drawImage(img, 0,0, canvas.width, canvas.height);
+    }
+    //set color of dots
+    context.fillStyle = 'red';
+    //draw dots
+    results.forEach(function(result){
+        console.log(canvas.width * result.x);
+        context.beginPath();
+        context.arc(canvas.width * result.x, canvas.height * result.y, 5, 0, 2 * Math.PI);
+        context.stroke();
+        context.fill();
+    })
+    // ctx.fillStyle = 'red';
+    // ctx.beginPath();
+    // ctx.arc(100, 75, 5, 0, 2 * Math.PI);
+    // ctx.stroke();
+    // ctx.fill();
+
+    // ctx.drawImage(img, 0, 0, img.width, img.height);
+    // img.onload =function() {
+    //     scaleToFill(this, ctx);
+    // };
    // ctx.drawImage(img,0,0);
     //draw point
     
@@ -222,39 +251,39 @@ function displayBodyPartResult(results){
     //ctx.arc(100,100, 1, 3, 2 * Math.PI, true);
     //ctx.arc(90,120, 1, 3, 2 * Math.PI, true);
     
-    console.log(results[0].address);
-    console.log(results[0].y / 15);
-    ctx.fill();
-    results.forEach(function(result){
-        //ctx.restore();
-        var xCoord = result.x * 0.5;
-        var yCoord = result.y * 0.5;
-        ctx.beginPath();
-        ctx.arc(xCoord, yCoord, 3, 0, Math.PI*2, true);
-        ctx.closePath();
-        ctx.fill();  
-        console.log(xCoord);
-        console.log(yCoord);
-    }); 
+    // console.log(results[0].address);
+    // console.log(results[0].y / 15);
+    // ctx.fill();
+    // results.forEach(function(result){
+    //     //ctx.restore();
+    //     var xCoord = result.x * 0.5;
+    //     var yCoord = result.y * 0.5;
+    //     ctx.beginPath();
+    //     ctx.arc(xCoord, yCoord, 3, 0, Math.PI*2, true);
+    //     ctx.closePath();
+    //     ctx.fill();  
+    //     // console.log(xCoord);
+    //     // console.log(yCoord);
+    // }); 
     
 }
 
-function scaleToFill(img, ctx){
+// function scaleToFill(img, ctx){
 
    
-    // get the scale
-    var scale = Math.min($("canvas").last()[0].width / img.width, $("canvas").last()[0].height / img.height);
-    // get the top left position of the image
-    var x = ($("canvas").last()[0].width / 2) - (img.width / 2) * scale;
-    var y = ($("canvas").last()[0].height / 2) - (img.height / 2) * scale;
+//     // get the scale
+//     var scale = Math.min($("canvas").last()[0].width / img.width, $("canvas").last()[0].height / img.height);
+//     // get the top left position of the image
+//     var x = ($("canvas").last()[0].width / 2) - (img.width / 2) * scale;
+//     var y = ($("canvas").last()[0].height / 2) - (img.height / 2) * scale;
 
-    ctx.imageSmoothingEnabled = false; 
-    ctx.webkitImageSmoothingEnabled = false;
-    ctx.mozImageSmoothingEnabled = false;
+//     ctx.imageSmoothingEnabled = false; 
+//     ctx.webkitImageSmoothingEnabled = false;
+//     ctx.mozImageSmoothingEnabled = false;
 
-    ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
+//     ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
     
-}
+// }
 
 
 //display the comments for the task
