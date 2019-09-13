@@ -1,8 +1,6 @@
-<html>
-    <head>
-		<?php
-			//get user ID
+<?php
 			session_start();
+			//get user ID
 			// if(isset($_SESSION['userID']))
 			// 	$userID = $_SESSION['userID'];
 			// else
@@ -14,8 +12,12 @@
 			$testID = 2; //remove after admin pages are linked up
 			//get user image directory
 			$imageDirectory = "C:\xampp\htdocs\images";
-		$from = "create";	
-		?>
+		$from = "create";
+		$taskId = -1;
+		
+?>
+<html>
+    <head>
         <title>Child'sPlay</title>
         <meta name = "viewport" content = "width = device-width, initial-scale = 1">
 		<link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -28,25 +30,42 @@
 		function createNewTask(){
 			var imageAddress = $("#imageAddress").val();
 			var instruction = $("#instruction").val();
-			var selected = $("#activityStyle option:selected").val();
-			var activity = $("#activity").val();
+			var activityStyle = $("#activityStyle option:selected").val();
 			var testID = <?php echo json_encode($testID);?>;
 			var from = <?php echo json_encode($from);?>;
-
-			$.post("createTask.php", 
-				{	imageAddress: imageAddress,
-					instruction: instruction,
-					activityStyle: selected,
-					activity: activity,
-					testID: testID
-				},
-				function(data){
-					$("#results").html(data);
-				}
-			);
-			//redirect back to page
-			if(from == "edit")
-				window.location = "EditTest.php?testID=" + testID;
+			var div = document.getElementById("results");
+			let taskID = 1;
+			var errors = "";
+			
+			if(imageAddress == ""){
+				div.style.color = "red";
+				div.style.fontStyle = "italic";
+				div.innerHTML = "Please select image(s) to upload!";
+			}
+			else{
+				$.post("createTask.php", 
+					{	imageAddress: imageAddress,
+						instruction: instruction,
+						activityStyle: activityStyle,
+						testID: testID
+					},
+					function(data){
+						if(data.includes("span")){
+							//errors = data;
+							$("#results").html(data);
+						}
+						else{
+							taskID = data;
+							$("#results").html(data);
+							//redirect back to page
+							if(from == "edit")
+								window.location = "EditTest.php?testID=" + testID;
+							else if(from == "create")
+								window.location = "CreateTest.php?taskID=" + taskID;
+						}	
+					}
+				);
+			}
 		}
 		</script>
 	</head>
@@ -91,7 +110,7 @@
                             <a class="tooltipped" data-position="left" data-tooltip="Activity for Task">
                                 <i class="material-icons">help_outline</i>
                             </a>
-                            Activity
+                            Instruction
                         </h5>
                     </div>
                 </div>
@@ -105,7 +124,7 @@
 						</select>
 					</div>
                     <div class="input-field col s6">
-                        <input id="instruction" name="activity" value="Press the character's [body part]" id="Activity" type="text">
+                        <input id="instruction" name="instruction" value="Press the character's [body part]" type="text">
                     </div>
 				</div>
 
@@ -138,11 +157,13 @@
 					<div class="col s12">
 						<p align="right">
 							<button name="createTaskBtn" id="submitBtn" class="submit waves-effect waves-light btn blue darken-2" onclick="createNewTask();">Create Task</button>
-							<a class="waves-effect waves-light btn blue darken-4">Cancel</a>
+							<a class="waves-effect waves-light btn blue darken-4" href="CreateTest.php">Cancel</a>
 						</p>
 					</div>
 				</div>
-				<div id="results"></div>
+				<div class="row">
+					<div id="results"></div>
+				</div>
 			</form>
 			<!--end form-->
 		</div>

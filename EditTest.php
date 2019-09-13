@@ -54,7 +54,7 @@
                 tasks.forEach(function displaytask(task){
                     //get preview link for task
                     var previewURL;
-                    switch(task.taskType){
+                    switch(task.activityStyle){
                         case "Likert Scale":
                             previewURL = "likertScaleTask.php?from=edit&taskID=" + task.taskID;
                             break;
@@ -69,9 +69,9 @@
                             break;
                     }
                     $('<tr/>').append([
-                        $('<td/>', { text: task.title }),
-                        $('<td/>', { text: task.taskType }),
-                        $('<td/>', { text: task.activity }),
+                        $('<td/>', { text: task.taskID }),
+                        $('<td/>', { text: task.activityStyle }),
+                        $('<td/>', { text: task.instruction }),
                         $('<td/>').append(
                             $('<a/>', {
                                 class: "waves-effect waves-light btn blue darken-2",
@@ -83,7 +83,8 @@
                             $('<a/>', {
                                 class: "waves-effect waves-light btn blue darken-4",
                                 text: "Edit",
-                                href: "EditTaskInEditTest.php?testID=" + testID + "&taskID=" + task.taskID
+                                //href: "EditTaskInEditTest.php?testID=" + testID + "&taskID=" + task.taskID
+								href: "CreateNewTaskInEditTest.php?testID=" + testID + "&taskID=" + task.taskID
                             })
                         ),
                         $('<td/>').append(
@@ -115,9 +116,9 @@
             <table class="striped">
                 <thead>
                     <tr class="blueText">
-                        <td>Title&nbsp;&nbsp;</td>
-                        <td>Task Type</td>
-                        <td>Activity</td>
+                        <td>TaskID&nbsp;&nbsp;</td>
+                        <td width="20%">Activity Style</td>
+                        <td>Instruction</td>
                         <td>Preview</td>
                         <td>Edit</td>
                         <td>Remove</td>

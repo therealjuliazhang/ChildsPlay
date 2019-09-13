@@ -47,8 +47,8 @@
             <td>jenny75@gmail.com</td>
             <td>Mulberry hill preschool</td>
             <td>Educator</td>
-            <td><a class="waves-effect waves-light btn acceptButton">Accept</a></td>
-            <td><a class="waves-effect waves-light btn #ff5252 red accent-2 declineButton">Decline</a></td>
+            <td><a href="#?accepted=1" class="waves-effect waves-light btn acceptButton">Accept</a></td>
+            <td><a href="#?accepted=-1" class="waves-effect waves-light btn #ff5252 red accent-2 declineButton">Decline</a></td>
           </tr>
           <tr>
             <td>Kerry Price</td>

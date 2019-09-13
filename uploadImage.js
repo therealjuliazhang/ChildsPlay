@@ -9,25 +9,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });	
 
 $(document).ready(function() {
-	//set default activity instruction
-	$("#instruction").change(function(){
-		var activityStyle = $("#activityStyle").val();
-		switch(activityStyle){
-			case "Likert Scale":
-				$("#instruction").val("Press the happy face if you like it, press the sad face if you don't like it.");
-				break;
-			case "Character Ranking":
-				$("#instruction").val("Press your favourite character and then your next favourite until they are all pressed.");
-				break;
-			case "Identify Body Part":
-				$("#instruction").val("Press the monster's [enter body part]");
-				break;
-			case "Preferred Mechanics":
-				$("#instruction").val("");
-				break;
-		}
-	})
-				
 	loadContent();
 	
 	$(document).on('change', '#file', function(){
@@ -57,7 +38,8 @@ $(document).ready(function() {
 				$('#imageUpload').html('<label>Loading...</label>');
 			},
 			success: function(data){
-				$('#imageUpload').html(data);					
+				$('#imageUpload').html(data);
+				$('#results').html("");
 			}
 		})
 	})
