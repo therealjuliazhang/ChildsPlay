@@ -33,7 +33,6 @@ if(isset($_POST["createTest"])){
 		if($errorFlag == false){
 			session_destroy();
 			unset($_SESSION["list"]);
-			//echo $testID;
 			header("Location: CreateTest.php");
 		}
 	}

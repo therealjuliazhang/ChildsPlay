@@ -2,6 +2,7 @@
 /*
 author: Phuong Linh Bui (5624095)
 */
+//session_start();
 include 'db_connection.php';
 $conn = OpenCon();
 
@@ -73,5 +74,6 @@ if ($conn->query($sql) === TRUE){
 else
 	$errorMsg .= "<span style='color:red'>Error: ".$sql."<br/>".mysqli_error($conn)."</span>";
 echo $errorMsg;
+
 CloseCon($conn);
 ?>

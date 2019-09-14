@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });	
 
 $(document).ready(function() {
-	loadContent();
+	//loadContent();
 	
 	$(document).on('change', '#file', function(){
 		var path = $("#imageAddress").val();
@@ -49,16 +49,16 @@ function loadContent(){
 	var selected = $("#activityStyle option:selected").val();
 	switch(selected){
 		case "Likert Scale":
-			$("#instruction").val("Press the happy face if you like it, press the sad face if you don't like it.");
+				$("#instruction").val("Press the happy face if you like it, press the sad face if you don't like it.");
 			break;
 		case "Character Ranking":
-			$("#instruction").val("Press your favourite character and then your next favourite until they are all pressed.");
+				$("#instruction").val("Press your favourite character and then your next favourite until they are all pressed.");
 			break;
 		case "Identify Body Part":
-			$("#instruction").val("Press the monster's [enter body part]");
+				$("#instruction").val("Press the monster's [enter body part]");
 			break;
-		case "Preferred Mechanics":
-			$("#instruction").val("");
+		case "Preferred Mechanic":
+				$("#instruction").val("");
 			break;
 	}
 	$.post("selectOption.php", {option_value: selected},

@@ -1,20 +1,36 @@
 <?php
-			session_start();
+	session_start();
+	include 'db_connection.php';
+	$conn = OpenCon();
 			//get user ID
 			// if(isset($_SESSION['userID']))
 			// 	$userID = $_SESSION['userID'];
 			// else
 			// 	header('login.php');
-			$userID = 1; //remove after admin pages are linked up
+	$userID = 1; //remove after admin pages are linked up
 			//get test ID
 			// if(isset($_GET['testID']))
 			// 	$testID = $_GET['testID'];
-			$testID = 2; //remove after admin pages are linked up
+	$testID = 2; //remove after admin pages are linked up
 			//get user image directory
 			$imageDirectory = "C:\xampp\htdocs\images";
-		$from = "create";
-		$taskId = -1;
-		
+	$from = "create";
+	
+	//$exist = false;
+	if(isset($_GET["taskID"])){
+		$taskID = $_GET["taskID"];
+		$query = "SELECT instruction, activityStyle, address FROM TASK T JOIN IMAGEASSIGNMENT IA ON T.taskID = IA.taskID".
+				" JOIN IMAGE I ON IA.imageID = I.imageID WHERE T.taskID = $taskID";
+		$result = $conn->query($query);
+		while($row = mysqli_fetch_assoc($result)){
+			$instruction = $row["instruction"];
+			$activityStyle = $row["activityStyle"];
+			$imageAddress = $row["address"];
+			//$exist = true;
+		}
+	}
+	if(isset($_GET["exist"]))
+		$exist = $_GET["exist"];
 ?>
 <html>
     <head>
@@ -27,6 +43,18 @@
 		<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 		<script src="uploadImage.js"></script>
 		<script>
+		//go back to the previous page when Cancel button is clicked
+		function goBack(){
+			var from = <?php echo json_encode($from);?>;
+			var exist = <?php echo json_encode($exist);?>;
+			if(exist)
+				window.location = "filterExistingQuestions.php";
+			else if(from == "create")
+				window.location = "createTest.php";
+			else
+				window.location = "editTest.php";
+		}
+		
 		function createNewTask(){
 			var imageAddress = $("#imageAddress").val();
 			var instruction = $("#instruction").val();
@@ -34,8 +62,7 @@
 			var testID = <?php echo json_encode($testID);?>;
 			var from = <?php echo json_encode($from);?>;
 			var div = document.getElementById("results");
-			let taskID = 1;
-			var errors = "";
+			var exist = <?php echo json_encode($exist);?>;
 			
 			if(imageAddress == ""){
 				div.style.color = "red";
@@ -59,9 +86,11 @@
 							$("#results").html(data);
 							//redirect back to page
 							if(from == "edit")
-								window.location = "EditTest.php?testID=" + testID;
+								window.location = "editTest.php?testID=" + testID;
 							else if(from == "create")
-								window.location = "CreateTest.php?taskID=" + taskID;
+								window.location = "createTest.php?taskID=" + taskID;
+							if(exist == true)
+								window.location = "filterExistingQuestions.php";
 						}	
 					}
 				);
@@ -71,7 +100,7 @@
 	</head>
     <body>
 	<?php
-	(isset($_POST["activityStyle"])) ? $activityStyle = $_POST["activityStyle"] : $activityStyle = 1;
+	//(isset($_POST["activityStyle"])) ? $activityStyle = $_POST["activityStyle"] : $activityStyle = 1;
 	?>
         <!--header-->
         <div class="row">
@@ -117,14 +146,15 @@
 				<div class="row">
 					<div class="input-field col s6">
 						<select name="activityStyle" id="activityStyle" onchange="loadContent()">
-							<option value="Identify Body Part">Identify Body Part</option>
-							<option value="Likert Scale">Likert Scale</option>
-							<option value="Character Ranking">Character Ranking</option>
-							<option value="Preferred Mechanics">Preferred Mechanics</option>
+						<?php echo "Style: ".$activityStyle;?>
+							<option <?php if(isset($activityStyle)) if($activityStyle == "Identify Body Part") echo "selected";?> value="Identify Body Part">Identify Body Part</option>
+							<option <?php if(isset($activityStyle)) if($activityStyle == "Likert Scale") echo "selected";?> value="Likert Scale">Likert Scale</option>
+							<option <?php if(isset($activityStyle)) if($activityStyle == "Character Ranking") echo "selected";?> value="Character Ranking">Character Ranking</option>
+							<option <?php if(isset($activityStyle)) if($activityStyle == "Preferred Mechanic") echo "selected";?> value="Preferred Mechanic">Preferred Mechanics</option>
 						</select>
 					</div>
                     <div class="input-field col s6">
-                        <input id="instruction" name="instruction" value="Press the character's [body part]" type="text">
+                        <input id="instruction" name="instruction" value="<?php echo isset($instruction) ? $instruction:""; ?>" type="text">
                     </div>
 				</div>
 
@@ -144,7 +174,12 @@
 							<input id="file" type="file" name="file" />
 							</div>
 							<div class="file-path-wrapper">
-								<input class="file-path validate" type="text" name="imageFileName" id="imageAddress" webkitdirectory directory multiple/>
+								<input class="file-path validate" type="text" name="imageFileName" id="imageAddress" 
+								value="<?php if(isset($imageAddress)){ 
+												$image = explode("/",$imageAddress); 
+												echo $image[1];
+											}	
+								?>" webkitdirectory directory multiple/>
 							</div>
 						</div>
 						</form>
@@ -157,9 +192,10 @@
 					<div class="col s12">
 						<p align="right">
 							<button name="createTaskBtn" id="submitBtn" class="submit waves-effect waves-light btn blue darken-2" onclick="createNewTask();">Create Task</button>
-							<a class="waves-effect waves-light btn blue darken-4" href="CreateTest.php">Cancel</a>
+							<button class="waves-effect waves-light btn blue darken-4" type="submit" onclick="goBack();">Cancel</button>
 						</p>
 					</div>
+					
 				</div>
 				<div class="row">
 					<div id="results"></div>

@@ -54,7 +54,7 @@ $testID=1; //NEED TO REMOVE LATER
 			);
 			//redirect back to page
 			if(from == "edit")
-				window.location = "EditTest.php?testID=" + testID;
+				window.location = "editTest.php?testID=" + testID;
 		}
 	}
 	</script>
@@ -144,7 +144,7 @@ $testID=1; //NEED TO REMOVE LATER
 					<div class="col s12">
 						<p align="right">
 							<button name="createTaskBtn" id="submitBtn" class="waves-effect waves-light btn blue darken-2" onclick="createNewTask();">Create Task</button>
-							<a class="waves-effect waves-light btn blue darken-4" href="EditTest.php">Cancel</a>
+							<a class="waves-effect waves-light btn blue darken-4" href="editTest.php">Cancel</a>
 						</p>
 					</div>
 				</div>

@@ -88,11 +88,9 @@ session_start();
             <table class="striped" id="taskTable">
                 <thead>
                     <tr class="blueText">
-                        <td>Name&nbsp;&nbsp;</td>
+                        <td>TaskID&nbsp;&nbsp;</td>
 						<td>Activity Style</td>
                         <td>Instruction</td>
-                        <!--<td>Created</td>
-                        <td>Last Edit</td>--->
                         <td>Preview</td>
                         <td>Edit</td>
                     </tr>
@@ -121,18 +119,19 @@ session_start();
 						}
 						$idList = explode(",", $_SESSION["list"]);
 					}
+					//display the newly created task(s) into the list of tasks
+					foreach($idList as $id){
+						$query = "SELECT * FROM TASK WHERE taskID=$id";
+						$result = $conn->query($query);
+						$row = mysqli_fetch_assoc($result);
+							echo "<tr><td>".$row["taskID"]."</td>".
+								"<td>".$row["activityStyle"]."</td>".
+								"<td>".$row["instruction"]."</td>".
+								"<td><a class='waves-effect waves-light btn blue darken-2'>Preview</a></td>".
+								"<td><a class='waves-effect waves-light btn blue darken-4'>Edit</a></td></tr>";
+					}
 				}
-				//display the newly created task(s) into the list of tasks
-				foreach($idList as $id){
-					$query = "SELECT * FROM TASK WHERE taskID=$id";
-					$result = $conn->query($query);
-					$row = mysqli_fetch_assoc($result);
-						echo "<tr><td>".$row["taskID"]."</td>".
-							"<td>".$row["activityStyle"]."</td>".
-							"<td>".$row["instruction"]."</td>".
-							"<td><a class='waves-effect waves-light btn blue darken-2'>Preview</a></td>".
-							"<td><a class='waves-effect waves-light btn blue darken-4'>Edit</a></td></tr>";
-				}
+				
 				?>
                 </tbody>
             </table>
@@ -141,7 +140,7 @@ session_start();
             
             <div align="right">
                 <ul id = "dropdown" class = "dropdown-content">
-                    <li><a href="">Existing Tasks</a></li>
+                    <li><a href="filterExistingQuestions.php">Existing Tasks</a></li>
                     <li><a href="CreateNewTaskInCreateTest.php?from=create">Create New Task</a></li>
                 </ul>
                 <a class = "btn dropdown-button blue darken-4" href="" data-activates = "dropdown">
