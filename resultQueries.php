@@ -1,4 +1,7 @@
 <?php
+/*
+	Author: Phuong Linh Bui (5624095)
+*/
 //connect to database
 include 'db_connection.php';
 $conn = OpenCon();
@@ -11,33 +14,33 @@ $mechanicResults = array();
 $filteredPreIDs = array();
 
 //likert result query
-$query1 = "SELECT DISTINCT happy, count(happy) AS likertCount, R.taskID, T.activity, I.imageID, address, comments      
+$query1 = "SELECT DISTINCT happy, count(happy) AS likertCount, R.taskID, T.instruction, I.imageID, address, comments      
 		FROM RESULTS R INNER JOIN IMAGEASSIGNMENT IA ON R.taskID = IA.taskID INNER JOIN IMAGE I ON IA.imageID = I.imageID INNER JOIN TASK T ON R.taskID = T.taskID INNER JOIN TASKASSIGNMENT TA ON TA.taskID = T.taskID
 		WHERE happy IS NOT NULL"; 
 //body parts result query				
-$query2 = "SELECT R.taskID, I.imageID, address, x, y, T.activity, comments   
+$query2 = "SELECT R.taskID, I.imageID, address, x, y, T.instruction, comments   
 		FROM RESULTS R INNER JOIN IMAGEASSIGNMENT IA ON R.taskID = IA.taskID INNER JOIN IMAGE I ON IA.imageID = I.imageID INNER JOIN TASK T ON R.taskID = T.taskID INNER JOIN TASKASSIGNMENT TA ON TA.taskID = T.taskID
 		WHERE x IS NOT NULL";
 //mechanic result query
-$query3 = "SELECT DISTINCT mechanic, count(mechanic) AS mechanicCount, T.activity, R.taskID, I.imageID, address, comments   
+$query3 = "SELECT DISTINCT mechanic, count(DISTINCT mechanic) AS mechanicCount, T.instruction, R.taskID, I.imageID, address, comments   
 		FROM RESULTS R INNER JOIN IMAGEASSIGNMENT IA ON R.taskID = IA.taskID INNER JOIN IMAGE I ON IA.imageID = I.imageID INNER JOIN TASK T ON R.taskID = T.taskID INNER JOIN TASKASSIGNMENT TA ON TA.taskID = T.taskID
 		WHERE mechanic IS NOT NULL";
 //character ranking result query		
-$query4 = "SELECT R.imageID, address, sum(score) AS totalScore, R.taskID, R.preID, T.activity, comments   
+$query4 = "SELECT R.imageID, address, sum(score) AS totalScore, R.taskID, R.preID, T.instruction, comments   
 		FROM RANKING R INNER JOIN IMAGE I ON R.imageID = I.imageID INNER JOIN TASK T ON R.taskID = T.taskID INNER JOIN TASKASSIGNMENT TA ON TA.taskID = T.taskID";		
 
 $testFilter = "";
 //get the selected testID from the list
 if(isset($_SESSION["testID"])){	
 	$testID = $_SESSION["testID"];
-	$testFilter = "testID=".$testID;
+	$testFilter = "R.testID=".$testID;
 	$query1 .= " AND ".$testFilter;
 	$query2 .= " AND ".$testFilter;
 	$query3 .= " AND ".$testFilter;
 	$query4 .= " WHERE ".$testFilter;
 }		
 
-if(isset($_POST["action"])){
+//if(isset($_POST["submitGroup"])){
 	$locationQuery = "SELECT groupID FROM GROUPTEST";
 	$groupList = array();
 	//check if any location option is selected
@@ -144,11 +147,32 @@ if(isset($_POST["action"])){
 		$preList3[] = $row["preID"];
 	}
 	
-	$filteredPreIDs = array_intersect($preList1, $preList2, $preList3);
+	//check if any preschooler's name is selected
+	if(isset($_POST["name"])){
+		$idList = array();
+		$i = 0;
+		$countIDs = count($_POST["name"]);
+		$selected = "";
+		while($i < $countIDs){
+			$selected .= $_POST["name"][$i];
+			array_push($idList, $selected);
+			$i++;
+		}
+		$filteredPreIDs = $idList;
+	}
+	else
+		$filteredPreIDs = array_intersect($preList1, $preList2, $preList3);
+	//foreach ($filteredPreIDs as $id)
+		//echo "Array: ".$id;
 	
 	if(count($filteredPreIDs) > 0){
-		$preIDsForQuery = join("','",$filteredPreIDs);
+		if(count($filteredPreIDs) > 1){
+			$preIDsForQuery = join("','",$filteredPreIDs);
+		}
+		else
+			$preIDsForQuery = $filteredPreIDs[0];
 		$filter = "preID IN ('$preIDsForQuery')";
+		
 		
 		$query1 .= " AND ".$filter;
 		$query2 .= " AND ".$filter;
@@ -158,14 +182,14 @@ if(isset($_POST["action"])){
 		else
 			$query4 .= " WHERE ".$filter;
 	}
-}
+//}
 
 $query1 .= " GROUP BY happy, R.taskID";
 $query3 .= " GROUP BY mechanic, R.taskID";
 $query4 .= " GROUP BY imageID ORDER BY totalScore DESC";
 
 
-if(!(isset($_POST["action"]) && count($filteredPreIDs) == 0)){
+if(!(count($filteredPreIDs) == 0)){
 	// get results for likert scale
 	$result1 = $conn->query($query1);
 	while($row1 = mysqli_fetch_assoc($result1))
@@ -182,8 +206,7 @@ if(!(isset($_POST["action"]) && count($filteredPreIDs) == 0)){
 	$result4 = $conn->query($query4);
 	while($row4 = mysqli_fetch_assoc($result4))
 		array_push($rankingResults, $row4);		
-
-	}
+}
 	//unset($_SESSION["testID"]);
 ?>
 

@@ -307,7 +307,12 @@ SET
 INSERT INTO TASKASSIGNMENT(taskID, testID, comments) VALUES (@taskID, @testID, @comments);
 
 SET
-@taskID = 2,
+@taskID = 4,
+@testID = 2;
+INSERT INTO TASKASSIGNMENT(taskID, testID) VALUES (@taskID, @testID);
+
+SET
+@taskID = 5,
 @testID = 2;
 INSERT INTO TASKASSIGNMENT(taskID, testID) VALUES (@taskID, @testID);
 

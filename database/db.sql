@@ -117,8 +117,8 @@ CREATE TABLE IMAGEASSIGNMENT(
 
 CREATE TABLE RESULTS(
 	mechanic				VARCHAR(20)		NULL,
-	x						DECIMAL(23,22)	NULL,
-	y						DECIMAL(23,22)	NULL,
+	x						DECIMAL(10,5)	NULL,
+	y						DECIMAL(10,5)	NULL,
 	happy					BOOLEAN			NULL,
 	/*dateCollected			DATE			NOT NULL,*/
 	testID					INTEGER			NOT NULL,

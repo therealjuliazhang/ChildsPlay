@@ -39,47 +39,47 @@ function getUniqueIDs(results){
     return taskIDs;
 }
 //display results for one task
-function displayResults(results, taskIDs, taskType){
+function displayResults(results, taskIDs, activityStyle){
     taskIDs.forEach(function(taskID){
         //get only the results for this task ID
         var taskResults = results.filter(function(result){
             return result['taskID'] == taskID;
         });
         //displays headers for each task results
-        displayHeaders(taskID, taskResults, taskType);
+        displayHeaders(taskID, taskResults, activityStyle);
         //displays graph results if likert or mechanics task
-        displayGraph(taskResults, taskType);
+        displayGraph(taskResults, activityStyle);
         //display ranking table if character ranking task
-        if(taskType == "Character Ranking")
+        if(activityStyle == "Character Ranking")
             displayRankingTable(taskResults);
         //display image results for body parts 
-        if(taskType == "Identify Body Parts")
+        if(activityStyle == "Identify Body Parts")
             displayBodyPartResult(taskResults);
         displayComments(taskResults);
     });
 }
 //displays headers for results and image if likert or mechanics task
-function displayHeaders(taskID, taskResults, taskType){
+function displayHeaders(taskID, taskResults, activityStyle){
     //if first header dont add padding-top, else put padding
     if(firstHeader){
         $('<h5/>', {
             class: "blue-text darken-2 header",
-            text: taskType + " - Task ID: " + taskID
+            text: activityStyle + " - Task ID: " + taskID
         }).appendTo('#results');  
         firstHeader = false; 
     }
     else{
         $('<h5/>', {
             class: "blue-text darken-2 header topPadding",
-            text: taskType + " - Task ID: " + taskID
+            text: activityStyle + " - Task ID: " + taskID
         }).appendTo('#results');   
     }
     $('<h6/>', {
         class: "blue-text darken-2 header",
-        text: "Activity: " + taskResults[0]['activity']
+        text: "Activity: " + taskResults[0]["instruction"]
     }).appendTo('#results'); 
     //display image if likert or mechanics task  
-    if(taskType == "Likert Scale" || taskType == "Preferred Mechanics"){
+    if(activityStyle == "Likert Scale" || activityStyle == "Preferred Mechanics"){
         $('<img/>', {
             class: "image",
             src: taskResults[0]['address'],
@@ -92,8 +92,8 @@ function displayHeaders(taskID, taskResults, taskType){
     }).appendTo('#results');  
 }
 //displays results graph if likert or mechanics task
-function displayGraph(taskResults, taskType){
-    if(taskType == "Likert Scale" || taskType == "Preferred Mechanics"){
+function displayGraph(taskResults, activityStyle){
+    if(activityStyle == "Likert Scale" || activityStyle == "Preferred Mechanics"){
         $('<canvas/>', {
             width: "800px",
             text: "CanvasNotSupported"
@@ -103,7 +103,7 @@ function displayGraph(taskResults, taskType){
         var labels = []; 
         var data = [];
         //get labels and data
-        if(taskType == "Likert Scale"){
+        if(activityStyle == "Likert Scale"){
             $.each(taskResults, function( index, value ) {
                 if(value['happy'] == "0")
                     labels.push("Dislike");
@@ -112,7 +112,7 @@ function displayGraph(taskResults, taskType){
                 data.push(value['likertCount']);
             });
         }
-        else if(taskType == "Preferred Mechanics"){
+        else if(activityStyle == "Preferred Mechanics"){
             $.each(taskResults, function( index, value ) {
                 labels.push(value['mechanic']);
                 data.push(value['mechanicCount']);
