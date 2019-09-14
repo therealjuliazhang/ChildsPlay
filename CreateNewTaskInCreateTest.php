@@ -1,6 +1,8 @@
-<?php
-			session_start();
+<html>
+    <head>
+		<?php
 			//get user ID
+			session_start();
 			// if(isset($_SESSION['userID']))
 			// 	$userID = $_SESSION['userID'];
 			// else
@@ -12,12 +14,8 @@
 			$testID = 2; //remove after admin pages are linked up
 			//get user image directory
 			$imageDirectory = "C:\xampp\htdocs\images";
-		$from = "create";
-		$taskId = -1;
-		
-?>
-<html>
-    <head>
+		$from = "create";	
+		?>
         <title>Child'sPlay</title>
         <meta name = "viewport" content = "width = device-width, initial-scale = 1">
 		<link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -30,42 +28,25 @@
 		function createNewTask(){
 			var imageAddress = $("#imageAddress").val();
 			var instruction = $("#instruction").val();
-			var activityStyle = $("#activityStyle option:selected").val();
+			var selected = $("#activityStyle option:selected").val();
+			var activity = $("#activity").val();
 			var testID = <?php echo json_encode($testID);?>;
 			var from = <?php echo json_encode($from);?>;
-			var div = document.getElementById("results");
-			let taskID = 1;
-			var errors = "";
-			
-			if(imageAddress == ""){
-				div.style.color = "red";
-				div.style.fontStyle = "italic";
-				div.innerHTML = "Please select image(s) to upload!";
-			}
-			else{
-				$.post("createTask.php", 
-					{	imageAddress: imageAddress,
-						instruction: instruction,
-						activityStyle: activityStyle,
-						testID: testID
-					},
-					function(data){
-						if(data.includes("span")){
-							//errors = data;
-							$("#results").html(data);
-						}
-						else{
-							taskID = data;
-							$("#results").html(data);
-							//redirect back to page
-							if(from == "edit")
-								window.location = "EditTest.php?testID=" + testID;
-							else if(from == "create")
-								window.location = "CreateTest.php?taskID=" + taskID;
-						}	
-					}
-				);
-			}
+
+			$.post("createTask.php", 
+				{	imageAddress: imageAddress,
+					instruction: instruction,
+					activityStyle: selected,
+					activity: activity,
+					testID: testID
+				},
+				function(data){
+					$("#results").html(data);
+				}
+			);
+			//redirect back to page
+			if(from == "edit")
+				window.location = "EditTest.php?testID=" + testID;
 		}
 		</script>
 	</head>
@@ -97,24 +78,13 @@
 			<!--start form-->
             <form action="" method="post">
                 <div class="row">
-                    <div class="col s6">
                     <h5 class="blue-text darken-2 header">
                         <a class="tooltipped" data-position="left" data-tooltip="Choose activity style from list">
                             <i class="material-icons">help_outline</i>
                         </a>
                         Activity Style:
-                    </h5>
-                    </div>
-                    <div class="col s6">
-                        <h5 class="blue-text darken-2 header">
-                            <a class="tooltipped" data-position="left" data-tooltip="Activity for Task">
-                                <i class="material-icons">help_outline</i>
-                            </a>
-                            Instruction
-                        </h5>
-                    </div>
-                </div>
-				<div class="row">
+						</h5>
+					<div class="row">
 					<div class="input-field col s6">
 						<select name="activityStyle" id="activityStyle" onchange="loadContent()">
 							<option value="Identify Body Part">Identify Body Part</option>
@@ -123,11 +93,21 @@
 							<option value="Preferred Mechanics">Preferred Mechanics</option>
 						</select>
 					</div>
+					</div>
+                </div>    
+                <div class="row">   
+                    <h5 class="blue-text darken-2 header">
+                        <a class="tooltipped" data-position="left" data-tooltip="Activity for Task">
+                            <i class="material-icons">help_outline</i>
+                        </a>
+                        Instruction
+                    </h5>
+				<div class="row">  
                     <div class="input-field col s6">
-                        <input id="instruction" name="instruction" value="Press the character's [body part]" type="text">
+                        <input id="instruction" name="activity" value="Press the character's [body part]" id="Activity" type="text">
                     </div>
 				</div>
-
+                </div>
 				<h5 class="blue-text darken-2 header">
 					<a class="tooltipped" data-position="left" data-tooltip="Click to upload image">
 						<i class="material-icons">help_outline</i>
@@ -135,7 +115,7 @@
 					Image
 				</h5>
 				<div class="row">
-					<div class="col s12">
+					<div class="col s7">
 						<!--start upload button + path display-->
 						<form action="uploadImage.php" method="post" enctype="multipart/form-data">
 						<div class="file-field input-field">
@@ -155,15 +135,13 @@
 				<div id="imageUpload"></div>
 				<div class="row">
 					<div class="col s12">
-						<p align="right">
+						<p align="center">
 							<button name="createTaskBtn" id="submitBtn" class="submit waves-effect waves-light btn blue darken-2" onclick="createNewTask();">Create Task</button>
-							<a class="waves-effect waves-light btn blue darken-4" href="CreateTest.php">Cancel</a>
+							<a class="waves-effect waves-light btn blue darken-4">Cancel</a>
 						</p>
 					</div>
 				</div>
-				<div class="row">
-					<div id="results"></div>
-				</div>
+				<div id="results"></div>
 			</form>
 			<!--end form-->
 		</div>
