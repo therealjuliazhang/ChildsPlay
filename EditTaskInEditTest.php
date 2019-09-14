@@ -66,7 +66,7 @@
         <!--end header-->
         
         <!--side bar-->
-        <ul id="sidebar" class="sidenav sidenav-fixed" >
+    <!--    <ul id="sidebar" class="sidenav sidenav-fixed" >
             <li><h5>Tests</h5></li>
             <li>
                 <ul class="collapsible">
@@ -85,7 +85,7 @@
 									<a href=""><span>Task 3</span></a>
 								</li>
 							</ul>
-                            </div> <!--end container-->
+                            </div> 
                         </div>
                     </li>
 					<li>
@@ -103,7 +103,7 @@
 									<a href=""><span>Task 3</span></a>
 								</li>
 							</ul>
-                            </div> <!--end container-->
+                            </div> 
                         </div>
                     </li>
 					<li>
@@ -121,7 +121,7 @@
 									<a href=""><span>Task 3</span></a>
 								</li>
 							</ul>
-                            </div> <!--end container-->
+                            </div> 
                         </div>
                     </li>
 					<li>
@@ -139,7 +139,7 @@
 									<a href=""><span>Task 3</span></a>
 								</li>
 							</ul>
-                            </div> <!--end container-->
+                            </div> 
                         </div>
                     </li>
 					<li>
@@ -157,12 +157,12 @@
 									<a href=""><span>Task 3</span></a>
 								</li>
 							</ul>
-                            </div> <!--end container-->
+                            </div> 
                         </div>
                     </li>
                 </ul>
             </li>
-        </ul>
+        </ul><!--end container-->
         <!--end side bar-->
         
         
@@ -171,59 +171,39 @@
         <div id="body">
 			<!--start form-->
             <form>
-				
-            <div class="row">
-                <div class="col s6">
-                    <h5 class="blue-text darken-2 header">Test Title</h5>
-                </div>
-                <div class="col s6">
-                    <h5 class="blue-text darken-2 header">Activity</h5>
-                </div>
-            </div>
-
 			<div class="row">
-				<div class="input-field col s6">
-					<input placeholder="Test 1" id="testTitle" type="text">
-				</div>
-                <div class="input-field col s6">
-                    <input placeholder="Identifying the eyes" id="Activity" type="text">
-                </div>
-			</div>
-
-			<div class="row">
-                <div class="col s6">
-                    <h5 class="blue-text darken-2 header">Image</h5>
-                </div>
-                <div class="col s6">
-                    <h5 class="blue-text darken-2 header">Activity Style:</h5>
-                </div>
-			</div>
-
-			
-			<div class="row">
-				<div class="file-field input-field col s6">
-					<div class="waves-effect waves-light btn blue darken-4">
-						<span>Upload</span>
-						<input type="file">
-					</div>
-					<div class="file-path-wrapper">
-						<input class="file-path" type="text" placeholder="E:\Project 321\Instructions Page\images\testImage.jpg">
-					</div>
-				</div>
-
-                <div class="col s6">
+			<h5 class="blue-text darken-2 header">Activity Style:</h5>
+			<div class="col s7">
                     <select>
                         <option value="" selected>Identify Body Part</option>
                         <option value="1">Likert Scale</option>
                         <option value="2">Character Ranking</option>
                         <option value="3">Preferred Mechanics</option>
                     </select>
+            </div>
+			</div>
+			
+            <div class="row">
+            <h5 class="blue-text darken-2 header">Instruction</h5>
+                <div class="input-field col s7">
+                    <input placeholder="Identifying the eyes" id="Activity" type="text">
                 </div>
 			</div>
-            <img id="OriginalImage" class="image" src="images/Spike.png" style="width:15%;">
-			<br/><br/><br/>
 
-			
+			<div class="row">
+            <h5 class="blue-text darken-2 header">Image</h5>
+			<div class="file-field input-field col s6">
+					<div class="waves-effect waves-light btn blue darken-4">
+						<span>Upload</span>
+						<input type="file">
+					</div>
+					<div class="file-path-wrapper">
+						<input class="file-path" type="text" placeholder="E:\Project 321\Instructions Page\images\pod.jpg">
+					</div>
+			</div>   
+			</div>
+            <img id="OriginalImage" class="image" src="images\pod.jpg" style="width:15%;">
+			<br/><br/><br/>
 			</form>
 			<!--end form-->
 			<div class="row">

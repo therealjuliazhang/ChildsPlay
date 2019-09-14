@@ -85,23 +85,9 @@ $testID=1; //NEED TO REMOVE LATER
 			<!--start form-->
 			<!---<iframe name="votar" style="display:none;"></iframe>---->
             <form method="post" action="">
-                <div class="row">
-                    <div class="col s6">
-                        <h5 class="blue-text darken-2 header">
-                            Task Title:
-                        </h5>
-                    </div>
-                    <div class="col s6">
-                        <h5 class="blue-text darken-2 header">
-                            Activity Style:
-                        </h5>
-                    </div>
-                </div>
 				<div class="row">
-					<div class="input-field col s6">
-						<input id="taskTitle" type="text">
-					</div>
-                    <div class="input-field col s6">
+				<h5 class="blue-text darken-2 header">Activity Style:</h5>
+                    <div class="input-field col s7">
                         <select name="activityStyle" id="activityStyle" onchange="loadContent()">
                             <option value="Identify Body Part" selected>Identify Body Part</option>
                             <option value="Likert Scale">Likert Scale</option>
@@ -110,15 +96,18 @@ $testID=1; //NEED TO REMOVE LATER
                         </select>
                     </div>
 				</div>
-                <div class="row">
-                    <h5 class="blue-text darken-2 header col s6">
+				
+				<div class="row">
+				<h5 class="blue-text darken-2 header">Instruction</h5>
+                <div class="input-field col s7">
+                    <input name="activity" id="instruction" type="text">
+                </div>
+				</div>
+				<h5 class="blue-text darken-2 header col s6">
                         Image
                     </h5>
-                    <h5 class="blue-text darken-2 header col s6">
-                        Instruction
-                    </h5>
-                </div>
 				<div class="row">
+					
 					<div class="col s6">
 					<!--start upload button + path display-->
 					<form action="uploadImage.php" method="post" enctype="multipart/form-data">
@@ -134,9 +123,6 @@ $testID=1; //NEED TO REMOVE LATER
 					</form>
 						<!--end upload button + path-->
 					</div>
-					<div class="input-field col s6">
-                        <input name="instruction" id="instruction" type="text">
-                    </div>
 				</div>
 				<!--Placeholder to display uploaded image(s)--->
 				<div id="imageUpload"></div>
