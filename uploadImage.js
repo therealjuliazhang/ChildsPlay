@@ -9,6 +9,38 @@ document.addEventListener('DOMContentLoaded', function() {
 });	
 
 $(document).ready(function() {
+	var selected = $("#activityStyle option:selected").val();
+	$.post("selectOption.php", {option_value: selected},
+		function(data){
+			var input = document.getElementById("file");
+			if(data == "Character Ranking"){
+				input.setAttribute("name", "files[]");
+				input.setAttribute("multiple", "multiple");
+				var header = document.createElement("h5");
+				header.setAttribute("class", "blue-text darken-2 header");
+				header.innerHTML = "Points system for the ranks";
+				var div = document.createElement("div");
+				div.setAttribute("class", "input-field col s7");
+				var pointInput = document.createElement("input");
+				pointInput.setAttribute("id", "points");
+				pointInput.setAttribute("name", "points");
+				pointInput.setAttribute("type", "number");
+				div.appendChild(pointInput);
+				var wrapper = document.getElementById("pointRow");
+				wrapper.appendChild(header);
+				wrapper.appendChild(div);
+			}
+			else{
+				input.setAttribute("name", "file");
+				input.removeAttribute("multiple");
+				
+				var contents = document.getElementById("pointRow");
+				while (contents.hasChildNodes()) {
+					contents.removeChild(contents.lastChild);
+				}
+			}
+		}
+	);
 	//loadContent();
 	
 	$(document).on('change', '#file', function(){
@@ -67,10 +99,28 @@ function loadContent(){
 			if(data == "Character Ranking"){
 				input.setAttribute("name", "files[]");
 				input.setAttribute("multiple", "multiple");
+				var header = document.createElement("h5");
+				header.setAttribute("class", "blue-text darken-2 header");
+				header.innerHTML = "Points system for the ranks";
+				var div = document.createElement("div");
+				div.setAttribute("class", "input-field col s7");
+				var pointInput = document.createElement("input");
+				pointInput.setAttribute("id", "points");
+				pointInput.setAttribute("name", "points");
+				pointInput.setAttribute("type", "number");
+				div.appendChild(pointInput);
+				var wrapper = document.getElementById("pointRow");
+				wrapper.appendChild(header);
+				wrapper.appendChild(div);
 			}
 			else{
 				input.setAttribute("name", "file");
 				input.removeAttribute("multiple");
+				
+				var contents = document.getElementById("pointRow");
+				while (contents.hasChildNodes()) {
+					contents.removeChild(contents.lastChild);
+				}
 			}
 		}
 	);

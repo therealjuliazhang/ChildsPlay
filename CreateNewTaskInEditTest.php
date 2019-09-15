@@ -103,11 +103,20 @@ $testID=1; //NEED TO REMOVE LATER
                     <input name="activity" id="instruction" type="text">
                 </div>
 				</div>
+				
+				<div class="row" id="pointRow">
+				<!---
+				<h5 class="blue-text darken-2 header">Points system</h5>
+                <div class="input-field col s7">
+                    <input name="points" id="points" type="number">
+                </div>
+				--->
+				</div>
+				
 				<h5 class="blue-text darken-2 header col s6">
                         Image
                     </h5>
 				<div class="row">
-					
 					<div class="col s6">
 					<!--start upload button + path display-->
 					<form action="uploadImage.php" method="post" enctype="multipart/form-data">

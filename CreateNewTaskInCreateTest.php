@@ -159,7 +159,16 @@
                         <input id="instruction" name="instruction" value="<?php echo isset($instruction) ? $instruction:""; ?>" type="text">
                     </div>
 				</div>
-
+				
+				<div class="row" id="pointRow">
+				<!---
+				<h5 class="blue-text darken-2 header">Points system</h5>
+                <div class="input-field col s7">
+                    <input name="points" id="points" type="number">
+                </div>
+				--->
+				</div>
+				
 				<h5 class="blue-text darken-2 header">
 					<a class="tooltipped" data-position="left" data-tooltip="Click to upload image">
 						<i class="material-icons">help_outline</i>
