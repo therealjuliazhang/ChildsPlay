@@ -87,6 +87,8 @@ while($row = mysqli_fetch_assoc($result)){
 		"<td><a class='waves-effect waves-light btn blue darken-4' href='CreateNewTaskInCreateTest.php?exist=true&taskID=".$row["taskID"]."'>Edit</a></td>".
 		"<td><a class='waves-effect waves-light btn blue darken-4' href='createTest.php?taskID=".$row["taskID"]."'>Add</a></td>";
 }
+//CloseCon($conn);
+?>
                 </tbody>
             </table>
         </div>

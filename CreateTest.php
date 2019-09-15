@@ -93,6 +93,7 @@ session_start();
                         <td>Instruction</td>
                         <td>Preview</td>
                         <td>Edit</td>
+						<td>Remove</td>
                     </tr>
                 </thead>
 				<!--List of tasks--->
@@ -105,6 +106,10 @@ session_start();
 				$conn = OpenCon();
 				$taskList = array();
 				$idList = array();
+                                
+                //session_destroy();
+                //unset($_GET["list"]);
+                                
 				//get a list of newly created tasks and store it in SESSION
 				if(isset($_GET["taskID"])){
 					$taskID = $_GET["taskID"];
@@ -119,7 +124,21 @@ session_start();
 						}
 						$idList = explode(",", $_SESSION["list"]);
 					}
-					//display the newly created task(s) into the list of tasks
+					if(isset($_GET["remove"])){
+						$taskID = $_GET["taskID"];
+						if (($key = array_search($taskID, $idList)) !== false) {
+							unset($idList[$key]);
+                            if(count($idList) > 0)
+                                $_SESSION["list"] = join(",", $idList);
+                            else{
+                                session_destroy();
+                                unset($_SESSION["list"]);
+                            }
+						}
+					}
+				}
+				//display the newly created task(s) into the list of tasks
+				if(count($idList) > 0){
 					foreach($idList as $id){
 						$query = "SELECT * FROM TASK WHERE taskID=$id";
 						$result = $conn->query($query);
@@ -128,10 +147,10 @@ session_start();
 								"<td>".$row["activityStyle"]."</td>".
 								"<td>".$row["instruction"]."</td>".
 								"<td><a class='waves-effect waves-light btn blue darken-2'>Preview</a></td>".
-								"<td><a class='waves-effect waves-light btn blue darken-4'>Edit</a></td></tr>";
+								"<td><a class='waves-effect waves-light btn blue darken-4'>Edit</a></td>".
+								"<td><a class='waves-effect waves-light btn blue darken-4' href='?taskID=".$row["taskID"]."&remove=true'>Remove</a></td></tr>";
 					}
 				}
-				
 				?>
                 </tbody>
             </table>

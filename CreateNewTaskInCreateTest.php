@@ -31,6 +31,8 @@
 	}
 	if(isset($_GET["exist"]))
 		$exist = $_GET["exist"];
+	else
+		$exist = false;
 ?>
 <html>
     <head>
