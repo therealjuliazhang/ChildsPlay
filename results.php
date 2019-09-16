@@ -1,10 +1,8 @@
 <!DOCTYPE html>
-
 <html>
 <?php
 session_start();
 //include_once 'resultQueries.php';
-
 if(isset($_SESSION['userID']))
 	$userID = $_SESSION['userID'];
 else
@@ -14,7 +12,6 @@ if(isset($_SESSION["testID"])){
 	//session_destroy();
 	unset($_SESSION["testID"]);
 }
-
 if(isset($_GET["testID"])){
 	$testID = $_GET["testID"];
 	$_SESSION["testID"] = $testID;
@@ -37,27 +34,30 @@ include_once 'resultQueries.php';
 			$('.collapsible').collapsible();
 			$('.dropdown-trigger').dropdown();
 			//get results from php
-			var likertResults = <?php echo json_encode($likertResults); ?>;
-			var rankingResults = <?php echo json_encode($rankingResults); ?>;
-			//var likertResults = <?php echo json_encode($likertResults); ?>;
-			var bodyPartsResults = <?php echo json_encode($bodyPartsResults); ?>;
-			var mechanicResults = <?php echo json_encode($mechanicResults); ?>;
-
+			var results = <?php echo json_encode($results); ?>;
+			
 			//print out "Result not found" if all results arrays are empty
-			if(likertResults.length == 0 && rankingResults.length == 0 && mechanicResults.length == 0 /*&& bodyPartsResults == 0*/){
+			// if(likertResults.length == 0 && rankingResults.length == 0 && mechanicResults.length == 0 /*&& bodyPartsResults == 0*/){
+			// 	var output = "No results match!";
+			// 	var result = document.getElementById("results");
+			// 	result.innerHTML = output;
+			// 	result.style.color = "red";
+			// 	result.style.fontStyle = "italic";
+			// }
+			//print out "Result not found" if all results is empty
+			if(results.length == 0){
 				var output = "No results match!";
 				var result = document.getElementById("results");
 				result.innerHTML = output;
 				result.style.color = "red";
 				result.style.fontStyle = "italic";
 			}
-
+			//order results by testID and order in test
+			results.sort(function (a, b) {  
+				return a.orderInTest - b.orderInTest || a.orderInTest - b.orderInTest;
+			});
 			//display results
-			displayLikert(likertResults);
-			displayRanking(rankingResults);
-			//displayLikert(likertResults);
-			displayMechanics(mechanicResults);
-			displayBody(bodyPartsResults);
+			displayResults(results);
 		});
 		</script>
 	</head>
@@ -81,22 +81,15 @@ include_once 'resultQueries.php';
 			while($row = mysqli_fetch_assoc($result))
 				//echo "<li><a href='#'>".$row["title"]."</a></li>";
 				echo "<li><a href='?testID=".$row["testID"]."'>".$row["title"]."</a></li>";
-
 			?>
 			</ul>
-
 			<li><h5>Filter Results By:</h5></li>
 			<form action="" method="post">
-
 		<!--Collapsible group tab-->
 		<ul class="collapsible">
 		  <li>
-
 		   	<div class="collapsible-header"><i class="material-icons">group</i><h6>Group</h6></div>
 		    <div class="collapsible-body">
-
-
-
 				<ul class="collapsible">
 					<li>
 						<div class="collapsible-header"><h6>Location</h6></div>
@@ -116,8 +109,6 @@ include_once 'resultQueries.php';
 						</div>
 					</li>
 				</ul>
-
-
 				<ul class="collapsible">
 					<li>
 						<div class="collapsible-header"><h6>Group</h6></div>
@@ -137,9 +128,6 @@ include_once 'resultQueries.php';
 						</div>
 					</li>
 				</ul>
-
-
-
 				<ul class="collapsible">
 					<li>
 						<div class="collapsible-header"><h6>Gender</h6></div>
@@ -159,8 +147,6 @@ include_once 'resultQueries.php';
 						</div>
 					</li>
 				</ul>
-
-
 				<ul class="collapsible">
 					<li>
 						<div class="collapsible-header"><h6>Age</h6></div>
@@ -180,7 +166,6 @@ include_once 'resultQueries.php';
 						</div>
 					</li>
 				</ul>
-
 			<ul class="collapsible">
 			<li>
 				<br/>
@@ -190,10 +175,8 @@ include_once 'resultQueries.php';
 			</li>
 			</form>
 			</ul>
-
 			</li>
 		</div>
-
 	</li>
 	</ul>
 	<!--End Collapsible group Tab-->
@@ -201,11 +184,7 @@ include_once 'resultQueries.php';
 	<!--Collapsible Individual Tab-->
 	<ul class="collapsible">
 		<li>
-
-
 			<div class="collapsible-header"><i class="material-icons">person</i><h6>Individual</h6></div>
-
-
 				<div class="collapsible-body">
 					<div class="container">
 						<p>
@@ -214,28 +193,21 @@ include_once 'resultQueries.php';
 		       			<span>Alex</span>
 		     			</label>
 						</p>
-
 						<p>
 							<label>
 								<input type="checkbox" />
 								<span>Julia</span>
 							</label>
 						</p>
-
 						<br/>
 						<div class="center-align">
 							<button class="btn waves-effect waves-light blue darken-4 sortButton" type="submit" name="action">Filter</button>
 						</div>
-
 					</div>
 				</div>
-
 		</li>
 	</ul>
-
 	<!--End Collapsible Individual Tab-->
-
-
 			<!--end filter result form-->
 		</ul>
         <!--end side bar-->
@@ -243,60 +215,11 @@ include_once 'resultQueries.php';
         <div id="body">
 			<!--end slide out menu-->
 			<div id="results">
-
-				<!-- IDENTIFY BODY PARTS TASK -->
-				<!-- <h5 class="blue-text darken-2 header">Identify Eye Task:</h5>
-				Can you point to the monster's eyes?
-				</br>
-				<img class="image" src="images/Puff.jpg" style="width:15%;">
-				</br>
-				<h5 class="blue-text darken-2 header">Results:</h5>
-				<canvas class="image" id="myCanvas" width="240" height="297" style="border:1px solid #d3d3d3;">
-					Your browser does not support the HTML5 canvas tag.
-				</canvas>
-				<div class="row">
-					<form class="col s12">
-						<div class="input-field col s8">
-							<textarea id="textarea1" class="materialize-textarea"></textarea>
-							<label for="textarea1">Comments</label>
-						</div>
-					</form>
-				</div> -->
 			</div>
 		</div>
 		<!--end body content-->
 		</body>
 	<script>
-		//identify body parts results
-		//window.onload = function() {
-			//identify body parts results canvas
-			// var c = document.getElementById("myCanvas");
-			// var ctx = c.getContext("2d");
-			// var img = new Image(240, 297);
-			// img.src = 'images/Puff.jpg';
-			// ctx.drawImage(img, 0, 0, img.width, img.height);
-			//circles on canvas
-			// ctx.fillStyle = 'red';
-			// ctx.beginPath();
-			// ctx.arc(100, 75, 5, 0, 2 * Math.PI);
-			// ctx.stroke();
-			// ctx.fill();
-			// ctx.fillStyle = 'blue';
-			// ctx.beginPath();
-			// ctx.arc(150, 50, 5, 0, 2 * Math.PI);
-			// ctx.stroke();
-			// ctx.fill();
-			// ctx.fillStyle = 'green';
-			// ctx.beginPath();
-			// ctx.arc(90, 60, 5, 0, 2 * Math.PI);
-			// ctx.stroke();
-			// ctx.fill();
-			// ctx.fillStyle = 'yellow';
-			// ctx.beginPath();
-			// ctx.arc(110, 85, 5, 0, 2 * Math.PI);
-			// ctx.stroke();
-			// ctx.fill();
-		//}
 		//function to scroll back to top of page
 		function backToTop(){
 			document.body.scrollTop = 0;

@@ -41,7 +41,7 @@ else if(isset($_GET["groupID"])){ //should be true if it is the first task of te
 }
 //get tasks and set to session
 function getTasks($conn, $testID){
-	$query = "SELECT taskID FROM TASKASSIGNMENT WHERE testID=".$testID;
+	$query = "SELECT taskID, orderInTest FROM TASKASSIGNMENT WHERE testID=".$testID." ORDER BY orderInTest ASC";
 	$result = $conn->query($query);
 	while($value = mysqli_fetch_assoc($result)){
 		$taskQuery = "SELECT * FROM TASK WHERE taskID=".$value["taskID"];
