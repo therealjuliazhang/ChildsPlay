@@ -77,7 +77,7 @@
 				$result = $conn->query($taskQuery);
 				echo "<ul id='dropdown".$index."' class='dropdown-content'>";
 				while($row = mysqli_fetch_assoc($result)){
-					echo "<li><a href='instruction.php?testID=".$value["testID"]."&taskID=".$row["taskID"]."&mode=preview'>".$row["taskTitle"]."</a></li>";
+					echo "<li><a href='instruction.php?testID=".$value["testID"]."&taskID=".$row["taskID"]."&mode=preview&from=availableTests'>".$row["taskTitle"]."</a></li>";
 				}
 				
 				echo "</ul></td>";
