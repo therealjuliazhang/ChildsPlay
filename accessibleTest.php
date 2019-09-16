@@ -48,7 +48,7 @@
 	<div class="container">
         <h5 class="blue-text darken-2 header">Tests accessible to <span id="fullName"></span></h5>
 		<div id="testsAccessible">
-			<table class="highlight centered">
+			<table class="striped centered">
                 <thead class="blue-text darken-2">
                     <tr>
                         <th>Name</th>

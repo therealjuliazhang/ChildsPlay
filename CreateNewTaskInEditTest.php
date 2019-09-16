@@ -31,25 +31,31 @@ $testID=1; //NEED TO REMOVE LATER
 	function createNewTask(){
 		var imageAddress = $("#imageAddress").val();
 		var instruction = $("#instruction").val();
-		var selected = $("#activityStyle option:selected").val();
-		var activity = $("#taskTitle").val();
+		var activityStyle = $("#activityStyle option:selected").val();
 		var testID = <?php echo json_encode($testID);?>;
 		var from = <?php echo json_encode($from);?>;
+		var div = document.getElementById("results");
 		
-		$.post("createTask.php", 
-			{	imageAddress: imageAddress,
-				instruction: instruction,
-				activityStyle: selected,
-				activity: activity,
-				testID: testID
-			},
-			function(data){
-				$("#results").html(data);
-			}
-		);
-		//redirect back to page
-		if(from == "edit")
-			window.location = "EditTest.php?testID=" + testID;
+		if(imageAddress == ""){
+			div.style.color = "red";
+			div.style.fontStyle = "italic";
+			div.innerHTML = "Please select image(s) to upload!";
+		}
+		else{
+			$.post("createTask.php", 
+				{	imageAddress: imageAddress,
+					instruction: instruction,
+					activityStyle: activityStyle,
+					testID: testID
+				},
+				function(data){
+					$("#results").html(data);
+				}
+			);
+			//redirect back to page
+			if(from == "edit")
+				window.location = "editTest.php?testID=" + testID;
+		}
 	}
 	</script>
 	</head>
@@ -77,28 +83,11 @@ $testID=1; //NEED TO REMOVE LATER
         <!-- body content -->
         <div id="body" class="container">
 			<!--start form-->
-			
 			<!---<iframe name="votar" style="display:none;"></iframe>---->
             <form method="post" action="">
-                <div class="row">
-                    <div class="col s6">
-                        <h5 class="blue-text darken-2 header">
-                            Task Title:
-                        </h5>
-                    </div>
-                    <div class="col s6">
-                        <h5 class="blue-text darken-2 header">
-                            Activity Style:
-                        </h5>
-                    </div>
-                </div>
-
-
 				<div class="row">
-					<div class="input-field col s6">
-						<input id="taskTitle" type="text">
-					</div>
-                    <div class="input-field col s6">
+				<h5 class="blue-text darken-2 header">Activity Style:</h5>
+                    <div class="input-field col s7">
                         <select name="activityStyle" id="activityStyle" onchange="loadContent()">
                             <option value="Identify Body Part" selected>Identify Body Part</option>
                             <option value="Likert Scale">Likert Scale</option>
@@ -107,18 +96,26 @@ $testID=1; //NEED TO REMOVE LATER
                         </select>
                     </div>
 				</div>
-
+				
 				<div class="row">
-
+				<h5 class="blue-text darken-2 header">Instruction</h5>
+                <div class="input-field col s7">
+                    <input name="activity" id="instruction" type="text">
+                </div>
 				</div>
-                <div class="row">
-                    <h5 class="blue-text darken-2 header col s6">
+				
+				<div class="row" id="pointRow">
+				<!---
+				<h5 class="blue-text darken-2 header">Points system</h5>
+                <div class="input-field col s7">
+                    <input name="points" id="points" type="number">
+                </div>
+				--->
+				</div>
+				
+				<h5 class="blue-text darken-2 header col s6">
                         Image
                     </h5>
-                    <h5 class="blue-text darken-2 header col s6">
-                        Instruction
-                    </h5>
-                </div>
 				<div class="row">
 					<div class="col s6">
 					<!--start upload button + path display-->
@@ -135,9 +132,6 @@ $testID=1; //NEED TO REMOVE LATER
 					</form>
 						<!--end upload button + path-->
 					</div>
-					<div class="input-field col s6">
-                        <input name="activity" id="instruction" type="text">
-                    </div>
 				</div>
 				<!--Placeholder to display uploaded image(s)--->
 				<div id="imageUpload"></div>
@@ -145,11 +139,13 @@ $testID=1; //NEED TO REMOVE LATER
 					<div class="col s12">
 						<p align="right">
 							<button name="createTaskBtn" id="submitBtn" class="waves-effect waves-light btn blue darken-2" onclick="createNewTask();">Create Task</button>
-							<a class="waves-effect waves-light btn blue darken-4">Cancel</a>
+							<a class="waves-effect waves-light btn blue darken-4" href="editTest.php">Cancel</a>
 						</p>
 					</div>
 				</div>
-				<div id="results"></div>
+				<div class="row">
+					<div id="results"></div>
+				</div>
 			</form>
 		</div>
 		<!--end body content-->

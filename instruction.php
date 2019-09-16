@@ -103,7 +103,7 @@ $bodyPart = "eye";
 //Display instructions for task
 $taskTypeUrl;
 if(count($tasks) > 0){
-	switch($tasks[$taskIndex]["taskType"]){
+	switch($tasks[$taskIndex]["activityStyle"]){
 		case "Likert Scale":
       		echo "<h4 class='blue-text text-darken-2'>Likert Scale</h4><br>";
       		echo "<h5 class='blue-text text-darken-2'>Task Instructions:</h5>";

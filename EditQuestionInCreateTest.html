@@ -32,11 +32,6 @@
 						var elem = document.querySelectorAll('.tooltipped');
 						var instance = M.Tooltip.init(elem);
 					});
-					
-					document.addEventListener('DOMContentLoaded', function() {
-						var el = document.querySelectorAll('.collapsible');
-						var inst = M.Collapsible.init(el);
-					});
                     
                     
                     </script>
@@ -50,10 +45,9 @@
                 <nav class="nav-extended blue darken-4">
                     <div class="nav-wrapper">
                         <a href="#" class="brand-logo left"><img src="images/logo1.png" ></a>
-                        <ul id="nav-mobile" class="hide-on-med-and-down">
+                        <ul id="nav-mobile" class="left hide-on-med-and-down">
                             <li><a href="">Tests</a></li>
-                            <li><a href="">Create</a></li>
-							<li class="active"><a href="">Edit</a></li>
+                            <li class="active"><a href="">Create</a></li>
                             <li><a href="">Users</a></li>
                         </ul>
                         <ul id="logoutButton" class="right hide-on-med-and-down logout">
@@ -66,103 +60,14 @@
         <!--end header-->
         
         <!--side bar-->
-    <!--    <ul id="sidebar" class="sidenav sidenav-fixed" >
-            <li><h5>Tests</h5></li>
-            <li>
-                <ul class="collapsible">
-                    <li>
-                        <div class="collapsible-header"><h6>Test 1</h6></div>
-                        <div class="collapsible-body">
-                            <div class="container">
-							<ul>
-								<li>
-									<a href=""><span>Task 1</span></a>
-								</li>
-								<li>
-									<a href=""><span>Task 2</span></a>
-								</li>
-								<li>
-									<a href=""><span>Task 3</span></a>
-								</li>
-							</ul>
-                            </div> 
-                        </div>
-                    </li>
-					<li>
-                        <div class="collapsible-header"><h6>Test 2</h6></div>
-                        <div class="collapsible-body">
-                            <div class="container">
-							<ul>
-								<li>
-									<a href=""><span>Task 1</span></a>
-								</li>
-								<li>
-									<a href=""><span>Task 2</span></a>
-								</li>
-								<li>
-									<a href=""><span>Task 3</span></a>
-								</li>
-							</ul>
-                            </div> 
-                        </div>
-                    </li>
-					<li>
-                        <div class="collapsible-header"><h6>Test 3</h6></div>
-                        <div class="collapsible-body">
-                            <div class="container">
-							<ul>
-								<li>
-									<a href=""><span>Task 1</span></a>
-								</li>
-								<li>
-									<a href=""><span>Task 2</span></a>
-								</li>
-								<li>
-									<a href=""><span>Task 3</span></a>
-								</li>
-							</ul>
-                            </div> 
-                        </div>
-                    </li>
-					<li>
-                        <div class="collapsible-header"><h6>Test 4</h6></div>
-                        <div class="collapsible-body">
-                            <div class="container">
-							<ul>
-								<li>
-									<a href=""><span>Task 1</span></a>
-								</li>
-								<li>
-									<a href=""><span>Task 2</span></a>
-								</li>
-								<li>
-									<a href=""><span>Task 3</span></a>
-								</li>
-							</ul>
-                            </div> 
-                        </div>
-                    </li>
-					<li>
-                        <div class="collapsible-header"><h6>Test 5</h6></div>
-                        <div class="collapsible-body">
-                            <div class="container">
-							<ul>
-								<li>
-									<a href=""><span>Task 1</span></a>
-								</li>
-								<li>
-									<a href=""><span>Task 2</span></a>
-								</li>
-								<li>
-									<a href=""><span>Task 3</span></a>
-								</li>
-							</ul>
-                            </div> 
-                        </div>
-                    </li>
-                </ul>
-            </li>
-        </ul><!--end container-->
+        <!--<ul id="sidebar" class="sidenav sidenav-fixed" >
+            <li class="active"><a href="">Task 10</a></li>
+            <li><a href="">Task 11</a></li>
+            <li><a href="">Task 12</a></li>
+            <li><a href="">Task 13</a></li>
+            <li><a href="">Task 14</a></li>
+        </ul>
+		-->
         <!--end side bar-->
         
         
@@ -170,47 +75,67 @@
         <!-- body content -->
         <div id="body">
 			<!--start form-->
-            <form>
+            <form class="col s12">
+			
+			<h5 class="blue-text darken-2 header">
+				<a class="tooltipped" data-position="left" data-tooltip="Choose activity style from list">
+					<i class="material-icons">help_outline</i>
+				</a>
+				Activity Style:
+			</h5>
 			<div class="row">
-			<h5 class="blue-text darken-2 header">Activity Style:</h5>
-			<div class="col s7">
-                    <select>
-                        <option value="" selected>Identify Body Part</option>
-                        <option value="1">Likert Scale</option>
-                        <option value="2">Character Ranking</option>
-                        <option value="3">Preferred Mechanics</option>
-                    </select>
-            </div>
+			<div class="input-field col s11">
+				<select>
+					<option value="" selected>Identify Body Part</option>
+					<option value="1">Likert Scale</option>
+					<option value="2">Character Ranking</option>
+					<option value="3">Preferred Mechanics</option>
+				</select>
+			</div>
 			</div>
 			
-            <div class="row">
-            <h5 class="blue-text darken-2 header">Instruction</h5>
-                <div class="input-field col s7">
-                    <input placeholder="Identifying the eyes" id="Activity" type="text">
-                </div>
-			</div>
-
+            <h5 class="blue-text darken-2 header">
+				<a class="tooltipped" data-position="left" data-tooltip="Activity for Task">
+				<i class="material-icons">help_outline</i>
+				</a>
+				Instruction
+			</h5>
 			<div class="row">
-            <h5 class="blue-text darken-2 header">Image</h5>
-			<div class="file-field input-field col s6">
+				<div class="input-field col s11">
+					<input placeholder="Identifying the eyes" id="Activity" type="text">
+				</div>
+			</div>            </br>
+            <h5 class="blue-text darken-2 header">
+				<a class="tooltipped" data-position="left" data-tooltip="Click to upload image">
+					<i class="material-icons">help_outline</i>
+				</a>
+				Image
+			</h5>
+			
+			<div class="row">
+				<div class="col s11">
+				<!--start upload button + path display-->
+				<div class="file-field input-field">
 					<div class="waves-effect waves-light btn blue darken-4">
 						<span>Upload</span>
 						<input type="file">
 					</div>
 					<div class="file-path-wrapper">
-						<input class="file-path" type="text" placeholder="E:\Project 321\Instructions Page\images\pod.jpg">
+						<input class="file-path" type="text" placeholder="E:\Project 321\Instructions Page\images\testImage.jpg">
 					</div>
-			</div>   
+				</div>
+				<!--end upload button + path-->
+				</div>
 			</div>
-            <img id="OriginalImage" class="image" src="images\pod.jpg" style="width:15%;">
+            <img id="OriginalImage" class="image" src="images/Puff.jpg" style="width:15%;">
 			<br/><br/><br/>
 			</form>
 			<!--end form-->
+			<br/><br/><br/>
 			<div class="row">
-			<div class="col s12">
+			<div class="col s11">
 				<p align="right">
 					<a class="waves-effect waves-light btn blue darken-2">Save Changes</a>
-					<a class="waves-effect waves-light btn red">Remove</a>
 					<a class="waves-effect waves-light btn blue darken-4">Cancel</a>
 				</p>
 			</div>

@@ -9,26 +9,39 @@ document.addEventListener('DOMContentLoaded', function() {
 });	
 
 $(document).ready(function() {
-	//set default activity instruction
-	$("#instruction").change(function(){
-		var activityStyle = $("#activityStyle").val();
-		switch(activityStyle){
-			case "Likert Scale":
-				$("#instruction").val("Press the happy face if you like it, press the sad face if you don't like it.");
-				break;
-			case "Character Ranking":
-				$("#instruction").val("Press your favourite character and then your next favourite until they are all pressed.");
-				break;
-			case "Identify Body Part":
-				$("#instruction").val("Press the monster's [enter body part]");
-				break;
-			case "Preferred Mechanics":
-				$("#instruction").val("");
-				break;
-		}
-	})
+	var selected = $("#activityStyle option:selected").val();
+	$.post("selectOption.php", {option_value: selected},
+		function(data){
+			var input = document.getElementById("file");
+			if(data == "Character Ranking"){
+				input.setAttribute("name", "files[]");
+				input.setAttribute("multiple", "multiple");
+				var header = document.createElement("h5");
+				header.setAttribute("class", "blue-text darken-2 header");
+				header.innerHTML = "Points system for the ranks";
+				var div = document.createElement("div");
+				div.setAttribute("class", "input-field col s7");
+				var pointInput = document.createElement("input");
+				pointInput.setAttribute("id", "points");
+				pointInput.setAttribute("name", "points");
+				pointInput.setAttribute("type", "number");
+				div.appendChild(pointInput);
+				var wrapper = document.getElementById("pointRow");
+				wrapper.appendChild(header);
+				wrapper.appendChild(div);
+			}
+			else{
+				input.setAttribute("name", "file");
+				input.removeAttribute("multiple");
 				
-	loadContent();
+				var contents = document.getElementById("pointRow");
+				while (contents.hasChildNodes()) {
+					contents.removeChild(contents.lastChild);
+				}
+			}
+		}
+	);
+	//loadContent();
 	
 	$(document).on('change', '#file', function(){
 		var path = $("#imageAddress").val();
@@ -57,7 +70,8 @@ $(document).ready(function() {
 				$('#imageUpload').html('<label>Loading...</label>');
 			},
 			success: function(data){
-				$('#imageUpload').html(data);					
+				$('#imageUpload').html(data);
+				$('#results').html("");
 			}
 		})
 	})
@@ -67,16 +81,16 @@ function loadContent(){
 	var selected = $("#activityStyle option:selected").val();
 	switch(selected){
 		case "Likert Scale":
-			$("#instruction").val("Press the happy face if you like it, press the sad face if you don't like it.");
+				$("#instruction").val("Press the happy face if you like it, press the sad face if you don't like it.");
 			break;
 		case "Character Ranking":
-			$("#instruction").val("Press your favourite character and then your next favourite until they are all pressed.");
+				$("#instruction").val("Press your favourite character and then your next favourite until they are all pressed.");
 			break;
 		case "Identify Body Part":
-			$("#instruction").val("Press the monster's [enter body part]");
+				$("#instruction").val("Press the monster's [enter body part]");
 			break;
-		case "Preferred Mechanics":
-			$("#instruction").val("");
+		case "Preferred Mechanic":
+				$("#instruction").val("");
 			break;
 	}
 	$.post("selectOption.php", {option_value: selected},
@@ -85,10 +99,28 @@ function loadContent(){
 			if(data == "Character Ranking"){
 				input.setAttribute("name", "files[]");
 				input.setAttribute("multiple", "multiple");
+				var header = document.createElement("h5");
+				header.setAttribute("class", "blue-text darken-2 header");
+				header.innerHTML = "Points system for the ranks";
+				var div = document.createElement("div");
+				div.setAttribute("class", "input-field col s7");
+				var pointInput = document.createElement("input");
+				pointInput.setAttribute("id", "points");
+				pointInput.setAttribute("name", "points");
+				pointInput.setAttribute("type", "number");
+				div.appendChild(pointInput);
+				var wrapper = document.getElementById("pointRow");
+				wrapper.appendChild(header);
+				wrapper.appendChild(div);
 			}
 			else{
 				input.setAttribute("name", "file");
 				input.removeAttribute("multiple");
+				
+				var contents = document.getElementById("pointRow");
+				while (contents.hasChildNodes()) {
+					contents.removeChild(contents.lastChild);
+				}
 			}
 		}
 	);

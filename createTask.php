@@ -1,25 +1,29 @@
 <?php
+/*
+author: Phuong Linh Bui (5624095)
+*/
+//session_start();
 include 'db_connection.php';
+$conn = OpenCon();
+
 $taskID; //need to select taskID that is just added into database
 $UploadFolder = "images";
 $names = $_POST["imageAddress"];
 $instruction = $_POST["instruction"];
-$testID = $_POST["testID"];
+if(isset($_GET["testID"]))
+	$testID = $_GET["testID"];
 $activityStyle = $_POST["activityStyle"];
-$activity = $_POST["activity"];
-//$from = $_POST["from"];
-
 $files = explode(", ", $names);
-	
-$conn = OpenCon();
+$errorMsg = "";
 
+$instructionValue = '"'.$instruction.'"';
+$styleValue = '"'.$activityStyle.'"';
 //insert task into database
-$sql = "INSERT INTO TASK (instruction, taskType, activity)VALUES ('".$instruction."', '".$activityStyle."', '".$activity."')"; 
+$sql = "INSERT INTO TASK (instruction, activityStyle) VALUES ($instructionValue, $styleValue)"; 
 if ($conn->query($sql) === TRUE){ 
-    echo "New record created successfully";
     //get ID of inserted task
     $taskID = $conn->insert_id;
-	
+	echo $taskID;
 	foreach($files as $name)
 	{
 		if(file_exists($UploadFolder."/".$name) == true){
@@ -29,15 +33,15 @@ if ($conn->query($sql) === TRUE){
 			if(mysqli_num_rows($idResult) != 0){
 				$id = mysqli_fetch_assoc($idResult);
 				$insertValuesSQL = "('".$id["imageID"]."', ".$taskID.")";
-				// Insert image file name into database	
+				//Assign an image to a task in database	
 				$insertQuery = "INSERT INTO IMAGEASSIGNMENT VALUES $insertValuesSQL";
 				$result = $conn->query($insertQuery);
+				
 				if(!$result)
-					echo "<span style='color:red'>Failed to add record!<br/>".mysqli_error($conn)."</span>";
-				else
-					echo "Successfully added record!";
+					$errorMsg .= "<span style='color:red'>Failed to add image record! ".mysqli_error($conn)."</span><br/>";
 			}
 			else{
+				//insert an image to the database if it doesn't exist
 				$insertImgQuery = "INSERT INTO IMAGE(address) VALUES('images/".$name."')";
 				$result = $conn->query($insertImgQuery);
 				if($result){
@@ -45,28 +49,31 @@ if ($conn->query($sql) === TRUE){
 					$idResult = $conn->query($idSql);
 					if($id = mysqli_fetch_assoc($idResult)){
 						$insertValuesSQL = "('".$id["imageID"]."', ".$taskID.")";
-						// Insert image file name into database
+						//Assign an image to a task in database
 						$insertQuery = "INSERT INTO IMAGEASSIGNMENT VALUES $insertValuesSQL";
 						$result = $conn->query($insertQuery);
+						
 						if(!$result)
-							echo "<span style='color:red'>Failed to add record!<br/>".mysqli_error($conn)."</span>";
-						else
-							echo "Successfully added record!";
+							$errorMsg .= "<span style='color:red'>Failed to add image record!<br/>".mysqli_error($conn)."</span><br/>";
 					}
 				}
 			}
 		}
 	}
-
-	//insert into task assignment
-    $sql = "INSERT INTO TASKASSIGNMENT (testID, taskID) VALUES (".$testID.", ".$taskID.")"; 
-    if ($conn->query($sql) === TRUE)
-        echo "New record added successfully";
-    else
-        echo "Error: " . $sql . "<br>" . $conn->error;
+	
+	//Only insert into taskassignment when create a new task in Edit test
+	if(isset($_GET["testID"])){
+		//insert into task assignment
+		$sql = "INSERT INTO TASKASSIGNMENT (testID, taskID) VALUES (".$testID.", ".$taskID.")"; 
+		$result = $conn->query($sql);
+		
+		if ($conn->query($sql) === TRUE)
+			$errorMsg .= "<span style='color:red'>Failed to add record! ".mysqli_error($conn)."</span><br/>";
+	}
 }
 else
-   echo "Error: " . $sql . "<br>" . $conn->error;
+	$errorMsg .= "<span style='color:red'>Error: ".$sql."<br/>".mysqli_error($conn)."</span>";
+echo $errorMsg;
 
 CloseCon($conn);
 ?>

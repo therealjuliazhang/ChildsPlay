@@ -258,33 +258,28 @@ INSERT INTO TESTASSIGNMENT(userID, testID, dateConducted) VALUES (@userID, @test
 /*TASK*/
 SET
 @instruction = "Touch the smiley face if you like it and touch the sad face if you don't like it.",
-@taskType = "Likert Scale",
-@activity = "Do you like this monster?";
-INSERT INTO TASK(instruction, taskType, activity) VALUES (@instruction, @taskType, @activity);
+@activityStyle = "Likert Scale";
+INSERT INTO TASK(instruction, activityStyle) VALUES (@instruction, @activityStyle);
 
 SET
 @instruction = "Touch the monster's eyes.",
-@taskType = "Identify Body Parts",
-@activity = "Touch the monster's eyes.";
-INSERT INTO TASK(instruction, taskType, activity) VALUES (@instruction, @taskType, @activity);
+@activityStyle = "Identify Body Parts";
+INSERT INTO TASK(instruction, activityStyle) VALUES (@instruction, @activityStyle);
 
 SET
 @instruction = "Select the monsters in order of your favourite to least favourite.",
-@taskType = "Character Ranking",
-@activity = "Select the monsters in order of your favourite to least favourite.";
-INSERT INTO TASK(instruction, taskType, activity) VALUES (@instruction, @taskType, @activity);
+@activityStyle = "Character Ranking";
+INSERT INTO TASK(instruction, activityStyle) VALUES (@instruction, @activityStyle);
 
 SET
 @instruction = "How would you make the monster bigger?",
-@taskType = "Preferred Mechanic",
-@activity = "Make the monster bigger.";
-INSERT INTO TASK(instruction, taskType, activity) VALUES (@instruction, @taskType, @activity);
+@activityStyle = "Preferred Mechanic";
+INSERT INTO TASK(instruction, activityStyle) VALUES (@instruction, @activityStyle);
 
 SET
 @instruction = "How would you move the monster into the box?",
-@taskType = "Preferred Mechanic",
-@activity = "Move the monster.";
-INSERT INTO TASK(instruction, taskType, activity) VALUES (@instruction, @taskType, @activity);
+@activityStyle = "Preferred Mechanic";
+INSERT INTO TASK(instruction, activityStyle) VALUES (@instruction, @activityStyle);
 
 /*TASKASSIGNMENT*/
 SET

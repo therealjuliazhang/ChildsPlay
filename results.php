@@ -63,31 +63,32 @@ include_once 'resultQueries.php';
 	</head>
     <body>
         <!--header-->
-				<div id="InsertHeader"></div>
-			  <script>
-			    //Read header
-			    $(function(){
-			      $("#InsertHeader").load("header.html");
-			    });
-			  </script>
+		<div id="InsertHeader"></div>
+		<script>
+			//Read header
+			$(function(){
+			    $("#InsertHeader").load("header.html");
+			});
+		</script>
         <!--end header-->
         <!--side bar-->
-		<ul id="sidebar" class="sidenav sidenav-fixed" >
-			<li><h5><a href="#" data-target="slide-out" class="dropdown-trigger">More Tests</a></h5></li>button to activate more tests
-			<ul class="dropdown-content" id="slide-out">
-			<?php
-			$testQuery = "SELECT testID, title FROM TEST";
-			$result = $conn->query($testQuery);
-			while($row = mysqli_fetch_assoc($result))
-				//echo "<li><a href='#'>".$row["title"]."</a></li>";
-				echo "<li><a href='?testID=".$row["testID"]."'>".$row["title"]."</a></li>";
-			?>
-			</ul>
-			<li><h5>Filter Results By:</h5></li>
-			<form action="" method="post">
+	<ul id="sidebar" class="sidenav sidenav-fixed" >
+		<li><h5><a href="#" data-target="slide-out" class="dropdown-trigger">More Tests</a></h5></li>button to activate more tests
+		<ul class="dropdown-content" id="slide-out">
+		<?php
+		$testQuery = "SELECT testID, title FROM TEST";
+		$result = $conn->query($testQuery);
+		while($row = mysqli_fetch_assoc($result))
+			//echo "<li><a href='#'>".$row["title"]."</a></li>";
+			echo "<li><a href='?testID=".$row["testID"]."'>".$row["title"]."</a></li>";
+		?>
+		</ul>
+
+		<li><h5>Filter Results By:</h5></li>
+		<form action="" method="post">
 		<!--Collapsible group tab-->
 		<ul class="collapsible">
-		  <li>
+			<li>
 		   	<div class="collapsible-header"><i class="material-icons">group</i><h6>Group</h6></div>
 		    <div class="collapsible-body">
 				<ul class="collapsible">
@@ -159,57 +160,50 @@ include_once 'resultQueries.php';
 									echo "<p><label><input type='checkbox' name='age[]' value='".$row["age"]."' class='filled-in' />".
 									     "<span>".$row["age"]."</span></label></p>";
 								}
-								CloseCon($conn);
 								?>
 								<!--end checkbox-->
 							</div> <!--end container-->
 						</div>
 					</li>
 				</ul>
-			<ul class="collapsible">
-			<li>
-				<br/>
-				<div class="center-align">
-					<button class="btn waves-effect waves-light blue darken-4 sortButton" type="submit" name="action">Filter</button>
-				</div>
+			</div>
 			</li>
-			</form>
-			</ul>
-			</li>
-		</div>
-	</li>
-	</ul>
-	<!--End Collapsible group Tab-->
-
-	<!--Collapsible Individual Tab-->
-	<ul class="collapsible">
-		<li>
-			<div class="collapsible-header"><i class="material-icons">person</i><h6>Individual</h6></div>
-				<div class="collapsible-body">
-					<div class="container">
-						<p>
-		      		<label>
-		       			<input type="checkbox" />
-		       			<span>Alex</span>
-		     			</label>
-						</p>
-						<p>
-							<label>
-								<input type="checkbox" />
-								<span>Julia</span>
-							</label>
-						</p>
-						<br/>
-						<div class="center-align">
-							<button class="btn waves-effect waves-light blue darken-4 sortButton" type="submit" name="action">Filter</button>
-						</div>
-					</div>
-				</div>
-		</li>
-	</ul>
-	<!--End Collapsible Individual Tab-->
-			<!--end filter result form-->
 		</ul>
+		<!--End Collapsible group Tab-->
+		
+		<!--Collapsible Individual Tab-->
+		<ul class="collapsible">
+					<li>
+						<div class="collapsible-header"><i class="material-icons">person</i><h6>Individual</h6></div>
+						<div class="collapsible-body">
+							<div class="container">
+							<?php
+								$childQuery = "SELECT DISTINCT name, preID FROM PRESCHOOLER";
+								if(isset($testID))
+									$childQuery .= " ";
+								$childResult = $conn->query($childQuery);
+								while($row = mysqli_fetch_assoc($childResult)){
+									echo "<p><label><input type='checkbox' name='name[]' value='".$row["preID"]."' class='filled-in' />".
+										 "<span>".$row["name"]."</span></label></p>";
+									}
+								CloseCon($conn);
+							?>
+							</div>
+						</div>
+					</li>
+				</ul>
+				<!--End Collapsible Individual Tab-->
+				<ul class="collapsible">
+				<li>
+					<br/>
+					<div class="center-align">
+						<button class="btn waves-effect waves-light blue darken-4 sortButton" type="submit" name="submitGroup">Filter</button>
+					</div>
+				</li>
+				</ul>
+		</form>
+	<!--end filter result form-->		
+	</ul>
         <!--end side bar-->
         <!-- body content -->
         <div id="body">
