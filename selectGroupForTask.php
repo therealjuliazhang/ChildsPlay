@@ -17,7 +17,6 @@
 		else if($_GET['mode'] == "preview")
 			$_SESSION['mode'] = "preview";
 	}
-
 	include 'db_connection.php';
 	$conn = OpenCon();
 	?>

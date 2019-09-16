@@ -285,42 +285,36 @@ INSERT INTO TASK(instruction, activityStyle) VALUES (@instruction, @activityStyl
 SET
 @taskID = 1,
 @testID = 1,
-@taskTitle = "Task 1",
+@orderInTest = 1,
 @comments = "Alex changed his mind after pressing like.";
-INSERT INTO TASKASSIGNMENT(taskID, testID, taskTitle, comments) VALUES (@taskID, @testID, @taskTitle, @comments);
+INSERT INTO TASKASSIGNMENT(taskID, testID, orderInTest, comments) VALUES (@taskID, @testID, @orderInTest, @comments);
 
 SET
 @taskID = 2,
 @testID = 1,
-@taskTitle = "Task 2",
+@orderInTest = 2,
 @comments = "Ren was not sure if she liked the monster.";
-INSERT INTO TASKASSIGNMENT(taskID, testID, taskTitle, comments) VALUES (@taskID, @testID, @taskTitle, @comments);
+INSERT INTO TASKASSIGNMENT(taskID, testID, orderInTest, comments) VALUES (@taskID, @testID, @orderInTest, @comments);
 
 SET
 @taskID = 3,
 @testID = 1,
-@taskTitle = "Task 3",
+@orderInTest = 3,
 @comments = "Kate was not sure if she liked the monster.";
-INSERT INTO TASKASSIGNMENT(taskID, testID, taskTitle, comments) VALUES (@taskID, @testID, @taskTitle, @comments);
+INSERT INTO TASKASSIGNMENT(taskID, testID, orderInTest, comments) VALUES (@taskID, @testID, @orderInTest, @comments);
 
 SET
 @taskID = 4,
 @testID = 1,
-@taskTitle = "Task 4",
+@orderInTest = 4,
 @comments = "Andre was not sure if she liked the monster.";
-INSERT INTO TASKASSIGNMENT(taskID, testID, taskTitle, comments) VALUES (@taskID, @testID, @taskTitle, @comments);
+INSERT INTO TASKASSIGNMENT(taskID, testID, orderInTest, comments) VALUES (@taskID, @testID, @orderInTest, @comments);
 
 SET
-@taskID = 4,
-@taskTitle = "Task 1",
-@testID = 2;
-INSERT INTO TASKASSIGNMENT(taskID, testID, taskTitle) VALUES (@taskID, @testID, @taskTitle);
-
-SET
-@taskID = 5,
-@taskTitle = "Task 2",
-@testID = 2;
-INSERT INTO TASKASSIGNMENT(taskID, testID, taskTitle) VALUES (@taskID, @testID, @taskTitle);
+@taskID = 2,
+@testID = 2,
+@orderInTest = 1;
+INSERT INTO TASKASSIGNMENT(taskID, testID, orderInTest) VALUES (@taskID, @testID, @orderInTest);
 
 /*IMAGE*/
 SET
