@@ -184,13 +184,14 @@
 							<span>Upload</span>
 							<input id="file" type="file" name="file" />
 							</div>
-							<div class="file-path-wrapper">
-								<input class="file-path validate" type="text" name="imageFileName" id="imageAddress" 
+							<div class="file-path-wrapper" id="upload">
+								<input class="file-path validate" type="text" name="imageFileName" id="imageAddress"
 								value="<?php if(isset($imageAddress)){ 
 												$image = explode("/",$imageAddress); 
 												echo $image[1];
 											}	
 								?>" webkitdirectory directory multiple/>
+								
 							</div>
 						</div>
 						</form>
