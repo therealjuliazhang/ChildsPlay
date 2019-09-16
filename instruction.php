@@ -41,7 +41,7 @@ else if(isset($_GET["groupID"])){ //should be true if it is the first task of te
 }
 //get tasks and set to session
 function getTasks($conn, $testID){
-	$query = "SELECT taskID, orderInTest FROM TASKASSIGNMENT WHERE testID=".$testID." ORDER BY orderInTest ASC";
+	$query = "SELECT taskID FROM TASKASSIGNMENT WHERE testID=".$testID;
 	$result = $conn->query($query);
 	while($value = mysqli_fetch_assoc($result)){
 		$taskQuery = "SELECT * FROM TASK WHERE taskID=".$value["taskID"];
@@ -103,7 +103,7 @@ $bodyPart = "eye";
 //Display instructions for task
 $taskTypeUrl;
 if(count($tasks) > 0){
-	switch($tasks[$taskIndex]["activityStyle"]){
+	switch($tasks[$taskIndex]["taskType"]){
 		case "Likert Scale":
       		echo "<h4 class='blue-text text-darken-2'>Likert Scale</h4><br>";
       		echo "<h5 class='blue-text text-darken-2'>Task Instructions:</h5>";
@@ -112,32 +112,46 @@ if(count($tasks) > 0){
 				<img src=\"images/happy.png\" width=\"75px\"><img src=\"images/sad.png\" width=\"75px\">
 			</br>";
 			$taskTypeUrl = "likertScaleTask.php?taskIndex=" . $taskIndex;
+			echo "After the participant has completed their task, select the grey, quarter-circle button on the top right
+						of the screen to go to the next participant's turn.
+						</br>
+						<img src='images/greyCircle.png' width='60px'>
+				  ";
 			break;
 		case "Identify Body Parts":
       		echo "<h4 class='blue-text text-darken-2'>Identify Body Parts</h4><br>";
       		echo "<h5 class='blue-text text-darken-2'>Task Instructions:</h5>";
 			echo $tasks[$taskIndex]['instruction'];
 			$taskTypeUrl = "identifyBodyPartsTask.php?taskIndex=" . $taskIndex;
+			echo "After the participant has completed their task, select the grey, quarter-circle button on the top right
+						of the screen to go to the next participant's turn.
+						</br>
+						<img src='images/greyCircle.png' width='60px'>
+				  ";
 			break;
 		case "Character Ranking":
       		echo "<h4 class='blue-text text-darken-2'>Character Ranking</h4><br>";
       		echo "<h5 class='blue-text text-darken-2'>Task Instructions:</h5>";
 			echo $tasks[$taskIndex]['instruction'];
 			$taskTypeUrl = "characterRankingTask.php?taskIndex=" . $taskIndex;
+			echo " After the participant has completed their task, select the grey, quarter-circle button on the top right
+						of the screen to go to the next participant's turn.
+						</br>
+						<img src='images/greyCircle.png' width='60px'>
+				  ";
 			break;
 		case "Preferred Mechanic":
 			echo "<h4 class='blue-text text-darken-2'>Preferred Mechanics</h4><br>";
 			echo "<h5 class='blue-text text-darken-2'>Task Instructions:</h5>";
 			echo $tasks[$taskIndex]['instruction'];
 			$taskTypeUrl = "preferredMechanicsTask.php?taskIndex=" . $taskIndex;
+			echo " After the participant has completed their task, click the next button to go to the next participant's turn.	</br>";
+					
 			break;
 	}
 }
 ?>
-						After the participant has completed their task, select the grey, quarter-circle button on the top right
-						of the screen to go to the next participant's turn.
-						</br>
-						<img src="images/greyCircle.png" width="60px">
+						
 					</div>
 					<h5 class="blue-text darken-2">Images Under Test:</h5>
 <?php
