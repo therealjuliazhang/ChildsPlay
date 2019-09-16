@@ -27,29 +27,49 @@ if(isset($_SESSION["groupID"]))
 	$groupID = $_SESSION["groupID"];
 else if(isset($_GET["testID"])){ //should be true if it is in preview mode
 	$testID = $_GET["testID"];
-	$tasks = getTasks($conn, $testID);
+	//$taskID = 0;
+	if(isset($_GET["taskID"])){
+		$taskID = $_GET["taskID"];
+	}
+	else
+		$taskID = 0;
+	/*else*/	
+	$tasks = getTasks($conn, $testID, $taskID);
 	$groupID = 4;  //group with group ID: 4 is the preview group
 	$_SESSION['groupID'] = $groupID;
 	$_SESSION['testID'] = $testID;
-	$mode = $_GET["mode"];
-	$_SESSION['mode'] = "preview";
+	if(isset($_GET["mode"])){
+		$mode = $_GET["mode"];
+		$_SESSION["mode"] = $mode;
+	}
+	//$mode = $_GET["mode"];
+	//$_SESSION['mode'] = "preview";
 } 
 else if(isset($_GET["groupID"])){ //should be true if it is the first task of test
 	$groupID = $_GET["groupID"];
 	$_SESSION['groupID'] = $groupID;
-	$tasks = getTasks($conn, $testID);
+        $taskID = 0;
+	$tasks = getTasks($conn, $testID, $taskID);
 }
 //get tasks and set to session
-function getTasks($conn, $testID){
-	$query = "SELECT taskID FROM TASKASSIGNMENT WHERE testID=".$testID;
-	$result = $conn->query($query);
-	while($value = mysqli_fetch_assoc($result)){
-		$taskQuery = "SELECT * FROM TASK WHERE taskID=".$value["taskID"];
-		$result2 = $conn->query($taskQuery);
-		while($row = mysqli_fetch_assoc($result2))
-			$tasks[] = $row;
+function getTasks($conn, $testID, $taskID){
+	if($taskID == 0){
+		$query = "SELECT taskID FROM TASKASSIGNMENT WHERE testID=".$testID;
+		$result = $conn->query($query);
+		while($value = mysqli_fetch_assoc($result)){
+			$taskQuery = "SELECT * FROM TASK WHERE taskID=".$value["taskID"];
+			$result2 = $conn->query($taskQuery);
+			while($row = mysqli_fetch_assoc($result2))
+				$tasks[] = $row;
+		}
+		$taskID = $tasks[0]['taskID'];
 	}
-	$taskID = $tasks[0]['taskID'];
+	else{
+		$taskQuery = "SELECT * FROM TASK WHERE taskID=".$taskID;
+			$result2 = $conn->query($taskQuery);
+			while($row = mysqli_fetch_assoc($result2))
+				$tasks[] = $row;
+	}
 	$_SESSION['tasks'] = $tasks;
 	return $tasks;
 }
