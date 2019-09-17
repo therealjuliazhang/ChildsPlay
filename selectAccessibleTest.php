@@ -45,9 +45,10 @@
         </script>
         <!--end header-->
         <!-- body content -->
+		<div id="bodyPart">
         <h5 class="blue-text darken-2 header">Available Tests</h5>
 		<div id="availableTest">
-            <table class="highlight centered">
+            <table class="striped centered">
                 <thead class="blue-text darken-2">
                     <tr>
                         <th>Name</th>
@@ -61,6 +62,7 @@
 			    </tbody>
             </table>
             <a id="back" href="accessibleTest.php" class="right waves-effect waves-light btn blue darken-4">Back</a>
+		</div>
 		</div>
         <!--end body content-->
     </body>
