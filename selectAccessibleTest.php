@@ -45,7 +45,7 @@
         </script>
         <!--end header-->
         <!-- body content -->
-		<div id="bodyPart">
+		<div class="container">
         <h5 class="blue-text darken-2 header">Available Tests</h5>
 		<div id="availableTest">
             <table class="striped centered">
