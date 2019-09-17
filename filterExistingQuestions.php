@@ -43,7 +43,7 @@
 
             <h5>Task Type</h5>
             <div class="row">
-              <div class="input-field col s4">
+              <div class="input-field col s6">
                 <select class="">
                   <option value="" selected disabled>Select Task Type:</option>
                   <option value="1">Identify Body Parts</option>
