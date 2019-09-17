@@ -1,17 +1,28 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-<?php
+  <?php
   include 'db_connection.php';
   $conn = OpenCon();
 
-  //need to change and make value hwo is currently logged in
-  $userID = 1;
+  session_start();
+
+  if(isset($_SESSION["userID"]))
+    $userID = $_SESSION["userID"];
+  
   //get userinfo from database
   $sql = "SELECT * FROM users WHERE userID = " .$userID;
   $users = array();
   $result = $conn ->query($sql);
   while($row = mysqli_fetch_assoc($result))
       $users[] = $row;
+
+
+  //get location information from database
+  $sql = "SELECT * FROM location";
+  $locationArray = array();
+  $result = $conn ->query($sql);
+  while($row = mysqli_fetch_assoc($result))
+      $locationArray[] = $row;
   ?>
   <head>
     <title>ProfilePage</title>
@@ -25,13 +36,19 @@
   </head>
   <body>
     <!--header-->
-    <div id="InsertHeader"></div>
-    <script>
-      //Read header
-      $(function(){
-        $("#InsertHeader").load("header.html");
-      });
-    </script>
+    <div class="navbar-fixed">
+      <nav class="nav-extended blue darken-4">
+        <div class="nav-wrapper">
+          <a href="#" class="brand-logo left"><img src="images/logo1.png" ></a>
+          <ul id="nav-mobile" class="left hide-on-med-and-down">
+            <li  class="active"><a href="">Tests</a></li>
+            <li><a href="">Create</a></li>
+            <li><a href="" >Results</a></li>
+            <li><a href="">Users</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
     <!--Content User Information under the header-->
     <div class="navbar-fixed">
     <table id="infoTable" height="200px" class="white-text">
@@ -49,7 +66,7 @@
           <div id="userIconCell">
           <i class="medium material-icons" id="mailIcon">account_box</i>
           <span id="userType">Admin</span><br>
-          <a href="home.html" class="waves-effect waves-light btn #2196f3 blue right" id="logoutButton" onclick="logout()">Logout</a>
+          <a class="waves-effect waves-light btn #2196f3 blue right" id="logoutButton" onclick="logout()">Logout</a>
           </div>
 
           </td>
@@ -65,7 +82,7 @@
     </ul>
     <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 
-
+  <form method="post" action="updateAdmin.php">
     <!--Main contents-->
     <div class="panel-group">
     <!--html for profile tab-->
@@ -75,17 +92,17 @@
          <div class="col s12 blue-text darken-2"><h5>Account Information</h5></div>
          <div class="col s3 column01"><h5 class="hInCol">Username:</h5></div>
          <div class='input-field col s9'>
-           <input id="uName" name="uName" disabled type='text' class='validate inputInCol'>
+           <input id="uName" name="uName" readonly type='text' class='validate inputInCol'>
          </div>
 
          <div class="col s3 column01"><h5 class="hInCol">Password:</h5></div>
          <div class='input-field col s9'>
-           <input id="password" name="password" disabled value='********' type='text' class='validate inputInCol'>
+           <input id="password" name="password" readonly value='********' type='text' class='validate inputInCol'>
          </div>
          <div class="col s12 blue-text darken-2"><h5>Personal Information</h5></div>
          <div class="col s3 valign-wrapper column01"><h5 class="hInCol">Email:</h5></div>
          <div class='input-field col s9'>
-          <input id="email" name="mailInput" disabled type='text' class='validate inputInCol'>
+          <input id="email" name="mailInput" readonly type='text' class='validate inputInCol'>
          </div>
        </div>
      </div>
@@ -105,96 +122,53 @@
     </div>
 
     <!--html for Location tab-->
-    <div class="panel">
-    <div class="container">
-       <div class="row" id="locationInfo">
-         <div class="col s11 blue-text darken-2"><h5>Name</h5></div>
-
-         <div class="removable">
-         <div class='col s11'>
-           <input disabled value='University of Wollongong' type='text' class='validate inputInColB'>
-         </div>
-         <div class="col s1">
-           <div class='col s1 removeCell'><a class='waves-effect waves-light btn hide removeButtonB'><i class='material-icons'>remove</i></a></div>
-         </div>
-        </div>
-
-        <div class="removable">
-         <div class='col s11'>
-           <input disabled value='Keiraville Community Preschool' type='text' class='validate inputInColB'>
-         </div>
-         <div class="col s1">
-           <div class='col s1 removeCell'><a class='waves-effect waves-light btn hide removeButtonB'><i class='material-icons'>remove</i></a></div>
-         </div>
-       </div>
-
-       <div class="removable">
-         <div class='col s11'>
-           <input disabled value='KU Gwynneville Preschool' type='text' class='validate inputInColB'>
-         </div>
-         <div class="col s1">
-           <div class='col s1 removeCell'><a class='waves-effect waves-light btn hide removeButtonB'><i class='material-icons'>remove</i></a></div>
-         </div>
-       </div>
-
-       <div class="removable">
-         <div class='col s11'>
-           <input disabled value='Wollongong City Community Preschool' type='text' class='validate inputInColB'>
-         </div>
-         <div class="col s1">
-           <div class='col s1 removeCell'><a class='waves-effect waves-light btn hide removeButtonB'><i class='material-icons'>remove</i></a></div>
-         </div>
-       </div>
-
-       <div class="removable">
-         <div class='col s11'>
-           <input disabled value='Balgownie Preschool' type='text' class='validate inputInColB'>
-         </div>
-         <div class="col s1">
-           <div class='col s1 removeCell'><a class='waves-effect waves-light btn hide removeButtonB'><i class='material-icons'>remove</i></a></div>
-         </div>
-       </div>
+<form id>
+<div class="panel">
+  <div class="container">
+      <div class="row" id="locationInfo">
+        <div class="col s11 blue-text darken-2"><h5>Name</h5></div>
      </div>
 
        <div class="row">
-         <div class="col s1 offset-s11"><a class="waves-effect waves-light btn blue darken-4 addCell hide" id="addButtonB" onclick="appendRow()"><i class="material-icons">add</i></a></div>
-         <div class="col s1 offset-s10"><a class="waves-effect waves-light btn #2196f3 blue" id="editButtonB">Edit</a></div>
-         <div class="col s1"><a class="waves-effect waves-light btn blue darken-2" id="saveButtonB">Save</a></div>
+         <div class="col s1 offset-s11"><a class="waves-effect waves-light btn blue darken-4 addCell hide right" id="addButtonB" onclick="appendRow()"><i class="material-icons">add</i></a></div>
+         <div class="col s1 offset-s10"><a class="waves-effect waves-light btn #2196f3 blue right" id="editButtonB">Edit</a></div>
+         <div class="col s1"><a class="waves-effect waves-light btn blue darken-2 right" id="saveButtonB">Save</a></div>
        </div>
 
     </div>
     </div>
   </div><!--Div for panel group-->
-
+</form>
   </body>
 
-  <script>
+<script>
 //enable input
   $(document).ready(function(){
     $("#editButton").click(function(){
-      $("#uName").prop( "disabled", false );
-      $("#password").prop( "disabled", false );
-      $("#email").prop( "disabled", false )
+      $("#uName").prop( "readonly", false );
+      $("#password").prop( "readonly", false );
+      $("#email").prop( "readonly", false )
       testValues();
     })
     loadProfileInfo();
+    loadLocationInfo();
   });
 //disable input
   $(document).ready(function(){
     $("#saveButton").click(function(){
-      $("#uName").prop( "disabled", true );
-      $("#password").prop( "disabled", true );
-      $("#email").prop( "disabled", true );
+      $("#uName").prop( "readonly", true );
+      $("#password").prop( "readonly", true );
+      $("#email").prop( "readonly", true );
     })
   });
 
 
-
+  //loads user info onto page 
   function loadProfileInfo()
   {
     var user = <?php echo json_encode($users); ?>;
     var format = "apple";
-    //display fullname
+    //display fullname 
     $("#fullNameTop").text(user[0].fullName);
     $("#mailInCell").text(user[0].email);
     $("#email").val(user[0].email);
@@ -204,25 +178,26 @@
     {
       $("#userType").text("Admin");
     }
-    else
+    else 
     {
       $("#userType").text("NotAdmin");
     }
   }
+  
 
 
 
 
   function testValues(){
-    val x = document.getElementById("uName");
+    var x = document.getElementById("uName");
 
     console.log(x);
-
+    
 
   }
+  
 
-
-//FUnction for switching tabs
+  //FUnction for switching tabs
   $(function($){
   	$('.tab').click(function(){
     	$('.is-active').removeClass('is-active');
@@ -235,25 +210,9 @@
     });
   });
 
-  //enable input for profile tab
-    $(document).ready(function(){
-      $("#editButton").click(function(){
-        $("#uName").prop( "disabled", false );
-        $("#password").prop( "disabled", false );
-        $("#email").prop( "disabled", false );
-      })
-    });
+ 
 
-  //disable input for profile tab
-    $(document).ready(function(){
-      $("#saveButton").click(function(){
-        $("#uName").prop( "disabled", true );
-        $("#password").prop( "disabled", true );
-        $("#email").prop( "disabled", true );
-      })
-    });
-
-    //enable input for location tab
+     //enable input for location tab
       $(document).ready(function(){
         $("#editButtonB").click(function(){
           $(".inputInColB").prop( "disabled", false );
@@ -262,7 +221,7 @@
         })
       });
 
-    //disable input for location tab
+      //disable input for location tab
       $(document).ready(function(){
         $("#saveButtonB").click(function(){
           $(".inputInColB").prop( "disabled", true );
@@ -274,11 +233,13 @@
       //Function for adding and deleting rows
       function appendRow() {
         //variables for a new row
-        var locationNameInput = "<div class='col s11'><input value='' type='text' class='validate inputInColB'></div>";
+        var locationNameInput = "<div class='col s4'><input value='' type='text' class='validate inputInColB'></div>";
+        var addressInput = "<div class='col s5'><input value='' type='text' class='validate inputInColB'></div>";
+        var dateInput = "<div class='col s2'>12/08/2019</div>";
         var removeButtonB = " <div class='col s1'><div class='col s1 removeCell'><a class='waves-effect waves-light btn removeButtonB'><i class='material-icons'>remove</i></a></div></div>";
 
         //insert a new row
-        var locations = "<div class='removable'>" + locationNameInput + removeButtonB + "</div>";
+        var locations = "<div class='removable'>" + locationNameInput + addressInput + dateInput + removeButtonB + "</div>";
 
         $("#locationInfo").append(locations);
 
@@ -289,11 +250,26 @@
         });
 
       };
+      
       //remove existing rows
       $('.removeButtonB').click(function() {
         $(this).closest('.removable').remove();
       });
 
-  </script>
+      function loadLocationInfo(){
+      var location = <?php echo json_encode($locationArray); ?>;
+      var format;
+      //display data 
+      location.forEach(function(result){
+        var locationNameInput = "<div class='col s11'><input disabled value='"+ result.name +"' type='text' class='validate inputInColB'></div>";
+
+        var removeButtonB = " <div class='col s1'><div class='col s1 removeCell'><a class='waves-effect waves-light btn hide removeButtonB'><i class='material-icons'>remove</i></a></div></div>";
+
+        var format = "<div class='removable'>" + locationNameInput + removeButtonB + "</div>";
+        $("#locationInfo").append(format);
+      });
+    }
+
+ </script>
 
 </html>
