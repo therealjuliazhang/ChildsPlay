@@ -36,13 +36,19 @@
   </head>
   <body>
     <!--header-->
-    <div id="InsertHeader"></div>
-    <script>
-      //Read header
-      $(function(){
-        $("#InsertHeader").load("header.html");
-      });
-    </script>
+    <div class="navbar-fixed">
+      <nav class="nav-extended blue darken-4">
+        <div class="nav-wrapper">
+          <a href="#" class="brand-logo left"><img src="images/logo1.png" ></a>
+          <ul id="nav-mobile" class="left hide-on-med-and-down">
+            <li  class="active"><a href="">Tests</a></li>
+            <li><a href="">Create</a></li>
+            <li><a href="" >Results</a></li>
+            <li><a href="">Users</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
     <!--Content User Information under the header-->
     <div class="navbar-fixed">
     <table id="infoTable" height="200px" class="white-text">
@@ -60,7 +66,7 @@
           <div id="userIconCell">
           <i class="medium material-icons" id="mailIcon">account_box</i>
           <span id="userType">Admin</span><br>
-          <a href="home.html" class="waves-effect waves-light btn #2196f3 blue right" id="logoutButton" onclick="logout()">Logout</a>
+          <a class="waves-effect waves-light btn #2196f3 blue right" id="logoutButton" onclick="logout()">Logout</a>
           </div>
 
           </td>
@@ -116,68 +122,17 @@
     </div>
 
     <!--html for Location tab-->
-<form>
+<form id>
 <div class="panel">
   <div class="container">
       <div class="row" id="locationInfo">
-        <div class="col s4 blue-text darken-2"><h5>Name</h5></div>
-        <div class="col s5 blue-text darken-2"><h5>Address</h5></div>
-        <div class="col s3 blue-text darken-2"><h5>Date added</h5></div>
-    <div class="panel">
-    <div class="container">
-       <div class="row" id="locationInfo">
-         <div class="col s11 blue-text darken-2"><h5>Name</h5></div>
-
-         <div class="removable">
-         <div class='col s11'>
-           <input disabled value='University of Wollongong' type='text' class='validate inputInColB'>
-         </div>
-         <div class="col s1">
-           <div class='col s1 removeCell'><a class='waves-effect waves-light btn hide removeButtonB'><i class='material-icons'>remove</i></a></div>
-         </div>
-        </div>
-
-        <div class="removable">
-         <div class='col s11'>
-           <input disabled value='Keiraville Community Preschool' type='text' class='validate inputInColB'>
-         </div>
-         <div class="col s1">
-           <div class='col s1 removeCell'><a class='waves-effect waves-light btn hide removeButtonB'><i class='material-icons'>remove</i></a></div>
-         </div>
-       </div>
-
-       <div class="removable">
-         <div class='col s11'>
-           <input disabled value='KU Gwynneville Preschool' type='text' class='validate inputInColB'>
-         </div>
-         <div class="col s1">
-           <div class='col s1 removeCell'><a class='waves-effect waves-light btn hide removeButtonB'><i class='material-icons'>remove</i></a></div>
-         </div>
-       </div>
-
-       <div class="removable">
-         <div class='col s11'>
-           <input disabled value='Wollongong City Community Preschool' type='text' class='validate inputInColB'>
-         </div>
-         <div class="col s1">
-           <div class='col s1 removeCell'><a class='waves-effect waves-light btn hide removeButtonB'><i class='material-icons'>remove</i></a></div>
-         </div>
-       </div>
-
-       <div class="removable">
-         <div class='col s11'>
-           <input disabled value='Balgownie Preschool' type='text' class='validate inputInColB'>
-         </div>
-         <div class="col s1">
-           <div class='col s1 removeCell'><a class='waves-effect waves-light btn hide removeButtonB'><i class='material-icons'>remove</i></a></div>
-         </div>
-       </div>
+        <div class="col s11 blue-text darken-2"><h5>Name</h5></div>
      </div>
 
        <div class="row">
-         <div class="col s1 offset-s11"><a class="waves-effect waves-light btn blue darken-4 addCell hide" id="addButtonB" onclick="appendRow()"><i class="material-icons">add</i></a></div>
-         <div class="col s1 offset-s10"><a class="waves-effect waves-light btn #2196f3 blue" id="editButtonB">Edit</a></div>
-         <div class="col s1"><a class="waves-effect waves-light btn blue darken-2" id="saveButtonB">Save</a></div>
+         <div class="col s1 offset-s11"><a class="waves-effect waves-light btn blue darken-4 addCell hide right" id="addButtonB" onclick="appendRow()"><i class="material-icons">add</i></a></div>
+         <div class="col s1 offset-s10"><a class="waves-effect waves-light btn #2196f3 blue right" id="editButtonB">Edit</a></div>
+         <div class="col s1"><a class="waves-effect waves-light btn blue darken-2 right" id="saveButtonB">Save</a></div>
        </div>
 
     </div>
@@ -213,7 +168,7 @@
   {
     var user = <?php echo json_encode($users); ?>;
     var format = "apple";
-    //display fullname
+    //display fullname 
     $("#fullNameTop").text(user[0].fullName);
     $("#mailInCell").text(user[0].email);
     $("#email").val(user[0].email);
@@ -223,7 +178,7 @@
     {
       $("#userType").text("Admin");
     }
-    else
+    else 
     {
       $("#userType").text("NotAdmin");
     }
@@ -237,10 +192,10 @@
     var x = document.getElementById("uName");
 
     console.log(x);
-
+    
 
   }
-
+  
 
   //FUnction for switching tabs
   $(function($){
@@ -278,11 +233,13 @@
       //Function for adding and deleting rows
       function appendRow() {
         //variables for a new row
-        var locationNameInput = "<div class='col s11'><input value='' type='text' class='validate inputInColB'></div>";
+        var locationNameInput = "<div class='col s4'><input value='' type='text' class='validate inputInColB'></div>";
+        var addressInput = "<div class='col s5'><input value='' type='text' class='validate inputInColB'></div>";
+        var dateInput = "<div class='col s2'>12/08/2019</div>";
         var removeButtonB = " <div class='col s1'><div class='col s1 removeCell'><a class='waves-effect waves-light btn removeButtonB'><i class='material-icons'>remove</i></a></div></div>";
 
         //insert a new row
-        var locations = "<div class='removable'>" + locationNameInput + removeButtonB + "</div>";
+        var locations = "<div class='removable'>" + locationNameInput + addressInput + dateInput + removeButtonB + "</div>";
 
         $("#locationInfo").append(locations);
 
@@ -304,12 +261,11 @@
       var format;
       //display data 
       location.forEach(function(result){
-        var locationNameInput = "<div class='col s4'><input disabled value='"+ result.name +"' type='text' class='validate inputInColB'></div>";
-        var addressInput = "<div class='col s5'><input disabled value='' type='text' class='validate inputInColB'></div>";
-        var dateInput = "<div class='col s2'></div>";
+        var locationNameInput = "<div class='col s11'><input disabled value='"+ result.name +"' type='text' class='validate inputInColB'></div>";
+
         var removeButtonB = " <div class='col s1'><div class='col s1 removeCell'><a class='waves-effect waves-light btn hide removeButtonB'><i class='material-icons'>remove</i></a></div></div>";
 
-        var format = "<div class='removable'>" + locationNameInput + addressInput + dateInput + removeButtonB + "</div>";
+        var format = "<div class='removable'>" + locationNameInput + removeButtonB + "</div>";
         $("#locationInfo").append(format);
       });
     }
