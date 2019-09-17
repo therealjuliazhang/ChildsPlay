@@ -19,24 +19,24 @@
   <body>
 
     <!--header-->
-    <div id="InsertHeader"></div>
 	<?php
 	//$contents = file_get_contents('header.html');
 	//echo $contents;
 	?>
+  <div id="InsertHeader"></div>
 	<script>
-      //Read header
+    //Read header
 	  $(document).ready(function(){
       //$(function(){
         $("#InsertHeader").load("header.html");
       });
-    </script>
+  </script>
 
 <!--body part-->
 <div id="bodyPart">
-  <h3 class="blue-text darken-2 header">Available Tests</h3>
+  <h5 class="blue-text darken-2 header">Available Tests</h5>
 
-  <table>
+  <table class="striped">
        <thead>
          <tr class="blue-text darken-2">
              <th>Name</th>

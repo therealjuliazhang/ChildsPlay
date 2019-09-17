@@ -104,9 +104,8 @@
 
       <div class="container">
        <div class="row">
-         <div class="col s10"></div>
-         <div class="col s1"><a class="waves-effect waves-light btn #2196f3 blue right" id="editButton">Edit</a></div>
-         <div class="col s1"><button class="submit waves-effect waves-light btn blue darken-2 right" id="saveButton" type="submit" value="submit">Save</button>
+         <div class="col s1 offset-s11" id="editButtonDiv"><a class="waves-effect waves-light btn #2196f3 blue right" id="editButton">Edit</a></div>
+         <div class="col s1 offset-s11 hide" id="saveButtonDiv"><button class="submit waves-effect waves-light btn blue darken-2 right" id="saveButton" type="submit" value="submit">Save</button>
          </div>
        </div>
       </div>
@@ -121,13 +120,13 @@
 <div class="panel">
   <div class="container">
       <div class="row" id="locationInfo">
-        <div class="col s11 blue-text darken-2"><h5>Name</h5></div>
+        <div class="col s11 blue-text darken-2"><h5>Location Names</h5></div>
      </div>
 
        <div class="row">
          <div class="col s1 offset-s11"><a class="waves-effect waves-light btn blue darken-4 addCell hide right" id="addButtonB" onclick="appendRow()"><i class="material-icons">add</i></a></div>
-         <div class="col s1 offset-s10"><a class="waves-effect waves-light btn #2196f3 blue right" id="editButtonB">Edit</a></div>
-         <div class="col s1"><a class="waves-effect waves-light btn blue darken-2 right" id="saveButtonB">Save</a></div>
+         <div class="col s1 offset-s11" id="editButtonDivB"><a class="waves-effect waves-light btn #2196f3 blue right" id="editButtonB">Edit</a></div>
+         <div class="col s1 offset-s11 hide" id="saveButtonDivB"><a class="waves-effect waves-light btn blue darken-2 right" id="saveButtonB">Save</a></div>
        </div>
 
     </div>
@@ -142,7 +141,10 @@
     $("#editButton").click(function(){
       $("#uName").prop( "readonly", false );
       $("#password").prop( "readonly", false );
-      $("#email").prop( "readonly", false )
+      $("#email").prop( "readonly", false );
+      $("#saveButtonDiv").removeClass("hide");
+      $("#editButtonDiv").addClass("hide");
+
       testValues();
     })
     loadProfileInfo();
@@ -154,6 +156,9 @@
       $("#uName").prop( "readonly", true );
       $("#password").prop( "readonly", true );
       $("#email").prop( "readonly", true );
+      $("#saveButtonDiv").addClass("hide");
+      $("#editButtonDiv").removeClass("hide");
+
     })
   });
 
@@ -213,6 +218,8 @@
           $(".inputInColB").prop( "disabled", false );
           $(".removeButtonB").removeClass("hide");
           $("#addButtonB").removeClass("hide");
+          $("#saveButtonDivB").removeClass("hide");
+          $("#editButtonDivB").addClass("hide");
         })
       });
 
@@ -222,22 +229,20 @@
           $(".inputInColB").prop( "disabled", true );
           $(".removeButtonB").addClass("hide");
           $("#addButtonB").addClass("hide");
+          $("#editButtonDivB").removeClass("hide");
+          $("#saveButtonDivB").addClass("hide");
         })
       });
 
       //Function for adding and deleting rows
       function appendRow() {
         //variables for a new row
-        var locationNameInput = "<div class='col s4'><input value='' type='text' class='validate inputInColB'></div>";
-        var addressInput = "<div class='col s5'><input value='' type='text' class='validate inputInColB'></div>";
-        var dateInput = "<div class='col s2'>12/08/2019</div>";
+        var locationNameInput = "<div class='col s11'><input value='' type='text' class='validate inputInColB'></div>";
         var removeButtonB = " <div class='col s1'><div class='col s1 removeCell'><a class='waves-effect waves-light btn removeButtonB'><i class='material-icons'>remove</i></a></div></div>";
-
         //insert a new row
-        var locations = "<div class='removable'>" + locationNameInput + addressInput + dateInput + removeButtonB + "</div>";
+        var locations = "<div class='removable'>" + locationNameInput + removeButtonB + "</div>";
 
         $("#locationInfo").append(locations);
-
 
         //remove added rows
         $('.removeButtonB').click(function() {

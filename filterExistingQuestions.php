@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 <html>
     <head>
         <title>Child'sPlay</title>
@@ -5,6 +7,7 @@
             <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
                     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
                     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
                 </head>
     <!--code for jquery-->
@@ -23,7 +26,7 @@
         <!--end header-->
         <!-- body content -->
         <div class="container">
-            <h4>Filter By:</h4>
+            <h4 class="blue-text darken-2">Filter By:</h4>
             <h5>Date Created</h5>
             <table>
                 <tr>
@@ -38,25 +41,34 @@
                 </tr>
             </table>
 
-            <h5>Task Type</h5><br/>
-
+            <h5>Task Type</h5>
+            <div class="row">
+              <div class="input-field col s4">
+                <select class="">
+                  <option value="" selected disabled>Select Task Type:</option>
+                  <option value="1">Identify Body Parts</option>
+                  <option value="2">Character Ranking</option>
+                  <option value="3">Likert Scale</option>
+                  <option value="3">Preferred Mechanics</option>
+                </select>
+              </div>
+            </div>
+<!--
             <ul id = "dropdown" class = "dropdown-content">
                 <li><a href = "#">Identify Body Parts</a></li>
                 <li><a href = "#">Character Ranking</a></li>
                 <li><a href = "#">Likert Scale</a></li>
                 <li><a href = "#">Preferred Mechanics</a></li>
+                <a class = "btn dropdown-button blue darken-4" href = "#" data-activates = "dropdown">Task Type</a>
             </ul>
-
-            <a class = "btn dropdown-button blue darken-4" href = "#" data-activates = "dropdown">Task Type</a>
-
-            <br/><br/><br/><br/>
+-->
             <!--table for holding tasks-->
             <table class="striped">
                 <thead>
-                    <tr>
+                    <tr class="blue-text darken-2">
                         <th>TaskID</th>
                         <th>Instruction</th>
-						<th>Activity Style</th>
+						            <th>Activity Style</th>
                         <th>Preview</th>
                         <th>Edit</th>
                         <th>Add</th>
@@ -80,10 +92,21 @@ while($row = mysqli_fetch_assoc($result)){
 ?>
                 </tbody>
             </table>
+          <div class="row">
+            <div class="col s1 offset-s11"><a class="waves-effect waves-light btn #2196f3 blue right" id="cancelButton">Cancel</a></div>
+          </div>
         </div>
         <!--end body content-->
     </body>
     <script>
+    //Initialize Selector
+     $(document).ready(function(){
+       $('select').formSelect();
+     });
+     //Initialize Date Picker
+     $(document).ready(function(){
+       $('.datepicker').datepicker();
+    });
         $('.datepicker').on('mousedown',function(event){
                             event.preventDefault();
                             });
@@ -115,6 +138,19 @@ while($row = mysqli_fetch_assoc($result)){
     }
     .header{
         margin-top: 30px;
+    }
+    #cancelButton{
+      margin-top: 15px;
+    }
+    .datepicker-date-display {
+    background-color: #1976D2;
+    color: #fff;
+    }
+    .datepicker-cancel, .datepicker-clear, .datepicker-today, .datepicker-done {
+    color: #1976D2;
+    }
+    .datepicker-table td.is-selected {
+    background-color: #1976D2;
     }
     </style>
 </html>
