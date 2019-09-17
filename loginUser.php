@@ -16,7 +16,8 @@
       $sql = "SELECT userID FROM USERS WHERE username = '".$username."'";
       $result = mysqli_query($conn, $query);
       $userID = mysqli_fetch_assoc($result)['userID'];
-  	  $_SESSION['userID'] = $userID;
+        $_SESSION['userID'] = $userID;
+    //check if admin or educator and redirect to correct page
   	  header('location: educatorTests.php');
   	}else {
         header('location: login.php?msg=failed');
