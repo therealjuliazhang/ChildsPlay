@@ -4,8 +4,8 @@
 	session_start();
 	if(isset($_SESSION["userID"]))
 		$userID = $_SESSION["userID"];
-	else
-		header('login.php');
+	//else
+		//header("Location: login.php");
 
 	//the group used for previewing tests
 	$previewGroupID = 4;
@@ -13,12 +13,15 @@
 	//task id in GET is set if task is being previewed
 	if (isset($_GET['from'])){
 		$from = $_GET['from'];
+		//if from == edit
 		if (isset($_GET['taskID']))
 			$taskID = $_GET['taskID'];
 		$groupID = $previewGroupID;
 		$isPreview = true;
 		$taskIndex = 0;
+        //$tasks = $_SESSION['tasks'];
 		$tasks = 0;
+		//if from == available test
 	}
 	else{ //else if not preview
 		if (isset($_SESSION['groupID']))
@@ -31,6 +34,7 @@
 	}
 	include 'db_connection.php';
 	$conn = OpenCon();
+	
 	//fetch images
 	$sql = "SELECT I.imageID, I.address, IA.taskID FROM IMAGE I JOIN IMAGEASSIGNMENT IA ON I.imageID = IA.imageID WHERE taskID = '$taskID'";
 	$result = $conn->query($sql);
@@ -38,7 +42,7 @@
 	while($row = mysqli_fetch_assoc($result))
 	   $images[] = $row;
 	//fetch preschoolers
-	$sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$groupID." AND userID=".$userID;
+	$sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$groupID." AND userID=1";//.$userID;
 	$result = $conn->query($sql);
 	$preschoolers = array();
 	while($row = mysqli_fetch_assoc($result)){
@@ -151,11 +155,11 @@
 		//check whether it is in preview mode
 		var isPreview = <?php echo(json_encode($isPreview)); ?>;
 		console.log("Is preview " + isPreview);
-		/*var from; //if preview check if from edit page or available test page ect.
+		var from; //if preview check if from edit page or available test page ect.
 		if(isPreview)
 			from = <?php echo(json_encode($from)); ?>; // checks from which page preview was opened
-		console.log("From: " + fromTest);
-		*/
+		//console.log("From: " + fromTest);
+		/**/
 		var taskIndex = <?php echo(json_encode($taskIndex)); ?>;
 		var tasks = <?php echo(json_encode($tasks)); ?>;
 		var taskID = <?php echo(json_encode($taskID)); ?>;
@@ -176,8 +180,12 @@
 			if(preschoolerIndex == preschoolers.length){
 				//if task was preview, go back to edit test page
 				if(isPreview){
-					if(from = "edit")
-						window.location.href = "EditTest.php";
+					if(from == "edit")
+						window.location.href = "editTest.php";
+					else if(from == "availableTests")
+						window.location.href = "viewExistingTests.php";
+					else if (from == "existingTasks")
+						window.location.href = "filterExistingQuestions.php";
 				}
 				else{
 					var taskIndex = <?php echo $taskIndex ?>;

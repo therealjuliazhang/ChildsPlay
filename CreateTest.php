@@ -92,7 +92,6 @@ session_start();
 						<td>Activity Style</td>
                         <td>Instruction</td>
                         <td>Preview</td>
-                        <td>Edit</td>
 						<td>Remove</td>
                     </tr>
                 </thead>
@@ -147,7 +146,6 @@ session_start();
 								"<td>".$row["activityStyle"]."</td>".
 								"<td>".$row["instruction"]."</td>".
 								"<td><a class='waves-effect waves-light btn blue darken-2'>Preview</a></td>".
-								"<td><a class='waves-effect waves-light btn blue darken-4'>Edit</a></td>".
 								"<td><a class='waves-effect waves-light btn blue darken-4' href='?taskID=".$row["taskID"]."&remove=true'>Remove</a></td></tr>";
 					}
 				}

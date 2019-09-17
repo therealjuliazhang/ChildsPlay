@@ -5,7 +5,9 @@ session_start();
 if(isset($_SESSION["userID"]))
 	$userID = $_SESSION["userID"];
 else
-	header('login.php');
+	$userID = 1;
+	//header("Location: login.php");
+
 //the group used for previewing tests
 $previewGroupID = 4;
 $isPreview = false;
@@ -60,9 +62,9 @@ mysqli_close($conn);
 	//check whether it is in preview mode
 	var isPreview = <?php echo(json_encode($isPreview)); ?>;
 	var from; //if preview check if from edit page or available test page ect.
-	/*if(isPreview)
+	if(isPreview)
 		from = <?php echo(json_encode($from)); ?>; // checks from which page preview was opened
-	*/
+	
 	var taskID = <?php echo(json_encode($taskID)); ?>;
 	//preschoolerNumber determines whos turn it is
 	var preschoolerNumber = 0;
@@ -72,7 +74,7 @@ mysqli_close($conn);
 	var colours = ['amber accent-4', 'red', 'deep-purple', 'deep-orange', ' blue accent-4', 'teal', 'indigo accent-4', 'light-green accent-4', 'green', 'lime'];
 	//characters being tested
 	var images = <?php echo(json_encode($images)); ?>;
-	var pointsToGive = images.length * 5;
+	var pointsToGive = images.length * 5; //set 5
 	//creates canvas and displays preschoolers name
 	window.onload = function() {
 		displayCharacters();
@@ -85,8 +87,12 @@ mysqli_close($conn);
 		if(preschoolerNumber == preschoolers.length){
 			//if task was preview, go back to previous page
 			if(isPreview){
-				if(from = "edit")
-					window.location.href = "EditTest.php";
+				if(from == "edit")
+					window.location.href = "editTest.php";
+				else if(from == "availableTests")
+					window.location.href = "viewExistingTests.php";
+				else if (from == "existingTasks")
+					window.location.href = "filterExistingQuestions.php";
 			}
 			else{
 				var taskIndex = <?php echo $taskIndex ?>;
@@ -117,7 +123,7 @@ mysqli_close($conn);
 			div.appendChild(img);
 			div.onclick = function(){
 				this.setAttribute('points', parseInt(this.getAttribute("points")) + pointsToGive);
-				pointsToGive -= 5;
+				pointsToGive -= 5; //change 5 to input variable
 				this.classList.add("chosen");
 				//send results to php file
 				$.ajax({
