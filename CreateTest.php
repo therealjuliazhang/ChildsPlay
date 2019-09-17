@@ -1,6 +1,7 @@
 <?php
-session_start();	
+session_start();
 ?>
+<!DOCTYPE html>
 
 <html>
     <head>
@@ -21,7 +22,7 @@ session_start();
         </script>
     </head>
     <!--code for jquery-->
-    
+
     <!--the stuff in the head is all the linking things to Materialize-->
     <!--all the linking's been done, so you shouldn't need to download anything from Materialise-->
     <body>
@@ -105,17 +106,17 @@ session_start();
 				$conn = OpenCon();
 				$taskList = array();
 				$idList = array();
-                                
+
                 //session_destroy();
                 //unset($_GET["list"]);
-                                
+
 				//get a list of newly created tasks and store it in SESSION
 				if(isset($_GET["taskID"])){
 					$taskID = $_GET["taskID"];
 					if(!isset($_SESSION["list"])){
 						$_SESSION["list"] = $taskID;
 						array_push($idList, $taskID);
-					} 
+					}
 					else{
 						$taskList = explode(",", $_SESSION["list"]);
 						if(!in_array($taskID, $taskList)){
@@ -152,9 +153,9 @@ session_start();
 				?>
                 </tbody>
             </table>
-            
+
             <br/>
-            
+
             <div align="right">
                 <ul id = "dropdown" class = "dropdown-content">
                     <li><a href="filterExistingQuestions.php">Existing Tasks</a></li>
@@ -175,9 +176,9 @@ session_start();
         <!--end body content-->
     </body>
     <script>
-        
+
     </script>
-    
+
     <style>
         #body {
             padding-left: 330px;
@@ -194,7 +195,7 @@ session_start();
         margin-top: 15px;
         margin-right:15px;
     }
-    
+
     .nav-wrapper > ul {
         margin-left: 220px;
     }

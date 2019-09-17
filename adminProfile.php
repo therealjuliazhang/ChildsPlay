@@ -8,7 +8,7 @@
 
   if(isset($_SESSION["userID"]))
     $userID = $_SESSION["userID"];
-  
+
   //get userinfo from database
   $sql = "SELECT * FROM users WHERE userID = " .$userID;
   $users = array();
@@ -36,19 +36,14 @@
   </head>
   <body>
     <!--header-->
-    <div class="navbar-fixed">
-      <nav class="nav-extended blue darken-4">
-        <div class="nav-wrapper">
-          <a href="#" class="brand-logo left"><img src="images/logo1.png" ></a>
-          <ul id="nav-mobile" class="left hide-on-med-and-down">
-            <li  class="active"><a href="">Tests</a></li>
-            <li><a href="">Create</a></li>
-            <li><a href="" >Results</a></li>
-            <li><a href="">Users</a></li>
-          </ul>
-        </div>
-      </nav>
-    </div>
+    <div id="InsertHeader"></div>
+  	<script>
+      //Read header
+  	  $(document).ready(function(){
+        //$(function(){
+          $("#InsertHeader").load("header.html");
+        });
+    </script>
     <!--Content User Information under the header-->
     <div class="navbar-fixed">
     <table id="infoTable" height="200px" class="white-text">
@@ -163,12 +158,12 @@
   });
 
 
-  //loads user info onto page 
+  //loads user info onto page
   function loadProfileInfo()
   {
     var user = <?php echo json_encode($users); ?>;
     var format = "apple";
-    //display fullname 
+    //display fullname
     $("#fullNameTop").text(user[0].fullName);
     $("#mailInCell").text(user[0].email);
     $("#email").val(user[0].email);
@@ -178,12 +173,12 @@
     {
       $("#userType").text("Admin");
     }
-    else 
+    else
     {
       $("#userType").text("NotAdmin");
     }
   }
-  
+
 
 
 
@@ -192,10 +187,10 @@
     var x = document.getElementById("uName");
 
     console.log(x);
-    
+
 
   }
-  
+
 
   //FUnction for switching tabs
   $(function($){
@@ -210,7 +205,7 @@
     });
   });
 
- 
+
 
      //enable input for location tab
       $(document).ready(function(){
@@ -250,7 +245,7 @@
         });
 
       };
-      
+
       //remove existing rows
       $('.removeButtonB').click(function() {
         $(this).closest('.removable').remove();
@@ -259,7 +254,7 @@
       function loadLocationInfo(){
       var location = <?php echo json_encode($locationArray); ?>;
       var format;
-      //display data 
+      //display data
       location.forEach(function(result){
         var locationNameInput = "<div class='col s11'><input disabled value='"+ result.name +"' type='text' class='validate inputInColB'></div>";
 
