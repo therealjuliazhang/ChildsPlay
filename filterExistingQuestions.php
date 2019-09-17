@@ -13,24 +13,13 @@
     <!--all the linking's been done, so you shouldn't need to download anything from Materialise-->
     <body>
         <!--header-->
-        <div class="row">
-            <div class="navbar-fixed">
-                <nav class="nav-extended blue darken-4">
-                    <div class="nav-wrapper">
-                        <a href="#" class="brand-logo left"><img src="images/logo1.png" ></a>
-                        <ul id="nav-mobile" class="left hide-on-med-and-down">
-                            <li><a href="">Tests</a></li>
-                            <li><a href="">Create</a></li>
-                            <li class="active"><a href="" >Results</a></li>
-                            <li><a href="">Users</a></li>
-                        </ul>
-                        <ul id="logoutButton" class="right hide-on-med-and-down logout">
-                            <li><a class="waves-effect waves-light btn blue darken-2 right" onclick="logout()">Logout</a></li>
-                        </ul>
-                    </div>
-                </nav>
-            </div>
-        </div>
+        <div id="InsertHeader"></div>
+        <script>
+          //Read header
+          $(function(){
+            $("#InsertHeader").load("educatorHeader.html");
+          });
+        </script>
         <!--end header-->
         <!-- body content -->
         <div class="container">
@@ -48,18 +37,18 @@
                     </td>
                 </tr>
             </table>
-            
+
             <h5>Task Type</h5><br/>
-            
+
             <ul id = "dropdown" class = "dropdown-content">
                 <li><a href = "#">Identify Body Parts</a></li>
                 <li><a href = "#">Character Ranking</a></li>
                 <li><a href = "#">Likert Scale</a></li>
                 <li><a href = "#">Preferred Mechanics</a></li>
             </ul>
-            
+
             <a class = "btn dropdown-button blue darken-4" href = "#" data-activates = "dropdown">Task Type</a>
-            
+
             <br/><br/><br/><br/>
             <!--table for holding tasks-->
             <table class="striped">
@@ -102,7 +91,7 @@ while($row = mysqli_fetch_assoc($result)){
                                    selectMonths: true, // Enable Month Selection
                                    selectYears: 10 // Creates a dropdown of 10 years to control year
                                    });
-        
+
     </script>
     <style>
         #body {
@@ -120,7 +109,7 @@ while($row = mysqli_fetch_assoc($result)){
         margin-top: 15px;
         margin-right:15px;
     }
-    
+
     .nav-wrapper > ul {
         margin-left: 220px;
     }
@@ -129,4 +118,3 @@ while($row = mysqli_fetch_assoc($result)){
     }
     </style>
 </html>
-
