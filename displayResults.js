@@ -1,85 +1,107 @@
 //needed for not putting padding-top on first header
 var firstHeader = true;
-var isRankingEmpty = false;
-var isLikertEmpty = false;
-var isMechanicEmpty = false;
+
+// var isRankingEmpty = false;
+// var isLikertEmpty = false;
+// var isMechanicEmpty = false;
 //var isBodyPartsEmpty = false;
 
+//display result
+// function displayResult(results){
+//     taskIDs = getUniqueIDs(results);
+// }
 // display results for identify body part 
-function displayBody(bodyResults){
-    taskIDs = getUniqueIDs(bodyResults);
-    displayResults(bodyResults, taskIDs, "Identify Body Parts");
-}
+// function displayBody(bodyResults){
+//     taskIDs = getUniqueIDs(bodyResults);
+//     displayResults(bodyResults, taskIDs, "Identify Body Parts");
+// }
 //display results for character ranking
-function displayRanking(rankingResults){
-	if(rankingResults.length == 0) {isRankingEmpty = true; console.log("True check");}
-	else {isRankingEmpty = false;console.log("False check");}
-    taskIDs = getUniqueIDs(rankingResults);
-    displayResults(rankingResults, taskIDs, "Character Ranking", );
-}
+// function displayRanking(rankingResults){
+// 	if(rankingResults.length == 0) {isRankingEmpty = true;}
+// 	else {isRankingEmpty = false;}
+//     taskIDs = getUniqueIDs(rankingResults);
+//     displayResults(rankingResults, taskIDs, "Character Ranking", );
+// }
 
 // display results for likert scale
-function displayLikert(likertResults){
-	if(likertResults.length == 0) isLikertEmpty = true;
-	else isLikertEmpty = false;
-    taskIDs = getUniqueIDs(likertResults);
-    displayResults(likertResults, taskIDs, "Likert Scale");
-}
+// function displayLikert(likertResults){
+// 	if(likertResults.length == 0) isLikertEmpty = true;
+// 	else isLikertEmpty = false;
+//     taskIDs = getUniqueIDs(likertResults);
+//     displayResults(likertResults, taskIDs, "Likert Scale");
+// }
 //display results for preferred mechanics
-function displayMechanics(mechanicResults){
-	if(mechanicResults.length == 0) isMechanicEmpty = true;
-	else isMechanicEmpty = false;
-    taskIDs = getUniqueIDs(mechanicResults);
-    displayResults(mechanicResults, taskIDs, "Preferred Mechanics");
-}
+// function displayMechanics(mechanicResults){
+// 	if(mechanicResults.length == 0) isMechanicEmpty = true;
+// 	else isMechanicEmpty = false;
+//     taskIDs = getUniqueIDs(mechanicResults);
+//     displayResults(mechanicResults, taskIDs, "Preferred Mechanics");
+// }
 
 //get all unique task IDs from results
-function getUniqueIDs(results){
+// function getUniqueIDs(results){
+//     taskIDs = [...new Set(results.map(item => item.taskID))];
+//     return taskIDs;
+// }
+
+//display all results for one activity style
+function displayResults(results){
     taskIDs = [...new Set(results.map(item => item.taskID))];
-    return taskIDs;
-}
-//display results for one task
-function displayResults(results, taskIDs, taskType){
     taskIDs.forEach(function(taskID){
         //get only the results for this task ID
         var taskResults = results.filter(function(result){
             return result['taskID'] == taskID;
         });
+        //get activity style
+        var activityStyle = getTaskType(taskResults[0]);
         //displays headers for each task results
-        displayHeaders(taskID, taskResults, taskType);
+        displayHeaders(taskID, taskResults, activityStyle);
         //displays graph results if likert or mechanics task
-        displayGraph(taskResults, taskType);
+        displayGraph(taskResults, activityStyle);
         //display ranking table if character ranking task
-        if(taskType == "Character Ranking")
+        if(activityStyle == "Character Ranking")
             displayRankingTable(taskResults);
         //display image results for body parts 
-        if(taskType == "Identify Body Parts")
+        if(activityStyle == "Identify Body Parts")
             displayBodyPartResult(taskResults);
         displayComments(taskResults);
     });
 }
+//get task type of task result
+function getTaskType(result){
+    var taskType;
+    if(result.hasOwnProperty("x"))
+        taskType = "Identify Body Parts";
+    else if(result.hasOwnProperty("totalScore"))
+        taskType = "Character Ranking";
+    else if(result.hasOwnProperty("happy"))
+        taskType = "Likert Scale";
+    else if(result.hasOwnProperty("mechanic"))
+        taskType = "Preferred Mechanics";
+    return taskType;
+}
 //displays headers for results and image if likert or mechanics task
-function displayHeaders(taskID, taskResults, taskType){
+function displayHeaders(taskID, taskResults, activityStyle){
     //if first header dont add padding-top, else put padding
     if(firstHeader){
         $('<h5/>', {
             class: "blue-text darken-2 header",
-            text: taskType + " - Task ID: " + taskID
+            text: activityStyle + " - Task ID: " + taskID
         }).appendTo('#results');  
         firstHeader = false; 
     }
     else{
         $('<h5/>', {
             class: "blue-text darken-2 header topPadding",
-            text: taskType + " - Task ID: " + taskID
+            text: activityStyle + " - Task ID: " + taskID
         }).appendTo('#results');   
     }
     $('<h6/>', {
         class: "blue-text darken-2 header",
-        text: "Activity: " + taskResults[0]['activity']
+        text: "Activity: " + taskResults[0]["instruction"]
     }).appendTo('#results'); 
     //display image if likert or mechanics task  
-    if(taskType == "Likert Scale" || taskType == "Preferred Mechanics"){
+    if(activityStyle == "Likert Scale" || activityStyle == "Preferred Mechanics"){
         $('<img/>', {
             class: "image",
             src: taskResults[0]['address'],
@@ -92,8 +114,8 @@ function displayHeaders(taskID, taskResults, taskType){
     }).appendTo('#results');  
 }
 //displays results graph if likert or mechanics task
-function displayGraph(taskResults, taskType){
-    if(taskType == "Likert Scale" || taskType == "Preferred Mechanics"){
+function displayGraph(taskResults, activityStyle){
+    if(activityStyle == "Likert Scale" || activityStyle == "Preferred Mechanics"){
         $('<canvas/>', {
             width: "800px",
             text: "CanvasNotSupported"
@@ -103,20 +125,60 @@ function displayGraph(taskResults, taskType){
         var labels = []; 
         var data = [];
         //get labels and data
-        if(taskType == "Likert Scale"){
+        var noLikes = true;
+        var noDislikes = true;
+        if(activityStyle == "Likert Scale"){
             $.each(taskResults, function( index, value ) {
-                if(value['happy'] == "0")
+                if(value['happy'] == "0"){
                     labels.push("Dislike");
-                else if(value['happy'] == "1")
+                    noDislikes = false;
+                }
+                else if(value['happy'] == "1"){
                     labels.push("Like");
+                    noLikes = false;
+                }
                 data.push(value['likertCount']);
             });
+            if(noDislikes){
+                labels.push("Dislike");
+                data.push(0);
+            }
+            if(noLikes){
+                labels.push("Like");
+                data.push(0);
+            }
         }
-        else if(taskType == "Preferred Mechanics"){
+        else if(activityStyle == "Preferred Mechanics"){
+            var noPress = true;
+            var noZoom = true;
+            var noSwipe = true;
             $.each(taskResults, function( index, value ) {
+                switch(value['mechanic']){
+                    case 'Press':
+                        noPress = false;
+                        break;
+                    case 'Zoom/Pinch':
+                        noZoom = false;
+                        break;
+                    case 'Swipe/Drag':
+                        noSwipe = false;
+                        break;
+                }
                 labels.push(value['mechanic']);
                 data.push(value['mechanicCount']);
             });
+            if(noPress){
+                labels.push('Press');
+                data.push(0);
+            }
+            if(noZoom){
+                labels.push('Zoom/Pinch');
+                data.push(0);
+            }
+            if(noSwipe){
+                labels.push('Swipe/Drag');
+                data.push(0);
+            }
         }
         setGraphData(ctx, labels, data);
     }
@@ -201,61 +263,36 @@ function displayBodyPartResult(results){
     //make canvas 
     $('<canvas/>', {
         //800 * 0.35
-        width: "400px",
+        width: "15%",
         //400 * 0.35
-        height: "200px",
-        text: "CanvasNotSupported"
+        // height: "297px",
+        text: "CanvasNotSupported",
+        stlye: "border:1px solid #d3d3d3;"
     }).appendTo('#results');
-    var ctx = $("canvas").last()[0].getContext('2d');
-    //draw image
+    //set image onto canvas
     var img = new Image();
-      img.src = results[0].address;
-      img.onload =function() {
-        scaleToFill(this, ctx);
-      };
-   // ctx.drawImage(img,0,0);
-    //draw point
-    
-   // ctx.fillRect(20,20,2,2);
-   // ctx.fillRect(50,50,2,2);
-  //  ctx.fillRect(200,200,2,2);
-    //ctx.arc(100,100, 1, 3, 2 * Math.PI, true);
-    //ctx.arc(90,120, 1, 3, 2 * Math.PI, true);
-    
-    console.log(results[0].address);
-    console.log(results[0].y / 15);
-    ctx.fill();
-    results.forEach(function(result){
-        //ctx.restore();
-        var xCoord = result.x * 0.5;
-        var yCoord = result.y * 0.5;
-        ctx.beginPath();
-        ctx.arc(xCoord, yCoord, 3, 0, Math.PI*2, true);
-        ctx.closePath();
-        ctx.fill();  
-        console.log(xCoord);
-        console.log(yCoord);
-    }); 
-    
-}
-
-function scaleToFill(img, ctx){
-
-   
-    // get the scale
-    var scale = Math.min($("canvas").last()[0].width / img.width, $("canvas").last()[0].height / img.height);
-    // get the top left position of the image
-    var x = ($("canvas").last()[0].width / 2) - (img.width / 2) * scale;
-    var y = ($("canvas").last()[0].height / 2) - (img.height / 2) * scale;
-
-    ctx.imageSmoothingEnabled = false; 
-    ctx.webkitImageSmoothingEnabled = false;
-    ctx.mozImageSmoothingEnabled = false;
-
-    ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
-    
-}
-
+    img.src = results[0].address;
+    var canvas = $("canvas").last()[0];
+    context = canvas.getContext('2d');
+    img.onload = function() {
+        //get ratio of width to height of image
+        var ratio = img.height/img.width;
+        //set height of canvas so that canvas is to scale
+        canvas.height = canvas.width * ratio;
+        //draw image on canvas
+        context.drawImage(img, 0,0, canvas.width, canvas.height);
+        //set color of dots
+        context.fillStyle = 'red';
+        //draw dots
+        results.forEach(function(result){
+            context.beginPath();
+            context.arc(canvas.width * result.x, canvas.height * result.y, 7, 0, 2 * Math.PI);
+            // context.arc(30, 30, 5, 0, 2 * Math.PI, true);
+            context.stroke();
+            // context.closePath();
+            context.fill();
+        })
+    }
 }
 
 //display the comments for the task
@@ -266,11 +303,4 @@ function displayComments(taskResults){
     .append([$('<textarea/>', { class: "materialize-textarea", id:"textarea1", text: taskResults[0].comments}), $('<label/>', { for: "textarea1", class:"materialize-textarea", text:"Comments" })])
     .appendTo('#results'); 
     M.textareaAutoResize($('#textarea1'));
-    // var commentsDiv = "<div class=\"row\"><form class=\"col s12\"><div class=\"input-field col s8\">";
-    // var textArea = "<textarea id=\"textarea1\" class=\"materialize-textarea\"";
-    // if(task.comments != null){
-    //     textArea += " value=" + task.comments;
-    // }
-    // textArea += "></textarea><label for=\"textarea1\">Comments</label></div></form></div><div class=\"row\"><form class=\"col s12\"><div class=\"input-field col s8\>";
-    // commentsDiv += textArea;
 }

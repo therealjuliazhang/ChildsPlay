@@ -4,25 +4,45 @@
 	session_start();
 	if(isset($_SESSION["userID"]))
 		$userID = $_SESSION["userID"];
-	else
-		header('login.php');
-	if(isset($_SESSION["groupID"]))
-		$groupID = $_SESSION["groupID"];
-	if(isset($_SESSION["tasks"]))
-		$tasks = $_SESSION['tasks'];
-	if(isset($_GET["taskIndex"]))
-		$taskIndex = $_GET['taskIndex'];
+	//else
+		//header("Location: login.php");
+
+	//the group used for previewing tests
+	$previewGroupID = 4;
+	$isPreview = false;
+	//task id in GET is set if task is being previewed
+	if (isset($_GET['from'])){
+		$from = $_GET['from'];
+		//if from == edit
+		if (isset($_GET['taskID']))
+			$taskID = $_GET['taskID'];
+		$groupID = $previewGroupID;
+		$isPreview = true;
+		$taskIndex = 0;
+        //$tasks = $_SESSION['tasks'];
+		$tasks = 0;
+		//if from == available test
+	}
+	else{ //else if not preview
+		if (isset($_SESSION['groupID']))
+			$groupID = $_SESSION['groupID'];
+		if (isset($_SESSION['tasks']))
+			$tasks = $_SESSION['tasks'];
+		if (isset($_GET['taskIndex']))
+			$taskIndex = $_GET['taskIndex'];
+		$taskID = $tasks[$taskIndex]['taskID'];
+	}
 	include 'db_connection.php';
 	$conn = OpenCon();
-	$taskID = $tasks[$taskIndex]['taskID'];
+	
 	//fetch images
-	$sql = "SELECT * FROM IMAGE WHERE TASKID = '$taskID'";
+	$sql = "SELECT I.imageID, I.address, IA.taskID FROM IMAGE I JOIN IMAGEASSIGNMENT IA ON I.imageID = IA.imageID WHERE taskID = '$taskID'";
 	$result = $conn->query($sql);
 	$images = array();
 	while($row = mysqli_fetch_assoc($result))
 	   $images[] = $row;
 	//fetch preschoolers
-	$sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$groupID." AND userID=".$userID;
+	$sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$groupID." AND userID=1";//.$userID;
 	$result = $conn->query($sql);
 	$preschoolers = array();
 	while($row = mysqli_fetch_assoc($result)){
@@ -45,6 +65,13 @@
 		<!--link for font awesome icons-->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<style>
+		.brand-logo{
+			margin-top:-67px;
+		}
+		.logout{
+			margin-top: 15px;
+			margin-right:15px;
+		}
 		.bottom{
 			position:absolute;
 			bottom: 0px;
@@ -76,6 +103,16 @@
 		.faceCol{
 			height: 150px;
 		}
+		#button{
+			margin-top:-20px;
+		}
+		.center-align{
+			margin-top: 100px;
+			font-size: 50px;
+		}
+		.container{
+			margin-top:-85px;
+		}
 		</style>
     </head>
     <body>
@@ -86,18 +123,16 @@
             <div class="nav-wrapper">
                 <a href="#" class="brand-logo left"><img src="images/logo1.png" ></a>
 
-                <ul id="logoutButton" class="right hide-on-med-and-down logout">
-                    <li><a class="waves-effect waves-light btn blue darken-2 right" onclick="logout()">Profile</a></li>
-                </ul>
+                
             </div>
         </nav>
     </div>
     </div>
     <!--end header-->
         <!-- body content -->
-		<img src="images/greyCircle.png" width="7%" align="right" onclick="goNext();"></img>
+		<img id="button" src="images/greyCircle.png" width="7%" align="right" onclick="goNext();"></img>
 		<div class="container">
-			<div class="center-align"><img id="image" width="28%"></img></div>
+			<div class="center-align"><img id="image" height="45%"></img></div>
 			<!--all container does is create padding on the left & right sides.-->
 			</div>
 		<div class="bottom">
@@ -117,9 +152,17 @@
         <!--end body content-->
     </body>
 	<script>
+		//check whether it is in preview mode
+		var isPreview = <?php echo(json_encode($isPreview)); ?>;
+		console.log("Is preview " + isPreview);
+		var from; //if preview check if from edit page or available test page ect.
+		if(isPreview)
+			from = <?php echo(json_encode($from)); ?>; // checks from which page preview was opened
+		//console.log("From: " + fromTest);
+		/**/
 		var taskIndex = <?php echo(json_encode($taskIndex)); ?>;
 		var tasks = <?php echo(json_encode($tasks)); ?>;
-		var taskID = tasks[taskIndex]['taskID'];
+		var taskID = <?php echo(json_encode($taskID)); ?>;
 		var images = <?php echo(json_encode($images)); ?>;
 		var imageURL = images[0]['address'];
 		document.getElementById("image").src = imageURL;
@@ -135,9 +178,19 @@
 		function goNext(){
 			preschoolerIndex++;
 			if(preschoolerIndex == preschoolers.length){
-				var groupID = <?php echo $groupID ?>;
-				var taskIndex = <?php echo $taskIndex ?>;
-				window.location.href = "comments.php?taskIndex=" + taskIndex;
+				//if task was preview, go back to edit test page
+				if(isPreview){
+					if(from == "edit")
+						window.location.href = "editTest.php";
+					else if(from == "availableTests")
+						window.location.href = "viewExistingTests.php";
+					else if (from == "existingTasks")
+						window.location.href = "filterExistingQuestions.php";
+				}
+				else{
+					var taskIndex = <?php echo $taskIndex ?>;
+					window.location.href = "comments.php?taskIndex=" + taskIndex;
+				}	
 			}
 			preID = preschoolers[preschoolerIndex]['preID'];
 			document.getElementById("preschoolerName").innerHTML = preschoolers[preschoolerIndex]['name'];

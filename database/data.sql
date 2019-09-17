@@ -4,40 +4,45 @@ SET
 @password = "21232f297a57a5a743894a0e4a801fc3",
 @email = "admin@gmail.com",
 @accountType = true,
-@fullName = "admin";
-INSERT INTO USERS(username, password, email, accountType, fullName) VALUES (@username, @password, @email, @accountType, @fullName);
+@fullName = "admin",
+@accepted = 1;
+INSERT INTO USERS(username, password, email, accountType, fullName, accepted) VALUES (@username, @password, @email, @accountType, @fullName, @accepted);
 
 SET
 @username = "holly",
 @password = "holly",
 @email = "holly@gmail.com",
 @accountType = true,
-@fullName = "Holly Tootell";
-INSERT INTO USERS(username, password, email, accountType, fullName) VALUES (@username, @password, @email, @accountType, @fullName);
+@fullName = "Holly Tootell",
+@accepted = 1;
+INSERT INTO USERS(username, password, email, accountType, fullName, accepted) VALUES (@username, @password, @email, @accountType, @fullName, @accepted);
 
 SET
 @username = "james",
 @password = "james",
 @email = "james@gmail.com",
 @accountType = false,
-@fullName = "James Bonds";
-INSERT INTO USERS(username, password, email, accountType, fullName) VALUES (@username, @password, @email, @accountType, @fullName);
+@fullName = "James Bonds",
+@accepted = 1;
+INSERT INTO USERS(username, password, email, accountType, fullName, accepted) VALUES (@username, @password, @email, @accountType, @fullName, @accepted);
 
 SET
 @username = "emma",
 @password = "emma",
 @email = "emma@gmail.com",
 @accountType = false,
-@fullName = "Emma Greens";
-INSERT INTO USERS(username, password, email, accountType, fullName) VALUES (@username, @password, @email, @accountType, @fullName);
+@fullName = "Emma Greens",
+@accepted = 0;
+INSERT INTO USERS(username, password, email, accountType, fullName, accepted) VALUES (@username, @password, @email, @accountType, @fullName, @accepted);
 
 SET
 @username = "jasmine",
 @password = "jasmine",
 @email = "jasmine@gmail.com",
 @accountType = false,
-@fullName = "Jasmine Flores";
-INSERT INTO USERS(username, password, email, accountType, fullName) VALUES (@username, @password, @email, @accountType, @fullName);
+@fullName = "Jasmine Flores",
+@accepted = 0;
+INSERT INTO USERS(username, password, email, accountType, fullName, accepted) VALUES (@username, @password, @email, @accountType, @fullName, @accepted);
 
 /*LOCATION*/
 SET
@@ -253,118 +258,158 @@ INSERT INTO TESTASSIGNMENT(userID, testID, dateConducted) VALUES (@userID, @test
 /*TASK*/
 SET
 @instruction = "Touch the smiley face if you like it and touch the sad face if you don't like it.",
-@taskType = "Likert Scale",
-@activity = "Do you like this monster?";
-INSERT INTO TASK(instruction, taskType, activity) VALUES (@instruction, @taskType, @activity);
+@activityStyle = "Likert Scale";
+INSERT INTO TASK(instruction, activityStyle) VALUES (@instruction, @activityStyle);
 
 SET
 @instruction = "Touch the monster's eyes.",
-@taskType = "Identify Body Parts",
-@activity = "Touch the monster's eyes.";
-INSERT INTO TASK(instruction, taskType, activity) VALUES (@instruction, @taskType, @activity);
+@activityStyle = "Identify Body Parts";
+INSERT INTO TASK(instruction, activityStyle) VALUES (@instruction, @activityStyle);
 
 SET
 @instruction = "Select the monsters in order of your favourite to least favourite.",
-@taskType = "Character Ranking",
-@activity = "Select the monsters in order of your favourite to least favourite.";
-INSERT INTO TASK(instruction, taskType, activity) VALUES (@instruction, @taskType, @activity);
+@activityStyle = "Character Ranking";
+INSERT INTO TASK(instruction, activityStyle) VALUES (@instruction, @activityStyle);
 
 SET
 @instruction = "How would you make the monster bigger?",
-@taskType = "Preferred Mechanic",
-@activity = "Make the monster bigger.";
-INSERT INTO TASK(instruction, taskType, activity) VALUES (@instruction, @taskType, @activity);
+@activityStyle = "Preferred Mechanic";
+INSERT INTO TASK(instruction, activityStyle) VALUES (@instruction, @activityStyle);
 
 SET
 @instruction = "How would you move the monster into the box?",
-@taskType = "Preferred Mechanic",
-@activity = "Move the monster.";
-INSERT INTO TASK(instruction, taskType, activity) VALUES (@instruction, @taskType, @activity);
+@activityStyle = "Preferred Mechanic";
+INSERT INTO TASK(instruction, activityStyle) VALUES (@instruction, @activityStyle);
 
 /*TASKASSIGNMENT*/
 SET
 @taskID = 1,
 @testID = 1,
+@taskTitle = "Task 1",
+@orderInTest = 1,
 @comments = "Alex changed his mind after pressing like.";
-INSERT INTO TASKASSIGNMENT(taskID, testID, comments) VALUES (@taskID, @testID, @comments);
+INSERT INTO TASKASSIGNMENT(taskID, testID, taskTitle, orderInTest, comments) VALUES (@taskID, @testID, @taskTitle, @orderInTest, @comments);
 
 SET
 @taskID = 2,
 @testID = 1,
+@taskTitle = "Task 2",
+@orderInTest = 2,
 @comments = "Ren was not sure if she liked the monster.";
-INSERT INTO TASKASSIGNMENT(taskID, testID, comments) VALUES (@taskID, @testID, @comments);
+INSERT INTO TASKASSIGNMENT(taskID, testID, taskTitle, orderInTest, comments) VALUES (@taskID, @testID, @taskTitle, @orderInTest, @comments);
 
 SET
 @taskID = 3,
 @testID = 1,
+@taskTitle = "Task 3",
+@orderInTest = 3,
 @comments = "Kate was not sure if she liked the monster.";
-INSERT INTO TASKASSIGNMENT(taskID, testID, comments) VALUES (@taskID, @testID, @comments);
+INSERT INTO TASKASSIGNMENT(taskID, testID, taskTitle, orderInTest) VALUES (@taskID, @testID, @taskTitle, @orderInTest);
 
 SET
 @taskID = 4,
 @testID = 1,
+@taskTitle = "Task 4",
+@orderInTest = 4,
 @comments = "Andre was not sure if she liked the monster.";
-INSERT INTO TASKASSIGNMENT(taskID, testID, comments) VALUES (@taskID, @testID, @comments);
+INSERT INTO TASKASSIGNMENT(taskID, testID, taskTitle, orderInTest) VALUES (@taskID, @testID, @taskTitle, @orderInTest);
 
 SET
 @taskID = 2,
-@testID = 2;
-INSERT INTO TASKASSIGNMENT(taskID, testID) VALUES (@taskID, @testID);
+@testID = 2,
+@taskTitle = "Task 1",
+@orderInTest = 1;
+INSERT INTO TASKASSIGNMENT(taskID, testID, taskTitle, orderInTest) VALUES (@taskID, @testID, @taskTitle, @orderInTest);
+
+SET
+@taskID = 5,
+@taskTitle = "Task 2",
+@testID = 2,
+@orderInTest = 2;
+INSERT INTO TASKASSIGNMENT(taskID, testID, taskTitle, orderInTest) VALUES (@taskID, @testID, @taskTitle, @orderInTest);
 
 /*IMAGE*/
 SET
-@address = "images/Puff.png",
-@imgType = true,
+@address = "images/Puff.png";
+INSERT INTO IMAGE(address) VALUES (@address);
+
+SET
+@address = "images/Puff.png";
+INSERT INTO IMAGE(address) VALUES (@address);
+
+SET
+@address = "images/Puff.png";
+INSERT INTO IMAGE(address) VALUES (@address);
+
+SET
+@address = "images/orbi.jpg";
+INSERT INTO IMAGE(address) VALUES (@address);
+
+SET
+@address = "images/peanut.jpg";
+INSERT INTO IMAGE(address) VALUES (@address);
+
+SET
+@address = "images/pod.jpg";
+INSERT INTO IMAGE(address) VALUES (@address);
+
+SET
+@address = "images/spike.jpg";
+INSERT INTO IMAGE(address) VALUES (@address);
+
+SET
+@address = "images/spike.jpg";
+INSERT INTO IMAGE(address) VALUES (@address);
+
+SET
+@address = "images/spike.jpg";
+INSERT INTO IMAGE(address) VALUES (@address);
+
+/*IMAGEASSIGNMENT*/
+SET
+@imageID = 1,
 @taskID = 1;
-INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);
+INSERT INTO IMAGEASSIGNMENT VALUES (@imageID, @taskID);
 
 SET
-@address = "images/Puff.png",
-@imgType = true,
+@imageID = 2,
 @taskID = 2;
-INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);
+INSERT INTO IMAGEASSIGNMENT VALUES (@imageID, @taskID);
 
 SET
-@address = "images/Puff.png",
-@imgType = true,
+@imageID = 3,
 @taskID = 3;
-INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);
+INSERT INTO IMAGEASSIGNMENT VALUES (@imageID, @taskID);
 
 SET
-@address = "images/orbi.jpg",
-@imgType = true,
+@imageID = 4,
 @taskID = 3;
-INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);
+INSERT INTO IMAGEASSIGNMENT VALUES (@imageID, @taskID);
 
 SET
-@address = "images/peanut.jpg",
-@imgType = true,
+@imageID = 5,
 @taskID = 3;
-INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);
+INSERT INTO IMAGEASSIGNMENT VALUES (@imageID, @taskID);
 
 SET
-@address = "images/pod.jpg",
-@imgType = true,
+@imageID = 6,
 @taskID = 3;
-INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);
+INSERT INTO IMAGEASSIGNMENT VALUES (@imageID, @taskID);
 
 SET
-@address = "images/spike.jpg",
-@imgType = true,
+@imageID = 7,
 @taskID = 3;
-INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);
+INSERT INTO IMAGEASSIGNMENT VALUES (@imageID, @taskID);
 
 SET
-@address = "images/spike.jpg",
-@imgType = true,
+@imageID = 8,
 @taskID = 4;
-INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);
+INSERT INTO IMAGEASSIGNMENT VALUES (@imageID, @taskID);
 
 SET
-@address = "images/spike.jpg",
-@imgType = true,
+@imageID = 9,
 @taskID = 5;
-INSERT INTO IMAGE(address, imgType, taskID) VALUES (@address, @imgType, @taskID);
+INSERT INTO IMAGEASSIGNMENT VALUES (@imageID, @taskID);
 
 /*RESULTS*/
 SET 
@@ -431,24 +476,24 @@ SET
 INSERT INTO RESULTS(mechanic, taskID, preID, testID) VALUES (@mechanic, @taskID, @preID, @testID);
 
 SET
-@x = 410.00,
-@y = 155.00,
+@x = 0.4119402985074626700000,
+@y = 0.2750000000000000000000,
 @taskID = 2,
 @preID = 1,
 @testID = 1;
 INSERT INTO RESULTS(x, y, taskID, preID, testID) VALUES (@x, @y, @taskID, @preID, @testID);
 
 SET
-@x = 375.00,
-@y = 107.00,
+@x = 0.6149253731343284000000,
+@y = 0.2750000000000000000000,
 @taskID = 2,
 @preID = 2,
 @testID = 1;
 INSERT INTO RESULTS(x, y, taskID, preID, testID) VALUES (@x, @y, @taskID, @preID, @testID);
 
 SET
-@x = 440.00,
-@y = 125.00,
+@x = 0.5044776119402985000000,
+@y = 0.5350000000000000000000,
 @taskID = 2,
 @preID = 3,
 @testID = 1;

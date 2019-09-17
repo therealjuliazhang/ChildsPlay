@@ -3,6 +3,10 @@
 session_start();
 include 'db_connection.php';
 $conn = OpenCon();
+
+session_destroy();
+unset($_SESSION["groupID"]);
+
 if(isset($_SESSION["tasks"]))
 	$tasks = $_SESSION["tasks"];
 else
@@ -21,36 +25,77 @@ if(isset($_SESSION["mode"])){
 	$mode = $_SESSION["mode"];
 }
 
+if(isset($_GET["mode"]) && $_GET["mode"] == "preview"){
+	if(isset($_GET["taskID"])){
+		$taskID = $_GET["taskID"];
+	}
+	else
+		$taskID = 0;
+	if(!isset($_GET["testID"]))
+		$testID = 0;
+	$tasks = getTasks($conn, $testID, $taskID);
+    $_SESSION['tasks'] = $tasks;
+	$groupID = 4;  //group with group ID: 4 is the preview group
+	$_SESSION['groupID'] = $groupID;
+	$mode = $_GET["mode"];
+	$_SESSION["mode"] = $mode;
+	if(isset($_GET["from"])){
+		$from = $_GET["from"];
+		$_SESSION["from"] = $from;
+	}
+}
+
+	
 if(isset($_SESSION["testID"]))
 	$testID = $_SESSION["testID"];
 if(isset($_SESSION["groupID"]))
 	$groupID = $_SESSION["groupID"];
 else if(isset($_GET["testID"])){ //should be true if it is in preview mode
 	$testID = $_GET["testID"];
-	$tasks = getTasks($conn, $testID);
+	
+	$tasks = getTasks($conn, $testID, $taskID);
+    $_SESSION['tasks'] = $tasks;
 	$groupID = 4;  //group with group ID: 4 is the preview group
 	$_SESSION['groupID'] = $groupID;
 	$_SESSION['testID'] = $testID;
-	$mode = $_GET["mode"];
-	$_SESSION['mode'] = "preview";
+	if(isset($_GET["mode"])){
+		$mode = $_GET["mode"];
+		$_SESSION["mode"] = $mode;
+	}
+	//$mode = $_GET["mode"];
+	//$_SESSION['mode'] = "preview";
+	if(isset($_GET["from"])){
+		$from = $_GET["from"];
+		$_SESSION["from"] = $from;
+	}
 } 
 else if(isset($_GET["groupID"])){ //should be true if it is the first task of test
 	$groupID = $_GET["groupID"];
 	$_SESSION['groupID'] = $groupID;
-	$tasks = getTasks($conn, $testID);
+        $taskID = 0;
+	$tasks = getTasks($conn, $testID, $taskID);
+        $_SESSION['tasks'] = $tasks;
 }
 //get tasks and set to session
-function getTasks($conn, $testID){
-	$query = "SELECT taskID FROM TASKASSIGNMENT WHERE testID=".$testID;
-	$result = $conn->query($query);
-	while($value = mysqli_fetch_assoc($result)){
-		$taskQuery = "SELECT * FROM TASK WHERE taskID=".$value["taskID"];
-		$result2 = $conn->query($taskQuery);
-		while($row = mysqli_fetch_assoc($result2))
-			$tasks[] = $row;
+function getTasks($conn, $testID, $taskID){
+	if($taskID == 0){
+		$query = "SELECT taskID FROM TASKASSIGNMENT WHERE testID=".$testID;
+		$result = $conn->query($query);
+		while($value = mysqli_fetch_assoc($result)){
+			$taskQuery = "SELECT * FROM TASK WHERE taskID=".$value["taskID"];
+			$result2 = $conn->query($taskQuery);
+			while($row = mysqli_fetch_assoc($result2))
+				$tasks[] = $row;
+		}
+		$taskID = $tasks[0]['taskID'];
 	}
-	$taskID = $tasks[0]['taskID'];
-	$_SESSION['tasks'] = $tasks;
+	else{
+		$taskQuery = "SELECT * FROM TASK WHERE taskID=".$taskID;
+			$result2 = $conn->query($taskQuery);
+			while($row = mysqli_fetch_assoc($result2))
+				$tasks[] = $row;
+	}
+	//$_SESSION['tasks'] = $tasks;
 	return $tasks;
 }
 /*
@@ -67,7 +112,6 @@ else
 	$taskIndex = $_SESSION['taskIndex'];
 */
 $taskIndex = isset($_GET['taskIndex']) ? $_GET['taskIndex'] : 0;
-echo "Task index: ".$taskIndex;
 $bodyPart = "eye";
 ?>
     <head>
@@ -87,9 +131,9 @@ $bodyPart = "eye";
 					<div class="col s10">
 						<a href="#" class="brand-logo"><img src="images/logo1.png" height="200px"></a>
 					</div>
-					<div class="col s2 offset-s10">
+					<!--div class="col s2 offset-s10">
 						<a class="waves-effect waves-light btn blue darken-2 right logout" onclick="logout()">Logout</a>
-					</div>
+					</div-->
 				</div>
             </div>
         </nav>
@@ -102,9 +146,10 @@ $bodyPart = "eye";
 					<div style="font-size:18px">
 <?php
 //Display instructions for task
-$taskTypeUrl;
+$taskTypeUrl = "likertScaleTask.php?taskIndex=" . $taskIndex."&from=availableTests&taskID=".$taskID; //default
 if(count($tasks) > 0){
-	switch($tasks[$taskIndex]["taskType"]){
+	//echo "From: ".$from;
+	switch($tasks[$taskIndex]["activityStyle"]){
 		case "Likert Scale":
       		echo "<h4 class='blue-text text-darken-2'>Likert Scale</h4><br>";
       		echo "<h5 class='blue-text text-darken-2'>Task Instructions:</h5>";
@@ -112,39 +157,51 @@ if(count($tasks) > 0){
 			"</br>
 				<img src=\"images/happy.png\" width=\"75px\"><img src=\"images/sad.png\" width=\"75px\">
 			</br>";
-			$taskTypeUrl = "likertScaleTask.php?taskIndex=" . $taskIndex;
+			$taskTypeUrl = "likertScaleTask.php?taskIndex=".$taskIndex."&from=".$from."&taskID=".$taskID;
+			echo "After the participant has completed their task, select the grey, quarter-circle button on the top right
+						of the screen to go to the next participant's turn.
+						</br>
+						<img src='images/greyCircle.png' width='60px'>
+				  ";
 			break;
 		case "Identify Body Parts":
       		echo "<h4 class='blue-text text-darken-2'>Identify Body Parts</h4><br>";
       		echo "<h5 class='blue-text text-darken-2'>Task Instructions:</h5>";
 			echo $tasks[$taskIndex]['instruction'];
-			$taskTypeUrl = "identifyBodyPartsTask.php?taskIndex=" . $taskIndex;
+			$taskTypeUrl = "identifyBodyPartsTask.php?taskIndex=".$taskIndex."&from=".$from."&taskID=".$taskID;
+			echo "After the participant has completed their task, select the grey, quarter-circle button on the top right
+						of the screen to go to the next participant's turn.
+						</br>
+						<img src='images/greyCircle.png' width='60px'>
+				  ";
 			break;
 		case "Character Ranking":
       		echo "<h4 class='blue-text text-darken-2'>Character Ranking</h4><br>";
       		echo "<h5 class='blue-text text-darken-2'>Task Instructions:</h5>";
 			echo $tasks[$taskIndex]['instruction'];
-			$taskTypeUrl = "characterRankingTask.php?taskIndex=" . $taskIndex;
+			$taskTypeUrl = "characterRankingTask.php?taskIndex=".$taskIndex."&from=".$from."&taskID=".$taskID;
+			echo "After the participant has completed their task, select the grey, quarter-circle button on the top right
+						of the screen to go to the next participant's turn.
+						</br>
+						<img src='images/greyCircle.png' width='60px'>
+				  ";
 			break;
 		case "Preferred Mechanic":
 			echo "<h4 class='blue-text text-darken-2'>Preferred Mechanics</h4><br>";
 			echo "<h5 class='blue-text text-darken-2'>Task Instructions:</h5>";
 			echo $tasks[$taskIndex]['instruction'];
-			$taskTypeUrl = "preferredMechanicsTask.php?taskIndex=" . $taskIndex;
+			$taskTypeUrl = "preferredMechanicsTask.php?taskIndex=".$taskIndex."&from=".$from."&taskID=".$taskID;
+			echo " After the participant has completed their task, click the next button to go to the next participant's turn.	</br>";
 			break;
 	}
 }
 ?>
-						After the participant has completed their task, select the grey, quarter-circle button on the top right
-						of the screen to go to the next participant's turn.
-						</br>
-						<img src="images/greyCircle.png" width="60px">
 					</div>
 					<h5 class="blue-text darken-2">Images Under Test:</h5>
 <?php
 //display images under test
 if(count($tasks) > 0){
-$testQuery = "SELECT address FROM IMAGE WHERE taskID=" . $tasks[$taskIndex]["taskID"];
+$testQuery = "SELECT address FROM IMAGE I JOIN IMAGEASSIGNMENT IA ON I.imageID = IA.imageID WHERE IA.taskID=" . $tasks[$taskIndex]["taskID"];
 $result = $conn->query($testQuery);
 $imageAdresses = array();
 while($row = mysqli_fetch_assoc($result))
@@ -167,13 +224,19 @@ foreach ($imageAdresses as $value)
 							echo "Start";
 						?>
 						</a>
-						<a href="?back=true" class="waves-effect waves-light btn blue darken-4">Back</a>
+						<!-- --> <a href="?back=true" class="waves-effect waves-light btn blue darken-4">Back</a> 
 						<?php
 							if(isset($_GET["back"])){
-								if($_SESSION['mode'] == "preview")
-										header("Location: educatorTests.php");
+								if($_SESSION['mode'] == "preview"){
+									if($_SESSION["from"] == "availableTests")
+										header("Location: viewExistingTests.php");
+									else if ($_SESSION["from"] == "existingTasks")
+										header("Location: filterExistingQuestions.php");
 									else
-										header("Location: selectGroupForTask.php");
+										header("Location: educatorTests.php");
+								}
+								else
+									header("Location: selectGroupForTask.php");
 								/*
 								if($taskIndex == 0){
 									//if preview (group is preview group), go back to educator tests page

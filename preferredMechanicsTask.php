@@ -4,17 +4,32 @@ session_start();
 if(isset($_SESSION["userID"]))
 	$userID = $_SESSION["userID"];
 else
-	header('login.php');
-if (isset($_SESSION['groupID']))
-  $groupID = $_SESSION['groupID'];
-if(isset($_SESSION["tasks"]))
-  $tasks = $_SESSION['tasks'];
-if(isset($_GET["taskIndex"]))
-  $taskIndex = $_GET['taskIndex'];
+	$userID = 1;
+	//header("Location: login.php");
+//the group used for previewing tests
+$previewGroupID = 4;
+$isPreview = false;
+//task id in GET is set if task is being previewed
+if (isset($_GET['from'])){
+	$from = $_GET['from'];
+	if (isset($_GET['taskID']))
+		$taskID = $_GET['taskID'];
+	$groupID = $previewGroupID;
+	$isPreview = true;
+	$taskIndex = 0;
+}
+else{ //else if not preview
+	if (isset($_SESSION['groupID']))
+		$groupID = $_SESSION['groupID'];
+	if (isset($_SESSION['tasks']))
+		$tasks = $_SESSION['tasks'];
+	if (isset($_GET['taskIndex']))
+		$taskIndex = $_GET['taskIndex'];
+	$taskID = $tasks[$taskIndex]['taskID'];
+}
 include 'db_connection.php';
 $conn = OpenCon();
 //get task ID
-$taskID = $tasks[$taskIndex]['taskID'];
 //fetch preschoolers from database
 $sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$groupID." AND userID=".$userID;
 $result = $conn->query($sql);
@@ -37,7 +52,13 @@ while($row = mysqli_fetch_assoc($result)){
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
     <script>
-      var preschoolers;
+      //check whether it is in preview mode
+      var isPreview = <?php echo(json_encode($isPreview)); ?>;
+      var from; //if preview check if from edit page or available test page ect.
+      if(isPreview)
+        from = <?php echo(json_encode($from)); ?>; // checks from which page preview was opened
+      
+	  var preschoolers;
       var results = [];
       var preIndex;
       var taskID = <?php echo json_encode($taskID); ?>;
@@ -68,7 +89,7 @@ while($row = mysqli_fetch_assoc($result)){
           activePreschooler = $("li.is-active").children("a").html();
           $("#nameSpan").html(activePreschooler);
         });
-      }); 
+      });
       //save results for preschooler into array
       function save(){
         preIndex = $("li.is-active").index();
@@ -91,6 +112,31 @@ while($row = mysqli_fetch_assoc($result)){
             }
           }
         });
+        //end task and submit if last preschooler
+        if($("li.is-active").next().length == 0){
+          results.forEach(function(result){
+            preID = preschoolers[result.preIndex]['preID'];
+            mechanic = result.mechanic;
+            $.ajax({
+              type: 'POST',
+              url: 'http://localhost/insertMechanicsResults.php',
+              data: { mechanic : mechanic, taskID : taskID, preID : preID}
+            });
+          });
+          //if task was preview, go back to previous page
+          if(isPreview){
+			if(from == "edit")
+				window.location.href = "editTest.php";
+			else if(from == "availableTests")
+				window.location.href = "viewExistingTests.php";
+			else if (from == "existingTasks")
+				window.location.href = "filterExistingQuestions.php";
+          }
+          else{
+            var taskIndex = <?php echo $taskIndex ?>;
+            window.location.href = "comments.php?taskIndex=" + taskIndex;
+          }
+        };
         //go to next preschooler
         $("li.is-active").next().addClass('is-active');
         $('li.is-active').first().removeClass('is-active');
@@ -101,19 +147,19 @@ while($row = mysqli_fetch_assoc($result)){
           $(this).prop( "checked", false );
         });
       }
-      //submit data into database and finish task
-      function submit(){
-        results.forEach(function(result){
-          preID = preschoolers[result.preIndex]['preID'];
-          mechanic = result.mechanic;
-          $.ajax({
-            type: 'POST',
-            url: 'http://localhost/insertMechanicsResults.php',
-            data: { mechanic : mechanic, taskID : taskID, preID : preID}
-          });
-        });
-        window.location.href = "comments.php?taskIndex=" + taskIndex;
-      }
+
+			//hide or unhide comment section when 'other' is clicked
+				$(document).ready(function(){
+					$('#checkBoxOther').click(function(){
+						if($(this).prop("checked") == true){
+							$(".commentSection").removeClass("hide");
+						}
+						else if($(this).prop("checked") == false){
+							$(".commentSection").addClass("hide");
+					}
+			});
+			});
+
     </script>
   </head>
 <body>
@@ -130,7 +176,6 @@ while($row = mysqli_fetch_assoc($result)){
   <div>
     <ul id="sidebar" class="sidenav sidenav-fixed #ffffff white tab-group">
     </ul>
-    <a onclick="submit()" class="waves-effect waves-light btn blue darken-2" id="submitButton">Submit</a>
   </div>
   <!--End Sidebar-->
   <!--Main content-->
@@ -168,21 +213,25 @@ while($row = mysqli_fetch_assoc($result)){
           </div>
           <div class="col s3 operationCol">
             <label>
-            <input type="checkbox" />
+            <input id="checkBoxOther" type="checkbox" />
             <span></span>
             </label>
             </form>
           </div>
-    <!--4th and other row-->
-          <div class="col s12" id="commentCol"><h5 class="blue-text darken-2">Comment:</h5></div>
-          <div class="col s12">
-            <form class="col s12">
-              <div class="input-field col s12">
-              <textarea id="textarea1" class="materialize-textarea"></textarea>
-              </div>
-            </form>
-          </div>
-          <div class="col s12"><a onclick="save()" class="waves-effect waves-light btn blue darken-2 right" id="saveButton">save</a></div>
+
+				<!--Comment Section-->
+				<div class="hide commentSection">
+					<div class="col s12" id="commentCol"><h5 class="blue-text darken-2">Comment:</h5></div>
+							<div class="input-field col s11">
+									<textarea id="textarea1" class="materialize-textarea"></textarea>
+							</div>
+					</div>
+				</div>
+
+
+
+
+          <div class="col s12"><a onclick="save()" class="waves-effect waves-light btn blue darken-2 right" id="saveButton">Next</a></div>
         </div>
       </div>
     </div>
@@ -233,13 +282,14 @@ padding-left: 330px;
   margin-right: 100px;
 }
 #saveButton{
-  margin-right: 21px;
+  margin-right: 50px;
+  margin-top: 100px;
 }
 #questionCol{
   height: 70px;
 }
 #commentCol{
-  margin-top: 100px;
+
 }
 
 .panel{

@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 <html>
     <head>
         <title>User Page</title>
@@ -10,21 +12,13 @@
     </head>
     <body>
         <!--header-->
-        <div class="row">
-        <nav class="nav-extended blue darken-4">
-            <div class="nav-wrapper">
-				<div class="row">
-					<div class="col s10">
-						<a href="educatorTests.php" class="brand-logo"><img src="images/logo1.png" height="200px"></a>
-					</div>
-					<div class="col s2 offset-s10 ">
-						<a class="waves-effect waves-light btn blue darken-2 center-align" id="profileLink" href="adminProfile.php"> <i class="material-icons" id="profileIcon">account_box</i></a>
-						<!--<a class="waves-effect waves-light btn blue darken-2" id="profileLink" href="adminProfile.php"><i class="material-icons">account_box</i></a>-->
-					</div>
-				</div>
-            </div>
-        </nav>
-        </div>
+        <div id="InsertHeader"></div>
+        <script>
+          //Read header
+          $(function(){
+            $("#InsertHeader").load("header.html");
+          });
+        </script>
         <!--end header-->
 
         <!-- body content -->
@@ -48,30 +42,65 @@
 					</tr>
 				</thead>
 				<tbody class="grey-text text-darken-1">
-          <tr>
-            <td>Jenny Carter</td>
-            <td>jenny75@gmail.com</td>
-            <td>Mulberry hill preschool</td>
-            <td>Educator</td>
-            <td><a class="waves-effect waves-light btn acceptButton">Accept</a></td>
-            <td><a class="waves-effect waves-light btn #ff5252 red accent-2 declineButton">Decline</a></td>
-          </tr>
-          <tr>
-            <td>Kerry Price</td>
-            <td>kezz1@hotmail.com</td>
-            <td>Smith preschool</td>
-            <td>Educator</td>
-            <td><a class="waves-effect waves-light btn acceptButton">Accept</a></td>
-            <td><a class="waves-effect waves-light btn #ff5252 red accent-2 declineButton">Decline</a></td>
-          </tr>
-          <tr>
-            <td>Geff Smith</td>
-            <td>gf356</td>
-            <td>University of Wollongong</td>
-            <td>Admin</td>
-            <td><a class="waves-effect waves-light btn acceptButton">Accept</a></td>
-            <td><a class="waves-effect waves-light btn #ff5252 red accent-2 declineButton">Decline</a></td>
-          </tr>
+                <form action="updateUserPage.php" method="post">
+        <?php
+            session_start();
+            include 'db_connection.php';
+            $conn = OpenCon();
+            //get pending users from database
+            $sql = "SELECT * FROM USERS WHERE accepted = 0";
+            
+            $result = $conn->query($sql);
+            $users = array();
+            while($row = mysqli_fetch_assoc($result))
+            {
+                $users[] = $row;
+            }
+            
+            foreach($users as $user)
+            {
+                echo "<tr><td>".$user["fullName"]."</td><td>".$user["email"]."</td>";
+                //get information about location
+                $newQuery = "SELECT L.name FROM LOCATION L JOIN LOCATIONASSIGNMENT LA ON L.locationID = LA.locationID WHERE LA.userID=".$user["userID"];
+                $newResult = $conn->query($newQuery);
+                $rowcount = mysqli_num_rows($newResult);
+                $newLoc = "<td>";
+                $count=0;
+                while($row = mysqli_fetch_assoc($newResult))
+                {
+                    $newLoc .= $row["name"];
+                    if($count < $rowcount - 1)
+                    {
+                        $newLoc .= ", ";
+                    }
+                    $count++;
+                }
+                echo $newLoc."</td>";
+                if($user["accountType"]==0)
+                {
+                    echo "<td>Educator</td>";
+                }else
+                {
+                    echo "<td>Admin</td>";
+                }
+                
+                //get user id as input
+                echo "<input id='UID' type='hidden' name='UID' value=".$user["userID"].">";
+                
+                //print buttons
+                echo "<td><input type='submit' value='ACCEPT' class='waves-effect waves-light btn acceptButton' name='accept'/></td>";
+                
+                echo "<td><input type='submit' value='DECLINE' class='waves-effect waves-light btn #ff5252 red accent-2 declineButton' name='decline'></td></tr>";
+                
+                
+            }
+            
+        ?>
+
+                </form>
+<?php
+    
+?>
 				</tbody>
 			</table>
 
@@ -88,12 +117,12 @@
 					</thead>
 					<tbody class="grey-text text-darken-1">
 <?php
-include 'db_connection.php';
-$conn = OpenCon();
+//include 'db_connection.php';
+//$conn = OpenCon();
 /*
 $sql = "SELECT fullName, email, LOCATION.name FROM LOCATIONASSIGNMENT LA JOIN USERS U ON U.userID = LA.userID ".
 		"JOIN LOCATION L ON LA.locationID = L.locationID WHERE accountType = 0";*/
-$sql = "SELECT * FROM USERS WHERE accountType = 0";
+$sql = "SELECT * FROM USERS WHERE accountType = 0 AND accepted = 1";//accepted educators
 $sqlResult = $conn->query($sql);
 $educators = array();
 while($row = mysqli_fetch_assoc($sqlResult)){
@@ -118,6 +147,7 @@ foreach ($educators as $educator){
 	echo $location."</td>";
 	echo '<td><a class="waves-effect waves-light btn #0d47a1 blue darken-4" href="accessibleTest.php?userID='.$educator["userID"].'">Tests</a></td></tr>';
 }
+    
 ?>
 					</tbody>
 				</table>
@@ -134,17 +164,19 @@ foreach ($educators as $educator){
 					</thead>
           <tbody class="grey-text text-darken-1">
 <?php
-$sql = "SELECT * FROM USERS WHERE accountType = 1";
-$sqlResult = $conn->query($sql);
-while($row = mysqli_fetch_assoc($sqlResult)){
-	$query = "SELECT L.name FROM LOCATION L JOIN LOCATIONASSIGNMENT LA ON L.locationID = LA.locationID WHERE userID=".$row["userID"];
-	$result = $conn->query($query);
-	$location = mysqli_fetch_array($result);
-	echo "<tr><td>".$row["fullName"]."</td>".
+    $conn = OpenCon();
+    $sql = "SELECT * FROM USERS WHERE accountType = 1";
+    $sqlResult = $conn->query($sql);
+    while($row = mysqli_fetch_assoc($sqlResult)){
+        $query = "SELECT L.name FROM LOCATION L JOIN LOCATIONASSIGNMENT LA ON L.locationID = LA.locationID WHERE userID=".$row["userID"];
+        $result = $conn->query($query);
+        $location = mysqli_fetch_array($result);
+        echo "<tr><td>".$row["fullName"]."</td>".
 		"<td>".$row["email"]."</td>".
 		"<td>".$location["name"]."</td></tr>";
-	CloseCon($conn);
-}
+        
+    }
+    CloseCon($conn);
 ?>
           </tbody>
 

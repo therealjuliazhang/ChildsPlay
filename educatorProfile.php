@@ -12,23 +12,13 @@
   </head>
   <body>
     <!--header-->
-
-        <div class="navbar-fixed">
-            <nav class="nav-extended blue darken-4">
-                <div class="nav-wrapper">
-                    <a href="#" class="brand-logo left"><img src="images/logo1.png" ></a>
-                    <ul id="nav-mobile" class="left hide-on-med-and-down">
-                        <li  class="active"><a href="">Tests</a></li>
-                        <li><a href="">Create</a></li>
-                        <li><a href="">Results</a></li>
-                        <li><a href="">Users</a></li>
-                    </ul>
-                    <ul id="logoutButton" class="right hide-on-med-and-down logout">
-                        <li><a class="waves-effect waves-light btn blue darken-2 right" onclick="logout()">Logout</a></li>
-                    </ul>
-                </div>
-            </nav>
-        </div>
+    <div id="InsertHeader"></div>
+    <script>
+      //Read header
+      $(function(){
+        $("#InsertHeader").load("educatorHeader.html");
+      });
+    </script>
 
     <!--end header-->
 <!--Body part-->
@@ -48,7 +38,7 @@
           <div id="user">
           <i class="medium material-icons" id="mailIcon">account_box</i>
           <span id="userType">Educator</span><br>
-          <a class="waves-effect waves-light btn #2196f3 blue right" id="logoutButton" onclick="logout()">Logout</a>
+          <a href="home.html" class="waves-effect waves-light btn #2196f3 blue right" id="logoutButton" onclick="logout()">Logout</a>
           </div>
 
           </td>
@@ -57,15 +47,11 @@
     </table>
     </div>
     <!--Side Bar-->
-    <ul id="sidebar" class="sidenav sidenav-fixed #ffffff white">
-          <li class="active #ffffff white"><a href="#!">Profile</a></li>
-          <li><a href="#!">Tests</a></li>
-    </ul>
-    <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+
 
     <!--main contents-->
 
-<div class="container" >
+<div class="container" id="educatorProfileContainer">
    <div class="row" id="userDetail">
      <div class="col s12 blue-text darken-2"><h5>Account Information</h5></div>
      <div class="col s3 column01"><h5 class="hInCol">Username:</h5></div>
@@ -97,7 +83,7 @@
  </div>
 
 
-  <div class="container" id="buttonsContainer">
+  <div class="container" id="educatorProfileButtonsContainer">
    <div class="row">
      <div class="col s1 offset-s11"><a class="waves-effect waves-light btn blue darken-4 addCell hide right" id="addButton" onclick="appendSelect()"><i class="material-icons">add</i></a></div>
      <div class="col s10"></div>

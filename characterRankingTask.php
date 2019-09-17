@@ -5,16 +5,32 @@ session_start();
 if(isset($_SESSION["userID"]))
 	$userID = $_SESSION["userID"];
 else
-	header('login.php');
-if (isset($_SESSION['groupID']))
-	$groupID = $_SESSION['groupID'];
-if (isset($_SESSION['tasks']))
-	$tasks = $_SESSION['tasks'];
-if (isset($_GET['taskIndex']))
-	$taskIndex = $_GET['taskIndex'];
+	$userID = 1;
+	//header("Location: login.php");
+
+//the group used for previewing tests
+$previewGroupID = 4;
+$isPreview = false;
+//task id in GET is set if task is being previewed
+if (isset($_GET['from'])){
+	$from = $_GET['from'];
+	if (isset($_GET['taskID']))
+		$taskID = $_GET['taskID'];
+	$groupID = $previewGroupID;
+	$isPreview = true;
+	$taskIndex = 0;
+}
+else{ //else if not preview
+	if (isset($_SESSION['groupID']))
+		$groupID = $_SESSION['groupID'];
+	if (isset($_SESSION['tasks']))
+		$tasks = $_SESSION['tasks'];
+	if (isset($_GET['taskIndex']))
+		$taskIndex = $_GET['taskIndex'];
+	$taskID = $tasks[$taskIndex]['taskID'];
+}
 include 'db_connection.php';
 $conn = OpenCon();
-$taskID = $tasks[$taskIndex]['taskID'];
 //fetch preschoolers from database
 $sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$groupID." AND userID=".$userID;
 $result = $conn->query($sql);
@@ -27,7 +43,7 @@ while($row = mysqli_fetch_assoc($result)){
 	}
 }
 //fetch images
-$sql = "SELECT * FROM IMAGE WHERE TASKID = '$taskID'";
+$sql = "SELECT I.imageID, I.address, IA.taskID FROM IMAGE I JOIN IMAGEASSIGNMENT IA ON I.imageID = IA.imageID WHERE taskID = '$taskID'";
 $result = $conn->query($sql);
 $images = array();
 while($row = mysqli_fetch_assoc($result))
@@ -43,6 +59,12 @@ mysqli_close($conn);
 	<script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
 	<script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
 	<script>
+	//check whether it is in preview mode
+	var isPreview = <?php echo(json_encode($isPreview)); ?>;
+	var from; //if preview check if from edit page or available test page ect.
+	if(isPreview)
+		from = <?php echo(json_encode($from)); ?>; // checks from which page preview was opened
+	
 	var taskID = <?php echo(json_encode($taskID)); ?>;
 	//preschoolerNumber determines whos turn it is
 	var preschoolerNumber = 0;
@@ -63,9 +85,19 @@ mysqli_close($conn);
 	function goNext(){
 		preschoolerNumber++;
 		if(preschoolerNumber == preschoolers.length){
-			var groupID = <?php echo $groupID ?>;
-			var taskIndex = <?php echo $taskIndex ?>;
-			window.location.href = "comments.php?taskIndex=" + taskIndex;
+			//if task was preview, go back to previous page
+			if(isPreview){
+				if(from == "edit")
+					window.location.href = "editTest.php";
+				else if(from == "availableTests")
+					window.location.href = "viewExistingTests.php";
+				else if (from == "existingTasks")
+					window.location.href = "filterExistingQuestions.php";
+			}
+			else{
+				var taskIndex = <?php echo $taskIndex ?>;
+				window.location.href = "comments.php?taskIndex=" + taskIndex;
+			}	
 		}
 		var previousPreschoolerName = document.getElementById("preschoolerName").innerHTML;
 		document.getElementById("preschoolerName").innerHTML = preschoolers[preschoolerNumber]['name'];;
@@ -111,48 +143,58 @@ mysqli_close($conn);
 						 data: { imageID : this.getAttribute("imageID"), score : this.getAttribute("points"), taskID : taskID, preID : preschoolers[preschoolerNumber]['preID']}
 				});
 			};
-			document.getElementById("container").appendChild(div);
+			document.getElementById("characters").appendChild(div);
 		}
 	}
 	</script>
 	<!--link for font awesome icons-->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<style>
+		.brand-logo
+		{
+			margin-top:-67px;
+		}
+		.logout
+		{
+			margin-top:15px;
+			margin-right:15px;
+		}
 		#button{
 			position: absolute;
 			right: 0px;
+			margin-top:-20px;
 		}
 		#participant{
-			height: 220px;
+			height: 100px;
 			position:absolute;
 			bottom: 0px;
 			right:0px;
 			left:0px
 		}
 		#container{
-			position: relative;
-			height: 100%;
-			width: 93%;
+			text-align:center;
+			width:100%;
+			height: 80pt;
 		}
 		.character {
-			position: absolute;
-			top: 150px;
-			transition: top 4000ms;
+			margin:1px;
+			width:18%;
+			text-align:left;
+			display:inline-block;  
 		}
 		.character.chosen {
 			display: none;
 		}
 		.center-align{
-			margin-top: 100px;
+			margin-top: 13px;
 			font-size: 50px;
 		}
-		.brand-logo{
-            		margin-top:-67px;
-        	}
-	        .logout{
-        	    margin-top: 15px;
-	            margin-right:15px;
-        	}
+		#characters{
+			text-align:center;
+			width:100%;
+			height: 80pt;
+			padding-top:125px;
+		}
 	</style>
 </head>
 <body>
@@ -172,7 +214,7 @@ mysqli_close($conn);
     </div>
     <!--end header-->
 	<img id="button" src="images/greyCircle.png" alt= "image not workning" width="7%" onclick="goNext();"></img>
-	<div id="container"></div>
+	<div id="container"><div id ="characters">      </div></div>
 	<div id="participant" class="row" style="font-size:18px;font-weight:bold">
 		<div class="center-align">
 			<span id="preschoolerName">
