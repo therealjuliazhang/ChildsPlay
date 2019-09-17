@@ -10,38 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 $(document).ready(function() {
 	var selected = $("#activityStyle option:selected").val();
-	$.post("selectOption.php", {option_value: selected},
-		function(data){
-			var input = document.getElementById("file");
-			if(data == "Character Ranking"){
-				input.setAttribute("name", "files[]");
-				input.setAttribute("multiple", "multiple");
-				var header = document.createElement("h5");
-				header.setAttribute("class", "blue-text darken-2 header");
-				header.innerHTML = "Points system for the ranks";
-				var div = document.createElement("div");
-				div.setAttribute("class", "input-field col s7");
-				var pointInput = document.createElement("input");
-				pointInput.setAttribute("id", "points");
-				pointInput.setAttribute("name", "points");
-				pointInput.setAttribute("type", "number");
-				div.appendChild(pointInput);
-				var wrapper = document.getElementById("pointRow");
-				wrapper.appendChild(header);
-				wrapper.appendChild(div);
-			}
-			else{
-				input.setAttribute("name", "file");
-				input.removeAttribute("multiple");
-				
-				var contents = document.getElementById("pointRow");
-				while (contents.hasChildNodes()) {
-					contents.removeChild(contents.lastChild);
-				}
-			}
-		}
-	);
-	//loadContent();
+	selectActivityStyle();
 	
 	$(document).on('change', '#file', function(){
 		var path = $("#imageAddress").val();
@@ -93,15 +62,23 @@ function loadContent(){
 				$("#instruction").val("");
 			break;
 	}
+	selectActivityStyle();
+}
+
+function selectActivityStyle(){
+	var selected = $("#activityStyle option:selected").val();
 	$.post("selectOption.php", {option_value: selected},
 		function(data){
 			var input = document.getElementById("file");
+			var upload = document.getElementById("upload");
+			var noti = document.createElement("label");
 			if(data == "Character Ranking"){
 				input.setAttribute("name", "files[]");
 				input.setAttribute("multiple", "multiple");
+				//create the points input when user selects Character Ranking activity style
 				var header = document.createElement("h5");
 				header.setAttribute("class", "blue-text darken-2 header");
-				header.innerHTML = "Points system for the ranks";
+				header.innerHTML = "Points interval";
 				var div = document.createElement("div");
 				div.setAttribute("class", "input-field col s7");
 				var pointInput = document.createElement("input");
@@ -112,11 +89,22 @@ function loadContent(){
 				var wrapper = document.getElementById("pointRow");
 				wrapper.appendChild(header);
 				wrapper.appendChild(div);
+				
+				//delete the previous label
+				upload.removeChild(upload.lastChild);
+				//add the label telling user that they can upload multiple images for Character Ranking task
+				noti.innerHTML = "You can upload multiple images for Character Ranking activity style";
+				upload.appendChild(noti);
 			}
 			else{
 				input.setAttribute("name", "file");
 				input.removeAttribute("multiple");
-				
+				//delete the previous label
+				upload.removeChild(upload.lastChild);
+				//add the label telling user that they can only upload one image for other tasks
+				noti.innerHTML = "Please select one image to upload";
+				upload.appendChild(noti);
+				//delete the point input for other tasks
 				var contents = document.getElementById("pointRow");
 				while (contents.hasChildNodes()) {
 					contents.removeChild(contents.lastChild);

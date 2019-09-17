@@ -54,6 +54,7 @@ footer.page-footer {
 }
 #sidebar{
     margin-top: 264px;
+    width: 15%;
 }
 .nav-wrapper > ul {
     margin-left: 220px;
@@ -139,12 +140,15 @@ position: fixed;
   margin-top:20px;
 }
 #addButton{
-  margin-right: -3px;
   margin-top: 10px;
+  width: 65px;
 }
 #editButton{
   margin-top: 30px;
 }
+
+
+
 #saveButton{
   margin-top: 30px;
 }
@@ -183,5 +187,10 @@ height: 66px;
   width: 80%;
 }
 #educatorProfileButtonsContainer{
-  width: 100%;
+  width: 80%;
+}
+
+/*User Page*/
+#tabIndicator{
+  height: 5px;
 }

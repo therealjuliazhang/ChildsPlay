@@ -20,7 +20,7 @@ if(isset($_POST["mailInput"]))
 //updaet details (NEED TO CHANGE AND GET USERID)
 $sql = "UPDATE USERS SET username = '".$user."', password = '".$password."', email = '".$email."' WHERE userID=".$userID;
     if (mysqli_query($conn, $sql))
-    	header("refresh:1; url:adminProfile.php");
+    	header("Refresh:0; url=adminProfile.php");
     else
     	echo"error idk";
 

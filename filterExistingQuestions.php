@@ -83,7 +83,7 @@ while($row = mysqli_fetch_assoc($result)){
 	echo "<tr><td>".$row["taskID"]."</td>".
 		"<td>".$row["instruction"]."</td>".
 		"<td>".$row["activityStyle"]."</td>".
-		"<td><a class='waves-effect waves-light btn blue darken-2'>Preview</a></td>".
+		"<td><a class='waves-effect waves-light btn blue darken-2' href='instruction.php?taskID=".$row["taskID"]."&mode=preview&from=existingTasks'>Preview</a></td>".
 		"<td><a class='waves-effect waves-light btn blue darken-4' href='CreateNewTaskInCreateTest.php?exist=true&taskID=".$row["taskID"]."'>Edit</a></td>".
 		"<td><a class='waves-effect waves-light btn blue darken-4' href='createTest.php?taskID=".$row["taskID"]."'>Add</a></td>";
 }

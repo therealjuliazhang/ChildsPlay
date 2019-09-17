@@ -63,6 +63,15 @@
      <div class='input-field col s9'>
        <input id="password" disabled value='********' type='text' class='validate inputInCol'>
      </div>
+
+     <!--Password confirm Section-->
+     <div class="hide passwordComfirmationRow">
+       <div class="col s3 column01"><h5 class="hInCol">Comfirm Password:</h5></div>
+       <div class='input-field col s9'>
+         <input id="password" value='' type='text' class='validate inputInCol'>
+       </div>
+     </div>
+
      <div class="col s12 blue-text darken-2"><h5>Personal Information</h5></div>
      <div class="col s3 valign-wrapper column01"><h5 class="hInCol">Email:</h5></div>
      <div class='input-field col s9'>
@@ -70,25 +79,23 @@
      </div>
      <div class="col s3 column01"><h5 class="hInCol">Location:</h5></div>
      <div class="removable">
-     <div class="input-field col s8 locationCell">
-       <select class="selectLocation" disabled>
-       <option value="">KU Gwynneville Preschool</option>
-       <option value="2" selected>Wollongong Preschool</option>
-       <option value="3">Keiraville Community Preschool</option>
-       </select>
+       <div class="input-field col s8 locationCell">
+         <select class="selectLocation" disabled>
+           <option value="">KU Gwynneville Preschool</option>
+           <option value="2" selected>Wollongong Preschool</option>
+           <option value="3">Keiraville Community Preschool</option>
+         </select>
+       </div>
+       <div class='col s1 hide removeCell'><a class='waves-effect waves-light btn removeButton'><i class='material-icons'>remove</i></a></div>
      </div>
-     <div class='col s1 hide removeCell'><a class='waves-effect waves-light btn removeButton'><i class='material-icons'>remove</i></a></div>
-   </div>
    </div>
  </div>
 
-
   <div class="container" id="educatorProfileButtonsContainer">
    <div class="row">
-     <div class="col s1 offset-s11"><a class="waves-effect waves-light btn blue darken-4 addCell hide right" id="addButton" onclick="appendSelect()"><i class="material-icons">add</i></a></div>
-     <div class="col s10"></div>
-     <div class="col s1"><a class="waves-effect waves-light btn #2196f3 blue right" id="editButton">Edit</a></div>
-     <div class="col s1"><a class="waves-effect waves-light btn blue darken-2 right" id="saveButton">Save</a></div>
+     <div class="col s1 offset-s11"><a class="waves-effect waves-light btn blue darken-4 addCell hide" id="addButton" onclick="appendSelect()"><i class="material-icons">add</i></a></div>
+     <div class="col s1 offset-s11" id="editBUttonDiv"><a class="waves-effect waves-light btn #2196f3 blue" id="editButton">Edit</a></div>
+     <div class="col s1 offset-s11 hide" id="saveButtonDiv"><a class="waves-effect waves-light btn blue darken-2" id="saveButton">Save</a></div>
     </div>
   </div>
 
@@ -104,8 +111,12 @@
         $("#password").prop( "disabled", false );
         $("#email").prop( "disabled", false );
         $(".selectLocation").prop('disabled', false);
+        $(".validate").prop('disabled', false);
         $(".removeCell").removeClass("hide");
         $(".addCell").removeClass("hide");
+        $(".passwordComfirmationRow").removeClass("hide");
+        $("#saveButtonDiv").removeClass("hide");
+        $("#editBUttonDiv").addClass("hide");
         $('select').formSelect();
       })
     });
@@ -116,8 +127,13 @@
         $("#password").prop( "disabled", true );
         $("#email").prop( "disabled", true );
         $(".selectLocation").prop('disabled', true);
+        $(".validate").prop('disabled', true);
         $(".removeCell").addClass("hide");
         $(".addCell").addClass("hide");
+        $(".saveButtonDiv").addClass("hide");
+        $(".passwordComfirmationRow").addClass("hide");
+        $("#saveButtonDiv").addClass("hide");
+        $("#editBUttonDiv").removeClass("hide");
         $('select').formSelect();
       })
     });
@@ -149,6 +165,15 @@
     $(document).ready(function(){
     $('select').formSelect();
     });
+
+/*
+    if ($(window).width() < 1280) {
+      alert('Less than 1280');
+    }
+    else {
+      alert('More than 1280');
+    }
+*/
     </script>
 
 
