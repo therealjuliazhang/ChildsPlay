@@ -34,7 +34,7 @@
 			<ul class="tabs ">
 				<li class="tab col s3"><a class="blue-text darken-2" href="#tests"><h5>Tests</h5></a></li>
 				<li class="tab col s3"><a class="blue-text darken-2" href="#groups"><h5>Groups</h5></a></li>
-				<div class="indicator blue darken-2" style="z-index:1"></div>
+				<div class="indicator blue darken-2" style="z-index:1" id="tabIndicator"></div>
 			</ul>
 			<table id="tests" class="striped">
 				<thead class="blue-text darken-2">

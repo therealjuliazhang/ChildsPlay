@@ -24,10 +24,10 @@
         <!-- body content -->
         <div class="container">
 			<ul class="tabs">
-				<li class="tab col s3"><a class="blue-text darken-2" href="#pendingUsers">Pending Users</a></li>
-				<li class="tab col s3"><a class="blue-text darken-2" href="#educators">Educators</a></li>
-        <li class="tab col s3"><a class="blue-text darken-2" href="#admin">Admin</a></li>
-				<div class="indicator blue darken-2" style="z-index:1"></div>
+				<li class="tab col s3"><a class="blue-text darken-2" href="#pendingUsers"><h5>Pending Users</h5></a></li>
+				<li class="tab col s3"><a class="blue-text darken-2" href="#educators"><h5>Educators</h5></a></li>
+        <li class="tab col s3"><a class="blue-text darken-2" href="#admin"><h5>Admin</h5></a></li>
+				<div class="indicator blue darken-2" style="z-index:1" id="tabIndicator"></div>
 			</ul>
       <!-- pending users tab-->
 			<table id="pendingUsers" class="striped">
@@ -49,14 +49,14 @@
             $conn = OpenCon();
             //get pending users from database
             $sql = "SELECT * FROM USERS WHERE accepted = 0";
-            
+
             $result = $conn->query($sql);
             $users = array();
             while($row = mysqli_fetch_assoc($result))
             {
                 $users[] = $row;
             }
-            
+
             foreach($users as $user)
             {
                 echo "<tr><td>".$user["fullName"]."</td><td>".$user["email"]."</td>";
@@ -83,23 +83,23 @@
                 {
                     echo "<td>Admin</td>";
                 }
-                
+
                 //get user id as input
                 echo "<input id='UID' type='hidden' name='UID' value=".$user["userID"].">";
-                
+
                 //print buttons
                 echo "<td><input type='submit' value='ACCEPT' class='waves-effect waves-light btn acceptButton' name='accept'/></td>";
-                
+
                 echo "<td><input type='submit' value='DECLINE' class='waves-effect waves-light btn #ff5252 red accent-2 declineButton' name='decline'></td></tr>";
-                
-                
+
+
             }
-            
+
         ?>
 
                 </form>
 <?php
-    
+
 ?>
 				</tbody>
 			</table>
@@ -147,7 +147,7 @@ foreach ($educators as $educator){
 	echo $location."</td>";
 	echo '<td><a class="waves-effect waves-light btn #0d47a1 blue darken-4" href="accessibleTest.php?userID='.$educator["userID"].'">Tests</a></td></tr>';
 }
-    
+
 ?>
 					</tbody>
 				</table>
@@ -174,7 +174,7 @@ foreach ($educators as $educator){
         echo "<tr><td>".$row["fullName"]."</td>".
 		"<td>".$row["email"]."</td>".
 		"<td>".$location["name"]."</td></tr>";
-        
+
     }
     CloseCon($conn);
 ?>
