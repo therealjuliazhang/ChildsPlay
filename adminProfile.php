@@ -36,19 +36,7 @@
   </head>
   <body>
     <!--header-->
-    <div class="navbar-fixed">
-      <nav class="nav-extended blue darken-4">
-        <div class="nav-wrapper">
-          <a href="#" class="brand-logo left"><img src="images/logo1.png" ></a>
-          <ul id="nav-mobile" class="left hide-on-med-and-down">
-            <li  class="active"><a href="">Tests</a></li>
-            <li><a href="">Create</a></li>
-            <li><a href="" >Results</a></li>
-            <li><a href="">Users</a></li>
-          </ul>
-        </div>
-      </nav>
-    </div>
+    <div id="InsertHeader"></div>
     <!--Content User Information under the header-->
     <div class="navbar-fixed">
     <table id="infoTable" height="200px" class="white-text">
@@ -144,6 +132,8 @@
 <script>
 //enable input
   $(document).ready(function(){
+    //Read header
+    $("#InsertHeader").load("header.html");
     $("#editButton").click(function(){
       $("#uName").prop( "readonly", false );
       $("#password").prop( "readonly", false );
