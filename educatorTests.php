@@ -125,7 +125,23 @@
 		position: absolute;
 		top: -14px;
 		left: 15px;
-
 	}
+	.container{
+		margin-top: 25px;
+	}
+
+	.tabs .tab a:focus, .tabs .tab a:focus.active {
+	    background-color: rgba(246,178,181,0.2);
+	    outline: none;
+	}
+	.tabs .tab a:hover, .tabs .tab a.active {
+	    background-color: rgba(246,178,181,0.2);
+	    color: #ee6e73;
+	}
+	.tabs{
+		margin-bottom: 10px;
+	}
+
+
     </style>
 </html>
