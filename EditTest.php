@@ -16,10 +16,10 @@
         //connect to database
         include 'db_connection.php';
         $conn = OpenCon();
-        //get test name from database
-        $sql = "SELECT title FROM TEST WHERE testID=".$testID;
+        //get test name and description from database
+        $sql = "SELECT title, description FROM TEST WHERE testID=".$testID;
         $result = $conn->query($sql);
-        $testTitle = mysqli_fetch_assoc($result)['title'];
+        $test = mysqli_fetch_assoc($result);
         //get tasks
         $tasks = array();
         $sql = "SELECT taskID FROM TASKASSIGNMENT WHERE testID=".$testID;
@@ -38,15 +38,55 @@
         <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
         <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+        <script type = "text/javascript" src = "https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
         <script>
-            var testTitle = <?php echo json_encode($testTitle); ?>;
+            var test = <?php echo json_encode($test); ?>;
             var tasks = <?php echo json_encode($tasks); ?>;
             var testID = <?php echo json_encode($testID); ?>;
             $(document).ready(function() {
-                //display test name
-                $("#testTitle").html(testTitle);
+                //load header
+                $("#InsertHeader").load("header.html");
+                //display test name and description
+                $("#testTitle").val(test.title);
+                $("#description").val(test.description);
                 //display tasks
                 displayTasks();
+                //Places error element next to invalid inputs
+                $.validator.setDefaults({
+                    errorElement : 'div',
+                    errorClass: 'invalid',
+                    errorPlacement: function(error, element) {
+                        if(element.attr('type') == "text" || element.attr('type') == "number"){
+                            $(element)
+                            .closest("form")
+                            .find("label[for='" + element.attr("id") + "']")
+                            .attr('data-error', error.text());
+                        }
+                    }
+                })
+                //validate test title
+                $("#form").validate({
+                    rules: {
+                        testTitle: {
+                            required: true,
+                            remote: {
+                                url: "checkTestTitle.php",
+                                type: "post",
+                                data: {
+                                    currentTitle: test.title
+                                }
+                            }
+                        },
+                        description: "required"
+                    },
+                    messages: {
+                        testTitle: {
+                            required: "Enter a test title.",
+                            remote: jQuery.validator.format("{0} is already used by an existing test.")
+                        },
+                        description: "Enter a description for the test."
+                    }
+                });
             });
             //display all tasks
             function displayTasks(){
@@ -103,16 +143,38 @@
     <body>
         <!--header-->
         <div id="InsertHeader"></div>
-        <script>
-          //Read header
-          $(function(){
-            $("#InsertHeader").load("header.html");
-          });
-        </script>
-        <!--end header-->
         <!-- body content -->
         <div class="container">
-            <h5><div class="blueText">Edit <span id="testTitle"></span></div></h5>
+        <form id="form" action="updateTest.php" method="post" class="col s12">
+            <h5 class="blue-text darken-2 header">
+                <a class="tooltipped" data-position="left" data-tooltip="Title of Test">
+                    <i class="material-icons">help_outline</i>
+                </a>Test Title
+            </h5>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input class="validate" id="testTitle" name="testTitle" type="text">
+                    <label for="testTitle"></label>
+                </div>
+            </div>
+            <h5 class="blue-text darken-2 header">
+                <a class="tooltipped" data-position="left" data-tooltip="Enter description for Task">
+                    <i class="material-icons">help_outline</i>
+                </a>
+                Description
+            </h5>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input class="validate" id="description" name="description" type="text">
+                    <label for="description"></label>
+                </div>
+            </div>
+			<h5 class="blue-text darken-2 header">
+				<a class="tooltipped" data-position="left" data-tooltip="List of tasks in test">
+					<i class="material-icons">help_outline</i>
+				</a>
+				Tasks
+			</h5>
             <table class="striped">
                 <thead>
                     <tr class="blueText">
@@ -127,8 +189,7 @@
                 <tbody id="tableBody">
                 </tbody>
             </table>
-            <br/>
-            <div align="right">
+            <div id="addTaskButton" align="right">
                 <ul id = "dropdown" class = "dropdown-content">
                     <li><a href = "EditExistingTaskInEditTest.php?testID=<?php echo json_encode($testID);?>">Existing Tasks</a></li>
                     <li><a href = "CreateNewTaskInEditTest.php?testID=<?php echo json_encode($testID);?>">Create New Task</a></li>
@@ -137,10 +198,11 @@
                     <i class="large material-icons">add</i>
                 </a>
             </div>
-            <br/><br/><br/>
-            <p align="right">
-                <a href = "ViewExistingTests.php" class="waves-effect waves-light btn blue darken-2">Confirm</a>
-            </p>
+            <div id="comfirmButton">
+                <input type="submit" name="submit" class="submit waves-effect waves-light btn blue darken-2 right" value="Confirm">
+                <!-- <a class="waves-effect waves-light btn blue darken-2 right">Confirm</a> -->
+            </div>
+          </form>
         </div>
         <!--end body content-->
     </body>
@@ -166,9 +228,24 @@
     .header{
         margin-top: 30px;
     }
-    .blueText
-    {
+    .blueText{
         color:#1976D2;
+    }
+    /* for error label */
+    label[data-error] {
+        width: 100%;
+        font-size: 12px;
+    }
+    .invalid{
+        font-size: 12px;
+        color: #EC453C;
+    }
+    #comfirmButton{
+        padding-top: 50px;
+        margin-bottom: 100px;
+    }
+    #addTaskButton{
+        padding-top: 10px;
     }
     </style>
 </html>
