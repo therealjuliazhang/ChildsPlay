@@ -3,7 +3,7 @@
     if(isset($_REQUEST['testTitle']))
         $inputTitle = $_REQUEST['testTitle'];
     //get current test title (needed for editing groupname)
-    $currentTestTitle = "";
+    $currentTitle = "";
     if(isset($_POST['currentTitle']))
         $currentTitle = $_POST['currentTitle'];
     if($inputTitle == $currentTitle){
