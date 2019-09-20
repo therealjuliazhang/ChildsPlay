@@ -303,8 +303,9 @@ SET
 @testID = 1,
 @taskTitle = "Task 3",
 @orderInTest = 3,
-@comments = "Kate was not sure if she liked the monster.";
-INSERT INTO TASKASSIGNMENT(taskID, testID, taskTitle, orderInTest) VALUES (@taskID, @testID, @taskTitle, @orderInTest);
+@comments = "Kate was not sure if she liked the monster.",
+@pointsInterval = 10;
+INSERT INTO TASKASSIGNMENT(taskID, testID, taskTitle, orderInTest, pointsInterval) VALUES (@taskID, @testID, @taskTitle, @orderInTest, @pointsInterval);
 
 SET
 @taskID = 4,

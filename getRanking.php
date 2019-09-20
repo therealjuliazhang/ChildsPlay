@@ -9,7 +9,7 @@ if($_REQUEST["imageID"] && $_REQUEST["score"] && $_REQUEST["taskID"] && $_REQUES
 	$taskID = $_REQUEST["taskID"];
 	$testID = $_REQUEST["testID"];
 	$preID = $_REQUEST["preID"];
-	$sql = "INSERT INTO RANKING VALUES (".$imageID.", ".$score.", ".$taskID.", ".$preID.")";
+	$sql = "INSERT INTO RANKING VALUES (".$imageID.", ".$score.", ".$testID.", ".$taskID.", ".$preID.")";
 	if ($conn->query($sql) === TRUE) {
 		echo "New record created successfully";
 	} else {

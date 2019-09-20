@@ -123,7 +123,7 @@ if(count($tasks) > 0){
       		echo "<h5 class='blue-text text-darken-2'>Task Instructions:</h5>";
 			echo $tasks[$taskIndex]['instruction'];
 			$taskTypeUrl = "identifyBodyPartsTask.php?taskIndex=" . $taskIndex;
-			echo "After the participant has completed their task, select the grey, quarter-circle button on the top right
+			echo "</br></br>After the participant has completed their task, select the grey, quarter-circle button on the top right
 						of the screen to go to the next participant's turn.
 						</br>
 						<img src='images/greyCircle.png' width='60px'>
@@ -134,7 +134,7 @@ if(count($tasks) > 0){
       		echo "<h5 class='blue-text text-darken-2'>Task Instructions:</h5>";
 			echo $tasks[$taskIndex]['instruction'];
 			$taskTypeUrl = "characterRankingTask.php?taskIndex=" . $taskIndex;
-			echo " After the participant has completed their task, select the grey, quarter-circle button on the top right
+			echo "</br></br>After the participant has completed their task, select the grey, quarter-circle button on the top right
 						of the screen to go to the next participant's turn.
 						</br>
 						<img src='images/greyCircle.png' width='60px'>
@@ -145,7 +145,7 @@ if(count($tasks) > 0){
 			echo "<h5 class='blue-text text-darken-2'>Task Instructions:</h5>";
 			echo $tasks[$taskIndex]['instruction'];
 			$taskTypeUrl = "preferredMechanicsTask.php?taskIndex=" . $taskIndex;
-			echo " After the participant has completed their task, click the next button to go to the next participant's turn.	</br>";
+			echo "</br></br>After the participant has completed their task, click the next button to go to the next participant's turn.	</br>";
 					
 			break;
 	}
