@@ -49,14 +49,14 @@
             $conn = OpenCon();
             //get pending users from database
             $sql = "SELECT * FROM USERS WHERE accepted = 0";
-            
+
             $result = $conn->query($sql);
             $users = array();
             while($row = mysqli_fetch_assoc($result))
             {
                 $users[] = $row;
             }
-            
+
             foreach($users as $user)
             {
                 echo "<tr><td>".$user["fullName"]."</td><td>".$user["email"]."</td>";
@@ -83,15 +83,15 @@
                 {
                     echo "<td>Admin</td>";
                 }
-                
+
 
                 //print buttons
                 echo "<td><a href='updateUserPage.php?uid=".$user["userID"]."&accepted=1' class='waves-effect waves-light btn acceptButton'>Accept</a></td>";
                 echo "<td><a href='updateUserPage.php?uid=".$user["userID"]."&accepted=-1' class='waves-effect waves-light btn #ff5252 red accent-2 declineButton'>Decline</a></td></tr>";
-                
-                
+
+
             }
-            
+
         ?>
 
 				</tbody>
@@ -140,7 +140,7 @@ foreach ($educators as $educator){
 	echo $location."</td>";
 	echo '<td><a class="waves-effect waves-light btn #0d47a1 blue darken-4" href="accessibleTest.php?userID='.$educator["userID"].'">Tests</a></td></tr>';
 }
-    
+
 ?>
 					</tbody>
 				</table>
@@ -167,7 +167,7 @@ foreach ($educators as $educator){
         echo "<tr><td>".$row["fullName"]."</td>".
 		"<td>".$row["email"]."</td>".
 		"<td>".$location["name"]."</td></tr>";
-        
+
     }
     CloseCon($conn);
 ?>
