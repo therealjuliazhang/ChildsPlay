@@ -29,33 +29,34 @@
   <!--end header-->
   <!-- body content -->
   <div class="container">
-    <h4 class="blue-text darken-2">Filter By:</h4>
-    <h5>Date Created</h5>
-    <table>
-      <tr>
-        <td>
-          Start<br/>
-          <input type="text" class="datepicker" id="startDate">
-        </td>
-        <td>
-          End<br/>
-          <input type="text" class="datepicker" id="endDate">
-        </td>
-      </tr>
-    </table>
-
-    <h5>Task Type</h5>
+    <h5 class="blue-text darken-2">Filter By:</h5>
+    <h6 class="blue-text darken-2 header">Date Created</h6>
+	<form action="" method="post">
     <div class="row">
-      <div class="input-field col s6">
-        <select class="">
-          <option value="" selected disabled>Select Task Type:</option>
-          <option value="1">Identify Body Parts</option>
-          <option value="2">Character Ranking</option>
-          <option value="3">Likert Scale</option>
-          <option value="3">Preferred Mechanics</option>
-        </select>
-      </div>
+      <div class="col s6">Start</div>
+      <div class="col s6">End</div>
+      <div class="col s6"><input type="text" class="datepicker" id="startDate"></div>
+      <div class="col s6"><input type="text" class="datepicker" id="endDate"></div>
     </div>
+
+		<h6 class="blue-text darken-2 header">Activity Style</h6>
+		<div class="row">
+		  <div class="input-field col s6">
+			<select class="" name="activityStyle">
+			  <option value="" selected disabled>Select Activity Style:</option>
+			  <option value="Identify Body Parts">Identify Body Parts</option>
+			  <option value="Character Ranking">Character Ranking</option>
+			  <option value="Likert Scale">Likert Scale</option>
+			  <option value="Preferred Mechanic">Preferred Mechanics</option>
+			</select>
+		  </div>
+		</div>
+		<div class="row">
+			<button class="btn waves-effect waves-light blue darken-4 sortButton" type="submit" name="submitFilter">Filter</button>
+		</div>
+	</form>
+	<?php ?>
+	<br/>
     <!--
     <ul id = "dropdown" class = "dropdown-content">
     <li><a href = "#">Identify Body Parts</a></li>
@@ -69,28 +70,18 @@
 <table class="striped">
   <thead>
     <tr class="blue-text darken-2">
-      <th>TaskID</th>
-      <th>Instruction</th>
-      <th>Activity Style</th>
-      <th>Preview</th>
-      <th>Edit</th>
-      <th>Add</th>
+      <th class='taskIdCol'>TaskID</th>
+      <th class='indtructionCol'>Instruction</th>
+      <th class='activityStyleCol'>Activity Style</th>
+      <th class='dateCreatedCol'>Date Created</th>
+      <th class='previewCol'>Preview</th>
+      <th class='editCol'>Edit</th>
+      <th class='addCol'>Add</th>
     </tr>
   </thead>
   <tbody>
     <?php
-    include 'db_connection.php';
-    $conn = OpenCon();
-    $query = "SELECT * FROM TASK";
-    $result = $conn->query($query);
-    while($row = mysqli_fetch_assoc($result)){
-      echo "<tr><td>".$row["taskID"]."</td>".
-      "<td>".$row["instruction"]."</td>".
-      "<td>".$row["activityStyle"]."</td>".
-      "<td><a class='waves-effect waves-light btn blue darken-2' href='instruction.php?taskID=".$row["taskID"]."&mode=preview&from=existingTasks'>Preview</a></td>".
-      "<td><a class='waves-effect waves-light btn blue darken-4' href='CreateNewTaskInCreateTest.php?exist=true&taskID=".$row["taskID"]."'>Edit</a></td>".
-      "<td><a class='waves-effect waves-light btn blue darken-4' href='createTest.php?taskID=".$row["taskID"]."'>Add</a></td>";
-    }
+    include_once 'filterTasks.php';
     //CloseCon($conn);
     ?>
   </tbody>
@@ -118,12 +109,12 @@ $(function() {
   $("#startDate").datepicker();
   $("#endDate").datepicker();
 
-    $("#endDate").on("change",function(){
-      checkDate();
-    });
-    $("#startDate").on("change",function(){
-      checkDate();
-    });
+  $("#endDate").on("change",function(){
+    checkDate();
+  });
+  $("#startDate").on("change",function(){
+    checkDate();
+  });
 });
 function checkDate(){
   var startSelected = $('#startDate').val();
@@ -136,29 +127,7 @@ function checkDate(){
     alert('End date should be greater than Start date. Please select a valid range.');
   }
 }
-//Date validation
-/*
-$(function() {
-  $("#startDate").datepicker();
-  $("#startDate").on("change",function(){
-    var startSelected = $(this).val();
-    $("#endDate").datepicker();
-    $("#endDate").on("change",function(){
-      var endSelected = $(this).val();
-      //alert(startSelected + endSelected);
-      if(startSelected > endSelected){
-        alert('End date should be greater than Start date. Please select a valid range.');
-      }
-    });
-  });
-});
-*/
-/*
-$('.datepicker').pickadate({
-selectMonths: true, // Enable Month Selection
-selectYears: 10 // Creates a dropdown of 10 years to control year
-});
-*/
+
 </script>
 <style>
 #body {
@@ -196,5 +165,50 @@ selectYears: 10 // Creates a dropdown of 10 years to control year
 .datepicker-table td.is-selected {
   background-color: #1976D2;
 }
+tbody {
+  display:block;
+  height:300px;
+  overflow:auto;
+}
+thead, tbody tr {
+  display:table;
+  width:100%;
+  table-layout:fixed;
+}
+thead {
+  width: calc( 100% - 1em )
+}
+table {
+  width:100%;
+}
+th{
+  text-align: center;
+}
+.taskIdCol, .activityStyleCol,.dateCreatedCol, .previewCol, .editCol, .addCol{
+  text-align: center;
+}
+.taskIdCol{
+  width: 3%;
+}
+.indtructionCol{
+  width: 30%;
+}
+.activityStyleCol{
+  width: 10%;
+}
+.dateCreatedCol{
+  width: 15%;
+}
+.previewCol{
+  width: 13%;
+}
+.editCol{
+  width: 13%;
+}
+.addCol{
+  width: 13%;
+}
+
+
 </style>
 </html>

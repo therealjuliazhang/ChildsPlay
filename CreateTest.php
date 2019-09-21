@@ -133,6 +133,7 @@ session_start();
                         }
                         if (isset($_GET["remove"])) {
                             $taskID = $_GET["taskID"];
+							//remove the selected task from the list
                             if (($key = array_search($taskID, $idList)) !== false) {
                                 unset($idList[$key]);
                                 if (count($idList) > 0)
@@ -163,7 +164,7 @@ session_start();
             <div align="right">
                 <ul id = "dropdown" class = "dropdown-content">
                     <li><a href="filterExistingTasks.php">Existing Tasks</a></li>
-                    <li><a href="CreateNewTaskInCreateTest.php?from=create">Create New Task</a></li>
+                    <li><a href="createNewTaskInCreateTest.php?from=create">Create New Task</a></li>
                 </ul>
                 <a class="btn dropdown-button blue darken-4" href="" data-activates="dropdown">
                     <i class="large material-icons">add</i>
@@ -172,7 +173,7 @@ session_start();
             <p align="right">
                 <!-- <button type="submit" name="createTest" class="waves-effect waves-light btn blue darken-2">Create Test</button> -->
                 <input type="submit" name="submit" class="submit waves-effect waves-light btn blue darken-2 right" value="Create Test">
-                <a class="waves-effect waves-light btn blue darken-4 right">Cancel</a>
+                <a class="waves-effect waves-light btn blue darken-4 right" onClick="javascript:history.go(-1)">Cancel</a>
             </p>
         </form>
     </div>

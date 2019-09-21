@@ -139,14 +139,19 @@ while($row = mysqli_fetch_assoc($result)){
           }
         };
         //go to next preschooler
-        $("li.is-active").next().addClass('is-active');
-        $('li.is-active').first().removeClass('is-active');
-        activePreschooler = $("li.is-active").children("a").html();
-        $("#nameSpan").html(activePreschooler);
-        //uncheck boxes
-        $('input:checkbox').each(function(){
-          $(this).prop( "checked", false );
-        });
+		var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+		
+		var checkedOne = Array.prototype.slice.call(checkboxes).some(x => x.checked);
+		if (checkedOne){
+			$("li.is-active").next().addClass('is-active');
+			$('li.is-active').first().removeClass('is-active');
+			activePreschooler = $("li.is-active").children("a").html();
+			$("#nameSpan").html(activePreschooler);
+			//uncheck boxes
+			$('input:checkbox').each(function(){
+			  $(this).prop( "checked", false );
+			});
+		}
       }
 
 			//hide or unhide comment section when 'other' is clicked
@@ -188,6 +193,7 @@ while($row = mysqli_fetch_assoc($result)){
       <!--1st row-->
           <div class="col s12" id="questionCol"><h5 class="blue-text darken-2">How does <span id="nameSpan"></span> interact with the image?</h5></div>
       <!--2nd row-->
+	  <form required>
           <div class="col s3 operationCol"><p class="operation">Press:</p></div>
           <div class="col s3 operationCol"><p class="operation">Zoom/Pinch:</p></div>
           <div class="col s3 operationCol"><p class="operation">Swipe/Drag:</p></div>
