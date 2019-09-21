@@ -163,6 +163,10 @@
 	}
 	.tabs{
 		margin-bottom: 10px;
+
+	}
+	.tabs .tab {
+	    text-transform: none;
 	}
 
 

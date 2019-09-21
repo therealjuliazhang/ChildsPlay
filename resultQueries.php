@@ -139,6 +139,7 @@ if(isset($_SESSION["testID"])){
 	
 	//check if any preschooler's name is selected
 	if(isset($_POST["name"])){
+		$isGroupResults = false;
 		$idList = array();
 		$i = 0;
 		$countIDs = count($_POST["name"]);

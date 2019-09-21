@@ -173,7 +173,7 @@ session_start();
             <p align="right">
                 <!-- <button type="submit" name="createTest" class="waves-effect waves-light btn blue darken-2">Create Test</button> -->
                 <input type="submit" name="submit" class="submit waves-effect waves-light btn blue darken-2 right" value="Create Test">
-                <a class="waves-effect waves-light btn blue darken-4 right">Cancel</a>
+                <a class="waves-effect waves-light btn blue darken-4 right" onClick="javascript:history.go(-1)">Cancel</a>
             </p>
         </form>
     </div>
