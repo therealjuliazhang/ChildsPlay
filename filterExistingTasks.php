@@ -29,8 +29,9 @@
   <!--end header-->
   <!-- body content -->
   <div class="container">
-    <h4 class="blue-text darken-2">Filter By:</h4>
-    <h5>Date Created</h5>
+    <h5 class="blue-text darken-2">Filter By:</h5>
+    <h6 class="blue-text darken-2 header">Date Created</h6>
+	<form action="" method="post">
     <div class="row">
       <div class="col s6">Start</div>
       <div class="col s6">End</div>
@@ -38,54 +39,57 @@
       <div class="col s6"><input type="text" class="datepicker" id="endDate"></div>
     </div>
 
-    <h5>Task Type</h5>
-    <div class="row">
-      <div class="input-field col s6">
-        <select class="">
-          <option value="" selected disabled>Select Task Type:</option>
-          <option value="1">Identify Body Parts</option>
-          <option value="2">Character Ranking</option>
-          <option value="3">Likert Scale</option>
-          <option value="3">Preferred Mechanics</option>
-        </select>
-      </div>
-    </div>
-
-    <!--table for holding tasks-->
-    <table class="striped">
-      <thead>
-        <tr class="blue-text darken-2">
-          <th class='taskIdCol'>TaskID</th>
-          <th class='indtructionCol'>Instruction</th>
-          <th class='activityStyleCol'>Activity Style</th>
-          <th class='previewCol'>Preview</th>
-          <th class='editCol'>Edit</th>
-          <th class='addCol'>Add</th>
-        </tr>
-      </thead>
-      <tbody>
-        <?php
-        include 'db_connection.php';
-        $conn = OpenCon();
-        $query = "SELECT * FROM TASK";
-        $result = $conn->query($query);
-        while($row = mysqli_fetch_assoc($result)){
-          echo "<tr><td class='taskIdCol'>".$row["taskID"]."</td>".
-          "<td class='indtructionCol'>".$row["instruction"]."</td>".
-          "<td class='activityStyleCol'>".$row["activityStyle"]."</td>".
-          "<td class='previewCol'><a class='waves-effect waves-light btn blue darken-2' href='instruction.php?taskID=".$row["taskID"]."&mode=preview&from=existingTasks'>Preview</a></td>".
-          "<td class='editCol'><a class='waves-effect waves-light btn blue darken-4' href='CreateNewTaskInCreateTest.php?exist=true&taskID=".$row["taskID"]."'>Edit</a></td>".
-          "<td class='addCol'><a class='waves-effect waves-light btn blue darken-4' href='createTest.php?taskID=".$row["taskID"]."'>Add</a></td>";
-        }
-        //CloseCon($conn);
-        ?>
-      </tbody>
-    </table>
-    <div class="row">
-      <div class="col s1 offset-s11"><a class="waves-effect waves-light btn #2196f3 blue right" id="cancelButton">Cancel</a></div>
-    </div>
-  </div>
-  <!--end body content-->
+		<h6 class="blue-text darken-2 header">Activity Style</h6>
+		<div class="row">
+		  <div class="input-field col s6">
+			<select class="" name="activityStyle">
+			  <option value="" selected disabled>Select Activity Style:</option>
+			  <option value="Identify Body Parts">Identify Body Parts</option>
+			  <option value="Character Ranking">Character Ranking</option>
+			  <option value="Likert Scale">Likert Scale</option>
+			  <option value="Preferred Mechanic">Preferred Mechanics</option>
+			</select>
+		  </div>
+		</div>
+		<div class="row">
+			<button class="btn waves-effect waves-light blue darken-4 sortButton" type="submit" name="submitFilter">Filter</button>
+		</div>
+	</form>
+	<?php ?>
+	<br/>
+    <!--
+    <ul id = "dropdown" class = "dropdown-content">
+    <li><a href = "#">Identify Body Parts</a></li>
+    <li><a href = "#">Character Ranking</a></li>
+    <li><a href = "#">Likert Scale</a></li>
+    <li><a href = "#">Preferred Mechanics</a></li>
+    <a class = "btn dropdown-button blue darken-4" href = "#" data-activates = "dropdown">Task Type</a>
+  </ul>
+-->
+<!--table for holding tasks-->
+<table class="striped">
+  <thead>
+    <tr class="blue-text darken-2">
+      <th class='taskIdCol'>TaskID</th>
+      <th class='indtructionCol'>Instruction</th>
+      <th class='activityStyleCol'>Activity Style</th>
+      <th class='previewCol'>Preview</th>
+      <th class='editCol'>Edit</th>
+      <th class='addCol'>Add</th>
+    </tr>
+  </thead>
+  <tbody>
+    <?php
+    include_once 'filterTasks.php';
+    //CloseCon($conn);
+    ?>
+  </tbody>
+</table>
+<div class="row">
+  <div class="col s1 offset-s11"><a class="waves-effect waves-light btn #2196f3 blue right" id="cancelButton">Cancel</a></div>
+</div>
+</div>
+<!--end body content-->
 </body>
 <script>
 //Initialize Selector

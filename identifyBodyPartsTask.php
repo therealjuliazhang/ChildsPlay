@@ -59,6 +59,7 @@ mysqli_close($conn);?>
 	<script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
 	<script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
 	<script>
+	var clicked = false;
 	//check whether it is in preview mode
 	var isPreview = <?php echo(json_encode($isPreview)); ?>;
 	var from; //if preview check if from edit page or available test page ect.
@@ -90,6 +91,7 @@ mysqli_close($conn);?>
 		document.getElementById("participant").className = 'row ' + colours[preschoolerIndex % colours.length];
 	}
 	function mouseDown(e) {
+		clicked = true;
 		if (!e)
 			var e = event;
 		 canX = e.pageX - canvas.offsetLeft;
@@ -107,6 +109,7 @@ mysqli_close($conn);?>
 		});
 	}
 	function touchDown(e) {
+		clicked= true;
 		if (!e)
 			var e = event;
 		e.preventDefault();
@@ -141,6 +144,7 @@ mysqli_close($conn);?>
 	}
 	//Next participant
 	function goNext(){
+		if(clicked == true){
 		preschoolerIndex++;
 		if(preschoolerIndex == preschoolers.length){
 			imageIndex++;
@@ -165,6 +169,8 @@ mysqli_close($conn);?>
 		}
 		document.getElementById("preschoolerName").innerHTML = preschoolers[preschoolerIndex]['name'];
 		document.getElementById("participant").className = 'row ' + colours[preschoolerIndex % colours.length];
+		clicked == false;
+	 }
 	}
 	function displayCharacter(imageIndex){
 		var img = new Image();

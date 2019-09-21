@@ -2,16 +2,25 @@
 <html>
 <?php
 //get user ID
-// session_start();
-// if(isset($_SESSION['userID']))
-// 	$userID = $_SESSION['userID'];
-// else
-// 	header('login.php');
-$userID = 1; //remove after admin pages are linked up
+ session_start();
+if(isset($_SESSION['userID']))
+{
+    $userID = $_SESSION['userID'];
+}else
+{
+    header('login.php');
+}
+    
+    
+//$userID = 1; //remove after admin pages are linked up
 //get test ID
-// if(isset($_GET['testID']))
-// 	$testID = $_GET['testID'];
-$testID = 2; //remove after admin pages are linked up
+if(isset($_GET['testID']))
+{
+    $testID = $_GET['testID'];
+}
+
+    //$testID = 2; //remove after admin pages are linked up
+
 //connect to database
 include 'db_connection.php';
 $conn = OpenCon();

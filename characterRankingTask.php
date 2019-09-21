@@ -90,6 +90,7 @@ mysqli_close($conn);
 	<script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
 	<script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
 	<script>
+	clicked = false;
 	//check whether task/test is being preview
 	var isTaskPreview = <?php echo(json_encode($isTaskPreview)); ?>;
 	var from; //if preview check if from edit page or available test page ect.
@@ -118,6 +119,7 @@ mysqli_close($conn);
 	}
 	//Next participant
 	function goNext(){
+		if(clicked == true){
 		preschoolerNumber++;
 		if(preschoolerNumber == preschoolers.length){
 			//if task was preview, go back to previous page
@@ -143,6 +145,9 @@ mysqli_close($conn);
 			chosenCharacters[i].setAttribute("points", 0);
 		}
 		pointsToGive = images.length * pointsInterval;
+		clicked = false;
+	   }
+	   
 	}
 	function displayCharacters(){
 		var width = 170;
@@ -157,6 +162,7 @@ mysqli_close($conn);
 			div.setAttribute('imageID', images[i]['imageID']);
 			div.appendChild(img);
 			div.onclick = function(){
+				clicked = true;
 				this.setAttribute('points', parseInt(this.getAttribute("points")) + pointsToGive);
 				pointsToGive -= pointsInterval;
 				this.classList.add("chosen");
@@ -168,6 +174,7 @@ mysqli_close($conn);
 				});
 			};
 			div.onTouchStart = function(){
+				clicked = true;
 				this.setAttribute('points', parseInt(this.getAttribute("points")) + pointsToGive);
 				pointsToGive -= pointsInterval;
 				this.classList.add("chosen");
