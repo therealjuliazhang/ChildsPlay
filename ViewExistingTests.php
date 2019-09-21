@@ -78,21 +78,26 @@
 				$title = "'".$value["title"]."'";
 				
 				echo "</td><td>".$formattedCreateDate."</td><td>".$formattedEditDate;
-				echo '</td><td><a class="btn dropdown-button blue darken-4" data-activates="dropdown'.$index.'" onclick="showError('.$title.')"; >Preview</a>';
 
 				$taskQuery = "SELECT * FROM TASKASSIGNMENT WHERE testID=".$value["testID"];
 				$result = $conn->query($taskQuery);
-				echo "<ul id='dropdown".$index."' class='dropdown-content'>";
-				//display the list of tasks in the test
-				while($row = mysqli_fetch_assoc($result)){
-					echo "<li><a href='instruction.php?testID=".$value["testID"]."&taskID=".$row["taskID"]."&mode=preview&from=availableTests'>".$row["taskTitle"]."</a></li>";
+				if(mysqli_num_rows($result) == 0){
+					echo '</td><td><a class="btn dropdown-button blue darken-4" onclick="showError('.$title.')"; >Preview</a>';
 				}
-
-				echo "</ul></td>";
+				else{
+					echo '</td><td><a class="btn dropdown-button blue darken-4" data-activates="dropdown'.$index.'">Preview</a>';
+					echo "<ul id='dropdown".$index."' class='dropdown-content'>";
+					//display the list of tasks in the test
+					while($row = mysqli_fetch_assoc($result)){
+						echo "<li><a href='instruction.php?testID=".$value["testID"]."&taskID=".$row["taskID"]."&mode=preview&from=availableTests'>".$row["taskTitle"]."</a></li>";
+					}
+					echo "</ul></td>";
+				}
+				
 				echo "<td><a href='#?testID=".$value["testID"]."' class='btn dropdown-button blue darken-4' data-activates='dropdownTask".$index."'>...</a>";
 				echo "<ul id='dropdownTask".$index."' class='dropdown-content'>";
-				echo "<li><a href='EditTest.php?testID=".$value["testID"]."'>Edit</a></li>";//this is where I'm having trouble passing TestID across to EditTest.php
-				echo "<li><a href='results.php?testID=".$value["testID"]."'>Result</a></li>";//same problem with passing TestID across to results.php
+				echo "<li><a href='EditTest.php?testID=".$value["testID"]."'>Edit</a></li>";
+				echo "<li><a href='results.php?testID=".$value["testID"]."'>Result</a></li>";
 				echo "</ul></td></tr>";
 			}
 		?>

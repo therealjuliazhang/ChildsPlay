@@ -131,6 +131,7 @@
                         <input id="instruction" name="activity" value="Press the character's [body part]" id="Activity" type="text">
                     </div>
 				</div>
+				<div class="row" id="pointRow"></div>
                 </div>
 				<h5 class="blue-text darken-2 header">
 					<a class="tooltipped" data-position="left" data-tooltip="Click to upload image">
