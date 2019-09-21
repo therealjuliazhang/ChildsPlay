@@ -7,17 +7,23 @@
         $username = mysqli_real_escape_string($conn, $_POST["username"]);
     if(isset($_POST["password"]))    
         $password = mysqli_real_escape_string($conn, $_POST["password"]);
-    //Get user
+    //Get user from database if exists
     $password = md5($password);
-    $query = "SELECT * FROM USERS WHERE username='$username' AND password='$password'";
+    $query = "SELECT userID, accountType, accepted FROM USERS WHERE username='$username' AND password='$password'";
   	$results = mysqli_query($conn, $query);
   	if (mysqli_num_rows($results) == 1) {
-      //get userID
-      $sql = "SELECT userID FROM USERS WHERE username = '".$username."'";
-      $result = mysqli_query($conn, $query);
-      $userID = mysqli_fetch_assoc($result)['userID'];
-  	  $_SESSION['userID'] = $userID;
-  	  header('location: educatorTests.php');
+        $user = mysqli_fetch_assoc($results);
+        //login fail if user not accepted by admin yet
+        if($user['accepted']==0)
+            header('location: login.php?msg=failed');
+        //set user ID to session
+        $userID = $user['userID'];
+        $_SESSION['userID'] = $userID;
+        //check if admin or educator and redirect to correct page
+        if($user['accountType']==1)
+            header('location: ViewExistingTests.php');
+        else
+  	        header('location: educatorTests.php');
   	}else {
         header('location: login.php?msg=failed');
   	}

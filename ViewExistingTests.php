@@ -13,30 +13,30 @@
     <script type="text/javascript"src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js">
     </script>
-	
+
     <!--end header-->
   </head>
   <body>
-  
+
     <!--header-->
-    <div id="InsertHeader"></div>
 	<?php
 	//$contents = file_get_contents('header.html');
 	//echo $contents;
 	?>
+  <div id="InsertHeader"></div>
 	<script>
-      //Read header
+    //Read header
 	  $(document).ready(function(){
       //$(function(){
         $("#InsertHeader").load("header.html");
       });
-    </script>
-    
+  </script>
+
 <!--body part-->
 <div id="bodyPart">
-  <h3 class="blue-text darken-2 header">Available Tests</h3>
+  <h5 class="blue-text darken-2 header">Available Tests</h5>
 
-  <table>
+  <table class="striped">
        <thead>
          <tr class="blue-text darken-2">
              <th>Name</th>
@@ -72,14 +72,14 @@
 				echo "<tr><td>".$value["title"]."</td><td>".$value["description"];
 				echo "</td><td>".$formattedCreateDate."</td><td>".$formattedEditDate;
 				echo "</td><td><a href='#' class='btn dropdown-button blue darken-4' data-activates='dropdown".$index."'>Preview</a>";
-				
+
 				$taskQuery = "SELECT * FROM TASKASSIGNMENT WHERE testID=".$value["testID"];
 				$result = $conn->query($taskQuery);
 				echo "<ul id='dropdown".$index."' class='dropdown-content'>";
 				while($row = mysqli_fetch_assoc($result)){
 					echo "<li><a href='instruction.php?testID=".$value["testID"]."&taskID=".$row["taskID"]."&mode=preview&from=availableTests'>".$row["taskTitle"]."</a></li>";
 				}
-				
+
 				echo "</ul></td>";
 				echo "<td><a href='#?testID=".$value["testID"]."' class='btn dropdown-button blue darken-4' data-activates='dropdownTask2'>...</a>";
 				echo "<ul id='dropdownTask2' class='dropdown-content'>";

@@ -10,6 +10,7 @@ else
 $previewGroupID = 4;
 $isPreview = false;
 //task id in GET is set if task is being previewed
+$from = "";
 if (isset($_GET['from'])){
 	$from = $_GET['from'];
 	if (isset($_GET['taskID']))

@@ -1,6 +1,7 @@
 /*common style*/
 .brand-logo{
     margin-top:-67px;
+
 }
 /*home*/
 nav ul a,
@@ -77,11 +78,9 @@ footer.page-footer {
 
 #userDetail{
   margin-top:150px;
-  margin-left:80px;
 }
 #locationInfo{
   margin-top:150px;
-  margin-left:200px;
 }
 .column01{
   height: 50px;
@@ -146,9 +145,6 @@ position: fixed;
 #editButton{
   margin-top: 30px;
 }
-
-
-
 #saveButton{
   margin-top: 30px;
 }
@@ -183,12 +179,6 @@ height: 66px;
 }
 
 /*educator profile*/
-#educatorProfileContainer{
-  width: 80%;
-}
-#educatorProfileButtonsContainer{
-  width: 80%;
-}
 
 /*User Page*/
 #tabIndicator{
