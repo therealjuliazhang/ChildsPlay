@@ -147,6 +147,7 @@
 				document.getElementById("participant").className = 'row ' + colours[preschoolerIndex % colours.length];
 				document.getElementById("sad").src="images/sad.png";
 				document.getElementById("happy").src="images/happy.png";
+				faceClicked = false;
 			}
 		}
 		function sadClicked(){

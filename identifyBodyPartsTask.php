@@ -169,6 +169,7 @@ mysqli_close($conn);?>
 		}
 		document.getElementById("preschoolerName").innerHTML = preschoolers[preschoolerIndex]['name'];
 		document.getElementById("participant").className = 'row ' + colours[preschoolerIndex % colours.length];
+		clicked == false;
 	 }
 	}
 	function displayCharacter(imageIndex){
