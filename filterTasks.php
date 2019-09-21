@@ -24,9 +24,9 @@ if(isset($_POST["submitFilter"])){
 	if(isset($_POST["activityStyle"])){
 		$activityStyle = "'".$_POST["activityStyle"]."'";
 	}
-    
+
 	$subqueryDate = "";
-	
+
 	if($startDate != ""){
 		$subqueryDate .= " WHERE dateCreated >= $startDate";
 	}
@@ -36,7 +36,7 @@ if(isset($_POST["submitFilter"])){
 		$subqueryDate .= " WHERE dateCreated BETWEEN $startDate AND $endDate";
 
 	$query .= $subqueryDate;
-	
+
 	if($activityStyle != ""){
 		$connector = "";
 		if (strpos($query, 'WHERE') !== false)
@@ -55,13 +55,13 @@ else{
 	while($row = mysqli_fetch_assoc($result)){
 		//fomart the date
 		$formattedCreateDate = date("d/m/Y", strtotime($row["date"])); //j F Y for the following date format: 15 January 2019
-		echo "<tr><td>".$row["taskID"]."</td>".
-		"<td>".$row["instruction"]."</td>".
-		"<td>".$row["activityStyle"]."</td>".
-		"<td>".$formattedCreateDate."</td>".
-		"<td><a class='waves-effect waves-light btn blue darken-2' href='instruction.php?taskID=".$row["taskID"]."&mode=preview&from=existingTasks'>Preview</a></td>".
-		"<td><a class='waves-effect waves-light btn blue darken-4' href='CreateNewTaskInCreateTest.php?exist=true&taskID=".$row["taskID"]."'>Edit</a></td>".
-		"<td><a class='waves-effect waves-light btn blue darken-4' href='createTest.php?taskID=".$row["taskID"]."'>Add</a></td>";
+		echo "<tr><td class='taskIdCol'>".$row["taskID"]."</td>".
+		"<td class='indtructionCol'>".$row["instruction"]."</td>".
+		"<td class='activityStyleCol' >".$row["activityStyle"]."</td>".
+		"<td class='dateCreatedCol'>".$formattedCreateDate."</td>".
+		"<td class='previewCol'><a class='waves-effect waves-light btn blue darken-2' href='instruction.php?taskID=".$row["taskID"]."&mode=preview&from=existingTasks'>Preview</a></td>".
+		"<td class='editCol'><a class='waves-effect waves-light btn blue darken-4' href='CreateNewTaskInCreateTest.php?exist=true&taskID=".$row["taskID"]."'>Edit</a></td>".
+		"<td class='addCol'><a class='waves-effect waves-light btn blue darken-4' href='createTest.php?taskID=".$row["taskID"]."'>Add</a></td>";
 	}
 }
 ?>

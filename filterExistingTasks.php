@@ -73,6 +73,7 @@
       <th class='taskIdCol'>TaskID</th>
       <th class='indtructionCol'>Instruction</th>
       <th class='activityStyleCol'>Activity Style</th>
+      <th class='dateCreatedCol'>Date Created</th>
       <th class='previewCol'>Preview</th>
       <th class='editCol'>Edit</th>
       <th class='addCol'>Add</th>
@@ -183,17 +184,20 @@ table {
 th{
   text-align: center;
 }
-.taskIdCol, .activityStyleCol, .previewCol, .editCol, .addCol{
+.taskIdCol, .activityStyleCol,.dateCreatedCol, .previewCol, .editCol, .addCol{
   text-align: center;
 }
 .taskIdCol{
-  width: 5%;
+  width: 3%;
 }
-.instructionCol{
-  width: 40%;
+.indtructionCol{
+  width: 30%;
 }
 .activityStyleCol{
   width: 10%;
+}
+.dateCreatedCol{
+  width: 15%;
 }
 .previewCol{
   width: 13%;
