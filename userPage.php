@@ -199,6 +199,11 @@
 </script>
 
 <style media="screen">
+.container{
+		margin-top: 25px;
+}
+
+
 .tabs .tab a:focus, .tabs .tab a:focus.active {
     background-color: rgba(38, 166, 154, 0.2);
     outline: none;
@@ -218,6 +223,9 @@ ul.tabs {
   float: center;
   max-width: 99%;
   overflow-x: hidden;
+}
+.tabs{
+		margin-bottom: 10px;
 }
 </style>
 </html>
