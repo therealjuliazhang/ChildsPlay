@@ -221,5 +221,10 @@
 #profileLinkIcon{
   font-size: 24px;
 }
+ul.tabs {
+  float: center;
+  max-width: 99%;
+  overflow-x: hidden;
+}
 </style>
 </html>
