@@ -30,6 +30,6 @@ if ($conn->query($sql) === TRUE)
 else
     echo "Error updating record: " . $conn->error;
 //close database connection
-$conn->close();
+CloseCon($conn);
 //redirect to edit test page
 header('Location: ViewExistingTests.php');

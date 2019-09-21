@@ -2,7 +2,6 @@
 /*
 author: Phuong Linh Bui (5624095)
 */
-//session_start();
 include 'db_connection.php';
 $conn = OpenCon();
 
@@ -10,8 +9,7 @@ $taskID; //need to select taskID that is just added into database
 $UploadFolder = "images";
 $names = $_POST["imageAddress"];
 $instruction = $_POST["instruction"];
-if(isset($_GET["testID"]))
-	$testID = $_GET["testID"];
+
 $activityStyle = $_POST["activityStyle"];
 $files = explode(", ", $names);
 $errorMsg = "";
@@ -62,7 +60,8 @@ if ($conn->query($sql) === TRUE){
 	}
 	
 	//Only insert into taskassignment when create a new task in Edit test
-	if(isset($_GET["testID"])){
+	if(isset($_POST["testID"])){
+		$testID = $_POST["testID"];
 		//insert into task assignment
 		$sql = "INSERT INTO TASKASSIGNMENT (testID, taskID) VALUES (".$testID.", ".$taskID.")"; 
 		$result = $conn->query($sql);

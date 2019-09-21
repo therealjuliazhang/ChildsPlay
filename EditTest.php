@@ -8,10 +8,12 @@
 // else
 // 	header('login.php');
 $userID = 1; //remove after admin pages are linked up
+
+$from = "edit";
+
 //get test ID
-// if(isset($_GET['testID']))
-// 	$testID = $_GET['testID'];
-$testID = 2; //remove after admin pages are linked up
+if(isset($_GET['testID']))
+	$testID = $_GET['testID'];
 //connect to database
 include 'db_connection.php';
 $conn = OpenCon();
@@ -29,6 +31,7 @@ while ($row = mysqli_fetch_assoc($taskIDsResult)) {
     while ($value = mysqli_fetch_assoc($result))
         $tasks[] = $value;
 }
+CloseCon($conn);
 ?>
 <head>
     <title>Child'sPlay</title>
@@ -129,7 +132,7 @@ while ($row = mysqli_fetch_assoc($taskIDsResult)) {
                             class: "waves-effect waves-light btn blue darken-4",
                             text: "Edit",
                             //href: "EditTaskInEditTest.php?testID=" + testID + "&taskID=" + task.taskID
-                            href: "CreateNewTaskInEditTest.php?testID=" + testID + "&taskID=" + task.taskID
+                            href: "CreateNewTaskInCreateTest.php?testID=" + testID + "&taskID=" + task.taskID
                         })
                     ),
                     $('<td/>').append(
@@ -196,15 +199,17 @@ while ($row = mysqli_fetch_assoc($taskIDsResult)) {
             </table>
             <div id="addTaskButton" align="right">
                 <ul id="dropdown" class="dropdown-content">
-                    <li><a href="EditExistingTaskInEditTest.php?testID=<?php echo json_encode($testID); ?>">Existing Tasks</a></li>
-                    <li><a href="CreateNewTaskInEditTest.php?testID=<?php echo json_encode($testID); ?>">Create New Task</a></li>
+				<?php  
+                    echo "<li><a href='filterExistingTasks.php?testID=".$testID."'>Existing Tasks</a></li>".
+                    "<li><a href='CreateNewTaskInCreateTest.php?from=edit&testID=".$testID."'>Create New Task</a></li>";
+				?>
                 </ul>
                 <a class="btn dropdown-button blue darken-4" href="#" data-activates="dropdown">
                     <i class="large material-icons">add</i>
                 </a>
             </div>
             <div id="comfirmButton">
-                <input type="submit" name="submit" class="submit waves-effect waves-light btn blue darken-2 right" value="Confirm">
+                <input type="submit" name="submit" class="submit waves-effect waves-light btn blue darken-2 right" value="Save">
             </div>
         </form>
     </div>

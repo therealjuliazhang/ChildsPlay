@@ -18,25 +18,32 @@
         <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
     </head>
+	<script>
+	function showError(title){	
+		var error = document.getElementById("error");
+		error.innerText = "There is no task in " + title;
+	}
+	</script>
     <body>
         <!--header-->
-				<div id="InsertHeader"></div>
-				<script>
-					//Read header
-					$(function(){
-						$("#InsertHeader").load("educatorHeader.html");
-					});
-				</script>
+		<div id="InsertHeader"></div>
+		<script>
+		//Read header
+		$(function(){
+			$("#InsertHeader").load("educatorHeader.html");
+		});
+		</script>
         <!--end header-->
 
         <!-- body content -->
-        <div class="container">
+        <div class="container" id="tabs">
 			<ul class="tabs ">
 				<li class="tab col s3"><a class="blue-text darken-2" href="#tests"><h5>Tests</h5></a></li>
 				<li class="tab col s3"><a class="blue-text darken-2" href="#groups"><h5>Groups</h5></a></li>
 				<div class="indicator blue darken-2" style="z-index:1" id="tabIndicator"></div>
 			</ul>
-			<table id="tests" class="striped">
+			<div id="tests" >
+			<table class="striped">
 				<thead class="blue-text darken-2">
 					<tr>
 						<th>Name</th>
@@ -56,13 +63,29 @@
 					$result = $conn->query($sql2);
 					while($value = mysqli_fetch_assoc($result)){
 						echo '<tr><td>' . $value['title'] . '</td><td>' . $value['description'];
-						echo '</td><td><a href="instruction.php?testID=' . $value['testID'] .'&mode=preview'.'" class="waves-effect waves-light btn blue darken-4 ">Preview</a></td>';
-						echo '</td><td><a href="selectGroupForTask.php?testID=' . $value['testID'] .'&mode=start'. '" class="waves-effect waves-light btn blue darken-2 ">Start</a></td></tr>';
+						$previewURL = "";
+						$startURL = "";
+						$query = "SELECT * FROM TASKASSIGNMENT WHERE testID=".$value['testID'];
+						$resultQuery = $conn->query($query);
+						if(mysqli_num_rows($resultQuery) != 0){
+							$previewURL = "instruction.php?testID=".$value['testID']."&mode=preview&from=educatorTests";
+							$startURL = "selectGroupForTask.php?testID=".$value['testID']."&mode=start";
+							echo '</td><td><a href="'.$previewURL.'" class="waves-effect waves-light btn blue darken-4">Preview</a></td>';
+							echo '</td><td><a href="'.$startURL.'" class="waves-effect waves-light btn blue darken-2 ">Start</a></td></tr>';
+						}
+						//show error if there is no task in the test
+						else{
+							$parameter = "'".$value['title']."'";
+							echo '</td><td><a class="waves-effect waves-light btn blue darken-4" onclick="showError('.$parameter.');">Preview</a></td>';
+							echo '</td><td><a class="waves-effect waves-light btn blue darken-2" onclick="showError('.$parameter.');">Start</a></td></tr>';
+						}
 					}
 				}
 				?>
 				</tbody>
 			</table>
+			<span id="error" style="color:red;font-style:italic"></span>
+			</div>
 			<div id="groups">
 				<table>
 					<thead class="blue-text darken-2">

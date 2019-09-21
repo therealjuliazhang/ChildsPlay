@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html>
 <head>
   <title>Child'sPlay</title>
@@ -61,7 +60,6 @@
 			<button class="btn waves-effect waves-light blue darken-4 sortButton" type="submit" name="submitFilter">Filter</button>
 		</div>
 	</form>
-	<?php ?>
 	<br/>
     <!--
     <ul id = "dropdown" class = "dropdown-content">

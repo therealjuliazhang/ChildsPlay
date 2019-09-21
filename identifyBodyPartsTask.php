@@ -49,7 +49,8 @@ $result = $conn->query($sql);
 $images = array();
 while($row = mysqli_fetch_assoc($result))
    $images[] = $row;
-mysqli_close($conn);?>
+CloseCon($conn);
+?>
 <head>
 	<title>Identify Body Parts Task</title>
 	<!--links for Materialize-->

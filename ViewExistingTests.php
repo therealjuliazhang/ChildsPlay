@@ -30,6 +30,10 @@
       //$(function(){
         $("#InsertHeader").load("header.html");
       });
+	function showError(title){	
+		var error = document.getElementById("error");
+		error.innerText = "There is no task in " + title;
+	}
   </script>
 
 <!--body part-->
@@ -70,19 +74,23 @@
 				$editDate = strtotime($value["dateEdited"]);
 				$formattedEditDate = date("d/m/Y", $editDate );
 				echo "<tr><td>".$value["title"]."</td><td>".$value["description"];
+				
+				$title = "'".$value["title"]."'";
+				
 				echo "</td><td>".$formattedCreateDate."</td><td>".$formattedEditDate;
-				echo "</td><td><a href='#' class='btn dropdown-button blue darken-4' data-activates='dropdown".$index."'>Preview</a>";
+				echo '</td><td><a class="btn dropdown-button blue darken-4" data-activates="dropdown'.$index.'" onclick="showError('.$title.')"; >Preview</a>';
 
 				$taskQuery = "SELECT * FROM TASKASSIGNMENT WHERE testID=".$value["testID"];
 				$result = $conn->query($taskQuery);
 				echo "<ul id='dropdown".$index."' class='dropdown-content'>";
+				//display the list of tasks in the test
 				while($row = mysqli_fetch_assoc($result)){
 					echo "<li><a href='instruction.php?testID=".$value["testID"]."&taskID=".$row["taskID"]."&mode=preview&from=availableTests'>".$row["taskTitle"]."</a></li>";
 				}
 
 				echo "</ul></td>";
-				echo "<td><a href='#?testID=".$value["testID"]."' class='btn dropdown-button blue darken-4' data-activates='dropdownTask2'>...</a>";
-				echo "<ul id='dropdownTask2' class='dropdown-content'>";
+				echo "<td><a href='#?testID=".$value["testID"]."' class='btn dropdown-button blue darken-4' data-activates='dropdownTask".$index."'>...</a>";
+				echo "<ul id='dropdownTask".$index."' class='dropdown-content'>";
 				echo "<li><a href='EditTest.php?testID=".$value["testID"]."'>Edit</a></li>";//this is where I'm having trouble passing TestID across to EditTest.php
 				echo "<li><a href='results.php?testID=".$value["testID"]."'>Result</a></li>";//same problem with passing TestID across to results.php
 				echo "</ul></td></tr>";
@@ -90,6 +98,11 @@
 		?>
        </tbody>
      </table>
+	 <span id="error" style="color:red;font-style:italic;"></span>
+		<?php
+			if(isset($_GET["empty"]))
+				echo "<span id='error' style='color:red;font-style=italic;'>There is no task in this test!</span>";
+		?>
 </div>
   </body>
 </html>

@@ -54,6 +54,9 @@ else{ //else if not preview
 	if (isset($_GET['taskIndex']))
 		$taskIndex = $_GET['taskIndex'];
 	$taskID = $tasks[$taskIndex]['taskID'];
+	
+	echo "TaskID:".$taskID;
+	
 	//get testID
 	if (isset($_SESSION['testID']))
 		$testID = $_SESSION['testID'];
@@ -79,7 +82,7 @@ $result = $conn->query($sql);
 $images = array();
 while($row = mysqli_fetch_assoc($result))
    $images[] = $row;
-mysqli_close($conn);
+CloseCon($conn);
 ?>
 <head>
 	<title>Character Ranking Task</title>

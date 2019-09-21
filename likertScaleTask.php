@@ -52,7 +52,7 @@
 			$preschoolers[] = $value;
 		}
 	}
-    mysqli_close($conn);
+	CloseCon($conn);
 	?>
 	<head>
 		<title>Likert Scale Task</title>

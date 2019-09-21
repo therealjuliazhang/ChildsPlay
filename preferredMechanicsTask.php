@@ -42,6 +42,7 @@ while($row = mysqli_fetch_assoc($result)){
 		$preschoolers[] = $value;
 	}
 }
+CloseCon($conn);
 ?>
 <html>
   <head>
@@ -219,7 +220,6 @@ while($row = mysqli_fetch_assoc($result)){
             </label>
             </form>
           </div>
-
 				<!--Comment Section-->
 				<div class="hide commentSection">
 					<div class="col s12" id="commentCol"><h5 class="blue-text darken-2">Comment:</h5></div>
@@ -228,10 +228,6 @@ while($row = mysqli_fetch_assoc($result)){
 							</div>
 					</div>
 				</div>
-
-
-
-
           <div class="col s12"><a onclick="save()" class="waves-effect waves-light btn blue darken-2 right" id="saveButton">Next</a></div>
         </div>
       </div>

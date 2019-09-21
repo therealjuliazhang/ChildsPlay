@@ -3,69 +3,82 @@
 session_start();
 include 'db_connection.php';
 $conn = OpenCon();
-if(isset($_SESSION["tasks"]))
+if(isset($_SESSION["tasks"])){
 	$tasks = $_SESSION["tasks"];
-else
+}
+else{
 	$tasks = array();
-/*
-if(isset($_SESSION["mode"])){
-	$mode = $_SESSION["mode"];
+}	
+
+if(isset($_GET["from"])){
+	$from = $_GET["from"];
+	$_SESSION["from"] = $from;
 }
-else if(isset($_GET["mode"])){
+else if(isset($_SESSION["from"]))
+	$from = $_SESSION["from"];
+	
+if(isset($_GET["testID"])){
+	$testID = $_GET["testID"];
+	$_SESSION["testID"] = $testID;
+}
+else if(isset($_SESSION["testID"]))
+	$testID = $_SESSION["testID"];
+else
+	$testID = 0;
+	
+if(isset($_SESSION["groupID"]))
+	$groupID = $_SESSION["groupID"];
+
+$taskID = isset($_GET["taskID"]) ? $_GET["taskID"]: 0;
+
+//check the mode if it's passed in the URL
+if(isset($_GET["mode"])){
 	$mode = $_GET["mode"];
-	$_SESSION["mode"] = $mode;
 }
-*/
-$mode;
-if(isset($_SESSION["mode"])){
+//check the mode if it's in session
+else if(isset($_SESSION["mode"])){
 	$mode = $_SESSION["mode"];
 }
 
-if(isset($_SESSION["testID"]))
-	$testID = $_SESSION["testID"];
-if(isset($_SESSION["groupID"]))
-	$groupID = $_SESSION["groupID"];
-else if(isset($_GET["testID"])){ //should be true if it is in preview mode
-	$testID = $_GET["testID"];
-	$tasks = getTasks($conn, $testID);
+//if the task is in preview mode
+if($mode == "preview"){
+	$tasks = getTasks($conn, $testID, $taskID);
 	$groupID = 4;  //group with group ID: 4 is the preview group
 	$_SESSION['groupID'] = $groupID;
-	$_SESSION['testID'] = $testID;
-	$mode = $_GET["mode"];
-	$_SESSION['mode'] = "preview";
-} 
-else if(isset($_GET["groupID"])){ //should be true if it is the first task of test
-	$groupID = $_GET["groupID"];
-	$_SESSION['groupID'] = $groupID;
-	$tasks = getTasks($conn, $testID);
+	$_SESSION["mode"] = "preview";
+}
+//if task is in start mode
+else{
+	if(isset($_GET["groupID"])){ //should be true if it is the first task of test
+		$groupID = $_GET["groupID"];
+		$_SESSION['groupID'] = $groupID;
+		$tasks = getTasks($conn, $testID, $taskID);
+	}
 }
 //get tasks and set to session
-function getTasks($conn, $testID){
-	$query = "SELECT taskID FROM TASKASSIGNMENT WHERE testID=".$testID;
-	$result = $conn->query($query);
-	while($value = mysqli_fetch_assoc($result)){
-		$taskQuery = "SELECT * FROM TASK WHERE taskID=".$value["taskID"];
+function getTasks($conn, $testID, $taskID){
+	$tasksArray = array();
+	if($testID != 0 && $taskID == 0){
+		$query = "SELECT taskID FROM TASKASSIGNMENT WHERE testID=".$testID;
+		$result = $conn->query($query);
+		while($value = mysqli_fetch_assoc($result)){
+			$taskQuery = "SELECT * FROM TASK WHERE taskID=".$value["taskID"];
+			$result2 = $conn->query($taskQuery);
+			while($row = mysqli_fetch_assoc($result2))
+				$tasksArray[] = $row;
+		}
+		if(count($tasksArray) > 0)
+			$taskID = $tasksArray[0]["taskID"];
+	}
+	else if ($taskID != 0){
+		$taskQuery = "SELECT * FROM TASK WHERE taskID=".$taskID;
 		$result2 = $conn->query($taskQuery);
 		while($row = mysqli_fetch_assoc($result2))
-			$tasks[] = $row;
+			$tasksArray[] = $row;
 	}
-	$taskID = $tasks[0]['taskID'];
-	$_SESSION['tasks'] = $tasks;
-	return $tasks;
+	$_SESSION["tasks"] = $tasksArray;
+	return $tasksArray;
 }
-/*
-$taskIndex;
-//index of task in array
-if(isset($_GET['taskIndex'])){
-	$_SESSION['taskIndex'] = $_GET['taskIndex'];
-//	$taskIndex = $taskIndex;
-}
-if(!isset($_SESSION['taskIndex'])){
-	$taskIndex = 0;
-}
-else
-	$taskIndex = $_SESSION['taskIndex'];
-*/
 $taskIndex = isset($_GET['taskIndex']) ? $_GET['taskIndex'] : 0;
 $bodyPart = "eye";
 ?>
@@ -102,6 +115,9 @@ $bodyPart = "eye";
 <?php
 //Display instructions for task
 $taskTypeUrl;
+if(count($tasks) == 0){
+	echo "Array has no element";
+}
 if(count($tasks) > 0){
 	switch($tasks[$taskIndex]["activityStyle"]){
 		case "Likert Scale":
@@ -165,6 +181,7 @@ while($row = mysqli_fetch_assoc($result))
 foreach ($imageAdresses as $value)
   echo '<img src=' . $value['address'] . ' width="100px">';
 }
+CloseCon($conn);
 ?>
 				</div>
 			</div>
@@ -184,26 +201,9 @@ foreach ($imageAdresses as $value)
 						<?php
 							if(isset($_GET["back"])){
 								if($_SESSION['mode'] == "preview")
-										header("Location: educatorTests.php");
-									else
-										header("Location: selectGroupForTask.php");
-								/*
-								if($taskIndex == 0){
-									//if preview (group is preview group), go back to educator tests page
-									if($_SESSION['mode'] == "preview")
-										header("Location: educatorTests.php");
-									else
-										header("Location: selectGroupForTask.php?");
-								}
-								else{
-									--$taskIndex;
-									
-									if($_SESSION['mode'] == "preview")
-										header("Location: educatorTests.php");
-									else
-										header("Location: comments.php?groupID=".$groupID."&taskIndex=".$taskIndex);
-									
-								}*/
+									header("Location: educatorTests.php");
+								else
+									header("Location: selectGroupForTask.php");
 							}
 						?>
 					</div>
