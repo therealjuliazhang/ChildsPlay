@@ -133,6 +133,7 @@ session_start();
                         }
                         if (isset($_GET["remove"])) {
                             $taskID = $_GET["taskID"];
+							//remove the selected task from the list
                             if (($key = array_search($taskID, $idList)) !== false) {
                                 unset($idList[$key]);
                                 if (count($idList) > 0)
@@ -163,7 +164,7 @@ session_start();
             <div align="right">
                 <ul id = "dropdown" class = "dropdown-content">
                     <li><a href="filterExistingTasks.php">Existing Tasks</a></li>
-                    <li><a href="CreateNewTaskInCreateTest.php?from=create">Create New Task</a></li>
+                    <li><a href="createNewTaskInCreateTest.php?from=create">Create New Task</a></li>
                 </ul>
                 <a class="btn dropdown-button blue darken-4" href="" data-activates="dropdown">
                     <i class="large material-icons">add</i>
