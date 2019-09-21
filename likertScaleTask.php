@@ -100,6 +100,7 @@
         <!--end body content-->
     </body>
 	<script>
+	    var faceClicked = false;
 		//check whether it is in preview mode
 		var isPreview = <?php echo(json_encode($isPreview)); ?>;
 		// console.log("Is preview " + isPreview);
@@ -124,29 +125,32 @@
 		document.getElementById("preschoolerName").innerHTML = preschoolers[0]['name'];
 		document.getElementById("participant").className = 'row ' + colours[preschoolerIndex % colours.length];
 		function goNext(){
-			preschoolerIndex++;
-			if(preschoolerIndex == preschoolers.length){
-				//if task was preview, go back to edit test page
-				if(isPreview){
-					if(from == "edit")
-						window.location.href = "editTest.php";
-					else if(from == "availableTests")
-						window.location.href = "viewExistingTests.php";
-					else if (from == "existingTasks")
-						window.location.href = "filterExistingQuestions.php";
+			if(faceClicked == true){
+				preschoolerIndex++;
+				if(preschoolerIndex == preschoolers.length){
+					//if task was preview, go back to edit test page
+					if(isPreview){
+						if(from == "edit")
+							window.location.href = "editTest.php";
+						else if(from == "availableTests")
+							window.location.href = "viewExistingTests.php";
+						else if (from == "existingTasks")
+							window.location.href = "filterExistingQuestions.php";
+					}
+					else{
+						var taskIndex = <?php echo $taskIndex ?>;
+						window.location.href = "comments.php?taskIndex=" + taskIndex;
+					}	
 				}
-				else{
-					var taskIndex = <?php echo $taskIndex ?>;
-					window.location.href = "comments.php?taskIndex=" + taskIndex;
-				}	
+				preID = preschoolers[preschoolerIndex]['preID'];
+				document.getElementById("preschoolerName").innerHTML = preschoolers[preschoolerIndex]['name'];
+				document.getElementById("participant").className = 'row ' + colours[preschoolerIndex % colours.length];
+				document.getElementById("sad").src="images/sad.png";
+				document.getElementById("happy").src="images/happy.png";
 			}
-			preID = preschoolers[preschoolerIndex]['preID'];
-			document.getElementById("preschoolerName").innerHTML = preschoolers[preschoolerIndex]['name'];
-			document.getElementById("participant").className = 'row ' + colours[preschoolerIndex % colours.length];
-			document.getElementById("sad").src="images/sad.png";
-			document.getElementById("happy").src="images/happy.png";
 		}
 		function sadClicked(){
+			faceClicked = true;
             document.getElementById("sad").src="images/transparent.png";
 			//insert data
 			$.ajax({
@@ -156,6 +160,7 @@
 			});
 		}
 		function happyClicked(){
+			faceClicked = true;
 			document.getElementById("happy").src="images/transparent.png";
 			//insert data
 			$.ajax({
