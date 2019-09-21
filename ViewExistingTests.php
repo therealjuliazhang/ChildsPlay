@@ -83,8 +83,8 @@
 				echo "</ul></td>";
 				echo "<td><a href='#?testID=".$value["testID"]."' class='btn dropdown-button blue darken-4' data-activates='dropdownTask2'>...</a>";
 				echo "<ul id='dropdownTask2' class='dropdown-content'>";
-				echo "<li><a href='#'>Edit</a></li>";
-				echo "<li><a href='#'>Result</a></li>";
+				echo "<li><a href='EditTest.php?testID=".$value["testID"]."'>Edit</a></li>";//this is where I'm having trouble passing TestID across to EditTest.php
+				echo "<li><a href='results.php?testID=".$value["testID"]."'>Result</a></li>";//same problem with passing TestID across to results.php
 				echo "</ul></td></tr>";
 			}
 		?>

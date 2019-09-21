@@ -5,10 +5,6 @@
 //connect to database
 include 'db_connection.php';
 $conn = OpenCon();
-// $likertResults = array();
-// $rankingResults = array();
-// $bodyPartsResults = array();
-// $mechanicResults = array();
 $filteredPreIDs = array();
 $isGroupResults = true;
 //likert result query
