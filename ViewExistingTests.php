@@ -33,7 +33,7 @@
   </script>
 
 <!--body part-->
-<div id="bodyPart">
+<div class="container">
   <h5 class="blue-text darken-2 header">Available Tests</h5>
 
   <table class="striped">

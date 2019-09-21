@@ -206,6 +206,11 @@
 </script>
 
 <style media="screen">
+.container{
+		margin-top: 25px;
+}
+
+
 .tabs .tab a:focus, .tabs .tab a:focus.active {
     background-color: rgba(38, 166, 154, 0.2);
     outline: none;
@@ -221,8 +226,16 @@
 #profileLinkIcon{
   font-size: 24px;
 }
+ul.tabs {
+  float: center;
+  max-width: 99%;
+  overflow-x: hidden;
+}
+.tabs{
+		margin-bottom: 10px;
+}
 .tabs .tab {
     text-transform: none;
-}
+  }
 </style>
 </html>
