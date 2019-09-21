@@ -46,6 +46,7 @@
           </tr>
         </thead>
         <tbody class="grey-text text-darken-1">
+          <form action="updateUserPage.php" method="post">
             <?php
             session_start();
             include 'db_connection.php';
@@ -87,14 +88,20 @@
                 echo "<td>Admin</td>";
               }
 
-              echo "<td><a href='updateUserPage.php?uid=".$user["userID"]."&accepted=1' class='waves-effect waves-light btn acceptButton'>Accept</a></td>";
-	            echo "<td><a href='updateUserPage.php?uid=".$user["userID"]."&accepted=-1' class='waves-effect waves-light btn #ff5252 red accent-2 declineButton'>Decline</a></td></tr>";
+              //get user id as input
+              echo "<input id='UID' type='hidden' name='UID' value=".$user["userID"].">";
+
+              //print buttons
+              echo "<td><input type='submit' value='ACCEPT' class='waves-effect waves-light btn acceptButton white-te' name='accept'/></td>";
+
+              echo "<td><input type='submit' value='DECLINE' class='waves-effect waves-light btn #ff5252 red accent-2 declineButton' name='decline'></td></tr>";
 
 
             }
 
             ?>
 
+          </form>
           <?php
 
           ?>
@@ -213,6 +220,9 @@
 }
 #profileLinkIcon{
   font-size: 24px;
+}
+.tabs .tab {
+    text-transform: none;
 }
 </style>
 </html>
