@@ -23,6 +23,23 @@ if(isset($_GET['testID']))
 //connect to database
 include 'db_connection.php';
 $conn = OpenCon();
+
+//add an existing task to the test
+if(isset($_GET["taskID"])){
+	$taskID = $_GET["taskID"];
+	$sql = "SELECT MAX(orderInTest) AS max FROM TASKASSIGNMENT WHERE testID=".$testID;
+	$taskResult = $conn->query($sql);
+	while ($row = mysqli_fetch_assoc($taskResult)) {
+		$index = $row["max"] + 1;
+		//$_SESSION["orderInTest"] = $index; 
+		$taskTitle = "'"."Task ".$index."'";
+		$sql = "INSERT INTO TASKASSIGNMENT(testID, taskID, taskTitle, orderInTest) VALUES($testID, $taskID, $taskTitle, $index)";
+		if(($conn->query($sql) !== TRUE))
+			echo "<span style='color:red'>Failed to add record!".mysqli_error($conn)."</span><br/>";
+	}
+	$_SESSION["orderInTest"] = $index;
+}
+
 //get test name and description from database
 $sql = "SELECT title, description FROM TEST WHERE testID=" . $testID;
 $result = $conn->query($sql);
@@ -206,7 +223,7 @@ CloseCon($conn);
             <div id="addTaskButton" align="right">
                 <ul id="dropdown" class="dropdown-content">
 				<?php  
-                    echo "<li><a href='filterExistingTasks.php?testID=".$testID."'>Existing Tasks</a></li>".
+                    echo "<li><a href='filterExistingTasks.php?from=edit&testID=".$testID."'>Existing Tasks</a></li>".
                     "<li><a href='CreateNewTaskInCreateTest.php?from=edit&testID=".$testID."'>Create New Task</a></li>";
 				?>
                 </ul>

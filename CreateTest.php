@@ -60,7 +60,21 @@ session_start();
                     description: "Enter a description for the test."
                 }
             });
+			//retrieve the stored input values
+			var testTitle = localStorage.getItem('testTitle');
+			var description = localStorage.getItem('description');
+			$("#testTitle").val(testTitle);
+			$("#description").val(description);
+			localStorage.removeItem( 'testTitle' );
+			localStorage.removeItem( 'description' );
         });
+		function storeValues(){
+			//store input values
+			var testTitle = $("#testTitle").val();
+			var description = $("#description").val();
+			localStorage.setItem( 'testTitle', testTitle );
+			localStorage.setItem( 'description', description );
+		}
     </script>
     <!-- body content -->
     <div class="container">
@@ -115,6 +129,9 @@ session_start();
                     $taskList = array();
                     $idList = array();
 
+					
+					
+					
                     //session_destroy();
                     //unset($_GET["list"]);
 
@@ -153,7 +170,7 @@ session_start();
                             $row = mysqli_fetch_assoc($result);
                             echo "<tr><td>" . $row["taskID"] . "</td>" .
                                 "<td>" . $row["activityStyle"] . "</td>" .
-                                "<td>" . $row["instruction"] . "</td>" .
+                                "<td width='45%'>" . $row["instruction"] . "</td>" .
                                 "<td><a class='waves-effect waves-light btn blue darken-2'>Preview</a></td>" .
                                 "<td><a class='waves-effect waves-light btn blue darken-4' href='?taskID=" . $row["taskID"] . "&remove=true'>Remove</a></td></tr>";
                         }
@@ -161,18 +178,20 @@ session_start();
                     ?>
                 </tbody>
             </table>
+			<br/>
             <div align="right">
-                <ul id = "dropdown" class = "dropdown-content">
-                    <li><a href="filterExistingTasks.php">Existing Tasks</a></li>
+                <ul id="dropdown" class = "dropdown-content">
+                    <li><a href="filterExistingTasks.php?from=create">Existing Tasks</a></li>
                     <li><a href="createNewTaskInCreateTest.php?from=create">Create New Task</a></li>
                 </ul>
-                <a class="btn dropdown-button blue darken-4" href="" data-activates="dropdown">
+                <a class="btn dropdown-button blue darken-4" onclick="storeValues();" data-activates="dropdown">
                     <i class="large material-icons">add</i>
                 </a>
             </div>
+			<br/>
             <p align="right">
                 <!-- <button type="submit" name="createTest" class="waves-effect waves-light btn blue darken-2">Create Test</button> -->
-                <input type="submit" name="submit" class="submit waves-effect waves-light btn blue darken-2 right" value="Create Test">
+                <input type="submit" name="createTest" class="submit waves-effect waves-light btn blue darken-2 right" value="Create Test">
                 <a class="waves-effect waves-light btn blue darken-4 right" onClick="javascript:history.go(-1)">Cancel</a>
             </p>
         </form>

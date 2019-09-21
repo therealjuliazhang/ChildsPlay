@@ -69,7 +69,7 @@
   <thead>
     <tr class="blue-text darken-2">
       <th class='taskIdCol'>TaskID</th>
-      <th class='indtructionCol'>Instruction</th>
+      <th class='instructionCol'>Instruction</th>
       <th class='activityStyleCol'>Activity Style</th>
       <th class='dateCreatedCol'>Date Created</th>
       <th class='previewCol'>Preview</th>
@@ -79,6 +79,15 @@
   </thead>
   <tbody>
     <?php
+	session_start();
+	if(isset($_GET["from"])){
+		$from = $_GET["from"];
+		$_SESSION["from"] = $from;
+	}
+	if(isset($_GET["testID"])){
+		$testID = $_GET["testID"];
+		$_SESSION["testID"] = $testID;
+	}
     include_once 'filterTasks.php';
     //CloseCon($conn);
     ?>
@@ -179,34 +188,32 @@ thead {
 table {
   width:100%;
 }
-th{
+/*th{
   text-align: center;
 }
 .taskIdCol, .activityStyleCol,.dateCreatedCol, .previewCol, .editCol, .addCol{
-  text-align: center;
+  text-align: center;*/
 }
 .taskIdCol{
-  width: 3%;
+  width: 1%;
 }
-.indtructionCol{
+.instructionCol{
   width: 30%;
 }
 .activityStyleCol{
-  width: 10%;
+  width: 18%;
 }
 .dateCreatedCol{
   width: 15%;
 }
 .previewCol{
-  width: 13%;
+  width: 10%;
 }
 .editCol{
-  width: 13%;
+  width: 5%;
 }
 .addCol{
-  width: 13%;
+  width: 10%;
 }
-
-
 </style>
 </html>

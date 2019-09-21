@@ -58,7 +58,7 @@ function loadContent(){
 		case "Identify Body Part":
 				$("#instruction").val("Press the monster's [enter body part]");
 			break;
-		case "Preferred Mechanic":
+		case "Preferred Mechanics":
 				$("#instruction").val("");
 			break;
 	}

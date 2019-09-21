@@ -8,18 +8,34 @@
 			// else
 			// 	header('login.php');
 			$userID = 1; //remove after admin pages are linked up
-			//get test ID
-			// if(isset($_GET['testID']))
-			// 	$testID = $_GET['testID'];
-			$testID = 2; //remove after admin pages are linked up
-			//get user image directory
-			$imageDirectory = "C:\xampp\htdocs\images";
-		$from = "create";	
+		//get test ID
+		if(isset($_GET['testID']))
+		 	$testID = $_GET['testID'];
+		//$testID = 2; //remove after admin pages are linked up
+		//$from = "create";	
+		
+		if(isset($_GET["from"]))
+			$from = $_GET["from"];
+		//get the orderInTest of a task
+		if(isset($_GET["index"])){
+			$index = $_GET["index"]; 
+		}
+		/*if(isset($_GET["taskID"])){
+			$taskID = $_GET["taskID"];
+			$query = "SELECT instruction, activityStyle, address FROM TASK T JOIN IMAGEASSIGNMENT IA ON T.taskID = IA.taskID".
+					" JOIN IMAGE I ON IA.imageID = I.imageID WHERE T.taskID = $taskID";
+			$result = $conn->query($query);
+			while($row = mysqli_fetch_assoc($result)){
+				$instruction = $row["instruction"];
+				$activityStyle = $row["activityStyle"];
+				$imageAddress = $row["address"];
+			}
+		}*/
 		?>
         <title>Child'sPlay</title>
         <meta name = "viewport" content = "width = device-width, initial-scale = 1">
-		<link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
-		<link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+		<link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons" />
+		<link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
 		<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 		<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
@@ -28,13 +44,17 @@
 		function createNewTask(){
 			var imageAddress = $("#imageAddress").val();
 			var instruction = $("#instruction").val();
-			var selected = $("#activityStyle option:selected").val();
-			var activity = $("#activity").val();
-			var testID = <?php echo json_encode($testID);?>;
+			var activityStyle = $("#activityStyle option:selected").val();
+			var testID = <?php if(isset($testID))
+								$testID = $testID;
+							  else $testID = 0;
+					       	echo json_encode($testID);?>;
 			var from = <?php echo json_encode($from);?>;
-
+			var orderInTest = <?php if(isset($index))
+								$index = $index;
+							  else $index = 0;
+					       	echo json_encode($index);?>;
 			var div = document.getElementById("results");
-			var exist = <?php echo json_encode($exist);?>;
 			
 			if(imageAddress == ""){
 				div.style.color = "red";
@@ -46,7 +66,8 @@
 					{	imageAddress: imageAddress,
 						instruction: instruction,
 						activityStyle: activityStyle,
-						testID: testID
+						testID: testID,
+						orderInTest: orderInTest
 					},
 					function(data){
 						if(data.includes("span")){
@@ -61,8 +82,8 @@
 								window.location = "editTest.php?testID=" + testID;
 							else if(from == "create")
 								window.location = "createTest.php?taskID=" + taskID;
-							if(exist == true)
-								window.location = "filterExistingTasks.php";
+							/*if(exist == true)
+								window.location = "filterExistingTasks.php";*/
 						}	
 					}
 				);
@@ -87,14 +108,17 @@
         <div id="body" class="container">
 			<!--start form-->
             <form action="" method="post">	
-			<div class="row">
+				<div class="row">
                     <div class="col s6">
-                    <h5 class="blue-text darken-2 header">
-                        <a class="tooltipped" data-position="left" data-tooltip="Enter the task title">
-                            <i class="material-icons">help_outline</i>
-                        </a>
-                        Task Title:
-                    </h5>
+						<h5 class="blue-text darken-2 header">
+							<a class="tooltipped" data-position="left" data-tooltip="Enter the task title">
+								<i class="material-icons">help_outline</i>
+							</a>
+							Task Title:
+						</h5>
+						<div class="input-field">
+							<input id="title" name="title" type="text">
+						</div>
                     </div>
                     <div class="col s6">
                         <h5 class="blue-text darken-2 header">
@@ -103,22 +127,16 @@
                             </a>
                            Activity Style:
                         </h5>
+						<div class="input-field">
+							<select name="activityStyle" id="activityStyle" onchange="loadContent()">
+								<option value="Identify Body Part">Identify Body Part</option>
+								<option value="Likert Scale">Likert Scale</option>
+								<option value="Character Ranking">Character Ranking</option>
+								<option value="Preferred Mechanics">Preferred Mechanics</option>
+							</select>
+						</div>
                     </div>
                 </div>
-				<div class="row">
-					<div class="input-field col s6">
-					
-					<input id="title" name="title" type="text">
-					</div>
-                    <div class="input-field col s6">
-                        <select name="activityStyle" id="activityStyle" onchange="loadContent()">
-							<option value="Identify Body Part">Identify Body Part</option>
-							<option value="Likert Scale">Likert Scale</option>
-							<option value="Character Ranking">Character Ranking</option>
-							<option value="Preferred Mechanics">Preferred Mechanics</option>
-						</select>
-                    </div>
-				</div>
                 <div class="row">   
                     <h5 class="blue-text darken-2 header">
                         <a class="tooltipped" data-position="left" data-tooltip="Activity for Task">
@@ -126,13 +144,11 @@
                         </a>
                         Instruction
                     </h5>
-				<div class="row">  
-                    <div class="input-field col s12">
-                        <input id="instruction" name="activity" value="Press the character's [body part]" id="Activity" type="text">
-                    </div>
-				</div>
-				<div class="row" id="pointRow"></div>
+					<div class="input-field col s12">
+							<input id="instruction" name="activity" value="Press the character's [body part]" id="Activity" type="text">
+					</div>
                 </div>
+				<div class="col s12" id="pointRow"></div>
 				<h5 class="blue-text darken-2 header">
 					<a class="tooltipped" data-position="left" data-tooltip="Click to upload image">
 						<i class="material-icons">help_outline</i>

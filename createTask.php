@@ -63,10 +63,12 @@ if ($conn->query($sql) === TRUE){
 	if(isset($_POST["testID"])){
 		$testID = $_POST["testID"];
 		//insert into task assignment
-		$sql = "INSERT INTO TASKASSIGNMENT (testID, taskID) VALUES (".$testID.", ".$taskID.")"; 
-		$result = $conn->query($sql);
+		$index = $_POST["orderInTest"] + 1;
+		$taskTitle = "'"."Task ".$index."'";
+		$sql = "INSERT INTO TASKASSIGNMENT (testID, taskID, taskTitle, orderInTest) VALUES($testID, $taskID, $taskTitle, $index)"; 
+		//$result = $conn->query($sql);
 		
-		if ($conn->query($sql) === TRUE)
+		if ($conn->query($sql) !== TRUE)
 			$errorMsg .= "<span style='color:red'>Failed to add record! ".mysqli_error($conn)."</span><br/>";
 	}
 }
