@@ -148,8 +148,6 @@
 				document.getElementById("sad").src="images/sad.png";
 				document.getElementById("happy").src="images/happy.png";
 			}
-			else
-				return;
 		}
 		function sadClicked(){
 			faceClicked = true;
