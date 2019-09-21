@@ -11,6 +11,7 @@
 	$previewGroupID = 4;
 	$isPreview = false;
 	//task id in GET is set if task is being previewed
+	$from = "";
 	if (isset($_GET['from'])){
 		$from = $_GET['from'];
 		//if from == edit
@@ -34,7 +35,6 @@
 	}
 	include 'db_connection.php';
 	$conn = OpenCon();
-	
 	//fetch images
 	$sql = "SELECT I.imageID, I.address, IA.taskID FROM IMAGE I JOIN IMAGEASSIGNMENT IA ON I.imageID = IA.imageID WHERE taskID = '$taskID'";
 	$result = $conn->query($sql);
@@ -63,57 +63,7 @@
         <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
 		<!--link for font awesome icons-->
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-		<style>
-		.brand-logo{
-			margin-top:-67px;
-		}
-		.logout{
-			margin-top: 15px;
-			margin-right:15px;
-		}
-		.bottom{
-			position:absolute;
-			bottom: 0px;
-			right:0px;
-			left:0px
-		}
-		.faces{
-			text-align: center;
-		}
-		#happy{
-			margin-right: 5%;
-		}
-		#sad{
-			margin-left: 5%;
-		}
-		#participant{
-			height: 220px;
-			position:absolute;
-			bottom: 0px;
-			right:0px;
-			left:0px
-		}
-		.bottomInBottom{
-			position: absolute;
-			bottom: 0px;
-			right:0px;
-			left:0px
-		}
-		.faceCol{
-			height: 150px;
-		}
-		#button{
-			margin-top:-20px;
-		}
-		.center-align{
-			margin-top: 100px;
-			font-size: 50px;
-		}
-		.container{
-			margin-top:-85px;
-		}
-		</style>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">		
     </head>
     <body>
     <!--header-->
@@ -122,8 +72,6 @@
             <nav class="nav-extended blue darken-4">
             <div class="nav-wrapper">
                 <a href="#" class="brand-logo left"><img src="images/logo1.png" ></a>
-
-                
             </div>
         </nav>
     </div>
@@ -155,7 +103,7 @@
 	    var faceClicked = false;
 		//check whether it is in preview mode
 		var isPreview = <?php echo(json_encode($isPreview)); ?>;
-		console.log("Is preview " + isPreview);
+		// console.log("Is preview " + isPreview);
 		var from; //if preview check if from edit page or available test page ect.
 		if(isPreview)
 			from = <?php echo(json_encode($from)); ?>; // checks from which page preview was opened
@@ -224,4 +172,54 @@
 			});
 		}
 	</script>
+	<style>
+		.brand-logo{
+			margin-top:-67px;
+		}
+		.logout{
+			margin-top: 15px;
+			margin-right:15px;
+		}
+		.bottom{
+			position:absolute;
+			bottom: 0px;
+			right:0px;
+			left:0px
+		}
+		.faces{
+			text-align: center;
+		}
+		#happy{
+			margin-right: 5%;
+		}
+		#sad{
+			margin-left: 5%;
+		}
+		#participant{
+			height: 220px;
+			position:absolute;
+			bottom: 0px;
+			right:0px;
+			left:0px
+		}
+		.bottomInBottom{
+			position: absolute;
+			bottom: 0px;
+			right:0px;
+			left:0px
+		}
+		.faceCol{
+			height: 150px;
+		}
+		#button{
+			margin-top:-20px;
+		}
+		.center-align{
+			margin-top: 100px;
+			font-size: 50px;
+		}
+		.container{
+			margin-top:-85px;
+		}
+		</style>
 </html>

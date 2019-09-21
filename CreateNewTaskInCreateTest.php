@@ -33,20 +33,40 @@
 			var testID = <?php echo json_encode($testID);?>;
 			var from = <?php echo json_encode($from);?>;
 
-			$.post("createTask.php", 
-				{	imageAddress: imageAddress,
-					instruction: instruction,
-					activityStyle: selected,
-					activity: activity,
-					testID: testID
-				},
-				function(data){
-					$("#results").html(data);
-				}
-			);
-			//redirect back to page
-			if(from == "edit")
-				window.location = "EditTest.php?testID=" + testID;
+			var div = document.getElementById("results");
+			var exist = <?php echo json_encode($exist);?>;
+			
+			if(imageAddress == ""){
+				div.style.color = "red";
+				div.style.fontStyle = "italic";
+				div.innerHTML = "Please select image(s) to upload!";
+			}
+			else{
+				$.post("createTask.php", 
+					{	imageAddress: imageAddress,
+						instruction: instruction,
+						activityStyle: activityStyle,
+						testID: testID
+					},
+					function(data){
+						if(data.includes("span")){
+							//errors = data;
+							$("#results").html(data);
+						}
+						else{
+							taskID = data;
+							$("#results").html(data);
+							//redirect back to page
+							if(from == "edit")
+								window.location = "editTest.php?testID=" + testID;
+							else if(from == "create")
+								window.location = "createTest.php?taskID=" + taskID;
+							if(exist == true)
+								window.location = "filterExistingTasks.php";
+						}	
+					}
+				);
+			}
 		}
 		</script>
 	</head>
@@ -151,7 +171,7 @@
 						<!--end upload button + path-->
 					</div>
 				</div>
-				<!--Placeholder to display uploaded image(s)--->
+				<!--Place to display uploaded image(s)--->
 				<div id="imageUpload"></div>
 				<div class="row">
 					<div class="col s12">

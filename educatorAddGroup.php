@@ -169,6 +169,5 @@
     .changeCursor {
         cursor: pointer;
     }
-
     </style>
 </html>
