@@ -92,7 +92,7 @@
 							else if(from == "create")
 								window.location = "createTest.php?taskID=" + taskID;
 							if(exist == true)
-								window.location = "filterExistingQuestions.php";
+								window.location = "filterExistingTasks.php";
 						}	
 					}
 				);
@@ -198,7 +198,7 @@
 						<!--end upload button + path-->
 					</div>
 				</div>
-				<!--Placeholder to display uploaded image(s)--->
+				<!--Place to display uploaded image(s)--->
 				<div id="imageUpload"></div>
 				<div class="row">
 					<div class="col s12">

@@ -40,7 +40,7 @@
                 <tr>
                     <td>
                         Start<br/>
-                        <input type="text" class="datepicker">
+                        <input type="text" class="datepicker blue">
                     </td>
                     <td>
                         End<br/>

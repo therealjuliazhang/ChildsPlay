@@ -157,7 +157,7 @@ session_start();
             
             <div align="right">
                 <ul id = "dropdown" class = "dropdown-content">
-                    <li><a href="filterExistingQuestions.php">Existing Tasks</a></li>
+                    <li><a href="filterExistingTasks.php">Existing Tasks</a></li>
                     <li><a href="CreateNewTaskInCreateTest.php?from=create">Create New Task</a></li>
                 </ul>
                 <a class = "btn dropdown-button blue darken-4" href="" data-activates = "dropdown">
