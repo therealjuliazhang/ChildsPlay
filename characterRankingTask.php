@@ -134,7 +134,7 @@ mysqli_close($conn);
 			else{
 				var taskIndex = <?php echo $taskIndex ?>;
 				window.location.href = "comments.php?taskIndex=" + taskIndex;
-			}	
+			}
 		}
 		var previousPreschoolerName = document.getElementById("preschoolerName").innerHTML;
 		document.getElementById("preschoolerName").innerHTML = preschoolers[preschoolerNumber]['name'];
@@ -147,7 +147,7 @@ mysqli_close($conn);
 		pointsToGive = images.length * pointsInterval;
 		clicked = false;
 	   }
-	   
+
 	}
 	function displayCharacters(){
 		var width = 170;
@@ -222,7 +222,7 @@ mysqli_close($conn);
 			margin:1px;
 			width:18%;
 			text-align:left;
-			display:inline-block;  
+			display:inline-block;
 		}
 		.character.chosen {
 			display: none;
@@ -241,20 +241,17 @@ mysqli_close($conn);
 </head>
 <body>
 	<!-- body content -->
-    <!--header-->
-    <div class="row">
-        <div class="navbar-fixed">
-            <nav class="nav-extended blue darken-4">
-                <div class="nav-wrapper">
-                    <a class="brand-logo left"><img src="images/logo1.png" ></a>
-                    <ul id="logoutButton" class="right hide-on-med-and-down logout">
-                        <li><a class="waves-effect waves-light btn blue darken-2 right" onclick="logout()">Profile</a></li>
-                    </ul>
-                </div>
-            </nav>
-        </div>
-    </div>
-    <!--end header-->
+	<!--header-->
+	<div class="row">
+		<div class="navbar-fixed">
+			<nav class="nav-extended blue darken-4">
+				<div class="nav-wrapper">
+					<a class="brand-logo left"><img src="images/logo1.png" ></a>
+				</div>
+			</nav>
+		</div>
+	</div>
+	<!--end header-->
 	<img id="button" src="images/greyCircle.png" alt= "image not workning" width="7%" onclick="goNext();"></img>
 	<div id="container"><div id ="characters">      </div></div>
 	<div id="participant" class="row" style="font-size:18px;font-weight:bold">

@@ -38,7 +38,7 @@ footer.page-footer {
 }
 .coolWords{
   position: absolute;
-  z-index: 1000;
+  z-index: 3;
   padding-top: 150px;
   padding-left: 100px;
 }
