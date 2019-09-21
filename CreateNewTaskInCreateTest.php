@@ -75,23 +75,13 @@
 	(isset($_POST["activityStyle"])) ? $activityStyle = $_POST["activityStyle"] : $activityStyle = 1;
 	?>
         <!--header-->
-        <div class="row">
-            <div class="navbar-fixed">
-                <nav class="nav-extended blue darken-4">
-                    <div class="nav-wrapper">
-                        <a href="#" class="brand-logo left"><img src="images/logo1.png" ></a>
-                        <ul id="nav-mobile" class="hide-on-med-and-down">
-                            <li><a href="">Tests</a></li>
-                            <li class="active"><a href="">Create</a></li>
-                            <li><a href="">Users</a></li>
-                        </ul>
-                        <ul id="logoutButton" class="right hide-on-med-and-down logout">
-                            <li><a class="waves-effect waves-light btn blue darken-2 right" onclick="">Profile</a></li>
-                        </ul>
-                    </div>
-                </nav>
-            </div>
-        </div>
+        <div id="InsertHeader"></div>
+        <script>
+          //Read header
+          $(function(){
+            $("#InsertHeader").load("header.html");
+          });
+        </script>
         <!--end header-->
         <!-- body content -->
         <div id="body" class="container">
