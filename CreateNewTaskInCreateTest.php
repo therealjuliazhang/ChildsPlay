@@ -177,7 +177,7 @@
 					<div class="col s12">
 						<p align="right">
 							<button name="createTaskBtn" id="submitBtn" class="submit waves-effect waves-light btn blue darken-2" onclick="createNewTask();">Create Task</button>
-							<a class="waves-effect waves-light btn blue darken-4">Cancel</a>
+							<a class="waves-effect waves-light btn blue darken-4" onClick="javascript:history.go(-1)">Cancel</a>
 						</p>
 					</div>
 				</div>
