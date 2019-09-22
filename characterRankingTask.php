@@ -16,7 +16,9 @@ $previewGroupID = 4;
 // $isPreview = false;
 //get mode from session to check if preview mode
 if (isset($_SESSION['mode']))
-		$mode = $_SESSION['mode'];
+	$mode = $_SESSION['mode'];
+else if (isset($_GET["mode"]))
+	$mode = $_GET["mode"];
 //task id in GET is set if this task only is being previewed
 $from = "";
 if (isset($_GET['from'])){
@@ -30,6 +32,7 @@ if (isset($_GET['from'])){
 	$testID = 0;
 	$pointsInterval = 5;
 }
+/*
 else if($mode=="preview"){ //mode is set to preview if a test is being previewed
 	$groupID = $previewGroupID;
 	$isTaskPreview = false;
@@ -40,6 +43,28 @@ else if($mode=="preview"){ //mode is set to preview if a test is being previewed
 		$tasks = $_SESSION['tasks'];
 	$taskID = $tasks[$taskIndex]['taskID'];
 	$testID = 0;
+	$pointsInterval = 5;
+}
+*/
+if($mode=="preview"){ //mode is set to preview if a test is being previewed
+	//get testID
+	if (isset($_SESSION['testID']))
+		$testID = $_SESSION['testID'];
+	else
+		$testID = 0;
+	$groupID = $previewGroupID;
+	$isTaskPreview = false;
+	// $isTestPreiew = true;
+	if (isset($_GET['taskID']))
+		$taskID = $_GET['taskID'];
+	else{
+		if (isset($_GET['taskIndex']))
+			$taskIndex = $_GET['taskIndex'];
+		if (isset($_SESSION['tasks']))
+			$tasks = $_SESSION['tasks'];
+		$taskID = $tasks[$taskIndex]['taskID'];
+	}
+	
 	$pointsInterval = 5;
 }
 else{ //else if not preview
@@ -55,7 +80,7 @@ else{ //else if not preview
 		$taskIndex = $_GET['taskIndex'];
 	$taskID = $tasks[$taskIndex]['taskID'];
 	
-	echo "TaskID:".$taskID;
+	//echo "TaskID:".$taskID;
 	
 	//get testID
 	if (isset($_SESSION['testID']))
@@ -65,6 +90,9 @@ else{ //else if not preview
 	$result = $conn->query($sql);
 	$pointsInterval = mysqli_fetch_assoc($result)['pointsInterval'];
 }
+
+$_SESSION["taskID"] = $taskID;
+
 //fetch preschoolers from database
 $sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$groupID." AND userID=".$userID;
 $result = $conn->query($sql);
@@ -128,7 +156,7 @@ CloseCon($conn);
 			//if task was preview, go back to previous page
 			if(isTaskPreview){
 				if(from == "edit")
-					window.location.href = "editTest.php";
+					window.location.href = "editTest.php?testID=" + testID;
 				else if(from == "availableTests")
 					window.location.href = "viewExistingTests.php";
 				else if (from == "existingTasks")

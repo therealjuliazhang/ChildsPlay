@@ -62,8 +62,10 @@ else{
 		"<td style='width:28%' class='indtructionCol'>".$row["instruction"]."</td>".
 		"<td style='width:16%' class='activityStyleCol' >".$row["activityStyle"]."</td>".
 		"<td style='width:9%' class='dateCreatedCol'>".$formattedCreateDate."</td>".
-		"<td style='width:10%' class='previewCol'><a class='waves-effect waves-light btn blue darken-2' href='instruction.php?taskID=".$row["taskID"]."&mode=preview&from=existingTasks'>Preview</a></td>".
-		"<td style='width:7%' class='editCol'><a class='waves-effect waves-light btn blue darken-4' href='CreateNewTaskInCreateTest.php?exist=true&taskID=".$row["taskID"]."'>Edit</a></td>";
+		"<td style='width:10%' class='previewCol'><a class='waves-effect waves-light btn blue darken-2' href='instruction.php?taskID=".$row["taskID"].
+		"&mode=preview&from=existingTasks'>Preview</a></td>".
+		"<td style='width:7%' class='editCol'><a class='waves-effect waves-light btn blue darken-4'".
+		" href='CreateNewTaskInCreateTest.php?exist=true&taskID=".$row["taskID"]."&testID=".$_SESSION["testID"]."&from=".$from."'>Edit</a></td>";
 		if ($from == "create")
 			echo "<td style='width:7%' class='addCol'><a class='waves-effect waves-light btn blue darken-4' href='createTest.php?taskID=".$row["taskID"]."'>Add</a></td>";
 		else if ($from == "edit")

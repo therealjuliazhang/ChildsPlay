@@ -273,12 +273,12 @@ INSERT INTO TASK(instruction, activityStyle) VALUES (@instruction, @activityStyl
 
 SET
 @instruction = "How would you make the monster bigger?",
-@activityStyle = "Preferred Mechanic";
+@activityStyle = "Preferred Mechanics";
 INSERT INTO TASK(instruction, activityStyle) VALUES (@instruction, @activityStyle);
 
 SET
 @instruction = "How would you move the monster into the box?",
-@activityStyle = "Preferred Mechanic";
+@activityStyle = "Preferred Mechanics";
 INSERT INTO TASK(instruction, activityStyle) VALUES (@instruction, @activityStyle);
 
 /*TASKASSIGNMENT*/

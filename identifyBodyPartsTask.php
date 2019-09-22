@@ -153,16 +153,16 @@ CloseCon($conn);
 				var groupID = <?php echo $groupID ?>;
 				//if task was preview, go back to previous page
 				if(isPreview){
-					if(from == "edit")
+					/*if(from == "edit")
 						window.location.href = "editTest.php";
 					else if(from == "availableTests")
 						window.location.href = "viewExistingTests.php";
 					else if (from == "existingTasks")
 						window.location.href = "filterExistingQuestions.php";
 				}
-				else{
+				else{*/
 					var taskIndex = <?php echo $taskIndex ?>;
-					window.location.href = "comments.php?taskIndex=" + taskIndex;
+					window.location.href = "comments.php?taskIndex=" + taskIndex + "&from=" + from;
 				}
 			}
 			preschoolerIndex = 0;

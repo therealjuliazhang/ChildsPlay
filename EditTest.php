@@ -9,16 +9,15 @@ if(isset($_SESSION['userID']))
 {
     header('login.php');
 }
-    
-    
 //$userID = 1; //remove after admin pages are linked up
-//get test ID
-if(isset($_GET['testID']))
-{
-    $testID = $_GET['testID'];
-}
 
-    //$testID = 2; //remove after admin pages are linked up
+//get test ID
+if(isset($_SESSION["testID"]))
+	$testID = $_SESSION["testID"];
+if(isset($_GET['testID'])){
+    $testID = $_GET['testID'];
+	$_SESSION["testID"] = $testID;
+}	
 
 //connect to database
 include 'db_connection.php';
@@ -31,7 +30,6 @@ if(isset($_GET["taskID"])){
 	$taskResult = $conn->query($sql);
 	while ($row = mysqli_fetch_assoc($taskResult)) {
 		$index = $row["max"] + 1;
-		//$_SESSION["orderInTest"] = $index; 
 		$taskTitle = "'"."Task ".$index."'";
 		$sql = "INSERT INTO TASKASSIGNMENT(testID, taskID, taskTitle, orderInTest) VALUES($testID, $taskID, $taskTitle, $index)";
 		if(($conn->query($sql) !== TRUE))
@@ -39,7 +37,6 @@ if(isset($_GET["taskID"])){
 	}
 	$_SESSION["orderInTest"] = $index;
 }
-
 //get test name and description from database
 $sql = "SELECT title, description FROM TEST WHERE testID=" . $testID;
 $result = $conn->query($sql);
@@ -121,16 +118,16 @@ CloseCon($conn);
                 var previewURL;
                 switch (task.activityStyle) {
                     case "Likert Scale":
-                        previewURL = "likertScaleTask.php?from=edit&taskID=" + task.taskID;
+                        previewURL = "likertScaleTask.php?mode=preview&from=edit&taskID=" + task.taskID;
                         break;
                     case "Identify Body Parts":
-                        previewURL = "identifyBodyPartsTask.php?from=edit&taskID=" + task.taskID;
+                        previewURL = "identifyBodyPartsTask.php?mode=preview&from=edit&taskID=" + task.taskID;
                         break;
                     case "Character Ranking":
-                        previewURL = "characterRankingTask.php?from=edit&taskID=" + task.taskID;
+                        previewURL = "characterRankingTask.php?mode=preview&from=edit&taskID=" + task.taskID;
                         break;
                     case "Preferred Mechanics":
-                        previewURL = "preferredMechanicsTask.php?from=edit&taskID=" + task.taskID;
+                        previewURL = "preferredMechanicsTask.php?mode=preview&from=edit&taskID=" + task.taskID;
                         break;
                 }
                 $('<tr/>').append([
@@ -154,8 +151,8 @@ CloseCon($conn);
                         $('<a/>', {
                             class: "waves-effect waves-light btn blue darken-4",
                             text: "Edit",
-                            //href: "EditTaskInEditTest.php?testID=" + testID + "&taskID=" + task.taskID
-                            href: "CreateNewTaskInCreateTest.php?testID=" + testID + "&taskID=" + task.taskID
+                            //href: "EditTaskInEditTest.php?from=edit&testID=" + testID + "&taskID=" + task.taskID
+                            href: "CreateNewTaskInCreateTest.php?from=edit&testID=" + testID + "&taskID=" + task.taskID
                         })
                     ),
                     $('<td/>').append(

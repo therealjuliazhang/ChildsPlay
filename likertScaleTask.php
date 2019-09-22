@@ -130,17 +130,19 @@
 				if(preschoolerIndex == preschoolers.length){
 					//if task was preview, go back to edit test page
 					if(isPreview){
-						if(from == "edit")
+						var taskIndex = <?php echo $taskIndex ?>;
+						window.location.href = "comments.php?taskIndex=" + taskIndex + "&from=" + from;
+						/*if(from == "edit")
 							window.location.href = "editTest.php";
 						else if(from == "availableTests")
 							window.location.href = "viewExistingTests.php";
 						else if (from == "existingTasks")
-							window.location.href = "filterExistingQuestions.php";
+							window.location.href = "filterExistingQuestions.php";*/
 					}
-					else{
+					/*else{
 						var taskIndex = <?php echo $taskIndex ?>;
 						window.location.href = "comments.php?taskIndex=" + taskIndex;
-					}	
+					}*/	
 				}
 				preID = preschoolers[preschoolerIndex]['preID'];
 				document.getElementById("preschoolerName").innerHTML = preschoolers[preschoolerIndex]['name'];

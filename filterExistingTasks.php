@@ -94,7 +94,10 @@
   </tbody>
 </table>
 <div class="row">
-  <div class="col s1 offset-s11"><a class="waves-effect waves-light btn #2196f3 blue right" id="cancelButton">Cancel</a></div>
+	<div class="col s1 offset-s11">
+		<!--<a class="waves-effect waves-light btn #2196f3 blue right" id="cancelButton">Cancel</a>-->
+		<a class="waves-effect waves-light btn blue darken-4" onClick="javascript:history.go(-1)">Cancel</a>
+	</div>
 </div>
 </div>
 <!--end body content-->
@@ -192,8 +195,8 @@ table {
   text-align: center;
 }
 .taskIdCol, .activityStyleCol,.dateCreatedCol, .previewCol, .editCol, .addCol{
-  text-align: center;*/
-}
+  text-align: center;
+}*/
 .taskIdCol{
   width: 1%;
 }
