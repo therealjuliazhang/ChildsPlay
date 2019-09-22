@@ -6,28 +6,47 @@ if(isset($_SESSION["userID"]))
 else
 	$userID = 1;
 	//header("Location: login.php");
+	
+//get mode from session to check if preview mode
+if (isset($_SESSION['mode']))
+	$mode = $_SESSION['mode'];
+else if (isset($_GET["mode"]))
+	$mode = $_GET["mode"];
+
+//get testID
+if (isset($_SESSION['testID']))
+	$testID = $_SESSION['testID'];
+if (isset($_SESSION['tasks']))
+	$tasks = $_SESSION['tasks'];
+//get task index from url
+if (isset($_GET['taskIndex']))
+	$taskIndex = $_GET['taskIndex'];
+	
 //the group used for previewing tests
 $previewGroupID = 4;
 $isPreview = false;
 //task id in GET is set if task is being previewed
 $from = "";
-if (isset($_GET['from'])){
+if (isset($_GET['from']))
 	$from = $_GET['from'];
+
+if($mode == "preview"){
+	$isPreview = true;
+	$groupID = $previewGroupID;
 	if (isset($_GET['taskID']))
 		$taskID = $_GET['taskID'];
-	$groupID = $previewGroupID;
-	$isPreview = true;
-	$taskIndex = 0;
+	else
+		$taskID = $tasks[$taskIndex]['taskID'];
 }
 else{ //else if not preview
+	$isPreview = false;
+	//get group ID
 	if (isset($_SESSION['groupID']))
 		$groupID = $_SESSION['groupID'];
-	if (isset($_SESSION['tasks']))
-		$tasks = $_SESSION['tasks'];
-	if (isset($_GET['taskIndex']))
-		$taskIndex = $_GET['taskIndex'];
 	$taskID = $tasks[$taskIndex]['taskID'];
 }
+$_SESSION["taskID"] = $taskID;
+
 include 'db_connection.php';
 $conn = OpenCon();
 //get task ID
@@ -63,6 +82,7 @@ CloseCon($conn);
 	  var preschoolers;
       var results = [];
       var preIndex;
+	  var testID = <?php echo json_encode($testID); ?>;
       var taskID = <?php echo json_encode($taskID); ?>;
       var taskIndex = <?php echo json_encode($taskIndex); ?>;
       $(document).ready(function(){
@@ -114,30 +134,59 @@ CloseCon($conn);
             }
           }
         });
+		/*var mechanic = results[results.length-1].mechanic;
+		var otherComment = "";
+			if(mechanic == "Other"){
+				otherComment = $("#textarea1").val();
+				console.log("Comment: " + otherComment);
+			}
+			console.log("Check");
+		*/
         //end task and submit if last preschooler
         if($("li.is-active").next().length == 0){
           results.forEach(function(result){
             preID = preschoolers[result.preIndex]['preID'];
-            mechanic = result.mechanic;
-            $.ajax({
-              type: 'POST',
-              url: 'http://localhost/insertMechanicsResults.php',
-              data: { mechanic : mechanic, taskID : taskID, preID : preID}
-            });
+            var mechanic = result.mechanic;
+			var otherComment = "";
+				if(mechanic == "Other"){
+					otherComment = $("#textarea1").val();
+					console.log("Comment: " + otherComment);
+				}
+			console.log("Check");
+			//only save results if in start mode
+			if(!isPreview){
+				/*$.post("insertMechanicsResults.php", 
+					{	mechanic : mechanic,
+						taskID : taskID,
+						preID : preID,
+						testID: testID,
+						otherComment : otherComment
+					},
+					function(data){
+						$("#results").html(data);
+					});*/
+				$.ajax(
+					{
+					  type: 'POST',
+					  url: 'insertMechanicsResults.php',
+					  data: { mechanic : mechanic, taskID : taskID, preID : preID, testID: testID, otherComment : otherComment}
+					}
+				);
+			}
           });
+		  var taskIndex = <?php echo $taskIndex ?>;
           //if task was preview, go back to previous page
-          if(isPreview){
+          //if(isPreview)
+			  //window.location.href = "comments.php?taskIndex=" + taskIndex + "&from=" + from;
 			/*if(from == "edit")
 				window.location.href = "editTest.php";
 			else if(from == "availableTests")
 				window.location.href = "viewExistingTests.php";
 			else if (from == "existingTasks")
 				window.location.href = "filterExistingQuestions.php";
-          }
-          else{*/
-            var taskIndex = <?php echo $taskIndex ?>;
-            window.location.href = "comments.php?taskIndex=" + taskIndex + "&from=" + from;
-          }
+          }*/
+          //else
+            //window.location.href = "comments.php?taskIndex=" + taskIndex;
         };
         //go to next preschooler
 		var checkboxes = document.querySelectorAll('input[type="checkbox"]');
@@ -155,18 +204,17 @@ CloseCon($conn);
 		}
       }
 
-			//hide or unhide comment section when 'other' is clicked
-				$(document).ready(function(){
-					$('#checkBoxOther').click(function(){
-						if($(this).prop("checked") == true){
-							$(".commentSection").removeClass("hide");
-						}
-						else if($(this).prop("checked") == false){
-							$(".commentSection").addClass("hide");
-					}
+		//hide or unhide comment section when 'other' is clicked
+		$(document).ready(function(){
+			$('#checkBoxOther').click(function(){
+				if($(this).prop("checked") == true){
+					$(".commentSection").removeClass("hide");
+				}
+				else if($(this).prop("checked") == false){
+					$(".commentSection").addClass("hide");
+				}
 			});
-			});
-
+		});
     </script>
   </head>
 <body>
@@ -186,59 +234,59 @@ CloseCon($conn);
   </div>
   <!--End Sidebar-->
   <!--Main content-->
-  <div class="panel-group">
+<div class="panel-group">
   <!--Content A (Ren's turn)-->
     <div class="panel is-show">
-      <div class="container" id="mainContainer">
-        <div class="row">
-      <!--1st row-->
-          <div class="col s12" id="questionCol"><h5 class="blue-text darken-2">How does <span id="nameSpan"></span> interact with the image?</h5></div>
-      <!--2nd row-->
-	  <form required>
-          <div class="col s3 operationCol"><p class="operation">Press:</p></div>
-          <div class="col s3 operationCol"><p class="operation">Zoom/Pinch:</p></div>
-          <div class="col s3 operationCol"><p class="operation">Swipe/Drag:</p></div>
-          <div class="col s3 operationCol"><p class="operation">Other:</P></div>
-          <!--3rd row-->
-          <div class="col s3 operationCol">
-            <form action="#">
-            <label>
-            <input type="checkbox" />
-            <span></span>
-            </label>
-          </div>
-          <div class="col s3 operationCol">
-            <label>
-            <input type="checkbox" />
-            <span></span>
-            </label>
-          </div>
-          <div class="col s3 operationCol">
-            <label>
-            <input type="checkbox" />
-            <span></span>
-            </label>
-          </div>
-          <div class="col s3 operationCol">
-            <label>
-            <input id="checkBoxOther" type="checkbox" />
-            <span></span>
-            </label>
-            </form>
-          </div>
+		<div class="container" id="mainContainer">
+			<div class="row">
+			<!--1st row-->
+			<div class="col s12" id="questionCol"><h5 class="blue-text darken-2">How does <span id="nameSpan"></span> interact with the image?</h5></div>
+			<!--2nd row-->
+			<form required>
+				<div class="col s3 operationCol"><p class="operation">Press:</p></div>
+				<div class="col s3 operationCol"><p class="operation">Zoom/Pinch:</p></div>
+				<div class="col s3 operationCol"><p class="operation">Swipe/Drag:</p></div>
+				<div class="col s3 operationCol"><p class="operation">Other:</P></div>
+				<!--3rd row-->
+				<form action="#">
+					<div class="col s3 operationCol">
+						<label>
+							<input type="checkbox" />
+							<span></span>
+						</label>
+					</div>
+					<div class="col s3 operationCol">
+						<label>
+							<input type="checkbox" />
+							<span></span>
+						</label>
+					</div>
+					<div class="col s3 operationCol">
+						<label>
+							<input type="checkbox" />
+							<span></span>
+						</label>
+					</div>
+					<div class="col s3 operationCol">
+						<label>
+							<input id="checkBoxOther" type="checkbox" />
+							<span></span>
+						</label>
+					</div>
+				</form>
 				<!--Comment Section-->
 				<div class="hide commentSection">
 					<div class="col s12" id="commentCol"><h5 class="blue-text darken-2">Comment:</h5></div>
-							<div class="input-field col s11">
-									<textarea id="textarea1" class="materialize-textarea"></textarea>
-							</div>
+					<div class="input-field col s11">
+						<textarea id="textarea1" class="materialize-textarea"></textarea>
 					</div>
 				</div>
-          <div class="col s12"><a onclick="save()" class="waves-effect waves-light btn blue darken-2 right" id="saveButton">Next</a></div>
+			</form>
+			</div>
+			<div class="col s12"><a onclick="save()" class="waves-effect waves-light btn blue darken-2 right" id="saveButton">Next</a></div>
         </div>
-      </div>
-    </div>
-  </div>
+	</div>
+</div>
 </body>
 <style>
 /*CSS for header*/

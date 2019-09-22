@@ -477,6 +477,22 @@ SET
 INSERT INTO RESULTS(mechanic, taskID, preID, testID) VALUES (@mechanic, @taskID, @preID, @testID);
 
 SET
+@mechanic = "Other",
+@taskID = 4,
+@preID = 2,
+@otherComment = "Alex had difficulty interacting with the monster",
+@testID = 1;
+INSERT INTO RESULTS(mechanic, taskID, preID, otherComment, testID) VALUES (@mechanic, @taskID, @preID, @otherComment, @testID);
+
+SET
+@mechanic = "Other",
+@taskID = 5,
+@preID = 1,
+@otherComment = "Julia did both press and drag the monster",
+@testID = 2;
+INSERT INTO RESULTS(mechanic, taskID, preID, otherComment, testID) VALUES (@mechanic, @taskID, @preID, @otherComment, @testID);
+
+SET
 @x = 0.4119402985074626700000,
 @y = 0.2750000000000000000000,
 @taskID = 2,

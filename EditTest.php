@@ -116,7 +116,8 @@ CloseCon($conn);
             tasks.forEach(function displaytask(task) {
                 //get preview link for task
                 var previewURL;
-                switch (task.activityStyle) {
+				previewURL = "instruction.php?from=edit&mode=preview&taskID=" + task.taskID;
+                /*switch (task.activityStyle) {
                     case "Likert Scale":
                         previewURL = "likertScaleTask.php?mode=preview&from=edit&taskID=" + task.taskID;
                         break;
@@ -129,7 +130,7 @@ CloseCon($conn);
                     case "Preferred Mechanics":
                         previewURL = "preferredMechanicsTask.php?mode=preview&from=edit&taskID=" + task.taskID;
                         break;
-                }
+                }*/
                 $('<tr/>').append([
                     $('<td/>', {
                         text: task.taskID

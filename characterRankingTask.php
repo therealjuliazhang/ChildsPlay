@@ -13,84 +13,45 @@ else
 	//header("Location: login.php");
 //the group used for previewing tests
 $previewGroupID = 4;
-// $isPreview = false;
+
 //get mode from session to check if preview mode
 if (isset($_SESSION['mode']))
 	$mode = $_SESSION['mode'];
 else if (isset($_GET["mode"]))
 	$mode = $_GET["mode"];
-//task id in GET is set if this task only is being previewed
+
+//get testID
+if (isset($_SESSION['testID']))
+	$testID = $_SESSION['testID'];
+if (isset($_SESSION['tasks']))
+	$tasks = $_SESSION['tasks'];
+//get task index from url
+if (isset($_GET['taskIndex']))
+	$taskIndex = $_GET['taskIndex'];
+
 $from = "";
-if (isset($_GET['from'])){
+if (isset($_GET['from']))
 	$from = $_GET['from'];
-	if (isset($_GET['taskID']))
-		$taskID = $_GET['taskID'];
+if($mode=="preview"){ //mode is set to preview if a test is being previewed
 	$groupID = $previewGroupID;
 	$isTaskPreview = true;
-	// $isTestPreiew = false;
-	$taskIndex = 0;
-	$testID = 0;
-	$pointsInterval = 5;
-}
-/*
-else if($mode=="preview"){ //mode is set to preview if a test is being previewed
-	$groupID = $previewGroupID;
-	$isTaskPreview = false;
-	// $isTestPreiew = true;
-	if (isset($_GET['taskIndex']))
-		$taskIndex = $_GET['taskIndex'];
-	if (isset($_SESSION['tasks']))
-		$tasks = $_SESSION['tasks'];
-	$taskID = $tasks[$taskIndex]['taskID'];
-	$testID = 0;
-	$pointsInterval = 5;
-}
-*/
-if($mode=="preview"){ //mode is set to preview if a test is being previewed
-	//get testID
-	if (isset($_SESSION['testID']))
-		$testID = $_SESSION['testID'];
-	else
-		$testID = 0;
-	$groupID = $previewGroupID;
-	$isTaskPreview = false;
-	// $isTestPreiew = true;
 	if (isset($_GET['taskID']))
 		$taskID = $_GET['taskID'];
-	else{
-		if (isset($_GET['taskIndex']))
-			$taskIndex = $_GET['taskIndex'];
-		if (isset($_SESSION['tasks']))
-			$tasks = $_SESSION['tasks'];
+	else
 		$taskID = $tasks[$taskIndex]['taskID'];
-	}
-	
 	$pointsInterval = 5;
 }
 else{ //else if not preview
 	$isTaskPreview = false;
-	// $isTestPreiew = false;
-	//get group ID and tasks from session
+	//get group ID
 	if (isset($_SESSION['groupID']))
 		$groupID = $_SESSION['groupID'];
-	if (isset($_SESSION['tasks']))
-		$tasks = $_SESSION['tasks'];
-	//get task index from url
-	if (isset($_GET['taskIndex']))
-		$taskIndex = $_GET['taskIndex'];
 	$taskID = $tasks[$taskIndex]['taskID'];
-	
-	//echo "TaskID:".$taskID;
-	
-	//get testID
-	if (isset($_SESSION['testID']))
-		$testID = $_SESSION['testID'];
 	//get points interval from task assignment table
 	$sql = "SELECT pointsInterval FROM TASKASSIGNMENT WHERE taskID=".$taskID;
 	$result = $conn->query($sql);
 	$pointsInterval = mysqli_fetch_assoc($result)['pointsInterval'];
 }
-
 $_SESSION["taskID"] = $taskID;
 
 //fetch preschoolers from database
@@ -105,7 +66,7 @@ while($row = mysqli_fetch_assoc($result)){
 	}
 }
 //fetch images
-$sql = "SELECT I.imageID, I.address, IA.taskID FROM IMAGE I JOIN IMAGEASSIGNMENT IA ON I.imageID = IA.imageID WHERE taskID = '$taskID'";
+$sql = "SELECT I.imageID, I.address, IA.taskID FROM IMAGE I JOIN IMAGEASSIGNMENT IA ON I.imageID = IA.imageID WHERE taskID = $taskID";
 $result = $conn->query($sql);
 $images = array();
 while($row = mysqli_fetch_assoc($result))
@@ -153,19 +114,19 @@ CloseCon($conn);
 		if(clicked == true){
 		preschoolerNumber++;
 		if(preschoolerNumber == preschoolers.length){
+			var taskIndex = <?php echo $taskIndex ?>;
 			//if task was preview, go back to previous page
-			if(isTaskPreview){
-				if(from == "edit")
+			if(isTaskPreview)
+				window.location.href = "comments.php?taskIndex=" + taskIndex + "&from=" + from;
+				/*if(from == "edit")
 					window.location.href = "editTest.php?testID=" + testID;
 				else if(from == "availableTests")
 					window.location.href = "viewExistingTests.php";
 				else if (from == "existingTasks")
 					window.location.href = "filterExistingQuestions.php";
-			}
-			else{
-				var taskIndex = <?php echo $taskIndex ?>;
+			}*/
+			else
 				window.location.href = "comments.php?taskIndex=" + taskIndex;
-			}
 		}
 		var previousPreschoolerName = document.getElementById("preschoolerName").innerHTML;
 		document.getElementById("preschoolerName").innerHTML = preschoolers[preschoolerNumber]['name'];
@@ -192,30 +153,38 @@ CloseCon($conn);
 			div.setAttribute('points', 0);
 			div.setAttribute('imageID', images[i]['imageID']);
 			div.appendChild(img);
-			div.onclick = function(){
-				clicked = true;
-				this.setAttribute('points', parseInt(this.getAttribute("points")) + pointsToGive);
-				pointsToGive -= pointsInterval;
-				this.classList.add("chosen");
-				//send results to php file
-				$.ajax({
-						 type: 'POST',
-						 url: 'http://localhost/getRanking.php/',
-						 data: { imageID : this.getAttribute("imageID"), score : this.getAttribute("points"), testID : testID, taskID : taskID, preID : preschoolers[preschoolerNumber]['preID']},
-				});
-			};
-			div.onTouchStart = function(){
-				clicked = true;
-				this.setAttribute('points', parseInt(this.getAttribute("points")) + pointsToGive);
-				pointsToGive -= pointsInterval;
-				this.classList.add("chosen");
-				//send results to php file
-				$.ajax({
-						 type: 'POST',
-						 url: 'http://localhost/getRanking.php/',
-						 data: { imageID : this.getAttribute("imageID"), score : this.getAttribute("points"), testID : testID, taskID : taskID, preID : preschoolers[preschoolerNumber]['preID']}
-				});
-			};
+			
+				div.onclick = function(){
+					clicked = true;
+					this.setAttribute('points', parseInt(this.getAttribute("points")) + pointsToGive);
+					pointsToGive -= pointsInterval;
+					this.classList.add("chosen");
+				//only save results if task is in start mode
+				if(!isTaskPreview){
+					//send results to php file
+					$.ajax({
+							 type: 'POST',
+							 url: 'insertCharacterRanking.php',
+							 data: { imageID : this.getAttribute("imageID"), score : this.getAttribute("points"), testID : testID, taskID : taskID, preID : preschoolers[preschoolerNumber]['preID']},
+					});
+				}
+				};
+				div.onTouchStart = function(){
+					clicked = true;
+					this.setAttribute('points', parseInt(this.getAttribute("points")) + pointsToGive);
+					pointsToGive -= pointsInterval;
+					this.classList.add("chosen");
+				//only save results if task is in start mode
+				if(!isTaskPreview){	
+					//send results to php file
+					$.ajax({
+							 type: 'POST',
+							 url: 'insertCharacterRankingResults.php',
+							 data: { imageID : this.getAttribute("imageID"), score : this.getAttribute("points"), testID : testID, taskID : taskID, preID : preschoolers[preschoolerNumber]['preID']}
+					});
+				}
+				};
+			
 			document.getElementById("characters").appendChild(div);
 		}
 	}
