@@ -7,7 +7,6 @@ if(isset($_SESSION['userID']))
 	$userID = $_SESSION['userID'];
 else
 	header('login.php');
-
 if(isset($_SESSION["testID"])){
 	//session_destroy();
 	unset($_SESSION["testID"]);
@@ -58,7 +57,7 @@ include_once 'resultQueries.php';
 				return a.orderInTest - b.orderInTest || a.orderInTest - b.orderInTest;
 			});
 			//display results
-			displayResults(results);
+			displayResults(results, isGroupResults);
 		});
 		</script>
 	</head>

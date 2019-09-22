@@ -3,8 +3,12 @@ include 'db_connection.php';
 $conn = OpenCon();
 session_start();
 //get userID
+// if(isset($_SESSION["userID"]))
+//     $userID = (int)str_replace('"', '', $_SESSION["userID"]);
 if(isset($_SESSION["userID"]))
-    $userID = (int)str_replace('"', '', $_SESSION["userID"]);
+	$userID = $_SESSION["userID"];
+else
+	header("Location: login.php");
 //get groupID
 if(isset($_GET["groupID"]))
     $groupID = (int)str_replace('"', '', $_GET["groupID"]);

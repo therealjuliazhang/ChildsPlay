@@ -1,7 +1,7 @@
 //needed for not putting padding-top on first header
 var firstHeader = true;
 //display all results for one activity style
-function displayResults(results){
+function displayResults(results, isGroupResults){
     taskIDs = [...new Set(results.map(item => item.taskID))];
     taskIDs.forEach(function(taskID){
         //get only the results for this task ID

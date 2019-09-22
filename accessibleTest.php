@@ -6,8 +6,10 @@
         include 'db_connection.php';
         $conn = OpenCon();
         session_start();
-        //$userID = $_SESSION['userID'];
-        $userID = 2; //remove this after admin pages are linked up
+        if(isset($_SESSION['userID']))
+            $userID = $_SESSION['userID'];
+        else
+            header('login.php');
         //get user's fullname from database
         $sql = "SELECT fullName FROM USERS WHERE userID=".$userID;
         $result = $conn->query($sql);
@@ -30,6 +32,7 @@
         <title>Accessible Test</title>
         <meta name = "viewport" content = "width = device-width, initial-scale = 1">
         <link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
         <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
         <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
@@ -60,7 +63,8 @@
                 <tbody id="testsTableBody" class="grey-text text-darken-1">
                 </tbody>
             </table>
-            <a id="addTest" class="right waves-effect waves-light btn blue darken-4" href="selectAccessibleTest.php">Add Test</a>
+            <a id="back" class="right waves-effect waves-light btn blue darken-4" href="userPage.php#educators">Back</a>
+            <a id="addTest" class="right waves-effect waves-light btn blue darken-2" href="selectAccessibleTest.php">Add Test</a>
         </div>
 	</div>
         <!--end body content-->
@@ -125,7 +129,10 @@ $(document).ready(function() {
 	}
     #addTest{
         margin-top:20px;
-        margin-right:55px;
+        margin-right:10px;
+    }
+    #back{
+        margin-top:20px;
     }
     </style>
 </html>

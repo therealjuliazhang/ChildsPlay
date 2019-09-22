@@ -1,6 +1,11 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
 <head>
+  <?php
+  session_start();
+  if(isset($_SESSION['userID']))
+    $userID = $_SESSION['userID'];
+  else
+    header('login.php');
+  ?>
   <title>ProfilePage</title>
   <meta name = "viewport" content = "width = device-width, initial-scale = 1">
   <link rel="stylesheet" type="text/css" href="childsPlayStyle.css">

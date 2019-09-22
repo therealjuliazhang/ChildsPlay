@@ -4,8 +4,8 @@
 	session_start();
 	if(isset($_SESSION["userID"]))
 		$userID = $_SESSION["userID"];
-	//else
-		//header("Location: login.php");
+	else
+		header("Location: login.php");
 
 	//the group used for previewing tests
 	$previewGroupID = 4;

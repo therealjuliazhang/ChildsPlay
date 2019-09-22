@@ -19,10 +19,6 @@
   <body>
 
     <!--header-->
-	<?php
-	//$contents = file_get_contents('header.html');
-	//echo $contents;
-	?>
   <div id="InsertHeader"></div>
 	<script>
     //Read header
@@ -54,6 +50,10 @@
        <tbody>
 		<?php
 			session_start();
+			if(isset($_SESSION["userID"]))
+				$userID = $_SESSION["userID"];
+			else
+				header("Location: login.php");
             //session_destroy();
             //unset($_SESSION["tasks"]);
 			include 'db_connection.php';

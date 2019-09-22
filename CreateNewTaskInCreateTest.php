@@ -12,7 +12,7 @@
 		if(isset($_GET['testID']))
 		 	$testID = $_GET['testID'];
 		//$testID = 2; //remove after admin pages are linked up
-		//$from = "create";	
+		$from = "";	
 		
 		if(isset($_GET["from"]))
 			$from = $_GET["from"];
@@ -20,17 +20,17 @@
 		if(isset($_GET["index"])){
 			$index = $_GET["index"]; 
 		}
-		/*if(isset($_GET["taskID"])){
-			$taskID = $_GET["taskID"];
-			$query = "SELECT instruction, activityStyle, address FROM TASK T JOIN IMAGEASSIGNMENT IA ON T.taskID = IA.taskID".
-					" JOIN IMAGE I ON IA.imageID = I.imageID WHERE T.taskID = $taskID";
-			$result = $conn->query($query);
-			while($row = mysqli_fetch_assoc($result)){
-				$instruction = $row["instruction"];
-				$activityStyle = $row["activityStyle"];
-				$imageAddress = $row["address"];
-			}
-		}*/
+		// if(isset($_GET["taskID"])){
+		// 	$taskID = $_GET["taskID"];
+		// 	$query = "SELECT instruction, activityStyle, address FROM TASK T JOIN IMAGEASSIGNMENT IA ON T.taskID = IA.taskID".
+		// 			" JOIN IMAGE I ON IA.imageID = I.imageID WHERE T.taskID = $taskID";
+		// 	$result = $conn->query($query);
+		// 	while($row = mysqli_fetch_assoc($result)){
+		// 		$instruction = $row["instruction"];
+		// 		$activityStyle = $row["activityStyle"];
+		// 		$imageAddress = $row["address"];
+		// 	}
+		// }
 		?>
         <title>Child'sPlay</title>
         <meta name = "viewport" content = "width = device-width, initial-scale = 1">
@@ -145,7 +145,7 @@
                         Instruction
                     </h5>
 					<div class="input-field col s12">
-							<input id="instruction" name="activity" value="Press the character's [body part]" id="Activity" type="text">
+							<input id="instruction" name="activity" id="Activity" type="text">
 					</div>
                 </div>
 				<div class="col s12" id="pointRow"></div>

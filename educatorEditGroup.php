@@ -5,8 +5,13 @@
         include 'db_connection.php';
         $conn = OpenCon();
         //get userID
-        if(isset($_GET["userID"]))
-            $userID = (int)str_replace('"', '', $_GET["userID"]);
+        // if(isset($_GET["userID"]))
+        //     $userID = (int)str_replace('"', '', $_GET["userID"]);
+        session_start();
+        if(isset($_SESSION['userID']))
+            $userID = $_SESSION['userID'];
+        else
+            header('login.php');
         //get groupID
         if(isset($_GET["groupID"]))
             $groupID = (int)str_replace('"', '', $_GET["groupID"]);

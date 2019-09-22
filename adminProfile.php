@@ -5,10 +5,10 @@ include 'db_connection.php';
 $conn = OpenCon();
 
 session_start();
-
-if(isset($_SESSION["userID"]))
-$userID = $_SESSION["userID"];
-
+if(isset($_SESSION['userID']))
+  $userID = $_SESSION['userID'];
+else
+  header('login.php');
 //get userinfo from database
 $sql = "SELECT * FROM users WHERE userID = " .$userID;
 $users = array();

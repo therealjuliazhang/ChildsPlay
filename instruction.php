@@ -1,6 +1,10 @@
 <html>
 <?php
 session_start();
+if(isset($_SESSION["userID"]))
+	$userID = $_SESSION["userID"];
+else
+	header("Location: login.php");
 include 'db_connection.php';
 $conn = OpenCon();
 if(isset($_SESSION["tasks"])){

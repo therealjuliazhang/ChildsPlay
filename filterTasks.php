@@ -2,10 +2,9 @@
 /*
  Author: Phuong Linh Bui (5624095)
 */
-//session_start();
+// session_start();
 if(isset($_SESSION["from"]))
 	$from = $_SESSION["from"];
-
 include 'db_connection.php';
 $conn = OpenCon();
 

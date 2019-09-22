@@ -2,10 +2,10 @@
 include 'db_connection.php';
 $conn = OpenCon();
 session_start();
-
 if(isset($_SESSION["userID"]))
 	$userID = $_SESSION["userID"];
-
+else
+	header("Location: login.php");
 //get username
 if(isset($_POST["uName"]))
 	$user = $_POST["uName"];
