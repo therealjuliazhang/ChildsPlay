@@ -20,7 +20,9 @@ if(isset($_GET["from"])){
 }
 else if(isset($_SESSION["from"]))
 	$from = $_SESSION["from"];
-	
+
+
+
 if(isset($_GET["testID"])){
 	$testID = $_GET["testID"];
 	$_SESSION["testID"] = $testID;
@@ -34,6 +36,7 @@ if(isset($_SESSION["groupID"]))
 	$groupID = $_SESSION["groupID"];
 
 $taskID = isset($_GET["taskID"]) ? $_GET["taskID"]: 0;
+$_SESSION["taskID"] = $taskID;
 
 //check the mode if it's passed in the URL
 if(isset($_GET["mode"])){
@@ -131,7 +134,7 @@ if(count($tasks) > 0){
 			"</br>
 				<img src=\"images/happy.png\" width=\"75px\"><img src=\"images/sad.png\" width=\"75px\">
 			</br>";
-			$taskTypeUrl = "likertScaleTask.php?taskIndex=" . $taskIndex;
+			$taskTypeUrl = "likertScaleTask.php?taskIndex=" . $taskIndex."&from=".$from;
 			echo "After the participant has completed their task, select the grey, quarter-circle button on the top right
 						of the screen to go to the next participant's turn.
 						</br>
@@ -142,7 +145,7 @@ if(count($tasks) > 0){
       		echo "<h4 class='blue-text text-darken-2'>Identify Body Parts</h4><br>";
       		echo "<h5 class='blue-text text-darken-2'>Task Instructions:</h5>";
 			echo $tasks[$taskIndex]['instruction'];
-			$taskTypeUrl = "identifyBodyPartsTask.php?taskIndex=" . $taskIndex;
+			$taskTypeUrl = "identifyBodyPartsTask.php?taskIndex=" . $taskIndex."&from=".$from;
 			echo "</br></br>After the participant has completed their task, select the grey, quarter-circle button on the top right
 						of the screen to go to the next participant's turn.
 						</br>
@@ -153,18 +156,18 @@ if(count($tasks) > 0){
       		echo "<h4 class='blue-text text-darken-2'>Character Ranking</h4><br>";
       		echo "<h5 class='blue-text text-darken-2'>Task Instructions:</h5>";
 			echo $tasks[$taskIndex]['instruction'];
-			$taskTypeUrl = "characterRankingTask.php?taskIndex=" . $taskIndex;
+			$taskTypeUrl = "characterRankingTask.php?taskIndex=" . $taskIndex."&from=".$from;
 			echo "</br></br>After the participant has completed their task, select the grey, quarter-circle button on the top right
 						of the screen to go to the next participant's turn.
 						</br>
 						<img src='images/greyCircle.png' width='60px'>
 				  ";
 			break;
-		case "Preferred Mechanic":
+		case "Preferred Mechanics":
 			echo "<h4 class='blue-text text-darken-2'>Preferred Mechanics</h4><br>";
 			echo "<h5 class='blue-text text-darken-2'>Task Instructions:</h5>";
 			echo $tasks[$taskIndex]['instruction'];
-			$taskTypeUrl = "preferredMechanicsTask.php?taskIndex=" . $taskIndex;
+			$taskTypeUrl = "preferredMechanicsTask.php?taskIndex=" . $taskIndex."&from=".$from;
 			echo "</br></br>After the participant has completed their task, click the next button to go to the next participant's turn.	</br>";
 					
 			break;
@@ -185,7 +188,7 @@ while($row = mysqli_fetch_assoc($result))
 foreach ($imageAdresses as $value)
   echo '<img src=' . $value['address'] . ' width="100px">';
 }
-CloseCon($conn);
+//CloseCon($conn);
 ?>
 				</div>
 			</div>

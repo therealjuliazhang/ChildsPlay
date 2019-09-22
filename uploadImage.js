@@ -45,8 +45,9 @@ $(document).ready(function() {
 		})
 	})
 });
-		
+
 function loadContent(){
+	//selectActivityStyle();
 	var selected = $("#activityStyle option:selected").val();
 	switch(selected){
 		case "Likert Scale":

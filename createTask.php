@@ -69,9 +69,13 @@ if ($conn->query($sql) === TRUE){
 		//insert into task assignment
 		$index = $_POST["orderInTest"] + 1;
 		$taskTitle = "'"."Task ".$index."'";
-		$sql = "INSERT INTO TASKASSIGNMENT (testID, taskID, taskTitle, orderInTest) VALUES($testID, $taskID, $taskTitle, $index)"; 
-		//$result = $conn->query($sql);
-		
+		//check activity style and save pointsInterval for Character Ranking task
+		if($activityStyle == "Character Ranking"){
+			$pointsInterval = $_POST["pointsInterval"];
+			$sql = "INSERT INTO TASKASSIGNMENT (testID, taskID, taskTitle, orderInTest, pointsInterval) VALUES($testID, $taskID, $taskTitle, $index, $pointsInterval)";
+		}
+		else
+			$sql = "INSERT INTO TASKASSIGNMENT (testID, taskID, taskTitle, orderInTest) VALUES($testID, $taskID, $taskTitle, $index)"; 
 		if ($conn->query($sql) !== TRUE)
 			$errorMsg .= "<span style='color:red'>Failed to add record! ".mysqli_error($conn)."</span><br/>";
 	}

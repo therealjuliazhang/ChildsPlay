@@ -123,6 +123,7 @@ CREATE TABLE RESULTS(
 	x						DECIMAL(10,5)	NULL,
 	y						DECIMAL(10,5)	NULL,
 	happy					BOOLEAN			NULL,
+	otherComment			VARCHAR(500)	NULL,
 	/*dateCollected			DATE			NOT NULL,*/
 	testID					INTEGER			NOT NULL,
 	taskID					INTEGER			NOT NULL,

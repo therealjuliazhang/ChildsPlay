@@ -273,12 +273,12 @@ INSERT INTO TASK(instruction, activityStyle) VALUES (@instruction, @activityStyl
 
 SET
 @instruction = "How would you make the monster bigger?",
-@activityStyle = "Preferred Mechanic";
+@activityStyle = "Preferred Mechanics";
 INSERT INTO TASK(instruction, activityStyle) VALUES (@instruction, @activityStyle);
 
 SET
 @instruction = "How would you move the monster into the box?",
-@activityStyle = "Preferred Mechanic";
+@activityStyle = "Preferred Mechanics";
 INSERT INTO TASK(instruction, activityStyle) VALUES (@instruction, @activityStyle);
 
 /*TASKASSIGNMENT*/
@@ -475,6 +475,22 @@ SET
 @preID = 3,
 @testID = 2;
 INSERT INTO RESULTS(mechanic, taskID, preID, testID) VALUES (@mechanic, @taskID, @preID, @testID);
+
+SET
+@mechanic = "Other",
+@taskID = 4,
+@preID = 2,
+@otherComment = "Alex had difficulty interacting with the monster",
+@testID = 1;
+INSERT INTO RESULTS(mechanic, taskID, preID, otherComment, testID) VALUES (@mechanic, @taskID, @preID, @otherComment, @testID);
+
+SET
+@mechanic = "Other",
+@taskID = 5,
+@preID = 1,
+@otherComment = "Julia did both press and drag the monster",
+@testID = 2;
+INSERT INTO RESULTS(mechanic, taskID, preID, otherComment, testID) VALUES (@mechanic, @taskID, @preID, @otherComment, @testID);
 
 SET
 @x = 0.4119402985074626700000,

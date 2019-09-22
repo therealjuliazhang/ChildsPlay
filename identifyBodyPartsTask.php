@@ -4,29 +4,49 @@ session_start();
 if(isset($_SESSION["userID"]))
 	$userID = $_SESSION["userID"];
 else
-	header("Location: login.php");
+	$userID = 1;
+	//header("Location: login.php");
+	
+//get mode from session to check if preview mode
+if (isset($_SESSION['mode']))
+	$mode = $_SESSION['mode'];
+else if (isset($_GET["mode"]))
+	$mode = $_GET["mode"];
+
+//get testID
+if (isset($_SESSION['testID']))
+	$testID = $_SESSION['testID'];
+if (isset($_SESSION['tasks']))
+	$tasks = $_SESSION['tasks'];
+//get task index from url
+if (isset($_GET['taskIndex']))
+	$taskIndex = $_GET['taskIndex'];
+	
 //the group used for previewing tests
 $previewGroupID = 4;
 $isPreview = false;
 //task id in GET is set if task is being previewed
 $from = "";
-if (isset($_GET['from'])){
+if (isset($_GET['from']))
 	$from = $_GET['from'];
+
+if($mode == "preview"){
+	$isPreview = true;
+	$groupID = $previewGroupID;
 	if (isset($_GET['taskID']))
 		$taskID = $_GET['taskID'];
-	$groupID = $previewGroupID;
-	$isPreview = true;
-	$taskIndex = 0;
+	else
+		$taskID = $tasks[$taskIndex]['taskID'];
 }
 else{ //else if not preview
+	$isPreview = false;
+	//get group ID
 	if (isset($_SESSION['groupID']))
 		$groupID = $_SESSION['groupID'];
-	if (isset($_SESSION['tasks']))
-		$tasks = $_SESSION['tasks'];
-	if (isset($_GET['taskIndex']))
-		$taskIndex = $_GET['taskIndex'];
 	$taskID = $tasks[$taskIndex]['taskID'];
 }
+$_SESSION["taskID"] = $taskID;
+
 header('Access-Control-Allow-Origin: *');
 include 'db_connection.php';
 $conn = OpenCon();
@@ -43,7 +63,7 @@ while($row = mysqli_fetch_assoc($result)){
 	}
 }
 //fetch images
-$sql = "SELECT I.imageID, I.address, IA.taskID FROM IMAGE I JOIN IMAGEASSIGNMENT IA ON I.imageID = IA.imageID WHERE taskID = '$taskID'";
+$sql = "SELECT I.imageID, I.address, IA.taskID FROM IMAGE I JOIN IMAGEASSIGNMENT IA ON I.imageID = IA.imageID WHERE taskID = $taskID";
 $result = $conn->query($sql);
 $images = array();
 while($row = mysqli_fetch_assoc($result))
@@ -65,8 +85,8 @@ CloseCon($conn);
 	var from; //if preview check if from edit page or available test page ect.
 	if(isPreview)
 		from = <?php echo(json_encode($from)); ?>; // checks from which page preview was opened 
-	/**/
-	// var testID = <php echo(json_encode($testID)); ?>;
+	var taskIndex = <?php echo(json_encode($taskIndex)); ?>;
+	var testID = <?php echo(json_encode($testID)); ?>;
 	var taskID = <?php echo(json_encode($taskID)); ?>;
 	//canX is canvas x coordinate, canY is y coordinate
 	var canvas, ctx, canX, canY = 0;
@@ -101,12 +121,14 @@ CloseCon($conn);
 		//change coordinates to percentage of image width/height
 		var x = canX/canvas.width;
 		var y = canY/canvas.height;
-		//send results to php file
+		//send results to php file only in start mode
+		if(!isPreview){
 		$.ajax({
 				 type: 'POST',
-				 url: 'http://localhost/getCoordinates.php',
-				 data: { x : x, y : y , taskID : taskID, preID : preschoolers[preschoolerIndex]['preID']}
+				 url: 'insertBodyPartsResults.php',
+				 data: { testID: testID, x : x, y : y , taskID : taskID, preID : preschoolers[preschoolerIndex]['preID']}
 		});
+		}
 	}
 	function touchDown(e) {
 		clicked= true;
@@ -120,12 +142,14 @@ CloseCon($conn);
 		//change coordinates to percentage of image width/height
 		var x = canX/canvas.width;
 		var y = canY/canvas.height;
-		//send results to php file
+		//send results to php file only in start mode
+		if(!isPreview){
 		$.ajax({
 				 type: 'POST',
-				 url: 'http://localhost/getCoordinates.php',
-				 data: { x : x, y : y , taskID : taskID, preID : preschoolers[preschoolerIndex]['preID']}
+				 url: 'insertBodyPartsResults.php',
+				 data: { testID: testID, x : x, y : y , taskID : taskID, preID : preschoolers[preschoolerIndex]['preID']}
 		});
+		}
 	}
 	//draws circle
 	function draw(){
@@ -149,20 +173,20 @@ CloseCon($conn);
 		if(preschoolerIndex == preschoolers.length){
 			imageIndex++;
 			if(imageIndex == images.length){
-				var groupID = <?php echo $groupID ?>;
+				//var groupID = <?php echo $groupID ?>;
+				var taskIndex = <?php echo $taskIndex ?>;
 				//if task was preview, go back to previous page
-				if(isPreview){
-					if(from == "edit")
+				if(isPreview)
+					window.location.href = "comments.php?taskIndex=" + taskIndex + "&from=" + from;
+					/*if(from == "edit")
 						window.location.href = "editTest.php";
 					else if(from == "availableTests")
 						window.location.href = "viewExistingTests.php";
 					else if (from == "existingTasks")
 						window.location.href = "filterExistingQuestions.php";
-				}
-				else{
-					var taskIndex = <?php echo $taskIndex ?>;
+				}*/
+				else
 					window.location.href = "comments.php?taskIndex=" + taskIndex;
-				}
 			}
 			preschoolerIndex = 0;
 			displayCharacter(imageIndex);

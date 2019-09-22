@@ -1,8 +1,10 @@
 <html>
     <head>
 		<?php
+		session_start();
+		include 'db_connection.php';
+		$conn = OpenCon();
 			//get user ID
-			session_start();
 			// if(isset($_SESSION['userID']))
 			// 	$userID = $_SESSION['userID'];
 			// else
@@ -20,17 +22,20 @@
 		if(isset($_GET["index"])){
 			$index = $_GET["index"]; 
 		}
-		// if(isset($_GET["taskID"])){
-		// 	$taskID = $_GET["taskID"];
-		// 	$query = "SELECT instruction, activityStyle, address FROM TASK T JOIN IMAGEASSIGNMENT IA ON T.taskID = IA.taskID".
-		// 			" JOIN IMAGE I ON IA.imageID = I.imageID WHERE T.taskID = $taskID";
-		// 	$result = $conn->query($query);
-		// 	while($row = mysqli_fetch_assoc($result)){
-		// 		$instruction = $row["instruction"];
-		// 		$activityStyle = $row["activityStyle"];
-		// 		$imageAddress = $row["address"];
-		// 	}
-		// }
+		
+		$imageAddresses = array();
+		if(isset($_GET["taskID"])){
+			$taskID = $_GET["taskID"];
+			$query = "SELECT instruction, activityStyle, address, pointsInterval FROM TASK T JOIN IMAGEASSIGNMENT IA ON T.taskID = IA.taskID".
+					" JOIN IMAGE I ON IA.imageID = I.imageID JOIN TASKASSIGNMENT TA ON TA.taskID = T.taskID WHERE T.taskID = $taskID";
+			$result = $conn->query($query);
+			while($row = mysqli_fetch_assoc($result)){
+				$instruction = $row["instruction"];
+				$activityStyle = $row["activityStyle"];
+				array_push($imageAddresses, $row["address"]);
+				$pointsInterval = $row["pointsInterval"];
+			}
+		}
 		?>
         <title>Child'sPlay</title>
         <meta name = "viewport" content = "width = device-width, initial-scale = 1">
@@ -45,6 +50,11 @@
 			var imageAddress = $("#imageAddress").val();
 			var instruction = $("#instruction").val();
 			var activityStyle = $("#activityStyle option:selected").val();
+			
+			var pointsInterval = 0;
+			if(activityStyle == "Character Ranking")
+				pointsInterval = $("#points").val();
+			
 			var testID = <?php if(isset($testID))
 								$testID = $testID;
 							  else $testID = 0;
@@ -67,11 +77,12 @@
 						instruction: instruction,
 						activityStyle: activityStyle,
 						testID: testID,
-						orderInTest: orderInTest
+						orderInTest: orderInTest,
+						pointsInterval: pointsInterval
 					},
 					function(data){
+						//show errors
 						if(data.includes("span")){
-							//errors = data;
 							$("#results").html(data);
 						}
 						else{
@@ -89,11 +100,66 @@
 				);
 			}
 		}
+	
+		function selectActivityStyle(){
+			var pointsInterval = 0;
+			var activityStyle = <?php if(isset($activityStyle)) echo json_encode($activityStyle);?>;
+			if((activityStyle) == "Character Ranking"){
+				pointsInterval = <?php if(isset($pointsInterval)) echo json_encode($pointsInterval); ?>;
+			}
+			var selected = $("#activityStyle option:selected").val();
+			$.post("selectOption.php", {option_value: selected},
+				function(data){
+					var input = document.getElementById("file");
+					var upload = document.getElementById("upload");
+					var noti = document.createElement("label");
+					if(data == "Character Ranking"){
+						input.setAttribute("name", "files[]");
+						input.setAttribute("multiple", "multiple");
+						//create the points input when user selects Character Ranking activity style
+						var header = document.createElement("h5");
+						header.setAttribute("class", "blue-text darken-2 header");
+						header.innerHTML = "Points interval";
+						var div = document.createElement("div");
+						div.setAttribute("class", "input-field col s7");
+						var pointInput = document.createElement("input");
+						pointInput.setAttribute("id", "points");
+						pointInput.setAttribute("name", "points");
+						pointInput.setAttribute("type", "number");
+						pointInput.setAttribute("value", pointsInterval);
+						div.appendChild(pointInput);
+						var wrapper = document.getElementById("pointRow");
+						wrapper.appendChild(header);
+						wrapper.appendChild(div);
+						
+						//delete the previous label
+						upload.removeChild(upload.lastChild);
+						//add the label telling user that they can upload multiple images for Character Ranking task
+						noti.innerHTML = "You can upload multiple images for Character Ranking activity style";
+						upload.appendChild(noti);
+					}
+					else{
+						input.setAttribute("name", "file");
+						input.removeAttribute("multiple");
+						//delete the previous label
+						upload.removeChild(upload.lastChild);
+						//add the label telling user that they can only upload one image for other tasks
+						noti.innerHTML = "Please select one image to upload";
+						upload.appendChild(noti);
+						//delete the point input for other tasks
+						var contents = document.getElementById("pointRow");
+						while (contents.hasChildNodes()) {
+							contents.removeChild(contents.lastChild);
+						}
+					}
+				}
+			);
+		}
 		</script>
 	</head>
     <body>
 	<?php
-	(isset($_POST["activityStyle"])) ? $activityStyle = $_POST["activityStyle"] : $activityStyle = 1;
+	//(isset($_POST["activityStyle"])) ? $activityStyle = $_POST["activityStyle"] : $activityStyle = 1;
 	?>
         <!--header-->
         <div id="InsertHeader"></div>
@@ -129,14 +195,15 @@
                         </h5>
 						<div class="input-field">
 							<select name="activityStyle" id="activityStyle" onchange="loadContent()">
-								<option value="Identify Body Part">Identify Body Part</option>
-								<option value="Likert Scale">Likert Scale</option>
-								<option value="Character Ranking">Character Ranking</option>
-								<option value="Preferred Mechanics">Preferred Mechanics</option>
+							<?php echo "Style: ".$activityStyle;?>
+							<option <?php if(isset($activityStyle)){ if($activityStyle == "Identify Body Part") echo "selected";}?> value="Identify Body Part">Identify Body Part</option>
+							<option <?php if(isset($activityStyle)){ if($activityStyle == "Likert Scale") echo "selected";}?> value="Likert Scale">Likert Scale</option>
+							<option <?php if(isset($activityStyle)){ if($activityStyle == "Character Ranking") echo "selected";}?> value="Character Ranking">Character Ranking</option>
+							<option <?php if(isset($activityStyle)) if($activityStyle == "Preferred Mechanics") echo "selected";?> value="Preferred Mechanics">Preferred Mechanics</option>
 							</select>
 						</div>
                     </div>
-                </div>
+				</div>
                 <div class="row">   
                     <h5 class="blue-text darken-2 header">
                         <a class="tooltipped" data-position="left" data-tooltip="Activity for Task">
@@ -145,7 +212,7 @@
                         Instruction
                     </h5>
 					<div class="input-field col s12">
-							<input id="instruction" name="activity" id="Activity" type="text">
+						<input id="instruction" name="instruction" value="<?php echo isset($instruction) ? $instruction:""; ?>" type="text" />
 					</div>
                 </div>
 				<div class="col s12" id="pointRow"></div>
@@ -166,10 +233,17 @@
 							</div>
 							<div class="file-path-wrapper" id="upload">
 								<input class="file-path validate" type="text" name="imageFileName" id="imageAddress"
-								value="<?php if(isset($imageAddress)){ 
-												$image = explode("/",$imageAddress); 
-												echo $image[1];
-											}	
+								value="<?php 
+								$index = 0;
+								if(count($imageAddresses) > 0){
+									foreach($imageAddresses as $imageAddress){
+										$image = explode("/",$imageAddress); 
+										echo $image[1];
+										if($index < count($imageAddresses) - 1)
+											echo ", ";
+										$index++;
+									}
+								}	
 								?>" webkitdirectory directory multiple/>
 								
 							</div>
