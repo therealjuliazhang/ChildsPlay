@@ -6,10 +6,8 @@
     $currentTitle = "";
     if(isset($_POST['currentTitle']))
         $currentTitle = $_POST['currentTitle'];
-    if($inputTitle == $currentTitle){
-        echo json_encode("true");
-    }
-    else{
+	
+    if ($inputTitle != $currentTitle){
         //check if group name already taken by selecting it from database
         include 'db_connection.php';
         $conn = OpenCon();
@@ -19,6 +17,8 @@
         if(mysqli_num_rows($result) > 0)
             echo json_encode("");
         else
-            echo json_encode("true");
+			echo json_encode("true");
     }
+	else
+		echo json_encode("true");
 ?>

@@ -86,27 +86,39 @@ CloseCon($conn);
                     }
                 }
             })
+			
             //validate test title
             $("#form").validate({
                 rules: {
-                    testTitle: {
+					testTitle: {
                         required: true,
-                        remote: {
-                            url: "checkTestTitle.php",
-                            type: "post",
-                            data: {
-                                currentTitle: test.title
-                            }
-                        }
+							remote: {
+							url: "checkTestTitle.php",
+							type: "post",
+							data: {
+								currentTitle: test.title
+							}
+						}
                     },
-                    description: "required"
+                    description: {
+						required: true
+					},
+					remote: {
+                        url: "checkTestTitle.php",
+                        type: "post",
+                        data: {
+                            currentTitle: test.title
+                        }
+                    }
                 },
                 messages: {
                     testTitle: {
                         required: "Enter a test title.",
                         remote: jQuery.validator.format("{0} is already used by an existing test.")
                     },
-                    description: "Enter a description for the test."
+					description:{
+                        required: "Enter a description."
+                    }
                 }
             });
         });
@@ -229,11 +241,16 @@ CloseCon($conn);
                     <i class="large material-icons">add</i>
                 </a>
             </div>
-            <div id="comfirmButton">
+            <!--<div id="comfirmButton">
                 <input type="submit" name="submit" class="submit waves-effect waves-light btn blue darken-2 right" value="Save">
-            </div>
+            </div>--->
+			<br/><br/>
+			<div align="left">
+			<button name="submit" type="submit" class="submit waves-effect waves-light btn blue darken-2">Save</button>
+			</div>
         </form>
     </div>
+	<br/><br/>
     <!--end body content-->
 </body>
 <style>

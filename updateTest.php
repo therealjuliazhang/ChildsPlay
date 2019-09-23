@@ -32,4 +32,4 @@ else
 //close database connection
 CloseCon($conn);
 //redirect to edit test page
-header('Location: ViewExistingTests.php');
+header("Location: viewExistingTests.php");

@@ -274,16 +274,18 @@ CloseCon($conn);
 						</label>
 					</div>
 				</form>
+			</form>
+			</div>
 				<!--Comment Section-->
 				<div class="hide commentSection">
-					<div class="col s12" id="commentCol"><h5 class="blue-text darken-2">Comment:</h5></div>
+					<br/><br/>
+					<div class="col s12" id="commentCol"><h6 class="blue-text darken-2">Comment:</h6></div>
 					<div class="input-field col s11">
 						<textarea id="textarea1" class="materialize-textarea"></textarea>
 					</div>
 				</div>
-			</form>
-			</div>
-			<div class="col s12"><a onclick="save()" class="waves-effect waves-light btn blue darken-2 right" id="saveButton">Next</a></div>
+		</div>
+		<div class="col s12"><a onclick="save()" class="waves-effect waves-light btn blue darken-2 right" id="saveButton">Next</a></div>
         </div>
 	</div>
 </div>
@@ -333,8 +335,8 @@ padding-left: 330px;
   margin-right: 100px;
 }
 #saveButton{
-  margin-right: 50px;
-  margin-top: 100px;
+  margin-right: 70px;
+  margin-top: 40px;
 }
 #questionCol{
   height: 70px;

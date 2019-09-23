@@ -96,7 +96,7 @@
 				
 				echo "<td><a href='#?testID=".$value["testID"]."' class='btn dropdown-button blue darken-4' data-activates='dropdownTask".$index."'>...</a>";
 				echo "<ul id='dropdownTask".$index."' class='dropdown-content'>";
-				echo "<li><a href='EditTest.php?testID=".$value["testID"]."'>Edit</a></li>";
+				echo "<li><a href='editTest.php?testID=".$value["testID"]."'>Edit</a></li>";
 				echo "<li><a href='results.php?testID=".$value["testID"]."'>Result</a></li>";
 				echo "</ul></td></tr>";
 			}
