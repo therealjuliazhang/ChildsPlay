@@ -258,31 +258,31 @@ INSERT INTO TESTASSIGNMENT(userID, testID, dateConducted) VALUES (@userID, @test
 /*TASK*/
 SET
 @taskTitle = "Task 1",
-@instruction = "Touch the smiley face if you like it and touch the sad face if you don't like it.",
+@instruction = "Do you like this monster? Touch the smiley face if you like it and touch the sad face if you don't like it.",
 @activityStyle = "Likert Scale";
 INSERT INTO TASK(taskTitle, instruction, activityStyle) VALUES (@taskTitle, @instruction, @activityStyle);
 
 SET
 @taskTitle = "Task 2",
-@instruction = "Touch the monster's eyes.",
+@instruction = "Can you see the monster's eyes? Touch the monster's eyes.",
 @activityStyle = "Identify Body Parts";
 INSERT INTO TASK(taskTitle, instruction, activityStyle) VALUES (@taskTitle, @instruction, @activityStyle);
 
 SET
 @taskTitle = "Task 3",
-@instruction = "Select the monsters in order of your favourite to least favourite.",
+@instruction = "What are your favourite monsters? Select the monsters in order of your favourite to least favourite.",
 @activityStyle = "Character Ranking";
 INSERT INTO TASK(taskTitle, instruction, activityStyle) VALUES (@taskTitle, @instruction, @activityStyle);
 
 SET
 @taskTitle = "Task 4",
-@instruction = "How would you make the monster bigger?",
+@instruction = "How would you make the monster bigger if the paper was a touch screen?",
 @activityStyle = "Preferred Mechanics";
 INSERT INTO TASK(taskTitle, instruction, activityStyle) VALUES (@taskTitle, @instruction, @activityStyle);
 
 SET
 @taskTitle = "Task 5",
-@instruction = "How would you move the monster into the box?",
+@instruction = "How would you move the monster into the box if this was a touch screen?",
 @activityStyle = "Preferred Mechanics";
 INSERT INTO TASK(taskTitle, instruction, activityStyle) VALUES (@taskTitle, @instruction, @activityStyle);
 

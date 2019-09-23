@@ -78,24 +78,24 @@
     </tr>
   </thead>
   <tbody>
-    <?php
+  <?php
   session_start();
   if (isset($_SESSION['userID']))
 		$userID = $_SESSION['userID'];
 	else
 		header('location: login.php');
-	// if(isset($_GET["from"])){
-	// 	$from = $_GET["from"];
-	// 	$_SESSION["from"] = $from;
-  // }
-  $from = "filterExistingTasks";
+	if(isset($_GET["from"])){
+		$from = $_GET["from"];
+		$_SESSION["from"] = $from;
+  }
 	if(isset($_GET["testID"])){
 		$testID = $_GET["testID"];
 		$_SESSION["testID"] = $testID;
-	}
-    include_once 'filterTasks.php';
-    //CloseCon($conn);
-    ?>
+  }
+  $from = "filterExistingTasks";
+  include_once 'filterTasks.php';
+  //CloseCon($conn);
+  ?>
   </tbody>
 </table>
 <div class="row">

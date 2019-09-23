@@ -51,16 +51,16 @@ function loadContent(){
 	var selected = $("#activityStyle option:selected").val();
 	switch(selected){
 		case "Likert Scale":
-				$("#instruction").val("Press the happy face if you like it, press the sad face if you don't like it.");
+				$("#instruction").val("Do you like this monster? Touch the smiley face if you like it and touch the sad face if you don't like it.");
 			break;
 		case "Character Ranking":
 				$("#instruction").val("Press your favourite character and then your next favourite until they are all pressed.");
 			break;
 		case "Identify Body Part":
-				$("#instruction").val("Press the monster's [enter body part]");
+				$("#instruction").val("Can you see the monster's [enter body part]? Touch the monster's [enter body part].");
 			break;
 		case "Preferred Mechanics":
-				$("#instruction").val("");
+				$("#instruction").val("How would you [action made on monster] if the paper was a touch screen?");
 			break;
 	}
 	selectActivityStyle();

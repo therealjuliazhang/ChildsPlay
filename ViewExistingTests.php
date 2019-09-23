@@ -79,7 +79,7 @@
 				
 				echo "</td><td>".$formattedCreateDate."</td><td>".$formattedEditDate;
 
-				$taskQuery = "SELECT * FROM TASKASSIGNMENT WHERE testID=".$value["testID"];
+				$taskQuery = "SELECT TA.*, T.taskTitle FROM TASKASSIGNMENT TA INNER JOIN TASK T WHERE TA.taskID = T.taskID AND testID=".$value["testID"];
 				$result = $conn->query($taskQuery);
 				if(mysqli_num_rows($result) == 0){
 					echo '</td><td><a class="btn dropdown-button blue darken-4" onclick="showError('.$title.')"; >Preview</a>';
