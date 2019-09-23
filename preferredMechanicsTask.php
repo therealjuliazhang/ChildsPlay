@@ -134,47 +134,43 @@ CloseCon($conn);
             }
           }
         });
-		/*var mechanic = results[results.length-1].mechanic;
-		var otherComment = "";
-			if(mechanic == "Other"){
-				otherComment = $("#textarea1").val();
-				console.log("Comment: " + otherComment);
-			}
-			console.log("Check");
-		*/
         //end task and submit if last preschooler
         if($("li.is-active").next().length == 0){
-          results.forEach(function(result){
+			results.forEach(function(result){
             preID = preschoolers[result.preIndex]['preID'];
             var mechanic = result.mechanic;
 			var otherComment = "";
-				if(mechanic == "Other"){
-					otherComment = $("#textarea1").val();
-					console.log("Comment: " + otherComment);
-				}
-			console.log("Check");
-			//only save results if in start mode
-			if(!isPreview){
-				/*$.post("insertMechanicsResults.php", 
-					{	mechanic : mechanic,
-						taskID : taskID,
-						preID : preID,
-						testID: testID,
-						otherComment : otherComment
-					},
-					function(data){
-						$("#results").html(data);
-					});*/
-				$.ajax(
-					{
-					  type: 'POST',
-					  url: 'insertMechanicsResults.php',
-					  data: { mechanic : mechanic, taskID : taskID, preID : preID, testID: testID, otherComment : otherComment}
-					}
-				);
+			if(mechanic == "Other"){
+				otherComment = $("#textarea1").val();
 			}
-          });
-		  var taskIndex = <?php echo $taskIndex ?>;
+				//only save results if in start mode
+				if(!isPreview){
+					/*$.post("insertMechanicsResults.php", 
+						{	mechanic : mechanic,
+							taskID : taskID,
+							preID : preID,
+							testID: testID,
+							otherComment : otherComment
+						},
+						function(data){
+							$("#results").html(data);
+						});*/
+					$.ajax(
+						{
+						  type: 'POST',
+						  url: 'insertMechanicsResults.php',
+						  data: { mechanic : mechanic, taskID : taskID, preID : preID, testID: testID, otherComment : otherComment}
+						}
+					);
+				}
+			});
+			var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+			var checkedOne = Array.prototype.slice.call(checkboxes).some(x => x.checked);
+			if (checkedOne){
+				var taskIndex = <?php echo $taskIndex ?>;
+				window.location.href = "comments.php?taskIndex=" + taskIndex;
+			}
+			
           //if task was preview, go back to previous page
           //if(isPreview)
 			  //window.location.href = "comments.php?taskIndex=" + taskIndex + "&from=" + from;
@@ -188,22 +184,20 @@ CloseCon($conn);
           //else
             //window.location.href = "comments.php?taskIndex=" + taskIndex;
         };
-        //go to next preschooler
-		var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-		
-		var checkedOne = Array.prototype.slice.call(checkboxes).some(x => x.checked);
-		if (checkedOne){
-			$("li.is-active").next().addClass('is-active');
-			$('li.is-active').first().removeClass('is-active');
-			activePreschooler = $("li.is-active").children("a").html();
-			$("#nameSpan").html(activePreschooler);
-			//uncheck boxes
-			$('input:checkbox').each(function(){
-			  $(this).prop( "checked", false );
-			});
+			//go to next preschooler
+			var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+			var checkedOne = Array.prototype.slice.call(checkboxes).some(x => x.checked);
+			if (checkedOne){
+				$("li.is-active").next().addClass('is-active');
+				$('li.is-active').first().removeClass('is-active');
+				activePreschooler = $("li.is-active").children("a").html();
+				$("#nameSpan").html(activePreschooler);
+				//uncheck boxes
+				$('input:checkbox').each(function(){
+				  $(this).prop( "checked", false );
+				});
+			}
 		}
-      }
-
 		//hide or unhide comment section when 'other' is clicked
 		$(document).ready(function(){
 			$('#checkBoxOther').click(function(){
@@ -215,6 +209,7 @@ CloseCon($conn);
 				}
 			});
 		});
+		
     </script>
   </head>
 <body>

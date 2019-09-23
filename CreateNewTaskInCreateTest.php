@@ -20,6 +20,7 @@
 			$index = $_GET["index"]; 
 		}
 		
+		//retrieve task data in Edit Test
 		$imageAddresses = array();
 		if(isset($_GET["taskID"])){
 			$taskID = $_GET["taskID"];
@@ -97,12 +98,20 @@
 				);
 			}
 		}
-	
+	/**/
 		function selectActivityStyle(){
 			var pointsInterval = 0;
-			var activityStyle = <?php if(isset($activityStyle)) echo json_encode($activityStyle);?>;
+			var activityStyle = <?php 
+			if(isset($activityStyle))
+				echo json_encode($activityStyle);
+			else
+				echo json_encode("");  ?>;
 			if((activityStyle) == "Character Ranking"){
-				pointsInterval = <?php if(isset($pointsInterval)) echo json_encode($pointsInterval); ?>;
+				pointsInterval = <?php if(isset($pointsInterval)) 
+										echo json_encode($pointsInterval);
+									else
+										echo json_encode(0);
+								?>;
 			}
 			var selected = $("#activityStyle option:selected").val();
 			$.post("selectOption.php", {option_value: selected},

@@ -10,6 +10,8 @@ $UploadFolder = "images";
 $names = $_POST["imageAddress"];
 $instruction = $_POST["instruction"];
 
+$testID = $_POST["testID"];
+
 $activityStyle = $_POST["activityStyle"];
 $files = explode(", ", $names);
 $errorMsg = "";
@@ -60,8 +62,8 @@ if ($conn->query($sql) === TRUE){
 	}
 	
 	//Only insert into taskassignment when create a new task in Edit test
-	if(isset($_POST["testID"])){
-		$testID = $_POST["testID"];
+	if($testID != 0){
+		//$testID = $_POST["testID"];
 		//insert into task assignment
 		$index = $_POST["orderInTest"] + 1;
 		$taskTitle = "'"."Task ".$index."'";

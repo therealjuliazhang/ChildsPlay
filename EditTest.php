@@ -165,7 +165,7 @@ CloseCon($conn);
                             class: "waves-effect waves-light btn blue darken-4",
                             text: "Edit",
                             //href: "EditTaskInEditTest.php?from=edit&testID=" + testID + "&taskID=" + task.taskID
-                            href: "CreateNewTaskInCreateTest.php?from=edit&testID=" + testID + "&taskID=" + task.taskID
+                            href: "createNewTaskInCreateTest.php?from=edit&testID=" + testID + "&taskID=" + task.taskID
                         })
                     ),
                     $('<td/>').append(

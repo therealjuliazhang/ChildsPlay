@@ -17,6 +17,11 @@ if(isset($_GET["from"])){
 else if(isset($_SESSION["from"]))
 	$from = $_SESSION["from"];
 
+//find out if it's from edit or create test page to display the appropriate Add button in FilterExistingTasks page
+if(isset($_GET["edit"]))
+	$_SESSION["edit"] = "edit";
+else if(isset($_GET["create"]))
+	$_SESSION["create"] = "create";
 
 
 if(isset($_GET["testID"])){

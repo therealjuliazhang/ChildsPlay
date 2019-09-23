@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
 $(document).ready(function() {
 	var selected = $("#activityStyle option:selected").val();
 	selectActivityStyle();
-	
+	//loadContent();
 	$(document).on('change', '#file', function(){
 		var path = $("#imageAddress").val();
 		var length = document.getElementById("file").files.length;

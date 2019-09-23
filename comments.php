@@ -113,14 +113,21 @@ if(isset($_POST['nextButton'])){
 		return $text;
 	}
 	$comment = processText($_POST['area1']);
+	
 	if($_SESSION["mode"] == "preview"){
 		if($taskIndex == (sizeof($tasks)-1)){
-			if($from == "existingTasks")
-				header("Location: filterExistingTasks.php");
+			if($from == "existingTasks"){
+				if(isset($_SESSION["edit"]))
+					header("Location: filterExistingTasks.php?from=edit");
+				else if (isset($_SESSION["create"]))
+					header("Location: filterExistingTasks.php?from=create");
+			}
 			else if($from == "availableTests")
 				header("Location: viewExistingTests.php");
 			else if($from == "edit")
 				header("Location: editTest.php");
+			else if($from == "create")
+				header("Location: createTest.php");
 			else
 				header("Location: thankyou.php");
 		}

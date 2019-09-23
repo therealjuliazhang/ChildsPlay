@@ -32,8 +32,8 @@
     <h6 class="blue-text darken-2 header">Date Created</h6>
 	<form action="" method="post">
     <div class="row">
-      <div class="col s6">Start</div>
-      <div class="col s6">End</div>
+      <div class="col s6">Start date</div>
+      <div class="col s6">End date</div>
       <div class="col s6"><input type="text" class="datepicker" id="startDate"></div>
       <div class="col s6"><input type="text" class="datepicker" id="endDate"></div>
     </div>
@@ -65,6 +65,7 @@
   </ul>
 -->
 <!--table for holding tasks-->
+<div style="overflow:auto">
 <table class="striped">
   <thead>
     <tr class="blue-text darken-2">
@@ -80,6 +81,12 @@
   <tbody>
     <?php
 	session_start();
+	//unset the sessions for preview tasks in filter existing tasks from comments.php
+	if(isset($_SESSION["create"]))
+		unset($_SESSION["create"]);
+	if(isset($_SESSION["edit"]))
+		unset($_SESSION["edit"]);
+	
 	if(isset($_GET["from"])){
 		$from = $_GET["from"];
 		$_SESSION["from"] = $from;
@@ -92,7 +99,9 @@
     //CloseCon($conn);
     ?>
   </tbody>
+  </div>
 </table>
+</div>
 <div class="row">
 	<div class="col s1 offset-s11">
 		<!--<a class="waves-effect waves-light btn #2196f3 blue right" id="cancelButton">Cancel</a>-->
@@ -175,6 +184,7 @@ function checkDate(){
 .datepicker-table td.is-selected {
   background-color: #1976D2;
 }
+/*
 tbody {
   display:block;
   height:300px;
@@ -190,13 +200,14 @@ thead {
 }
 table {
   width:100%;
-}
-/*th{
+}*/
+/*
+th{
   text-align: center;
 }
 .taskIdCol, .activityStyleCol,.dateCreatedCol, .previewCol, .editCol, .addCol{
   text-align: center;
-}*/
+}
 .taskIdCol{
   width: 1%;
 }
@@ -218,5 +229,6 @@ table {
 .addCol{
   width: 10%;
 }
+*/
 </style>
 </html>
