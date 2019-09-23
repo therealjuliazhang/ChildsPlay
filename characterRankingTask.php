@@ -6,11 +6,10 @@ session_start();
 include 'db_connection.php';
 $conn = OpenCon();
 //get user ID from session
-if(isset($_SESSION["userID"]))
-	$userID = $_SESSION["userID"];
+if(isset($_SESSION['userID']))
+    $userID = $_SESSION['userID'];
 else
-	$userID = 1;
-	//header("Location: login.php");
+    header('login.php');
 //the group used for previewing tests
 $previewGroupID = 4;
 

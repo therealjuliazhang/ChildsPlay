@@ -5,7 +5,10 @@
 include 'db_connection.php';
 $conn = OpenCon();
 session_start();
-$userID = $_SESSION['userID'];
+if(isset($_SESSION['userID']))
+    $userID = $_SESSION['userID'];
+else
+    header('login.php');
 //fetch locations for select drop down
 $locations = array();
 $sql = "SELECT locationID FROM LOCATIONASSIGNMENT WHERE userID=".$userID;

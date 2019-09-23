@@ -19,7 +19,7 @@
         <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
     </head>
 	<script>
-	function showError(title){	
+	function showError(title){
 		var error = document.getElementById("error");
 		error.innerText = "There is no task in " + title;
 	}
@@ -151,6 +151,7 @@
 	}
 	.container{
 		margin-top: 25px;
+		width: 900px;
 	}
 
 	.tabs .tab a:focus, .tabs .tab a:focus.active {

@@ -4,8 +4,11 @@ if(isset($_POST["submit"])){
 	
 include 'db_connection.php';
 $conn = OpenCon();
-//This should be received from another page  
-$userID = 2;
+session_start();
+if(isset($_SESSION["userID"]))
+	$userID = $_SESSION["userID"];
+else
+	header("Location: login.php");
 //used to determine what information $value holds
 $valueCount = 0;
 //get groupname and location

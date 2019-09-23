@@ -1,33 +1,37 @@
+<!DOCTYPE html>
 <html>
     <head>
 		<?php
 		session_start();
 		include 'db_connection.php';
 		$conn = OpenCon();
-			//get user ID
-			// if(isset($_SESSION['userID']))
-			// 	$userID = $_SESSION['userID'];
-			// else
-			// 	header('login.php');
-			$userID = 1; //remove after admin pages are linked up
+		//get user ID
+		if(isset($_SESSION['userID']))
+			$userID = $_SESSION['userID'];
+		else
+			header('login.php');
+			// $userID = 1; //remove after admin pages are linked up
 		//get test ID
 		if(isset($_GET['testID']))
 		 	$testID = $_GET['testID'];
+		//$testID = 2; //remove after admin pages are linked up
+		$from = "";	
+		
 		if(isset($_GET["from"]))
 			$from = $_GET["from"];
 		//get the orderInTest of a task
 		if(isset($_GET["index"])){
 			$index = $_GET["index"]; 
 		}
-		
 		//retrieve task data in Edit Test
 		$imageAddresses = array();
 		if(isset($_GET["taskID"])){
 			$taskID = $_GET["taskID"];
-			$query = "SELECT instruction, activityStyle, address, pointsInterval FROM TASK T JOIN IMAGEASSIGNMENT IA ON T.taskID = IA.taskID".
+			$query = "SELECT taskTitle, instruction, activityStyle, address, pointsInterval FROM TASK T JOIN IMAGEASSIGNMENT IA ON T.taskID = IA.taskID".
 					" JOIN IMAGE I ON IA.imageID = I.imageID JOIN TASKASSIGNMENT TA ON TA.taskID = T.taskID WHERE T.taskID = $taskID";
 			$result = $conn->query($query);
 			while($row = mysqli_fetch_assoc($result)){
+				$taskTitle = $row["taskTitle"];
 				$instruction = $row["instruction"];
 				$activityStyle = $row["activityStyle"];
 				array_push($imageAddresses, $row["address"]);
@@ -189,7 +193,7 @@
 							Task Title:
 						</h5>
 						<div class="input-field">
-							<input id="title" name="title" type="text">
+							<input id="title" name="title" type="text" value=<?php echo isset($taskTitle) ? $taskTitle:"";?>>
 						</div>
                     </div>
                     <div class="col s6">

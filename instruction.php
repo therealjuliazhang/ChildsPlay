@@ -1,6 +1,10 @@
 <html>
 <?php
 session_start();
+if(isset($_SESSION["userID"]))
+	$userID = $_SESSION["userID"];
+else
+	header("Location: login.php");
 include 'db_connection.php';
 $conn = OpenCon();
 if(isset($_SESSION["tasks"])){
@@ -9,7 +13,7 @@ if(isset($_SESSION["tasks"])){
 else{
 	$tasks = array();
 }	
-
+$from="";
 if(isset($_GET["from"])){
 	$from = $_GET["from"];
 	$_SESSION["from"] = $from;
@@ -22,7 +26,6 @@ if(isset($_GET["edit"]))
 	$_SESSION["edit"] = "edit";
 else if(isset($_GET["create"]))
 	$_SESSION["create"] = "create";
-
 
 if(isset($_GET["testID"])){
 	$testID = $_GET["testID"];
@@ -164,7 +167,7 @@ if(count($tasks) > 0){
 						<img src='images/greyCircle.png' width='60px'>
 				  ";
 			break;
-		case "Preferred Mechanics":
+		case "Preferred Mechanic":
 			echo "<h4 class='blue-text text-darken-2'>Preferred Mechanics</h4><br>";
 			echo "<h5 class='blue-text text-darken-2'>Task Instructions:</h5>";
 			echo $tasks[$taskIndex]['instruction'];

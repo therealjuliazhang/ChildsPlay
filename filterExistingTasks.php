@@ -79,25 +79,31 @@
     </tr>
   </thead>
   <tbody>
-    <?php
-	session_start();
-	//unset the sessions for preview tasks in filter existing tasks from comments.php
-	if(isset($_SESSION["create"]))
-		unset($_SESSION["create"]);
-	if(isset($_SESSION["edit"]))
-		unset($_SESSION["edit"]);
-	
+  <?php
+  session_start();
+  if (isset($_SESSION['userID']))
+		$userID = $_SESSION['userID'];
+	else
+		header('location: login.php');
+
+  //unset the sessions for preview tasks in filter existing tasks from comments.php
+  if(isset($_SESSION["create"]))
+    unset($_SESSION["create"]);
+  if(isset($_SESSION["edit"]))
+    unset($_SESSION["edit"]);
+
 	if(isset($_GET["from"])){
 		$from = $_GET["from"];
 		$_SESSION["from"] = $from;
-	}
+  }
 	if(isset($_GET["testID"])){
 		$testID = $_GET["testID"];
 		$_SESSION["testID"] = $testID;
-	}
-    include_once 'filterTasks.php';
-    //CloseCon($conn);
-    ?>
+  }
+  $from = "filterExistingTasks";
+  include_once 'filterTasks.php';
+  //CloseCon($conn);
+  ?>
   </tbody>
   </div>
 </table>
@@ -184,8 +190,7 @@ function checkDate(){
 .datepicker-table td.is-selected {
   background-color: #1976D2;
 }
-/*
-tbody {
+/* tbody {
   display:block;
   height:300px;
   overflow:auto;
@@ -200,15 +205,14 @@ thead {
 }
 table {
   width:100%;
-}*/
-/*
-th{
+} */
+/*th{
   text-align: center;
 }
 .taskIdCol, .activityStyleCol,.dateCreatedCol, .previewCol, .editCol, .addCol{
   text-align: center;
-}
-.taskIdCol{
+}*/
+/* .taskIdCol{
   width: 1%;
 }
 .instructionCol{

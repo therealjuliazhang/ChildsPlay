@@ -3,14 +3,10 @@
 <?php
  session_start();
 if(isset($_SESSION['userID']))
-{
     $userID = $_SESSION['userID'];
-}else
-{
+else
     header('login.php');
-}
 //$userID = 1; //remove after admin pages are linked up
-
 //get test ID
 if(isset($_SESSION["testID"]))
 	$testID = $_SESSION["testID"];
@@ -18,11 +14,9 @@ if(isset($_GET['testID'])){
     $testID = $_GET['testID'];
 	$_SESSION["testID"] = $testID;
 }	
-
 //connect to database
 include 'db_connection.php';
 $conn = OpenCon();
-
 //add an existing task to the test
 if(isset($_GET["taskID"])){
 	$taskID = $_GET["taskID"];
@@ -58,14 +52,21 @@ CloseCon($conn);
     <meta name="viewport" content="width = device-width, initial-scale = 1">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
+    <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
     <script>
         var test = <?php echo json_encode($test); ?>;
         var tasks = <?php echo json_encode($tasks); ?>;
         var testID = <?php echo json_encode($testID); ?>;
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     var elems = document.querySelectorAll('.dropdown-trigger');
+        //     var instances = M.Dropdown.init(elems);
+        // });
         $(document).ready(function() {
+            //initialise drop down selector
+            $('.dropdown-trigger').dropdown();
             //load header
             $("#InsertHeader").load("header.html");
             //display test name and description
@@ -139,7 +140,7 @@ CloseCon($conn);
                     case "Character Ranking":
                         previewURL = "characterRankingTask.php?mode=preview&from=edit&taskID=" + task.taskID;
                         break;
-                    case "Preferred Mechanics":
+                    case "Preferred Mechanic":
                         previewURL = "preferredMechanicsTask.php?mode=preview&from=edit&taskID=" + task.taskID;
                         break;
                 }*/
@@ -231,15 +232,13 @@ CloseCon($conn);
                 </tbody>
             </table>
             <div id="addTaskButton" align="right">
-                <ul id="dropdown" class="dropdown-content">
-				<?php  
-                    echo "<li><a href='filterExistingTasks.php?from=edit&testID=".$testID."'>Existing Tasks</a></li>".
-                    "<li><a href='CreateNewTaskInCreateTest.php?from=edit&testID=".$testID."'>Create New Task</a></li>";
-				?>
-                </ul>
-                <a class="btn dropdown-button blue darken-4" href="#" data-activates="dropdown">
+                <a class="dropdown-trigger btn blue darken-4" href='#' data-target="dropdown">
                     <i class="large material-icons">add</i>
                 </a>
+                <ul id="dropdown" class="dropdown-content">
+				    <li><a href='filterExistingTasks.php?from=edit&testID=<?php echo json_encode($testID);?>'>Existing Tasks</a></li>
+                    <li><a href='CreateNewTaskInCreateTest.php?from=edit&testID=<?php echo json_encode($testID);?>'>Create New Task</a></li>
+                </ul>
             </div>
             <!--<div id="comfirmButton">
                 <input type="submit" name="submit" class="submit waves-effect waves-light btn blue darken-2 right" value="Save">
@@ -295,5 +294,4 @@ CloseCon($conn);
         padding-top: 10px;
     }
 </style>
-
 </html>

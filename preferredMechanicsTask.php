@@ -4,45 +4,44 @@ session_start();
 if(isset($_SESSION["userID"]))
 	$userID = $_SESSION["userID"];
 else
-	$userID = 1;
-	//header("Location: login.php");
-	
+	header("Location: login.php");
+
 //get mode from session to check if preview mode
 if (isset($_SESSION['mode']))
-	$mode = $_SESSION['mode'];
+$mode = $_SESSION['mode'];
 else if (isset($_GET["mode"]))
-	$mode = $_GET["mode"];
+$mode = $_GET["mode"];
 
 //get testID
 if (isset($_SESSION['testID']))
-	$testID = $_SESSION['testID'];
+$testID = $_SESSION['testID'];
 if (isset($_SESSION['tasks']))
-	$tasks = $_SESSION['tasks'];
+$tasks = $_SESSION['tasks'];
 //get task index from url
 if (isset($_GET['taskIndex']))
-	$taskIndex = $_GET['taskIndex'];
-	
+$taskIndex = $_GET['taskIndex'];
+
 //the group used for previewing tests
 $previewGroupID = 4;
 $isPreview = false;
 //task id in GET is set if task is being previewed
 $from = "";
 if (isset($_GET['from']))
-	$from = $_GET['from'];
+$from = $_GET['from'];
 
-if($mode == "preview"){
+if ($mode == "preview") {
 	$isPreview = true;
 	$groupID = $previewGroupID;
 	if (isset($_GET['taskID']))
-		$taskID = $_GET['taskID'];
+	$taskID = $_GET['taskID'];
 	else
-		$taskID = $tasks[$taskIndex]['taskID'];
+	$taskID = $tasks[$taskIndex]['taskID'];
 }
 else{ //else if not preview
 	$isPreview = false;
 	//get group ID
 	if (isset($_SESSION['groupID']))
-		$groupID = $_SESSION['groupID'];
+	$groupID = $_SESSION['groupID'];
 	$taskID = $tasks[$taskIndex]['taskID'];
 }
 $_SESSION["taskID"] = $taskID;
@@ -51,13 +50,13 @@ include 'db_connection.php';
 $conn = OpenCon();
 //get task ID
 //fetch preschoolers from database
-$sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$groupID." AND userID=".$userID;
+$sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=" . $groupID . " AND userID=" . $userID;
 $result = $conn->query($sql);
 $preschoolers = array();
-while($row = mysqli_fetch_assoc($result)){
-	$sql2 = "SELECT * FROM PRESCHOOLER WHERE preID=".$row["preID"];
+while ($row = mysqli_fetch_assoc($result)) {
+	$sql2 = "SELECT * FROM PRESCHOOLER WHERE preID=" . $row["preID"];
 	$result2 = $conn->query($sql2);
-	while($value = mysqli_fetch_assoc($result2)){
+	while ($value = mysqli_fetch_assoc($result2)) {
 		$preschoolers[] = $value;
 	}
 }
@@ -278,6 +277,7 @@ CloseCon($conn);
 					<div class="input-field col s11">
 						<textarea id="textarea1" class="materialize-textarea"></textarea>
 					</div>
+					<div class="col s12"><a onclick="save()" class="waves-effect waves-light btn blue darken-2 right" id="saveButton">Next</a></div>
 				</div>
 		</div>
 		<div class="col s12"><a onclick="save()" class="waves-effect waves-light btn blue darken-2 right" id="saveButton">Next</a></div>
@@ -337,18 +337,17 @@ padding-left: 330px;
   height: 70px;
 }
 #commentCol{
+	}
 
-}
+	.panel{
+		display:none;
+	}
+	.panel.is-show{
+		display:block;
+	}
+	.is-active{
+		background-color: #eceff1;
+	}
 
-.panel{
-    display:none;
-}
-.panel.is-show{
-    display:block;
-}
-.is-active{
-  background-color: #eceff1;
-}
-
-</style>
-</html>
+	</style>
+	</html>

@@ -3,6 +3,10 @@
 <html>
 	<?php
     session_start();
+    if(isset($_SESSION["userID"]))
+      $userID = $_SESSION["userID"];
+    else
+      header("Location: login.php");
     unset($_SESSION['testID']);
     unset($_SESSION['groupID']);
     unset($_SESSION['tasks']);
