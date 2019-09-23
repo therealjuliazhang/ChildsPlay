@@ -277,12 +277,10 @@ CloseCon($conn);
 					<div class="input-field col s11">
 						<textarea id="textarea1" class="materialize-textarea"></textarea>
 					</div>
-					<div class="col s12"><a onclick="save()" class="waves-effect waves-light btn blue darken-2 right" id="saveButton">Next</a></div>
 				</div>
 		</div>
 		<div class="col s12"><a onclick="save()" class="waves-effect waves-light btn blue darken-2 right" id="saveButton">Next</a></div>
-        </div>
-	</div>
+    </div>
 </div>
 </body>
 <style>

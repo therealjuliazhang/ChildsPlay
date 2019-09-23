@@ -132,9 +132,6 @@ else
                     $conn = OpenCon();
                     $taskList = array();
                     $idList = array();
-
-					
-					
 					
                     //session_destroy();
                     //unset($_GET["list"]);
@@ -172,7 +169,7 @@ else
                             $query = "SELECT * FROM TASK WHERE taskID=$id";
                             $result = $conn->query($query);
                             $row = mysqli_fetch_assoc($result);
-                            echo "<tr><td>" . $row["taskID"] . "</td>" .
+                            echo "<tr><td>" . $row["taskTitle"] . "</td>" .
                                 "<td>" . $row["activityStyle"] . "</td>" .
                                 "<td width='45%'>" . $row["instruction"] . "</td>" .
                                 "<td><a class='waves-effect waves-light btn blue darken-2'>Preview</a></td>" .

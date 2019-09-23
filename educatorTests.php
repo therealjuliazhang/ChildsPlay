@@ -20,8 +20,9 @@
     </head>
 	<script>
 	function showError(title){
-		var error = document.getElementById("error");
-		error.innerText = "There is no task in " + title;
+		//var error = document.getElementById("error");
+		//error.innerText = "There is no task in " + title;
+		alert("There is no task in " + title);
 	}
 	</script>
     <body>

@@ -7,18 +7,26 @@ if (isset($_SESSION["from"]))
 	$from = $_SESSION["from"];
 if (isset($_GET["from"]))
 	$from = $_GET["from"];
+
 include 'db_connection.php';
 $conn = OpenCon();
 //if editing test, get taskIDs in test
 if ($from == "edit") {
 	$taskIDs = array();
-	$query = "SELECT taskID FROM TASK WHERE testID = " . $testID;
+	$query = "SELECT taskID FROM TASKASSIGNMENT WHERE testID = ".$testID;
 	$taskIDsResult = $conn->query($query);
-	while ($row = mysqli_fetch_assoc($taskIDsResult))
-		$taskIDs[] = $row;
-	$query = "SELECT T.*, TEST.testID, MIN(TEST.dateCreated) AS date FROM TASK T JOIN TASKASSIGNMENT TA ON T.taskID = TA.taskID JOIN TEST ON TEST.testID = TA.testID WHERE T.taskID NOT IN ( '" . implode("', '", $taskIDs) . "' )";
+	
+	$sql = "SELECT T.*, TEST.testID, MIN(TEST.dateCreated) AS date FROM TASK T JOIN TASKASSIGNMENT TA ON T.taskID = TA.taskID JOIN TEST ON TEST.testID = TA.testID WHERE T.taskID NOT IN (";
+	$index = 0;
+	while ($row = mysqli_fetch_assoc($taskIDsResult)){
+		$sql .= $row["taskID"];
+		if($index < mysqli_num_rows($taskIDsResult) - 1)
+			$sql .= ",";
+		$index++;
+	}
+	$sql .= ")";
 } else
-	$query = "SELECT T.*, TEST.testID, MIN(TEST.dateCreated) AS date FROM TASK T JOIN TASKASSIGNMENT TA ON T.taskID = TA.taskID JOIN TEST ON TEST.testID = TA.testID";
+	$sql = "SELECT T.*, TEST.testID, MIN(TEST.dateCreated) AS date FROM TASK T JOIN TASKASSIGNMENT TA ON T.taskID = TA.taskID JOIN TEST ON TEST.testID = TA.testID";
 $startDate = "";
 $endDate = "";
 $activityStyle = "";
@@ -48,7 +56,7 @@ if (isset($_POST["submitFilter"])) {
 	else if ($startDate != "" && $endDate != "")
 		$subqueryDate .= " WHERE dateCreated BETWEEN $startDate AND $endDate";
 
-	$query .= $subqueryDate;
+	$sql .= $subqueryDate;
 
 	if ($activityStyle != "") {
 		$connector = "";
@@ -56,17 +64,17 @@ if (isset($_POST["submitFilter"])) {
 			$connector = " AND";
 		else
 			$connector = " WHERE";
-		$query .= $connector . " activityStyle=$activityStyle";
+		$sql .= $connector . " activityStyle=$activityStyle";
 	}
 }
 
-$query .= " GROUP BY TA.taskID";
-$result = $conn->query($query);
+$sql .= " GROUP BY TA.taskID";
+$result = $conn->query($sql);
 if (mysqli_num_rows($result) == 0)
 	echo "<span style='color:red;font-style:italic'>No results found!</span><br/>";
 else {
 	while ($row = mysqli_fetch_assoc($result)) {
-		//fomart the date
+		//format the date
 		$formattedCreateDate = date("d/m/Y", strtotime($row["date"])); //j F Y for the following date format: 15 January 2019
 		echo "<tr><td style='width:8%' class='taskIdCol'>".$row["taskID"]."</td>".
 		"<td style='width:28%' class='indtructionCol'>".$row["instruction"]."</td>".

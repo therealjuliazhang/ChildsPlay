@@ -29,8 +29,7 @@ if(isset($_POST["createTest"])){
 		$index = 0;
 		foreach($idList as $taskID){
 			$index++;
-			$taskTitle = "'"."Task".$index."'"; //need to change
-			$query = "INSERT INTO TASKASSIGNMENT(testID, taskID, taskTitle, orderInTest) VALUES ($testID, $taskID, $taskTitle, $index)";
+			$query = "INSERT INTO TASKASSIGNMENT(testID, taskID, orderInTest) VALUES ($testID, $taskID, $index)";
 			if(!$result = $conn->query($query)){
 				$errorFlag = true;
 				echo "<span style='color:red'>Failed to create a new test! ".mysqli_error($conn)."</span><br/>";

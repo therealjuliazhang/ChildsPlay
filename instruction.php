@@ -66,6 +66,9 @@ else{
 		$tasks = getTasks($conn, $testID, $taskID);
 	}
 }
+
+
+
 //get tasks and set to session
 function getTasks($conn, $testID, $taskID){
 	$tasksArray = array();
@@ -167,7 +170,7 @@ if(count($tasks) > 0){
 						<img src='images/greyCircle.png' width='60px'>
 				  ";
 			break;
-		case "Preferred Mechanic":
+		case "Preferred Mechanics":
 			echo "<h4 class='blue-text text-darken-2'>Preferred Mechanics</h4><br>";
 			echo "<h5 class='blue-text text-darken-2'>Task Instructions:</h5>";
 			echo $tasks[$taskIndex]['instruction'];

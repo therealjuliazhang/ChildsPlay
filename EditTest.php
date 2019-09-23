@@ -10,8 +10,8 @@ else
 //get test ID
 if(isset($_SESSION["testID"]))
 	$testID = $_SESSION["testID"];
-if(isset($_GET['testID'])){
-    $testID = $_GET['testID'];
+if(isset($_GET["testID"])){
+    $testID = $_GET["testID"];
 	$_SESSION["testID"] = $testID;
 }	
 //connect to database
@@ -24,8 +24,7 @@ if(isset($_GET["taskID"])){
 	$taskResult = $conn->query($sql);
 	while ($row = mysqli_fetch_assoc($taskResult)) {
 		$index = $row["max"] + 1;
-		$taskTitle = "'"."Task ".$index."'";
-		$sql = "INSERT INTO TASKASSIGNMENT(testID, taskID, taskTitle, orderInTest) VALUES($testID, $taskID, $taskTitle, $index)";
+		$sql = "INSERT INTO TASKASSIGNMENT(testID, taskID, orderInTest) VALUES($testID, $taskID, $index)";
 		if(($conn->query($sql) !== TRUE))
 			echo "<span style='color:red'>Failed to add record!".mysqli_error($conn)."</span><br/>";
 	}
@@ -146,7 +145,7 @@ CloseCon($conn);
                 }*/
                 $('<tr/>').append([
                     $('<td/>', {
-                        text: task.taskID
+                        text: task.taskTitle
                     }),
                     $('<td/>', {
                         text: task.activityStyle
@@ -236,8 +235,8 @@ CloseCon($conn);
                     <i class="large material-icons">add</i>
                 </a>
                 <ul id="dropdown" class="dropdown-content">
-				    <li><a href='filterExistingTasks.php?from=edit&testID=<?php echo json_encode($testID);?>'>Existing Tasks</a></li>
-                    <li><a href='CreateNewTaskInCreateTest.php?from=edit&testID=<?php echo json_encode($testID);?>'>Create New Task</a></li>
+				    <li><a href='filterExistingTasks.php?from=edit&testID=<?php echo $testID;?>'>Existing Tasks</a></li>
+                    <li><a href='createNewTaskInCreateTest.php?from=edit&testID=<?php echo $testID;?>'>Create New Task</a></li>
                 </ul>
             </div>
             <!--<div id="comfirmButton">
