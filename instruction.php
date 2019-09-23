@@ -13,16 +13,13 @@ if(isset($_SESSION["tasks"])){
 else{
 	$tasks = array();
 }	
-
+$from="";
 if(isset($_GET["from"])){
 	$from = $_GET["from"];
 	$_SESSION["from"] = $from;
 }
 else if(isset($_SESSION["from"]))
 	$from = $_SESSION["from"];
-
-
-
 if(isset($_GET["testID"])){
 	$testID = $_GET["testID"];
 	$_SESSION["testID"] = $testID;
@@ -163,7 +160,7 @@ if(count($tasks) > 0){
 						<img src='images/greyCircle.png' width='60px'>
 				  ";
 			break;
-		case "Preferred Mechanics":
+		case "Preferred Mechanic":
 			echo "<h4 class='blue-text text-darken-2'>Preferred Mechanics</h4><br>";
 			echo "<h5 class='blue-text text-darken-2'>Task Instructions:</h5>";
 			echo $tasks[$taskIndex]['instruction'];

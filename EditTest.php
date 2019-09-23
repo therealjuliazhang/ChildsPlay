@@ -6,9 +6,7 @@ if(isset($_SESSION['userID']))
     $userID = $_SESSION['userID'];
 else
     header('login.php');
-}
 //$userID = 1; //remove after admin pages are linked up
-
 //get test ID
 if(isset($_SESSION["testID"]))
 	$testID = $_SESSION["testID"];
@@ -16,7 +14,6 @@ if(isset($_GET['testID'])){
     $testID = $_GET['testID'];
 	$_SESSION["testID"] = $testID;
 }	
-
 //connect to database
 include 'db_connection.php';
 $conn = OpenCon();
@@ -69,7 +66,7 @@ CloseCon($conn);
         // });
         $(document).ready(function() {
             //initialise drop down selector
-            $('#newTaskDropdown').dropdown();
+            $('.dropdown-trigger').dropdown();
             //load header
             $("#InsertHeader").load("header.html");
             //display test name and description
@@ -223,15 +220,13 @@ CloseCon($conn);
                 </tbody>
             </table>
             <div id="addTaskButton" align="right">
-                <ul id="dropdown" class="dropdown-content">
-				<?php  
-                    echo "<li><a href='filterExistingTasks.php?from=edit&testID=".$testID."'>Existing Tasks</a></li>".
-                    "<li><a href='CreateNewTaskInCreateTest.php?from=edit&testID=".$testID."'>Create New Task</a></li>";
-				?>
-                </ul>
-                <a id="newTaskDropdown" class="btn dropdown-trigger blue darken-4" href='#' data-activates="dropdown">
+                <a class="dropdown-trigger btn blue darken-4" href='#' data-target="dropdown">
                     <i class="large material-icons">add</i>
                 </a>
+                <ul id="dropdown" class="dropdown-content">
+				    <li><a href='filterExistingTasks.php?from=edit&testID=<?php echo json_encode($testID);?>'>Existing Tasks</a></li>
+                    <li><a href='CreateNewTaskInCreateTest.php?from=edit&testID=<?php echo json_encode($testID);?>'>Create New Task</a></li>
+                </ul>
             </div>
             <div id="comfirmButton">
                 <input type="submit" name="submit" class="submit waves-effect waves-light btn blue darken-2 right" value="Save">
@@ -282,5 +277,4 @@ CloseCon($conn);
         padding-top: 10px;
     }
 </style>
-
 </html>

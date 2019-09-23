@@ -176,17 +176,17 @@ CloseCon($conn);
           });
 		  var taskIndex = <?php echo $taskIndex ?>;
           //if task was preview, go back to previous page
-          //if(isPreview)
-			  //window.location.href = "comments.php?taskIndex=" + taskIndex + "&from=" + from;
-			/*if(from == "edit")
-				window.location.href = "editTest.php";
-			else if(from == "availableTests")
-				window.location.href = "viewExistingTests.php";
-			else if (from == "existingTasks")
-				window.location.href = "filterExistingQuestions.php";
-          }*/
-          //else
-            //window.location.href = "comments.php?taskIndex=" + taskIndex;
+        //   if(isPreview)
+		// 	  window.location.href = "comments.php?taskIndex=" + taskIndex + "&from=" + from;
+		// 	if(from == "edit")
+		// 		window.location.href = "editTest.php";
+		// 	else if(from == "availableTests")
+		// 		window.location.href = "viewExistingTests.php";
+		// 	else if (from == "existingTasks")
+		// 		window.location.href = "filterExistingQuestions.php";
+        //   }
+        //   else
+            window.location.href = "comments.php?taskIndex=" + taskIndex;
         };
         //go to next preschooler
 		var checkboxes = document.querySelectorAll('input[type="checkbox"]');

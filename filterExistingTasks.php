@@ -180,7 +180,7 @@ function checkDate(){
 .datepicker-table td.is-selected {
   background-color: #1976D2;
 }
-tbody {
+/* tbody {
   display:block;
   height:300px;
   overflow:auto;
@@ -195,14 +195,14 @@ thead {
 }
 table {
   width:100%;
-}
+} */
 /*th{
   text-align: center;
 }
 .taskIdCol, .activityStyleCol,.dateCreatedCol, .previewCol, .editCol, .addCol{
   text-align: center;
 }*/
-.taskIdCol{
+/* .taskIdCol{
   width: 1%;
 }
 .instructionCol{
@@ -222,6 +222,6 @@ table {
 }
 .addCol{
   width: 10%;
-}
+} */
 </style>
 </html>

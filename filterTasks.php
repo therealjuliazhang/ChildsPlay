@@ -5,11 +5,14 @@
 // session_start();
 if(isset($_SESSION["from"]))
 	$from = $_SESSION["from"];
+if(isset($_GET["from"]))
+	$from = $_GET["from"];
 include 'db_connection.php';
 $conn = OpenCon();
-
 $query = "SELECT T.*, TEST.testID, MIN(TEST.dateCreated) AS date FROM TASK T JOIN TASKASSIGNMENT TA ON T.taskID = TA.taskID JOIN TEST ON TEST.testID = TA.testID";
-
+$startDate = "";
+$endDate = "";
+$activityStyle = "";
 if(isset($_POST["submitFilter"])){
 	//get selected start date
 	if(isset($_POST["startDate"])){
@@ -44,7 +47,7 @@ if(isset($_POST["submitFilter"])){
 		if (strpos($query, 'WHERE') !== false)
 			$connector = " AND";
 		else
-			$connector = "WHERE";
+			$connector = " WHERE";
 		$query .= $connector." activityStyle=$activityStyle";
 	}
 }
