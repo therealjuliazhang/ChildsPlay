@@ -7,6 +7,9 @@
     //get test ID
     if(isset($_GET["testID"]))
         $testID = $_GET["testID"];
+    //get selected user ID
+    if(isset($_GET["userID"]))
+        $selectedUserID = $_GET["userID"];
     //open connection
     include 'db_connection.php';
     $conn = OpenCon();  
@@ -15,7 +18,7 @@
         die("Connection failed: " . $conn->connect_error);
     } 
     //delete from testassignment
-    $sql = "DELETE FROM TESTASSIGNMENT WHERE userID=" .$userID. " AND testID=" .$testID;  
+    $sql = "DELETE FROM TESTASSIGNMENT WHERE userID=" .$selectedUserID. " AND testID=" .$testID;  
     if ($conn->query($sql) === TRUE) {
         echo "Record deleted successfully";
     } else {
@@ -24,5 +27,5 @@
     //close connection
     $conn->close();  
     //go back to accessibleTests page
-    header("Location: accessibleTest.php");
+    header("Location: accessibleTest.php?userID=".$selectedUserID);
 ?>

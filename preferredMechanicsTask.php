@@ -50,7 +50,10 @@ include 'db_connection.php';
 $conn = OpenCon();
 //get task ID
 //fetch preschoolers from database
-$sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=" . $groupID . " AND userID=" . $userID;
+if($mode=="preview")
+	$sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=" . $groupID;
+else
+	$sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=" . $groupID . " AND userID=" . $userID;
 $result = $conn->query($sql);
 $preschoolers = array();
 while ($row = mysqli_fetch_assoc($result)) {
