@@ -4,11 +4,11 @@ include 'db_connection.php';
 $conn = OpenCon();
 session_start();
 //results for Identify body parts task
-if($_REQUEST["x"] && $_REQUEST["y"] && $_REQUEST["taskID"] && $_REQUEST["preID"] && $_SESSION["testID"]){
+if($_REQUEST["x"] && $_REQUEST["y"] && $_REQUEST["taskID"] && $_REQUEST["preID"] && $_REQUEST["testID"]){
 	$x = $_REQUEST["x"];
 	$y = $_REQUEST["y"];
 	$taskID = $_REQUEST["taskID"];
-	$testID = $_SESSION["testID"];
+	$testID = $_REQUEST["testID"];
 	$preID = $_REQUEST["preID"];
 	$dateCollected = date('Y-m-d');
 	$sql = "INSERT INTO RESULTS(x, y, testID, taskID, preID) VALUES (".$x.", ".$y.", ".$testID.", ".$taskID.", ".$preID.")";

@@ -4,11 +4,10 @@
     <?php
         //get user ID
         session_start();
-        // if(isset($_SESSION['userID']))
-        //     $userID = $_SESSION['userID'];
-        // else
-        //     header('login.php');
-        $userID = 2; //remove this after admin pages are linked up
+        if(isset($_SESSION['userID']))
+            $userID = $_SESSION['userID'];
+        else
+            header('login.php');
         //open connection to database
         include 'db_connection.php';
         $conn = OpenCon();
@@ -30,9 +29,9 @@
         <title>Select Test</title>
         <meta name = "viewport" content = "width = device-width, initial-scale = 1">
         <link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
-        <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
+        <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
         <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
-        <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+
     </head>
     <body>
         <!--header-->
@@ -45,9 +44,10 @@
         </script>
         <!--end header-->
         <!-- body content -->
+		<div class="container">
         <h5 class="blue-text darken-2 header">Available Tests</h5>
 		<div id="availableTest">
-            <table class="highlight centered">
+            <table class="striped centered">
                 <thead class="blue-text darken-2">
                     <tr>
                         <th>Name</th>
@@ -61,6 +61,7 @@
 			    </tbody>
             </table>
             <a id="back" href="accessibleTest.php" class="right waves-effect waves-light btn blue darken-4">Back</a>
+		</div>
 		</div>
         <!--end body content-->
     </body>

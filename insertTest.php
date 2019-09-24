@@ -8,6 +8,9 @@ $conn = OpenCon();
 
 $errorFlag = false;
 
+$testTitle = $_POST["testTitle"];
+					echo "Test title: ".$testTitle;
+
 if(isset($_POST["createTest"])){
 	$title = "'".$_POST["testTitle"]."'";
 	echo "Title: ".$title;
@@ -16,24 +19,29 @@ if(isset($_POST["createTest"])){
 	//$taskIds = $_POST["taskIds"];
 	//create a new test
 	$testQuery = "INSERT INTO TEST(title, description, dateCreated, dateEdited) VALUES ($title, $description, $dateCreated, $dateEdited)";
-	if(!$result = $conn->query($testQuery)){
+	if(!($result = $conn->query($testQuery))){
 		$errorFlag = true;
 		echo "<span style='color:red'>Failed to create a new test! ".mysqli_error($conn)."</span><br/>"; 
 	}
 	else{
 		$testID = $conn->insert_id;
 		$idList = explode(",", $_SESSION["list"]);
+		$index = 0;
 		foreach($idList as $taskID){
-			$query = "INSERT INTO TASKASSIGNMENT(testID, taskID) VALUES ($testID, $taskID)";
-			if(!$result = $conn->query($query))
+			$index++;
+			$query = "INSERT INTO TASKASSIGNMENT(testID, taskID, orderInTest) VALUES ($testID, $taskID, $index)";
+			if(!$result = $conn->query($query)){
 				$errorFlag = true;
+				echo "<span style='color:red'>Failed to create a new test! ".mysqli_error($conn)."</span><br/>";
+			}
 			else
 				$errorFlag = false;
 		}
 		if($errorFlag == false){
 			session_destroy();
 			unset($_SESSION["list"]);
-			header("Location: CreateTest.php");
+			header("Location: viewExistingTests.php");
+			//header("Location: CreateTest.php");
 		}
 	}
 }

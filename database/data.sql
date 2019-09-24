@@ -257,76 +257,76 @@ INSERT INTO TESTASSIGNMENT(userID, testID, dateConducted) VALUES (@userID, @test
 
 /*TASK*/
 SET
-@instruction = "Touch the smiley face if you like it and touch the sad face if you don't like it.",
+@taskTitle = "Task 1",
+@instruction = "Do you like this monster? Touch the smiley face if you like it and touch the sad face if you don't like it.",
 @activityStyle = "Likert Scale";
-INSERT INTO TASK(instruction, activityStyle) VALUES (@instruction, @activityStyle);
+INSERT INTO TASK(taskTitle, instruction, activityStyle) VALUES (@taskTitle, @instruction, @activityStyle);
 
 SET
-@instruction = "Touch the monster's eyes.",
+@taskTitle = "Task 2",
+@instruction = "Can you see the monster's eyes? Touch the monster's eyes.",
 @activityStyle = "Identify Body Parts";
-INSERT INTO TASK(instruction, activityStyle) VALUES (@instruction, @activityStyle);
+INSERT INTO TASK(taskTitle, instruction, activityStyle) VALUES (@taskTitle, @instruction, @activityStyle);
 
 SET
-@instruction = "Select the monsters in order of your favourite to least favourite.",
+@taskTitle = "Task 3",
+@instruction = "What are your favourite monsters? Select the monsters in order of your favourite to least favourite.",
 @activityStyle = "Character Ranking";
-INSERT INTO TASK(instruction, activityStyle) VALUES (@instruction, @activityStyle);
+INSERT INTO TASK(taskTitle, instruction, activityStyle) VALUES (@taskTitle, @instruction, @activityStyle);
 
 SET
-@instruction = "How would you make the monster bigger?",
-@activityStyle = "Preferred Mechanic";
-INSERT INTO TASK(instruction, activityStyle) VALUES (@instruction, @activityStyle);
+@taskTitle = "Task 4",
+@instruction = "How would you make the monster bigger if the paper was a touch screen?",
+@activityStyle = "Preferred Mechanics";
+INSERT INTO TASK(taskTitle, instruction, activityStyle) VALUES (@taskTitle, @instruction, @activityStyle);
 
 SET
-@instruction = "How would you move the monster into the box?",
-@activityStyle = "Preferred Mechanic";
-INSERT INTO TASK(instruction, activityStyle) VALUES (@instruction, @activityStyle);
+@taskTitle = "Task 5",
+@instruction = "How would you move the monster into the box if this was a touch screen?",
+@activityStyle = "Preferred Mechanics";
+INSERT INTO TASK(taskTitle, instruction, activityStyle) VALUES (@taskTitle, @instruction, @activityStyle);
 
 /*TASKASSIGNMENT*/
 SET
 @taskID = 1,
 @testID = 1,
-@taskTitle = "Task 1",
 @orderInTest = 1,
 @comments = "Alex changed his mind after pressing like.";
-INSERT INTO TASKASSIGNMENT(taskID, testID, taskTitle, orderInTest, comments) VALUES (@taskID, @testID, @taskTitle, @orderInTest, @comments);
+INSERT INTO TASKASSIGNMENT(taskID, testID, orderInTest, comments) VALUES (@taskID, @testID, @orderInTest, @comments);
 
 SET
 @taskID = 2,
 @testID = 1,
-@taskTitle = "Task 2",
 @orderInTest = 2,
 @comments = "Ren was not sure if she liked the monster.";
-INSERT INTO TASKASSIGNMENT(taskID, testID, taskTitle, orderInTest, comments) VALUES (@taskID, @testID, @taskTitle, @orderInTest, @comments);
+INSERT INTO TASKASSIGNMENT(taskID, testID, orderInTest, comments) VALUES (@taskID, @testID, @orderInTest, @comments);
 
 SET
 @taskID = 3,
 @testID = 1,
-@taskTitle = "Task 3",
 @orderInTest = 3,
-@comments = "Kate was not sure if she liked the monster.";
-INSERT INTO TASKASSIGNMENT(taskID, testID, taskTitle, orderInTest) VALUES (@taskID, @testID, @taskTitle, @orderInTest);
+@comments = "Kate was not sure if she liked the monster.",
+@pointsInterval = 10;
+INSERT INTO TASKASSIGNMENT(taskID, testID, orderInTest, pointsInterval) VALUES (@taskID, @testID, @orderInTest, @pointsInterval);
 
 SET
 @taskID = 4,
 @testID = 1,
-@taskTitle = "Task 4",
 @orderInTest = 4,
 @comments = "Andre was not sure if she liked the monster.";
-INSERT INTO TASKASSIGNMENT(taskID, testID, taskTitle, orderInTest) VALUES (@taskID, @testID, @taskTitle, @orderInTest);
+INSERT INTO TASKASSIGNMENT(taskID, testID, orderInTest) VALUES (@taskID, @testID, @orderInTest);
 
 SET
 @taskID = 2,
 @testID = 2,
-@taskTitle = "Task 1",
 @orderInTest = 1;
-INSERT INTO TASKASSIGNMENT(taskID, testID, taskTitle, orderInTest) VALUES (@taskID, @testID, @taskTitle, @orderInTest);
+INSERT INTO TASKASSIGNMENT(taskID, testID, orderInTest) VALUES (@taskID, @testID, @orderInTest);
 
 SET
 @taskID = 5,
-@taskTitle = "Task 2",
 @testID = 2,
 @orderInTest = 2;
-INSERT INTO TASKASSIGNMENT(taskID, testID, taskTitle, orderInTest) VALUES (@taskID, @testID, @taskTitle, @orderInTest);
+INSERT INTO TASKASSIGNMENT(taskID, testID, orderInTest) VALUES (@taskID, @testID, @orderInTest);
 
 /*IMAGE*/
 SET
@@ -474,6 +474,22 @@ SET
 @preID = 3,
 @testID = 2;
 INSERT INTO RESULTS(mechanic, taskID, preID, testID) VALUES (@mechanic, @taskID, @preID, @testID);
+
+SET
+@mechanic = "Other",
+@taskID = 4,
+@preID = 2,
+@otherComment = "Alex had difficulty interacting with the monster",
+@testID = 1;
+INSERT INTO RESULTS(mechanic, taskID, preID, otherComment, testID) VALUES (@mechanic, @taskID, @preID, @otherComment, @testID);
+
+SET
+@mechanic = "Other",
+@taskID = 5,
+@preID = 1,
+@otherComment = "Julia did both press and drag the monster",
+@testID = 2;
+INSERT INTO RESULTS(mechanic, taskID, preID, otherComment, testID) VALUES (@mechanic, @taskID, @preID, @otherComment, @testID);
 
 SET
 @x = 0.4119402985074626700000,

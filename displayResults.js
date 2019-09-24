@@ -1,51 +1,7 @@
 //needed for not putting padding-top on first header
 var firstHeader = true;
-
-// var isRankingEmpty = false;
-// var isLikertEmpty = false;
-// var isMechanicEmpty = false;
-//var isBodyPartsEmpty = false;
-
-//display result
-// function displayResult(results){
-//     taskIDs = getUniqueIDs(results);
-// }
-// display results for identify body part 
-// function displayBody(bodyResults){
-//     taskIDs = getUniqueIDs(bodyResults);
-//     displayResults(bodyResults, taskIDs, "Identify Body Parts");
-// }
-//display results for character ranking
-// function displayRanking(rankingResults){
-// 	if(rankingResults.length == 0) {isRankingEmpty = true;}
-// 	else {isRankingEmpty = false;}
-//     taskIDs = getUniqueIDs(rankingResults);
-//     displayResults(rankingResults, taskIDs, "Character Ranking", );
-// }
-
-// display results for likert scale
-// function displayLikert(likertResults){
-// 	if(likertResults.length == 0) isLikertEmpty = true;
-// 	else isLikertEmpty = false;
-//     taskIDs = getUniqueIDs(likertResults);
-//     displayResults(likertResults, taskIDs, "Likert Scale");
-// }
-//display results for preferred mechanics
-// function displayMechanics(mechanicResults){
-// 	if(mechanicResults.length == 0) isMechanicEmpty = true;
-// 	else isMechanicEmpty = false;
-//     taskIDs = getUniqueIDs(mechanicResults);
-//     displayResults(mechanicResults, taskIDs, "Preferred Mechanics");
-// }
-
-//get all unique task IDs from results
-// function getUniqueIDs(results){
-//     taskIDs = [...new Set(results.map(item => item.taskID))];
-//     return taskIDs;
-// }
-
 //display all results for one activity style
-function displayResults(results){
+function displayResults(results, isGroupResults){
     taskIDs = [...new Set(results.map(item => item.taskID))];
     taskIDs.forEach(function(taskID){
         //get only the results for this task ID
@@ -64,7 +20,9 @@ function displayResults(results){
         //display image results for body parts 
         if(activityStyle == "Identify Body Parts")
             displayBodyPartResult(taskResults);
-        displayComments(taskResults);
+        //display comments if displaying group results
+        if(isGroupResults)
+            displayComments(taskResults);
     });
 }
 //get task type of task result
@@ -98,7 +56,7 @@ function displayHeaders(taskID, taskResults, activityStyle){
     }
     $('<h6/>', {
         class: "blue-text darken-2 header",
-        text: "Activity: " + taskResults[0]["instruction"]
+        text: "Instruction: " + taskResults[0]["instruction"]
     }).appendTo('#results'); 
     //display image if likert or mechanics task  
     if(activityStyle == "Likert Scale" || activityStyle == "Preferred Mechanics"){

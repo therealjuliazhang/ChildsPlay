@@ -1,8 +1,9 @@
 <?php
     session_start();
-    //if(isset($_SESSION["userID"]))
-    //    $userID = $_SESSION["userID"];
-    $userID = 2; //remove after admin pages are linked up
+    if(isset($_SESSION["userID"]))
+        $userID = $_SESSION["userID"];
+    else
+        header("Location: login.php");
     //get test ID
     if(isset($_GET["testID"]))
         $testID = $_GET["testID"];

@@ -12,14 +12,28 @@
 		$groupID = $_SESSION['groupID'];
 	if(isset($_SESSION['testID']))
 		$testID = $_SESSION['testID'];
-	if(isset($_SESSION['tasks']))
-		$tasks = $_SESSION['tasks'];
-	if(isset($_SESSION["testID"]))
-		$testID = $_SESSION['testID'];
+	
 	if(isset($_GET["taskIndex"]))
 		$taskIndex = $_GET['taskIndex'];
-	$taskID = $tasks[$taskIndex]['taskID'];
-	CloseCon($conn);
+	
+	if(isset($_SESSION['tasks'])){
+		$tasks = $_SESSION['tasks'];
+		$taskID = $tasks[$taskIndex]['taskID'];
+	}
+	if(isset($_SESSION["testID"]))
+		$testID = $_SESSION['testID'];
+	
+	
+	if(isset($_SESSION["taskID"]))
+		$taskID = $_SESSION["taskID"];
+	
+	if(isset($_GET["from"]))
+		$from = $_GET["from"];
+	else{
+		if(isset($_SESSION['from']))
+			$from = $_SESSION['from'];
+	}
+	//CloseCon($conn);
 	?>
     <head>
         <title>Comments</title>
@@ -90,7 +104,6 @@
 header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1.
 header("Pragma: no-cache"); // HTTP 1.0.
 header("Expires: 0"); // Proxies.
-$conn = OpenCon();
 
 if(isset($_POST['nextButton'])){
 	function processText($text) {
@@ -100,13 +113,28 @@ if(isset($_POST['nextButton'])){
 		return $text;
 	}
 	$comment = processText($_POST['area1']);
+	
 	if($_SESSION["mode"] == "preview"){
-		if($taskIndex == (sizeof($tasks)-1))
-				header("Location: thankyou.php");
-			else{
-				$taskIndex++;
-				header("Location: instruction.php?groupID=".$groupID."&taskIndex=".$taskIndex);
+		if($taskIndex == (sizeof($tasks)-1)){
+			if($from == "existingTasks"){
+				if(isset($_SESSION["edit"]))
+					header("Location: filterExistingTasks.php?from=edit");
+				else if (isset($_SESSION["create"]))
+					header("Location: filterExistingTasks.php?from=create");
 			}
+			else if($from == "availableTests")
+				header("Location: viewExistingTests.php");
+			else if($from == "edit")
+				header("Location: editTest.php");
+			else if($from == "create")
+				header("Location: createTest.php");
+			else
+				header("Location: thankyou.php");
+		}
+		else{
+			$taskIndex++;
+			header("Location: instruction.php?groupID=".$groupID."&taskIndex=".$taskIndex);
+		}
 	}
 	else{
 		if($comment != ""){
@@ -128,22 +156,16 @@ if(isset($_POST['nextButton'])){
 			}
 		}
 		else{
-			if($taskIndex == (sizeof($tasks)-1))
-					header("Location: thankyou.php");
-				else{
-					$taskIndex++;
-					header("Location: instruction.php?groupID=".$groupID."&taskIndex=".$taskIndex);
-				}
+			if($taskIndex == (sizeof($tasks)-1)){
+				header("Location: thankyou.php");
+			}
+			else{
+				$taskIndex++;
+				header("Location: instruction.php?groupID=".$groupID."&taskIndex=".$taskIndex);
+			}
 		}
-		/*else
-			echo "<span id='error'>Please write a comment!</span>";*/
 	}
 }
-/*
-$taskTypeUrl = $_SESSION["url"];
-if(isset($_POST['backButton'])){
-	header("Location: ".$taskTypeUrl);
-}*/
     CloseCon($conn);
 ?>
         <!--end body content-->

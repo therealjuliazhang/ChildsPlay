@@ -1,6 +1,7 @@
 /*common style*/
 .brand-logo{
     margin-top:-67px;
+
 }
 /*home*/
 nav ul a,
@@ -37,7 +38,7 @@ footer.page-footer {
 }
 .coolWords{
   position: absolute;
-  z-index: 1000;
+  z-index: 3;
   padding-top: 150px;
   padding-left: 100px;
 }
@@ -54,6 +55,7 @@ footer.page-footer {
 }
 #sidebar{
     margin-top: 264px;
+    width: 15%;
 }
 .nav-wrapper > ul {
     margin-left: 220px;
@@ -76,11 +78,9 @@ footer.page-footer {
 
 #userDetail{
   margin-top:150px;
-  margin-left:80px;
 }
 #locationInfo{
   margin-top:150px;
-  margin-left:200px;
 }
 .column01{
   height: 50px;
@@ -139,8 +139,8 @@ position: fixed;
   margin-top:20px;
 }
 #addButton{
-  margin-right: -3px;
   margin-top: 10px;
+  width: 65px;
 }
 #editButton{
   margin-top: 30px;
@@ -179,9 +179,8 @@ height: 66px;
 }
 
 /*educator profile*/
-#educatorProfileContainer{
-  width: 80%;
-}
-#educatorProfileButtonsContainer{
-  width: 100%;
+
+/*User Page*/
+#tabIndicator{
+  height: 5px;
 }

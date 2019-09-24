@@ -5,28 +5,22 @@
 //connect to database
 include 'db_connection.php';
 $conn = OpenCon();
-
-$likertResults = array();
-$rankingResults = array();
-$bodyPartsResults = array();
-$mechanicResults = array();
-
 $filteredPreIDs = array();
-
+$isGroupResults = true;
 //likert result query
-$query1 = "SELECT DISTINCT happy, count(happy) AS likertCount, R.taskID, T.activity, I.imageID, address, comments, orderInTest, R.testID  
+$query1 = "SELECT DISTINCT happy, count(happy) AS likertCount, R.taskID, T.instruction, I.imageID, address, comments, orderInTest, R.testID  
 		FROM RESULTS R INNER JOIN IMAGEASSIGNMENT IA ON R.taskID = IA.taskID INNER JOIN IMAGE I ON IA.imageID = I.imageID INNER JOIN TASK T ON R.taskID = T.taskID INNER JOIN TASKASSIGNMENT TA ON TA.taskID = T.taskID
 		WHERE happy IS NOT NULL"; 
 //body parts result query				
-$query2 = "SELECT R.taskID, I.imageID, address, x, y, T.activity, comments, orderInTest, R.testID  
+$query2 = "SELECT R.taskID, I.imageID, address, x, y, T.instruction, comments, orderInTest, R.testID  
 		FROM RESULTS R INNER JOIN IMAGEASSIGNMENT IA ON R.taskID = IA.taskID INNER JOIN IMAGE I ON IA.imageID = I.imageID INNER JOIN TASK T ON R.taskID = T.taskID INNER JOIN TASKASSIGNMENT TA ON TA.taskID = T.taskID
 		WHERE x IS NOT NULL";
 //mechanic result query
-$query3 = "SELECT DISTINCT mechanic, count(mechanic) AS mechanicCount, T.activity, R.taskID, I.imageID, address, comments, orderInTest, R.testID  
+$query3 = "SELECT DISTINCT mechanic, count(mechanic) AS mechanicCount, T.instruction, R.taskID, I.imageID, address, comments, orderInTest, R.testID  
 		FROM RESULTS R INNER JOIN IMAGEASSIGNMENT IA ON R.taskID = IA.taskID INNER JOIN IMAGE I ON IA.imageID = I.imageID INNER JOIN TASK T ON R.taskID = T.taskID INNER JOIN TASKASSIGNMENT TA ON TA.taskID = T.taskID
 		WHERE mechanic IS NOT NULL";
 //character ranking result query		
-$query4 = "SELECT R.imageID, address, sum(score) AS totalScore, R.taskID, R.preID, T.activity, comments, orderInTest, R.testID  
+$query4 = "SELECT R.imageID, address, sum(score) AS totalScore, R.taskID, R.preID, T.instruction, comments, orderInTest, R.testID  
 		FROM RANKING R INNER JOIN IMAGE I ON R.imageID = I.imageID INNER JOIN TASK T ON R.taskID = T.taskID INNER JOIN TASKASSIGNMENT TA ON TA.taskID = T.taskID";		
 
 $testFilter = "";
@@ -39,7 +33,6 @@ if(isset($_SESSION["testID"])){
 	$query3 .= " AND ".$testFilter;
 	$query4 .= " WHERE ".$testFilter;
 }		
-
 //if(isset($_POST["submitGroup"])){
 	$locationQuery = "SELECT groupID FROM GROUPTEST";
 	$groupList = array();
@@ -61,7 +54,6 @@ if(isset($_SESSION["testID"])){
 	while ($row = mysqli_fetch_assoc($locationResult)){
 		$groupList[] = $row["groupID"]; //get a list of groupIDs from selected locations
 	}
-	
 	$groupQuery = "SELECT preID FROM GROUPASSIGNMENT";
 	$subQuery = "";
 	$selectedGroups = array();
@@ -82,7 +74,6 @@ if(isset($_SESSION["testID"])){
 	//get common groupID from selected locations and selected groups
 	$groupIntersection = array();
 	$preList1 = array();
-	
 	if(count($groupList) > 0){
 		if(count($selectedGroups) > 0){// && count($groupList) > 0){ //check if any group is selected
 			$groupIntersection = (array_intersect($selectedGroups, $groupList));
@@ -95,7 +86,6 @@ if(isset($_SESSION["testID"])){
 			$ids = join(",",$groupList);
 			$subQuery = " WHERE groupID IN (".$ids.")"; //get list of groupIDs from selected locations
 		}
-		
 		$groupQuery .= $subQuery;
 		$groupResult = $conn->query($groupQuery);
 		//$preList1 = array();
@@ -149,6 +139,7 @@ if(isset($_SESSION["testID"])){
 	
 	//check if any preschooler's name is selected
 	if(isset($_POST["name"])){
+		$isGroupResults = false;
 		$idList = array();
 		$i = 0;
 		$countIDs = count($_POST["name"]);
@@ -164,7 +155,6 @@ if(isset($_SESSION["testID"])){
 		$filteredPreIDs = array_intersect($preList1, $preList2, $preList3);
 	//foreach ($filteredPreIDs as $id)
 		//echo "Array: ".$id;
-	
 	if(count($filteredPreIDs) > 0){
 		if(count($filteredPreIDs) > 1){
 			$preIDsForQuery = join("','",$filteredPreIDs);

@@ -2,16 +2,20 @@
 /*
 author: Phuong Linh Bui (5624095)
 */
-//session_start();
 include 'db_connection.php';
 $conn = OpenCon();
-
+session_start();
+if(isset($_SESSION['userID']))
+    $userID = $_SESSION['userID'];
+else
+    header('login.php');
 $taskID; //need to select taskID that is just added into database
 $UploadFolder = "images";
 $names = $_POST["imageAddress"];
 $instruction = $_POST["instruction"];
-if(isset($_GET["testID"]))
-	$testID = $_GET["testID"];
+
+$testID = $_POST["testID"];
+
 $activityStyle = $_POST["activityStyle"];
 $files = explode(", ", $names);
 $errorMsg = "";
@@ -62,12 +66,19 @@ if ($conn->query($sql) === TRUE){
 	}
 	
 	//Only insert into taskassignment when create a new task in Edit test
-	if(isset($_GET["testID"])){
+	if($testID != 0){
+		//$testID = $_POST["testID"];
 		//insert into task assignment
-		$sql = "INSERT INTO TASKASSIGNMENT (testID, taskID) VALUES (".$testID.", ".$taskID.")"; 
-		$result = $conn->query($sql);
-		
-		if ($conn->query($sql) === TRUE)
+		$index = $_POST["orderInTest"] + 1;
+		$taskTitle = "'"."Task ".$index."'";
+		//check activity style and save pointsInterval for Character Ranking task
+		if($activityStyle == "Character Ranking"){
+			$pointsInterval = $_POST["pointsInterval"];
+			$sql = "INSERT INTO TASKASSIGNMENT (testID, taskID, taskTitle, orderInTest, pointsInterval) VALUES($testID, $taskID, $taskTitle, $index, $pointsInterval)";
+		}
+		else
+			$sql = "INSERT INTO TASKASSIGNMENT (testID, taskID, taskTitle, orderInTest) VALUES($testID, $taskID, $taskTitle, $index)"; 
+		if ($conn->query($sql) !== TRUE)
 			$errorMsg .= "<span style='color:red'>Failed to add record! ".mysqli_error($conn)."</span><br/>";
 	}
 }

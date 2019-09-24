@@ -7,7 +7,6 @@ if(isset($_SESSION['userID']))
 	$userID = $_SESSION['userID'];
 else
 	header('login.php');
-
 if(isset($_SESSION["testID"])){
 	//session_destroy();
 	unset($_SESSION["testID"]);
@@ -35,7 +34,8 @@ include_once 'resultQueries.php';
 			$('.dropdown-trigger').dropdown();
 			//get results from php
 			var results = <?php echo json_encode($results); ?>;
-			
+			//get is group results boolean from php
+			var isGroupResults = <?php echo json_encode($isGroupResults);?>;
 			//print out "Result not found" if all results arrays are empty
 			// if(likertResults.length == 0 && rankingResults.length == 0 && mechanicResults.length == 0 /*&& bodyPartsResults == 0*/){
 			// 	var output = "No results match!";
@@ -57,7 +57,7 @@ include_once 'resultQueries.php';
 				return a.orderInTest - b.orderInTest || a.orderInTest - b.orderInTest;
 			});
 			//display results
-			displayResults(results);
+			displayResults(results, isGroupResults);
 		});
 		</script>
 	</head>
@@ -73,7 +73,7 @@ include_once 'resultQueries.php';
         <!--end header-->
         <!--side bar-->
 	<ul id="sidebar" class="sidenav sidenav-fixed" >
-		<li><h5><a href="#" data-target="slide-out" class="dropdown-trigger">More Tests</a></h5></li>button to activate more tests
+		<li><h5><a href="#" data-target="slide-out" class="dropdown-trigger">More Tests</a></h5></li>
 		<ul class="dropdown-content" id="slide-out">
 		<?php
 		$testQuery = "SELECT testID, title FROM TEST";

@@ -75,8 +75,9 @@
 				if($count == sizeof($names)) break;
 				echo ", ";
 			}
-			echo '</td><td><a href="instruction.php?groupID=', $row["groupID"], '" class="waves-effect waves-light btn blue darken-2">Select</a></td></tr>';
+			echo '</td><td><a href="instruction.php?groupID='.$row["groupID"].'" class="waves-effect waves-light btn blue darken-2">Select</a></td></tr>';
 		}
+		CloseCon($conn);
 		?>
 				</tbody>
 			</table>
