@@ -37,13 +37,18 @@ if(isset($_POST["createTest"])){
 				}
 				else
 					$errorFlag = false;
-			}/*
-			if($errorFlag == false){
-				session_destroy();
-				unset($_SESSION["list"]);
-				header("Location: viewExistingTests.php");
-				//header("Location: CreateTest.php");
-			}*/
+			}
+			
 		}
+		else 
+		 $errorFlag = false;
+		 
 	}
+	if($errorFlag == false){
+		//session_destroy();
+		unset($_SESSION["list"]);
+		header("Location: viewExistingTests.php");
+		//header("Location: CreateTest.php");
+	}
+	/**/
 }
