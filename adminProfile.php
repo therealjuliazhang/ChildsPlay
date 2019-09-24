@@ -18,7 +18,7 @@ $users[] = $row;
 
 
 //get location information from database
-$sql = "SELECT * FROM LOCATIONS";
+$sql = "SELECT * FROM LOCATION";
 $locationArray = array();
 $result = $conn ->query($sql);
 while($row = mysqli_fetch_assoc($result))
