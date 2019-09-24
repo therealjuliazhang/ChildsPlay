@@ -1,42 +1,62 @@
-<head>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
   <?php
-  session_start();
-  if(isset($_SESSION['userID']))
-    $userID = $_SESSION['userID'];
-  else
-    header('login.php');
-  ?>
-  <title>ProfilePage</title>
-  <meta name = "viewport" content = "width = device-width, initial-scale = 1">
-  <link rel="stylesheet" type="text/css" href="childsPlayStyle.css">
-  <link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
-</head>
-<body>
-  <!--header-->
-  <div id="InsertHeader"></div>
-  <script>
-  //Read header
-  $(function(){
-    $("#InsertHeader").load("educatorHeader.html");
-  });
-  </script>
+   include 'db_connection.php';
+   $conn = OpenCon();
+ 
+   session_start();
+ 
+   if(isset($_SESSION["userID"]))
+     $userID = $_SESSION["userID"];
 
-  <!--end header-->
-  <!--Body part-->
-  <div class="navbar-fixed">
+   //get userinfo from database
+   $sql = "SELECT * FROM users WHERE userID = " .$userID;
+   $users = array();
+   $result = $conn ->query($sql);
+   while($row = mysqli_fetch_assoc($result))
+       $userArray[] = $row;
+
+
+    //get location information from database
+    $sql = "SELECT * FROM LOCATION JOIN LOCATIONASSIGNMENT ON LOCATION.locationID = LOCATIONASSIGNMENT.locationID WHERE LOCATIONASSIGNMENT.userID =  " .$userID;
+    $locationArray = array();
+    $result = $conn ->query($sql);
+    while($row = mysqli_fetch_assoc($result))
+      $locationArray[] = $row;
+
+?>
+  <head>
+    <title>ProfilePage</title>
+    <meta name = "viewport" content = "width = device-width, initial-scale = 1">
+    <link rel="stylesheet" type="text/css" href="childsPlayStyle.css">
+    <link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+  </head>
+  <body>
+    <!--header-->
+    <div id="InsertHeader"></div>
+    <script>
+      //Read header
+      $(function(){
+        $("#InsertHeader").load("educatorHeader.html");
+      });
+    </script>
+
+    <!--end header-->
+<!--Body part-->
+    <div class="navbar-fixed">
     <table id="infoTable" height="200px" class="white-text">
       <tbody class="#1565c0 blue darken-3">
         <tr>
           <td width="50%">
-            <div class="tableLeft">
-              <h3>Alex Satoru Hanrahan</h3>
-              <i class="small material-icons" id="mailIcon">email</i>
-              <span id="mailInCell">ash@gmail.com</span>
-            </div>
+          <div class="tableLeft">
+          <h3 id="fullNameTop">Alex Satoru Hanrahan</h3>
+          <i class="small material-icons" id="mailIcon">email</i>
+          <span id="mailInCell">ash@gmail.com</span>
+          </div>
           </td>
           <td width="50%">
             <div id="user">
@@ -117,6 +137,8 @@ $(document).ready(function(){
     $("#editBUttonDiv").addClass("hide");
     $('select').formSelect();
   })
+  loadProfileInfo();
+  loadLocations();
 });
 //disable inputs
 $(document).ready(function(){
@@ -172,6 +194,37 @@ else {
 alert('More than 1280');
 }
 */
+
+ //load user's data for profile onto page 
+ function loadProfileInfo()
+    {
+      var user = <?php echo json_encode($userArray); ?>;
+      //display the data on page 
+      $("#fullNameTop").text(user[0].fullName);
+      $("#mailInCell").text(user[0].email);
+      $("#email").val(user[0].email);
+      $("#uName").val(user[0].username);
+    }
+
+    function loadLocations ()
+    {
+      var locations = <?php echo json_encode($locationArray); ?>;
+      //var formatStart =  "<div class='removable'><div class='col s3'></div><div class='input-field col s8 locationCell'><select class='selectLocation'><option value='1' disabled selected>Choose location";
+      var formatBody;
+      var format = "<select><option value='' disable selected>List of Locations</option>";
+      var formatEnd = "</select>";
+      var counter = 1;
+     // $("#locationInfo").append(formatStart);
+      locations.forEach(function(result)
+      {
+        console.log(result.name);
+        formatBody = "<option value=" + counter + ">" + result.name + "</option>";
+        format = format + formatBody;
+      });
+      format = format + formatEnd;
+      $("#locationInfo").append(format);
+      counter++;
+    }
 </script>
 
 
