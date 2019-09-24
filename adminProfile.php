@@ -122,17 +122,18 @@
     </div>
 
     <!--html for Location tab-->
-<form id>
+<form method = "post" action="addLocation.php">
 <div class="panel">
   <div class="container">
       <div class="row" id="locationInfo">
         <div class="col s11 blue-text darken-2"><h5>Name</h5></div>
+      
      </div>
 
        <div class="row">
          <div class="col s1 offset-s11"><a class="waves-effect waves-light btn blue darken-4 addCell hide right" id="addButtonB" onclick="appendRow()"><i class="material-icons">add</i></a></div>
          <div class="col s1 offset-s10"><a class="waves-effect waves-light btn #2196f3 blue right" id="editButtonB">Edit</a></div>
-         <div class="col s1"><a class="waves-effect waves-light btn blue darken-2 right" id="saveButtonB">Save</a></div>
+         <div class="col s1"><button class="waves-effect waves-light btn blue darken-2 right" id="saveButtonB" type="submit" value = "submit">Save</button></div>
        </div>
 
     </div>
@@ -142,6 +143,8 @@
   </body>
 
 <script>
+  
+
 //enable input
   $(document).ready(function(){
     $("#editButton").click(function(){
@@ -167,7 +170,6 @@
   function loadProfileInfo()
   {
     var user = <?php echo json_encode($users); ?>;
-    var format = "apple";
     //display fullname 
     $("#fullNameTop").text(user[0].fullName);
     $("#mailInCell").text(user[0].email);
@@ -215,7 +217,7 @@
      //enable input for location tab
       $(document).ready(function(){
         $("#editButtonB").click(function(){
-          $(".inputInColB").prop( "disabled", false );
+          $(".inputInColB").prop( "readonly", false );
           $(".removeButtonB").removeClass("hide");
           $("#addButtonB").removeClass("hide");
         })
@@ -224,7 +226,7 @@
       //disable input for location tab
       $(document).ready(function(){
         $("#saveButtonB").click(function(){
-          $(".inputInColB").prop( "disabled", true );
+          $(".inputInColB").prop( "readonly", true );
           $(".removeButtonB").addClass("hide");
           $("#addButtonB").addClass("hide");
         })
@@ -232,14 +234,12 @@
 
       //Function for adding and deleting rows
       function appendRow() {
+      
         //variables for a new row
-        var locationNameInput = "<div class='col s4'><input value='' type='text' class='validate inputInColB'></div>";
-        var addressInput = "<div class='col s5'><input value='' type='text' class='validate inputInColB'></div>";
-        var dateInput = "<div class='col s2'>12/08/2019</div>";
-        var removeButtonB = " <div class='col s1'><div class='col s1 removeCell'><a class='waves-effect waves-light btn removeButtonB'><i class='material-icons'>remove</i></a></div></div>";
+        var locationNameInput = "<div class='col s11'><input name='rowNum[]' value='default' type='text' class='validate inputInColB'></div>";
 
         //insert a new row
-        var locations = "<div class='removable'>" + locationNameInput + addressInput + dateInput + removeButtonB + "</div>";
+        var locations = "<div class='removable'>" + locationNameInput + "</div>";
 
         $("#locationInfo").append(locations);
 
@@ -259,13 +259,15 @@
       function loadLocationInfo(){
       var location = <?php echo json_encode($locationArray); ?>;
       var format;
+     
       //display data 
       location.forEach(function(result){
-        var locationNameInput = "<div class='col s11'><input disabled value='"+ result.name +"' type='text' class='validate inputInColB'></div>";
+    
+        var locationNameInput = "<div class='col s11'><input readonly name='locRow[]' value='"+ result.name +"' type='text' class='validate inputInColB'></div>";
 
-        var removeButtonB = " <div class='col s1'><div class='col s1 removeCell'><a class='waves-effect waves-light btn hide removeButtonB'><i class='material-icons'>remove</i></a></div></div>";
+        
 
-        var format = "<div class='removable'>" + locationNameInput + removeButtonB + "</div>";
+        var format = "<div class='removable'>" + locationNameInput + "</div>";
         $("#locationInfo").append(format);
       });
     }
