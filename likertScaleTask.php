@@ -13,7 +13,6 @@
 		$mode = $_SESSION['mode'];
 	else if (isset($_GET["mode"]))
 		$mode = $_GET["mode"];
-
 	//get testID
 	if (isset($_SESSION['testID']))
 		$testID = $_SESSION['testID'];
@@ -57,7 +56,10 @@
 	while($row = mysqli_fetch_assoc($result))
 	   $images[] = $row;
 	//fetch preschoolers
-	$sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$groupID." AND userID=".$userID;
+	if($mode=="preview")
+		$sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$groupID;
+	else
+		$sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$groupID." AND userID=".$userID;
 	$result = $conn->query($sql);
 	$preschoolers = array();
 	while($row = mysqli_fetch_assoc($result)){
