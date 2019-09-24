@@ -42,7 +42,14 @@
             <div id="user">
               <i class="medium material-icons" id="mailIcon">account_box</i>
               <span id="userType">Educator</span><br>
-              <a href="home.html" class="waves-effect waves-light btn #2196f3 blue right" id="logoutButton" onclick="logout()">Logout</a>
+              <!--<a href="home.html" class="waves-effect waves-light btn #2196f3 blue right" id="logoutButton" onclick="logout()">Logout</a>--->
+			  <button type="submit" name="btnLogout" class="waves-effect waves-light btn #2196f3 blue right">Logout</button>
+				<?php
+				if(isset($_POST["btnLogout"])){
+					unset($_SESSION['userID']);
+					header("Location: home.html");
+				}
+				?>
             </div>
           </td>
         </tr>

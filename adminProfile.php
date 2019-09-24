@@ -43,11 +43,16 @@ $locationArray[] = $row;
     //$(function(){
     $("#InsertHeader").load("header.html");
   });
+  
+  function logout(){
+	  window.location = "home.html";
+  }
   </script>
   <!--Content User Information under the header-->
   <div class="navbar-fixed">
     <table id="infoTable" height="200px" class="white-text">
       <tbody class="#1565c0 blue darken-3">
+	  <form action="" method="post">
         <tr>
           <td width="50%">
             <div class="tableLeft">
@@ -58,12 +63,20 @@ $locationArray[] = $row;
           </td>
           <td width="50%">
             <div id="userIconCell">
-              <i class="medium material-icons" id="mailIcon">account_box</i>
-              <span id="userType">Admin</span><br>
-              <a class="waves-effect waves-light btn #2196f3 blue right" id="logoutButton" onclick="logout()">Logout</a>
+				<i class="medium material-icons" id="mailIcon">account_box</i>
+				<span id="userType">Admin</span><br>
+				<!--<a class="waves-effect waves-light btn #2196f3 blue right" id="logoutButton" onclick="logout()">Logout</a>--->
+				<button type="submit" name="btnLogout" class="waves-effect waves-light btn #2196f3 blue right">Logout</button>
+				<?php
+				if(isset($_POST["btnLogout"])){
+					unset($_SESSION['userID']);
+					header("Location: home.html");
+				}
+				?>
             </div>
           </td>
         </tr>
+		</form>
       </tbody>
     </table>
   </div>

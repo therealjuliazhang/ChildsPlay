@@ -243,8 +243,9 @@ CloseCon($conn);
                 <input type="submit" name="submit" class="submit waves-effect waves-light btn blue darken-2 right" value="Save">
             </div>--->
 			<br/><br/>
-			<div align="left">
-			<button name="submit" type="submit" class="submit waves-effect waves-light btn blue darken-2">Save</button>
+			<div align="right">
+				<button style="width:95px" name="submit" type="submit" class="submit waves-effect waves-light btn blue darken-2">Save</button>
+				<a style="width:95px" class="waves-effect waves-light btn blue darken-4" href="viewExistingTests.php">Cancel</a>
 			</div>
         </form>
     </div>

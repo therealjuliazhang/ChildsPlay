@@ -173,7 +173,7 @@ else
                                 "<td>" . $row["activityStyle"] . "</td>" .
                                 "<td width='45%'>" . $row["instruction"] . "</td>" .
                                 "<td><a class='waves-effect waves-light btn blue darken-2'>Preview</a></td>" .
-                                "<td><a class='waves-effect waves-light btn blue darken-4' href='?taskID=" . $row["taskID"] . "&remove=true'>Remove</a></td></tr>";
+                                "<td><a class='waves-effect waves-light btn red' href='?taskID=" . $row["taskID"] . "&remove=true'>Remove</a></td></tr>";
                         }
                     }
                     ?>
