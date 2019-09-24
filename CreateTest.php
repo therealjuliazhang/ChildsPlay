@@ -174,10 +174,14 @@ else
                                 if (count($idList) > 0)
                                     $_SESSION["list"] = join(",", $idList);
                                 else {
-                                    session_destroy();
+                                    //session_destroy();
                                     unset($_SESSION["list"]);
                                 }
                             }
+							//if the task is not in the idList (when remove the last task in the list)
+							else{
+								unset($_SESSION["list"]);
+							}
                         }
                     }
                     //display the newly created task(s) into the list of tasks
