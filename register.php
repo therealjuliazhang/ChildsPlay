@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 	<?php
 		include 'db_connection.php';
@@ -10,7 +11,7 @@
             $locations[] = $row;
 	?>
     <head>
-        <title>Educator Register</title>
+        <title>Register</title>
         <meta name = "viewport" content = "width = device-width, initial-scale = 1">
         <link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
@@ -45,7 +46,7 @@
                 errorElement : 'div',
                 errorClass: 'invalid',
                 errorPlacement: function(error, element) {
-                    if(element.attr('type') == "text" || element.attr('type') == "email"){
+                    if(element.attr('type') == "text" || element.attr('type') == "email" || element.attr('type') == "password"){
                         $(element)
                         .closest("form")
                         .find("label[for='" + element.attr("id") + "']")
@@ -73,6 +74,15 @@
                             url: "checkEmail.php",
                             type: "post"
                         }
+					},
+					password1: {
+						required: true,
+						minlength: 5
+					},
+					password2: {
+						required: true,
+						minlength: 5,
+						equalTo: "#password1"
 					}
                 },
                 messages: {
@@ -84,25 +94,33 @@
                     },
                     email: {
                         required: "Enter an email.",
-						email: "Enter a valid email address.",
-                        remote: jQuery.validator.format("The email {0} is already being used by another account.")
+						email: "Enter a valid email address."
+                    },
+					password1: {
+                        required: "Enter a password.",
+						minlength: "Password must be at least 5 characters long."
+                    },
+					password2: {
+                        required: "Confirm your password.",
+						minlength: "Password must be at least 5 characters long.",
+                        equalTo: "Passwords entered are different."
                     }
                 }
             });
 		});
 
-		function validate() {
-			var password1 = document.getElementById("password1").value;
-			var password2 = document.getElementById("password2").value;
-			if(password1 == password2) {
-			document.getElementById("tishi").innerHTML="<font color='green'>password correct</font>";
-			document.getElementById("submit").disabled = false;
-			}
-			else {
-			document.getElementById("tishi").innerHTML="<font color='red'>password different</font>";
-			document.getElementById("submit").disabled = true;
-			}
-		}
+		// function validate() {
+		// 	var password1 = document.getElementById("password1").value;
+		// 	var password2 = document.getElementById("password2").value;
+		// 	if(password1 == password2) {
+		// 	document.getElementById("tishi").innerHTML="<font color='green'>password correct</font>";
+		// 	document.getElementById("submit").disabled = false;
+		// 	}
+		// 	else {
+		// 	document.getElementById("tishi").innerHTML="<font color='red'>password different</font>";
+		// 	document.getElementById("submit").disabled = true;
+		// 	}
+		// }
     </script>
 	<script>
 	 function chg(obj)
@@ -139,8 +157,8 @@
 				<div class="col s12 valign">
 					<div class="card teal lighten-5">
 						<div class="card-content">
-							<img src="Images/login icon.png"  height ="10%"style="display:block; margin:auto;"/>
-							<span class="card-title grey-text text-darken-2"><b>Create Your Account</b></span>
+							<img src="images/login icon.png" height="70px" style="display:block; margin:auto;"/>
+							<span class="card-title grey-text text-darken-2"><h5 class="center-align">Create Your Account</h5></span>
 							<form id="form" style="font-size:20px" action="registerAccount.php" method="post">
 								<div class="row valign-wrapper">
 									<div class="col s12 right-align">Register as an</div>
@@ -177,9 +195,8 @@
 								</div>
 								<div class="row">
 									<div class="input-field col s12">
-										<input id="password2" type="password" class="validate" onkeyup="validate()">
+										<input id="password2" name="password2" type="password" class="validate" > 
 										<label for ="password2">Password Again</label>
-										<span id="tishi"></span>
 									</div>
 								</div>
 								<div class="row valign-wrapper" >

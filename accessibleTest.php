@@ -10,13 +10,16 @@
             $userID = $_SESSION['userID'];
         else
             header('login.php');
+        //get select users ID
+        if(isset($_GET['userID']))
+            $selectedUserID = $_GET['userID'];
         //get user's fullname from database
-        $sql = "SELECT fullName FROM USERS WHERE userID=".$userID;
+        $sql = "SELECT fullName FROM USERS WHERE userID=".$selectedUserID;
         $result = $conn->query($sql);
         $fullName = mysqli_fetch_assoc($result)['fullName'];
         //get user's tests
         $tests = array();
-        $sql = "SELECT testID, dateConducted FROM TESTASSIGNMENT WHERE userID=".$userID;
+        $sql = "SELECT testID, dateConducted FROM TESTASSIGNMENT WHERE userID=".$selectedUserID;
         $testIDsResult = $conn->query($sql);
         while($row = mysqli_fetch_assoc($testIDsResult)){
             $sql = "SELECT * FROM TEST WHERE testID=".$row['testID'];
@@ -63,13 +66,15 @@
                 </tbody>
             </table>
             <a id="back" class="right waves-effect waves-light btn blue darken-4" href="userPage.php#educators">Back</a>
-            <a id="addTest" class="right waves-effect waves-light btn blue darken-2" href="selectAccessibleTest.php">Add Test</a>
+            <a id="addTest" class="right waves-effect waves-light btn blue darken-2" href="selectAccessibleTest.php?userID=<?php echo $selectedUserID?>">Add Test</a>
         </div>
 	</div>
         <!--end body content-->
     </body>
 <script>
 $(document).ready(function() {
+    //get selected user Id
+    var selectedUserID = <?php echo $selectedUserID; ?>;
     //display users name
     var fullName = <?php echo json_encode($fullName); ?>;
     $("#fullName").html(fullName);
@@ -90,7 +95,7 @@ $(document).ready(function() {
                 $('<a/>', {
                     class: "waves-effect waves-light btn #0d47a1 red darken-1 remove",
                     text: "Remove",
-                    href: "removeAccessibleTest.php?testID=" + test.testID,
+                    href: "removeAccessibleTest.php?userID=" + selectedUserID + "&testID=" + test.testID,
                     onclick: "javascript: return confirm('Are you sure you wish to make the test inaccessible to this user?');"
                 })
             )

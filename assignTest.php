@@ -1,9 +1,13 @@
 <?php
     session_start();
+    if(isset($_SESSION['userID']))
+        $userID = $_SESSION['userID'];
+    else
+        header('login.php');
     //get user ID
-    //if(isset($_SESSION["userID"]))
-    //    $userID = $_SESSION["userID"];
-    $userID = 2; //remove after admin pages are linked up
+    if(isset($_GET["userID"]))
+       $selectedUserID = $_GET["userID"];
+    // $userID = 2; //remove after admin pages are linked up
     //get test ID
     if(isset($_GET["testID"]))
         $testID = $_GET["testID"];
@@ -15,7 +19,7 @@
         die("Connection failed: " . $conn->connect_error);
     } 
     //add to testassignment
-    $sql = "INSERT INTO TESTASSIGNMENT (userID, testID) VALUES (" .$userID. ", " .$testID. ")";  
+    $sql = "INSERT INTO TESTASSIGNMENT (userID, testID) VALUES (" .$selectedUserID. ", " .$testID. ")";  
     if ($conn->query($sql) === TRUE) {
         echo "Record inserted successfully";
     } else {
@@ -24,5 +28,5 @@
     //close connection
     $conn->close();  
     //go back to accessibleTests page
-    header("Location: selectAccessibleTest.php");
+    header("Location: selectAccessibleTest.php?userID=".$selectedUserID);
 ?>

@@ -11,9 +11,12 @@
         //open connection to database
         include 'db_connection.php';
         $conn = OpenCon();
+        //get selected Users ID
+        if(isset($_GET['userID']))
+            $selectedUserID = $_GET['userID'];
         //get tests IDs of tests assigned to user
         $assignedTests = array();
-        $sql = "SELECT testID FROM TESTASSIGNMENT WHERE userID=".$userID;
+        $sql = "SELECT testID FROM TESTASSIGNMENT WHERE userID=".$selectedUserID;
         $testIDsResult = $conn->query($sql);
         while($row = mysqli_fetch_assoc($testIDsResult))
             $assignedTests[] = $row['testID'];
@@ -60,13 +63,14 @@
                 <tbody id="testsTableBody" class="grey-text text-darken-1">
 			    </tbody>
             </table>
-            <a id="back" href="accessibleTest.php" class="right waves-effect waves-light btn blue darken-4">Back</a>
+            <a id="back" href="accessibleTest.php?userID=<?php echo $selectedUserID ?>" class="right waves-effect waves-light btn blue darken-4">Back</a>
 		</div>
 		</div>
         <!--end body content-->
     </body>
 <script>
 $(document).ready(function() {
+    var selectedUserID = <?php echo $selectedUserID; ?>;
     //display available tests in table
     var tests = <?php echo json_encode($availableTests); ?>;
     tests.forEach(function displayTest(test){
@@ -78,7 +82,7 @@ $(document).ready(function() {
             $('<td/>').append(
                 $('<a/>', {
                     class: "waves-effect waves-light btn #0d47a1 blue darken-2",
-                    href: "assignTest.php?testID=" + test.testID,
+                    href: "assignTest.php?userID=" + selectedUserID + "&testID=" + test.testID,
                     text: "Assign"
                 })
             )

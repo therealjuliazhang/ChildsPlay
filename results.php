@@ -73,7 +73,7 @@ include_once 'resultQueries.php';
         <!--end header-->
         <!--side bar-->
 	<ul id="sidebar" class="sidenav sidenav-fixed" >
-		<li><h5><a href="#" data-target="slide-out" class="dropdown-trigger">More Tests</a></h5></li>button to activate more tests
+		<li><h5><a href="#" data-target="slide-out" class="dropdown-trigger">More Tests</a></h5></li>
 		<ul class="dropdown-content" id="slide-out">
 		<?php
 		$testQuery = "SELECT testID, title FROM TEST";

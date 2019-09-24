@@ -42,4 +42,4 @@ if($accountType == 0){
     }
 }
 $_SESSION['userID'] = $userID;
-header('location: educatorTests.php');
+header('location: thankyouForRegister.html');

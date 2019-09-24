@@ -122,24 +122,29 @@ $locationArray[] = $row;
     </div>
 
     <!--html for Location tab-->
-    <form id>
-      <div class="panel">
-        <div class="container">
-          <div class="row" id="locationInfo">
-            <div class="col s11 blue-text darken-2"><h5>Location Names</h5></div>
-          </div>
-          <div class="row">
-            <div class="col s1 offset-s11"><a class="waves-effect waves-light btn blue darken-4 addCell hide right" id="addButtonB" onclick="appendRow()"><i class="material-icons">add</i></a></div>
-            <div class="col s1 offset-s11" id="editButtonDivB"><a class="waves-effect waves-light btn #2196f3 blue right" id="editButtonB">Edit</a></div>
-            <div class="col s1 offset-s11 hide" id="saveButtonDivB"><a class="waves-effect waves-light btn blue darken-2 right" id="saveButtonB">Save</a></div>
-          </div>
-        </div>
-      </div>
-    </div><!--Div for panel group-->
-  </form>
-</body>
+<form method = "post" action="addLocation.php">
+<div class="panel">
+  <div class="container">
+      <div class="row" id="locationInfo">
+        <div class="col s11 blue-text darken-2"><h5>Name</h5></div>
+      
+     </div>
+
+       <div class="row">
+         <div class="col s1 offset-s11"><a class="waves-effect waves-light btn blue darken-4 addCell hide right" id="addButtonB" onclick="appendRow()"><i class="material-icons">add</i></a></div>
+         <div class="col s1 offset-s10"><a class="waves-effect waves-light btn #2196f3 blue right" id="editButtonB">Edit</a></div>
+         <div class="col s1"><button class="waves-effect waves-light btn blue darken-2 right" id="saveButtonB" type="submit" value = "submit">Save</button></div>
+       </div>
+
+    </div>
+    </div>
+  </div><!--Div for panel group-->
+</form>
+  </body>
 
 <script>
+  
+
 //enable input
 $(document).ready(function(){
   $("#editButton").click(function(){
@@ -180,7 +185,21 @@ function loadProfileInfo()
   $("#uName").val(user[0].username);
   if (user[0].accountType == 1)
   {
-    $("#userType").text("Admin");
+    var user = <?php echo json_encode($users); ?>;
+    //display fullname 
+    $("#fullNameTop").text(user[0].fullName);
+    $("#mailInCell").text(user[0].email);
+    $("#email").val(user[0].email);
+    $("#uNameCell").val(user[0].username);
+    $("#uName").val(user[0].username);
+    if (user[0].accountType == 1)
+    {
+      $("#userType").text("Admin");
+    }
+    else 
+    {
+      $("#userType").text("NotAdmin");
+    }
   }
   else
   {
@@ -274,6 +293,66 @@ function loadLocationInfo(){
   });
 }
 
-</script>
+ 
+
+     //enable input for location tab
+      $(document).ready(function(){
+        $("#editButtonB").click(function(){
+          $(".inputInColB").prop( "readonly", false );
+          $(".removeButtonB").removeClass("hide");
+          $("#addButtonB").removeClass("hide");
+        })
+      });
+
+      //disable input for location tab
+      $(document).ready(function(){
+        $("#saveButtonB").click(function(){
+          $(".inputInColB").prop( "readonly", true );
+          $(".removeButtonB").addClass("hide");
+          $("#addButtonB").addClass("hide");
+        })
+      });
+
+      //Function for adding and deleting rows
+      function appendRow() {
+      
+        //variables for a new row
+        var locationNameInput = "<div class='col s11'><input name='rowNum[]' value='default' type='text' class='validate inputInColB'></div>";
+
+        //insert a new row
+        var locations = "<div class='removable'>" + locationNameInput + "</div>";
+
+        $("#locationInfo").append(locations);
+
+
+        //remove added rows
+        $('.removeButtonB').click(function() {
+          $(this).closest('.removable').remove();
+        });
+
+      };
+      
+      //remove existing rows
+      $('.removeButtonB').click(function() {
+        $(this).closest('.removable').remove();
+      });
+
+      function loadLocationInfo(){
+      var location = <?php echo json_encode($locationArray); ?>;
+      var format;
+     
+      //display data 
+      location.forEach(function(result){
+    
+        var locationNameInput = "<div class='col s11'><input readonly name='locRow[]' value='"+ result.name +"' type='text' class='validate inputInColB'></div>";
+
+        
+
+        var format = "<div class='removable'>" + locationNameInput + "</div>";
+        $("#locationInfo").append(format);
+      });
+    }
+
+ </script>
 
 </html>

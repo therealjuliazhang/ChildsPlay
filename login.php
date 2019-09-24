@@ -32,7 +32,7 @@
       <div class="col s12 valign center-align">
         <div class="card teal lighten-5">
           <div class="card-content">
-            <img src="Images/login icon.png" height ="70px"/>
+            <img src="images/login icon.png" height ="70px"/>
             <form id="form" style="font-size:20px" action="loginUser.php" method="post">
               <div class="row">
                 <div class="input-field col s12">
