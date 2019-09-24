@@ -168,18 +168,24 @@ $(document).ready(function(){
 //Add new selector
 
 function appendSelect() {
+  var locations = <?php echo json_encode($locationArray); ?>;
   //insert locations into variable
   var location01 = "KU Gwynneville Preschool";
   var location02 = "Wollongong Preschool";
   var location03 = "Keiraville Community Preschool";
   var removeButton = "<a class='waves-effect waves-light btn removeButton'><i class='material-icons' >remove</i></a>";
+  locations.forEach(function(result)
+      {
+        
+        format
+      });
+  var locationsDisplay = "<div class='removable'><div class='col s3'></div><div class='input-field col s8 locationCell'><select class='selectLocation'><option value='1' disabled selected>Choose location<option>";
 
-  var locations = "<div class='removable'><div class='col s3'></div><div class='input-field col s8 locationCell'><select class='selectLocation'><option value='1' disabled selected>Choose location<option>"
   + location01 + "</option><option>"
   + location02 + "</option><option>"
   + location03 + "</option></select></div><div class='col s1 removeCell'>"
   + removeButton + "</div></div>";
-  $("#userDetail").append(locations);
+  $("#userDetail").append(locationDisplay);
   $('select').formSelect();
 
   //remove a row
