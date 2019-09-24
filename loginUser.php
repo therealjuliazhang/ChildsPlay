@@ -21,7 +21,7 @@
         $_SESSION['userID'] = $userID;
         //check if admin or educator and redirect to correct page
         if($user['accountType']==1)
-            header('location: ViewExistingTests.php');
+            header('location: viewExistingTests.php');
         else
   	        header('location: educatorTests.php');
   	}else {

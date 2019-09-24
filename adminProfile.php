@@ -238,7 +238,7 @@ $(function($){
 //enable input for location tab
 $(document).ready(function(){
   $("#editButtonB").click(function(){
-    $(".inputInColB").prop( "disabled", false );
+    $(".inputInColB").prop( "readonly", false );
     $(".removeButtonB").removeClass("hide");
     $("#addButtonB").removeClass("hide");
     $("#saveButtonDivB").removeClass("hide");
@@ -249,7 +249,7 @@ $(document).ready(function(){
 //disable input for location tab
 $(document).ready(function(){
   $("#saveButtonB").click(function(){
-    $(".inputInColB").prop( "disabled", true );
+    $(".inputInColB").prop( "readonly", true );
     $(".removeButtonB").addClass("hide");
     $("#addButtonB").addClass("hide");
     $("#editButtonDivB").removeClass("hide");

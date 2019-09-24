@@ -84,7 +84,7 @@ else {
 		"&mode=preview&from=existingTasks&".$from."'>Preview</a></td>";
 		if($from == "create"){
 			echo "<td style='width:7%' class='editCol'><a class='waves-effect waves-light btn blue darken-4'".
-			" href='CreateNewTaskInCreateTest.php?exist=true&taskID=".$row["taskID"]."&from=".$from."'>Edit</a></td>";
+			" href='createNewTaskInCreateTest.php?exist=true&taskID=".$row["taskID"]."&from=".$from."'>Edit</a></td>";
 			echo "<td style='width:7%' class='addCol'><a class='waves-effect waves-light btn blue darken-4' href='createTest.php?taskID=" . $row["taskID"] . "'>Add</a></td>";
 		}
 		/*"<td style='width:7%' class='editCol'><a class='waves-effect waves-light btn blue darken-4'".
@@ -93,7 +93,7 @@ else {
 			echo "<td style='width:7%' class='addCol'><a class='waves-effect waves-light btn blue darken-4' href='createTest.php?taskID=" . $row["taskID"] . "'>Add</a></td>";*/
 		else if ($from == "edit"){
 			echo "<td style='width:7%' class='editCol'><a class='waves-effect waves-light btn blue darken-4'".
-			" href='CreateNewTaskInCreateTest.php?exist=true&taskID=".$row["taskID"]."&testID=".$_SESSION["testID"]."&from=".$from."'>Edit</a></td>";
+			" href='createNewTaskInCreateTest.php?exist=true&taskID=".$row["taskID"]."&testID=".$_SESSION["testID"]."&from=".$from."'>Edit</a></td>";
 			echo "<td style='width:7%' class='addCol'><a class='waves-effect waves-light btn blue darken-4' href='editTest.php?taskID=" . $row["taskID"] . "&testID=" . $_SESSION["testID"] . "'>Add</a></td>";
 		}
 			//echo "<td style='width:7%' class='addCol'><a class='waves-effect waves-light btn blue darken-4' href='editTest.php?taskID=" . $row["taskID"] . "&testID=" . $_SESSION["testID"] . "'>Add</a></td>";
