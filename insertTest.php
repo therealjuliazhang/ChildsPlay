@@ -9,7 +9,7 @@ $conn = OpenCon();
 $errorFlag = false;
 
 $testTitle = $_POST["testTitle"];
-					echo "Test title: ".$testTitle;
+echo "Test title: ".$testTitle;
 
 if(isset($_POST["createTest"])){
 	$title = "'".$_POST["testTitle"]."'";
@@ -45,4 +45,3 @@ if(isset($_POST["createTest"])){
 		}
 	}
 }
-?>
