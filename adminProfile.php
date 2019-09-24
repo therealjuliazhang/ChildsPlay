@@ -60,7 +60,7 @@ $locationArray[] = $row;
             <div id="userIconCell">
               <i class="medium material-icons" id="mailIcon">account_box</i>
               <span id="userType">Admin</span><br>
-              <a class="waves-effect waves-light btn #2196f3 blue right" id="logoutButton" onclick="logout()">Logout</a>
+              <a href="home.html" class="waves-effect waves-light btn #2196f3 blue right" id="logoutButton" onclick="logout()">Logout</a>
             </div>
           </td>
         </tr>
