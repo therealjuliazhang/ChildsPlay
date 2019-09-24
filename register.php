@@ -158,7 +158,7 @@
 					<div class="card teal lighten-5">
 						<div class="card-content">
 							<img src="images/login icon.png" height="70px" style="display:block; margin:auto;"/>
-							<span class="card-title grey-text text-darken-2"><b>Create Your Account</b></span>
+							<span class="card-title grey-text text-darken-2"><h5 class="center-align">Create Your Account</h5></span>
 							<form id="form" style="font-size:20px" action="registerAccount.php" method="post">
 								<div class="row valign-wrapper">
 									<div class="col s12 right-align">Register as an</div>
