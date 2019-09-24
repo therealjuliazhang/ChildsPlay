@@ -10,7 +10,7 @@ if(isset($_SESSION['userID']))
 else
   header('login.php');
 //get userinfo from database
-$sql = "SELECT * FROM users WHERE userID = " .$userID;
+$sql = "SELECT * FROM USERS WHERE userID = " .$userID;
 $users = array();
 $result = $conn ->query($sql);
 while($row = mysqli_fetch_assoc($result))
@@ -18,7 +18,7 @@ $users[] = $row;
 
 
 //get location information from database
-$sql = "SELECT * FROM location";
+$sql = "SELECT * FROM LOCATIONS";
 $locationArray = array();
 $result = $conn ->query($sql);
 while($row = mysqli_fetch_assoc($result))
