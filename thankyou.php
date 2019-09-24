@@ -11,6 +11,12 @@
     unset($_SESSION['groupID']);
     unset($_SESSION['tasks']);
     unset($_SESSION['mode']);
+	
+	if(isset($_SESSION["from"]))
+	{
+		$from = $_SESSION["from"];
+		//echo "from: ".$from;
+	}
     ?>
     <head>
         <title>Thank You</title>
@@ -44,7 +50,13 @@
                     finish to go back to available tests.
 					</div>
                     </br>
-                    <a href="educatorTests.php" class="waves-effect waves-light btn blue darken-2 right" name="button1">Finish</a>
+					<?php
+					if($from == "existingTests")
+						echo '<a href="viewExistingTests.php" class="waves-effect waves-light btn blue darken-2 right" name="button1">Finish</a>';
+					else
+						echo '<a href="educatorTests.php" class="waves-effect waves-light btn blue darken-2 right" name="button1">Finish</a>';
+					?>
+                    
 				</div>
 			</div>
         </div>
