@@ -79,6 +79,23 @@ else
 			localStorage.setItem( 'testTitle', testTitle );
 			localStorage.setItem( 'description', description );
 		}
+		
+		function showWarning(){
+			//javascript: return confirm('Are you sure you wish to remove this task from this test?');
+			//alert("Are you sure you wish to remove this task from this test?");
+		}/*
+		$('</tr>').append(
+			$('<td/>').append(
+                $('<a/>', {
+                    class: "waves-effect waves-light btn #0d47a1 red darken-1",
+                    text: "Remove",
+                    href: "removeTask.php?testID=" + testID + "&taskID=" + task.taskID,
+                    onclick: "javascript: return confirm('Are you sure you wish to remove this task from this test?');"
+                })
+			)
+		)*/
+		
+		
     </script>
     <!-- body content -->
     <div class="container">
@@ -173,7 +190,7 @@ else
                                 "<td>" . $row["activityStyle"] . "</td>" .
                                 "<td width='45%'>" . $row["instruction"] . "</td>" .
                                 "<td><a class='waves-effect waves-light btn blue darken-2'>Preview</a></td>" .
-                                "<td><a class='waves-effect waves-light btn red' href='?taskID=" . $row["taskID"] . "&remove=true'>Remove</a></td></tr>";
+                                "<td><a class='waves-effect waves-light btn red' href='?taskID=" . $row["taskID"] . "&remove=true' onclick='showWarning();'>Remove</a></td></tr>";
                         }
                     }
                     ?>

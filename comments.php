@@ -27,8 +27,10 @@
 	if(isset($_SESSION["taskID"]))
 		$taskID = $_SESSION["taskID"];
 	
-	if(isset($_GET["from"]))
+	if(isset($_GET["from"])){
 		$from = $_GET["from"];
+		$_SESSION["from"] = $from;
+	}
 	else{
 		if(isset($_SESSION['from']))
 			$from = $_SESSION['from'];

@@ -96,13 +96,17 @@
 					echo '</td><td class="previewCol"><a class="btn dropdown-button blue darken-4" onclick="showError('.$title.')"; >Preview</a>';
 				}
 				else{
+					$previewURL = "instruction.php?testID=".$value['testID']."&mode=preview&from=existingTests";
+					//echo $previewURL;
+					echo '</td><td class="previewCol"><a class="btn dropdown-button blue darken-4" href="'.$previewURL.'">Preview</a>';
+					/*
 					echo '</td><td class="previewCol"><a class="btn dropdown-button blue darken-4" data-activates="dropdown'.$index.'">Preview</a>';
 					echo "<ul id='dropdown".$index."' class='dropdown-content'>";
 					//display the list of tasks in the test
 					while($row = mysqli_fetch_assoc($result)){
 						echo "<li><a href='instruction.php?testID=".$value["testID"]."&taskID=".$row["taskID"]."&mode=preview&from=availableTests'>".$row["taskTitle"]."</a></li>";
 					}
-					echo "</ul></td>";
+					echo "</ul></td>";*/
 				}
 				
 				echo "<td><a href='#?testID=".$value["testID"]."' class='btn dropdown-button blue darken-4' data-activates='dropdownTask".$index."'>...</a>";
