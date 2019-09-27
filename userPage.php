@@ -162,7 +162,7 @@
           <tbody class="grey-text text-darken-1">
             <?php
             $conn = OpenCon();
-            $sql = "SELECT * FROM USERS WHERE accountType = 1";
+            $sql = "SELECT * FROM USERS WHERE accountType = 1 AND accepted = 1";
             $sqlResult = $conn->query($sql);
             while($row = mysqli_fetch_assoc($sqlResult)){
               $query = "SELECT L.name FROM LOCATION L JOIN LOCATIONASSIGNMENT LA ON L.locationID = LA.locationID WHERE userID=".$row["userID"];
