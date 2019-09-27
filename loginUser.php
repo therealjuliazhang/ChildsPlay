@@ -15,7 +15,7 @@
         $user = mysqli_fetch_assoc($results);
         //login fail if user not accepted by admin yet
         if($user['accepted']==0)
-            header('location: login.php?msg=failed');
+            header('location: login.php?msg=notaccepted');
         //set user ID to session
         $userID = $user['userID'];
         $_SESSION['userID'] = $userID;

@@ -9,17 +9,13 @@
     {
         //echo "post uid exists <br/>";
         $userID .= $_GET["uid"];
-        
+        $_SESSION["uID"] = $userID;
     }
     if(isset($_GET["accepted"]))
     {
         //echo "post accepted exists <br/>";
         $accepted .= $_GET["accepted"];
     }
-    //hard coding userID
-    //$userID=4;
-    
-    
     
     echo "This is the user id ".$userID."<br/>";
     echo "This is the accepted value ".$accepted."<br/>";
@@ -30,7 +26,8 @@
     if ($conn->query($query) === TRUE)
     {
         echo "Record updated successfully";
-        header('location: userPage.php');
+		include 'sendEmail.php';
+        //header('location: userPage.php');
     }
     else
     {

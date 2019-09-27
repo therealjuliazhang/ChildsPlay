@@ -49,7 +49,11 @@
               <div class="card-action">
                 <?php
                 if(isset($_GET["msg"])){
-                  echo "<span style=\"font-size: 12px; color: #EC453C;\">Incorrect username or password.</span>";
+					$msg = $_GET["msg"];
+					if($msg == "notaccepted")
+						echo "<span style='font-size:12px;color:#EC453C;'>Your account has not been accepted by admin yet!</span>";
+					else
+						echo "<span style=\"font-size: 12px; color: #EC453C;\">Incorrect username or password.</span>";
                 }
                 ?>
                 <input type="submit" value="Login" class="btn blue darken-4 middle">
