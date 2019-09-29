@@ -11,8 +11,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale = 1">
   <script type="text/javascript"src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js">
-  </script>
 </head>
 <body>
 
@@ -41,8 +39,9 @@
           <th class='descriptionCol'>Description</th>
           <th class='createdCol'>Created</th>
           <th class='lastEditCol'>Last Edit</th>
-          <th class='previewCol'>Preview</th>
-          <th class='moreCol'>More</th>
+          <th class='previewCol'></th>
+          <th class='editCol'></th>
+          <th class='resultCol'></th>
         </tr>
       </thead>
       <tbody>
@@ -98,7 +97,7 @@
 				else{
 					$previewURL = "instruction.php?testID=".$value['testID']."&mode=preview&from=existingTests";
 					//echo $previewURL;
-					echo '</td><td class="previewCol"><a class="btn dropdown-button blue darken-4" href="'.$previewURL.'">Preview</a>';
+					echo '</td><td class="previewCol"><a class="btn buttonsInTable blue darken-4" href="'.$previewURL.'">Preview</a>';
 					/*
 					echo '</td><td class="previewCol"><a class="btn dropdown-button blue darken-4" data-activates="dropdown'.$index.'">Preview</a>';
 					echo "<ul id='dropdown".$index."' class='dropdown-content'>";
@@ -108,15 +107,19 @@
 					}
 					echo "</ul></td>";*/
 				}
-				
-				echo "<td><a href='#?testID=".$value["testID"]."' class='btn dropdown-button blue darken-4' data-activates='dropdownTask".$index."'>...</a>";
-				echo "<ul id='dropdownTask".$index."' class='dropdown-content'>";
-				echo "<li><a href='editTest.php?testID=".$value["testID"]."'>Edit</a></li>";
-				echo "<li><a href='results.php?testID=".$value["testID"]."'>Result</a></li>";
-				echo "</ul></td></tr>";
+
+        echo "<td><a class='btn buttonsInTable blue darken-4' href='editTest.php?testID=".$value["testID"]."'>Edit</a></td>";
+        echo "<td><a class='btn buttonsInTable blue darken-4' href='results.php?testID=".$value["testID"]."'>Result</a></td>";
+
+
+				// echo "<td><a href='#?testID=".$value["testID"]."' class='btn dropdown-button blue darken-4' data-activates='dropdownTask".$index."'>...</a>";
+				// echo "<ul id='dropdownTask".$index."' class='dropdown-content'>";
+				// echo "<li><a href='editTest.php?testID=".$value["testID"]."'>Edit</a></li>";
+				// echo "<li><a href='results.php?testID=".$value["testID"]."'>Result</a></li>";
+				// echo "</ul></td></tr>";
 			}
 		?>
-		
+
        </tbody>
 	   <span id="error" style="color:red;font-style:italic;"></span>
      </table>
@@ -151,23 +154,27 @@ table {
   width: 10%;
 }
 .descriptionCol{
-  width: 40%;
+  width: 30%;
 }
 .createdCol{
-  width: 14%;
+  width: width: 10%;
   text-align: center;
 }
 .lastEditCol{
-  width: 14%;
+  width: width: 10%;
   text-align: center;
 }
 .previewCol{
-  width: 14%;
   text-align: center;
 }
-.moreCol{
-  width: 8%;
+.editCol{
   text-align: center;
 }
-/**/
+.resultCol{
+  text-align: center;
+}
+.buttonsInTable{
+  width: 90px;
+}
+
 </style>

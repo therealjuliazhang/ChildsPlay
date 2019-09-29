@@ -41,8 +41,8 @@
             <th>Email</th>
             <th>Organization</th>
             <th>Role</th>
-            <th width="10%">Accept</th>
-            <th width="10%">Decline</th>
+            <!-- <th width="10%">Accept</th>
+            <th width="10%">Decline</th> -->
           </tr>
         </thead>
         <tbody class="grey-text text-darken-1">

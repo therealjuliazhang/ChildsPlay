@@ -49,8 +49,8 @@
 					<tr>
 						<th>Name</th>
 						<th>Description</th>
-						<th>Preview Test</th>
-						<th>Start Testing</th>
+						<!-- <th>Preview Test</th>
+						<th>Start Testing</th> -->
 					</tr>
 				</thead>
 				<tbody class="grey-text text-darken-1">
@@ -93,7 +93,7 @@
 						<tr>
 							<th>Name</th>
 							<th>Members</th>
-							<th>Edit Group</th>
+							<!-- <th>Edit Group</th> -->
 						</tr>
 					</thead>
 					<tbody class="grey-text text-darken-1">

@@ -73,9 +73,9 @@
       <th class='instructionCol'>Instruction</th>
       <th class='activityStyleCol'>Activity Style</th>
       <th class='dateCreatedCol'>Date Created</th>
-      <th class='previewCol'>Preview</th>
+      <!-- <th class='previewCol'>Preview</th>
       <th class='editCol'>Edit</th>
-      <th class='addCol'>Add</th>
+      <th class='addCol'>Add</th> -->
     </tr>
   </thead>
   <tbody>
