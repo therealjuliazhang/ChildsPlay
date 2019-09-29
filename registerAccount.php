@@ -22,9 +22,12 @@ if(isset($_POST["password1"]))
     $password = mysqli_real_escape_string($conn, $_POST["password1"]);
 //insert user into database
 $password = md5($password);//encrypt the password before saving in the database
-$query = "INSERT INTO USERS (username, password, email, accountType, fullName) VALUES('$username', '$password', '$email', '$accountType', '$fullName')";
-if ($conn->query($query) === TRUE)
-    echo "New record created successfully";
+$query = "INSERT INTO USERS (username, password, email, accountType, fullName, accepted) VALUES('$username', '$password', '$email', '$accountType', '$fullName', 0)";
+if ($conn->query($query) === TRUE){
+	echo "New record created successfully";
+	$_SESSION["uEmail"] = $email;
+	include 'sendEmail.php';
+}
 else 
     echo "Error: " . $query . "<br>" . $conn->error;
 //get user ID and set it to session 
@@ -42,4 +45,4 @@ if($accountType == 0){
     }
 }
 $_SESSION['userID'] = $userID;
-header('location: thankyouForRegister.html');
+//header('location: thankyouForRegister.html');

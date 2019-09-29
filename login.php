@@ -51,7 +51,7 @@
                 if(isset($_GET["msg"])){
 					$msg = $_GET["msg"];
 					if($msg == "notaccepted")
-						echo "<span style='font-size:12px;color:#EC453C;'>Your account has not been accepted by admin yet!</span>";
+						echo "<span style='font-size:12px;color:#EC453C;'>Your account has not been accepted or rejected by admin. Please check your email for more details!</span>";
 					else
 						echo "<span style=\"font-size: 12px; color: #EC453C;\">Incorrect username or password.</span>";
                 }

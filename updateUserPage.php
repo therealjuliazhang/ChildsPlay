@@ -15,6 +15,7 @@
     {
         //echo "post accepted exists <br/>";
         $accepted .= $_GET["accepted"];
+		$_SESSION["accepted"] = $accepted;
     }
     
     echo "This is the user id ".$userID."<br/>";
