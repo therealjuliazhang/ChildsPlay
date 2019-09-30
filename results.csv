@@ -1,0 +1,15 @@
+Activity Style,Instruction,Happy,Likert Count,Coordinate X,Coordinate Y,Preferred Mechanics,Mechanics Count,Other Comment,Points Interval,Total Scores,General Comment
+Likert Scale,Do you like this monster? Touch the smiley face if you like it and touch the sad face if you don't like it.,1,5,,,,,,,,Alex changed his mind after pressing like.
+Likert Scale,Do you like this monster? Touch the smiley face if you like it and touch the sad face if you don't like it.,0,2,,,,,,,,Alex changed his mind after pressing like.
+Identify Body Parts,Can you see the monster's eyes? Touch the monster's eyes.,,,0.41194,0.275,,,,,,Ren was not sure if she liked the monster.
+Identify Body Parts,Can you see the monster's eyes? Touch the monster's eyes.,,,0.61493,0.275,,,,,,Ren was not sure if she liked the monster.
+Identify Body Parts,Can you see the monster's eyes? Touch the monster's eyes.,,,0.50448,0.535,,,,,,Ren was not sure if she liked the monster.
+Preferred Mechanics,How would you make the monster bigger if the paper was a touch screen?,,,,,Other,2,Alex had difficulty interacting with the monster,,,
+Character Ranking,What are your favourite monsters? Select the monsters in order of your favourite to least favourite.,,,,,,,,10,100,
+Character Ranking,What are your favourite monsters? Select the monsters in order of your favourite to least favourite.,,,,,,,,10,75,
+Character Ranking,What are your favourite monsters? Select the monsters in order of your favourite to least favourite.,,,,,,,,10,55,
+Character Ranking,What are your favourite monsters? Select the monsters in order of your favourite to least favourite.,,,,,,,,10,50,
+Character Ranking,What are your favourite monsters? Select the monsters in order of your favourite to least favourite.,,,,,,,,10,40,
+Preferred Mechanics,How would you make the monster bigger if the paper was a touch screen?,,,,,Press,1,,,,
+Preferred Mechanics,How would you make the monster bigger if the paper was a touch screen?,,,,,Zoom/Pinch,1,,,,
+Preferred Mechanics,How would you make the monster bigger if the paper was a touch screen?,,,,,Swipe/Drag,2,,,,

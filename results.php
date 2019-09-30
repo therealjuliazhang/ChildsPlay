@@ -75,15 +75,15 @@ include_once 'resultQueries.php';
 	<ul id="sidebar" class="sidenav sidenav-fixed" >
 		<li><h5><a href="#" data-target="slide-out" class="dropdown-trigger">More Tests</a></h5></li>
 		<ul class="dropdown-content" id="slide-out">
+		<li><a href="results.php">All tests</a></li>
 		<?php
 		$testQuery = "SELECT testID, title FROM TEST";
 		$result = $conn->query($testQuery);
 		while($row = mysqli_fetch_assoc($result))
-			//echo "<li><a href='#'>".$row["title"]."</a></li>";
 			echo "<li><a href='?testID=".$row["testID"]."'>".$row["title"]."</a></li>";
 		?>
 		</ul>
-
+		
 		<li><h5>Filter Results By:</h5></li>
 		<form action="" method="post">
 		<!--Collapsible group tab-->
@@ -208,6 +208,8 @@ include_once 'resultQueries.php';
         <!-- body content -->
         <div id="body">
 			<!--end slide out menu-->
+			<div align="right" style="position:fixed;top:77px;right:25px"><a href="exportData.php" ><img src="images/Excel-2-icon.png" width="33px" height="33px"/></a></div>
+			<div style="position:fixed;top:77px;right:63px;"><a><img src="images/icons8-export-csv-80.png" width="38px" height="38px"/></a></div>
 			<div id="results">
 			</div>
 		</div>
@@ -221,6 +223,11 @@ include_once 'resultQueries.php';
 		}
 	</script>
     <style>
+	.dropdown-content{
+		max-height:350px;
+	}
+	/**/
+	
 	#body {
 		padding-left: 330px;
 		padding-bottom: 50px;

@@ -2,28 +2,30 @@
 /*
 	Author: Phuong Linh Bui (5624095)
 */
+
 //connect to database
 include 'db_connection.php';
 $conn = OpenCon();
 $filteredPreIDs = array();
 $isGroupResults = true;
 //likert result query
-$query1 = "SELECT DISTINCT happy, count(happy) AS likertCount, R.taskID, T.instruction, I.imageID, address, comments, orderInTest, R.testID  
-		FROM RESULTS R INNER JOIN IMAGEASSIGNMENT IA ON R.taskID = IA.taskID INNER JOIN IMAGE I ON IA.imageID = I.imageID INNER JOIN TASK T ON R.taskID = T.taskID INNER JOIN TASKASSIGNMENT TA ON TA.taskID = T.taskID
+$query1 = "SELECT R.testID, TEST.title, R.taskID, T.taskTitle, orderInTest, T.activityStyle, T.instruction, I.imageID, address, happy, count(happy) AS likertCount, comments  
+		FROM RESULTS R INNER JOIN IMAGEASSIGNMENT IA ON R.taskID = IA.taskID INNER JOIN IMAGE I ON IA.imageID = I.imageID INNER JOIN TEST ON R.testID = TEST.testID JOIN TASK T ON R.taskID = T.taskID INNER JOIN TASKASSIGNMENT TA ON TA.taskID = R.taskID AND TA.testID = R.testID
 		WHERE happy IS NOT NULL"; 
 //body parts result query				
-$query2 = "SELECT R.taskID, I.imageID, address, x, y, T.instruction, comments, orderInTest, R.testID  
-		FROM RESULTS R INNER JOIN IMAGEASSIGNMENT IA ON R.taskID = IA.taskID INNER JOIN IMAGE I ON IA.imageID = I.imageID INNER JOIN TASK T ON R.taskID = T.taskID INNER JOIN TASKASSIGNMENT TA ON TA.taskID = T.taskID
+$query2 = "SELECT R.testID, TEST.title, R.taskID, T.taskTitle, orderInTest, T.activityStyle, T.instruction, I.imageID, address, x, y, comments 
+		FROM RESULTS R INNER JOIN IMAGEASSIGNMENT IA ON R.taskID = IA.taskID INNER JOIN IMAGE I ON IA.imageID = I.imageID INNER JOIN TEST ON R.testID = TEST.testID JOIN TASK T ON R.taskID = T.taskID INNER JOIN TASKASSIGNMENT TA ON TA.taskID = R.taskID AND TA.testID = R.testID
 		WHERE x IS NOT NULL";
 //mechanic result query
-$query3 = "SELECT DISTINCT mechanic, count(mechanic) AS mechanicCount, T.instruction, R.taskID, I.imageID, address, comments, orderInTest, R.testID  
-		FROM RESULTS R INNER JOIN IMAGEASSIGNMENT IA ON R.taskID = IA.taskID INNER JOIN IMAGE I ON IA.imageID = I.imageID INNER JOIN TASK T ON R.taskID = T.taskID INNER JOIN TASKASSIGNMENT TA ON TA.taskID = T.taskID
+$query3 = "SELECT R.testID, TEST.title, R.taskID, T.taskTitle, orderInTest, T.activityStyle, T.instruction, I.imageID, address, mechanic, count(mechanic) AS mechanicCount, otherComment, comments  
+		FROM RESULTS R INNER JOIN IMAGEASSIGNMENT IA ON R.taskID = IA.taskID INNER JOIN IMAGE I ON IA.imageID = I.imageID INNER JOIN TEST ON R.testID = TEST.testID JOIN TASK T ON R.taskID = T.taskID INNER JOIN TASKASSIGNMENT TA ON TA.taskID = R.taskID AND TA.testID = R.testID
 		WHERE mechanic IS NOT NULL";
 //character ranking result query		
-$query4 = "SELECT R.imageID, address, sum(score) AS totalScore, R.taskID, R.preID, T.instruction, comments, orderInTest, R.testID  
-		FROM RANKING R INNER JOIN IMAGE I ON R.imageID = I.imageID INNER JOIN TASK T ON R.taskID = T.taskID INNER JOIN TASKASSIGNMENT TA ON TA.taskID = T.taskID";		
+$query4 = "SELECT R.testID, TEST.title, R.taskID, T.taskTitle, orderInTest, T.activityStyle, T.instruction, I.imageID, address, TA.pointsInterval, sum(score) AS totalScore, comments  
+		FROM RANKING R INNER JOIN IMAGE I ON R.imageID = I.imageID INNER JOIN TASK T ON R.taskID = T.taskID INNER JOIN TEST ON R.testID = TEST.testID JOIN TASKASSIGNMENT TA ON TA.taskID = R.taskID AND TA.testID = R.testID";		
 
 $testFilter = "";
+$filter = "";
 //get the selected testID from the list
 if(isset($_SESSION["testID"])){	
 	$testID = $_SESSION["testID"];
@@ -174,8 +176,8 @@ if(isset($_SESSION["testID"])){
 	}
 //}
 
-$query1 .= " GROUP BY happy, R.taskID";
-$query3 .= " GROUP BY mechanic, R.taskID";
+$query1 .= " GROUP BY happy";
+$query3 .= " GROUP BY mechanic";
 $query4 .= " GROUP BY imageID ORDER BY totalScore DESC";
 
 //array for all results
@@ -199,6 +201,21 @@ if(!(count($filteredPreIDs) == 0)){
 	while($row4 = mysqli_fetch_assoc($result4))
 		array_push($results, $row4);		
 }
-	//unset($_SESSION["testID"]);
+//sort the results array by orderInTest in ascending order
+$order = array();
+foreach($results as $value){
+	array_push($order, $value["orderInTest"]);
+}
+$uniqueOrder = array_unique($order);
+sort($uniqueOrder);
+
+$records = array();
+foreach($uniqueOrder as $v){
+	foreach($results as $value){
+		if($value["orderInTest"] == $v)
+			array_push($records, $value);
+	}
+}
+$_SESSION["records"] = $records;
 ?>
 
