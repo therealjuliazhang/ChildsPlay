@@ -13,7 +13,7 @@ if(isset($_SESSION["testID"]))
 if(isset($_GET["testID"])){
     $testID = $_GET["testID"];
 	$_SESSION["testID"] = $testID;
-}	
+}
 //connect to database
 include 'db_connection.php';
 $conn = OpenCon();
@@ -86,7 +86,7 @@ CloseCon($conn);
                     }
                 }
             })
-			
+
             //validate test title
             $("#form").validate({
                 rules: {
@@ -222,9 +222,9 @@ CloseCon($conn);
                         <td>TaskID&nbsp;&nbsp;</td>
                         <td width="20%">Activity Style</td>
                         <td>Instruction</td>
-                        <td>Preview</td>
+                        <!-- <td>Preview</td>
                         <td>Edit</td>
-                        <td>Remove</td>
+                        <td>Remove</td> -->
                     </tr>
                 </thead>
                 <tbody id="tableBody">

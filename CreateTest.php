@@ -79,7 +79,7 @@ else
 			localStorage.setItem( 'testTitle', testTitle );
 			localStorage.setItem( 'description', description );
 		}
-		
+
 		function showWarning(){
 			//javascript: return confirm('Are you sure you wish to remove this task from this test?');
 			//alert("Are you sure you wish to remove this task from this test?");
@@ -94,8 +94,8 @@ else
                 })
 			)
 		)*/
-		
-		
+
+
     </script>
     <!-- body content -->
     <div class="container">
@@ -135,8 +135,8 @@ else
                         <td>TaskID&nbsp;&nbsp;</td>
                         <td>Activity Style</td>
                         <td>Instruction</td>
-                        <td>Preview</td>
-                        <td>Remove</td>
+                        <!-- <td>Preview</td>
+                        <td>Remove</td> -->
                     </tr>
                 </thead>
                 <!--List of tasks--->
@@ -149,7 +149,7 @@ else
                     $conn = OpenCon();
                     $taskList = array();
                     $idList = array();
-					
+
                     //session_destroy();
                     //unset($_GET["list"]);
 
