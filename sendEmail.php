@@ -24,7 +24,6 @@ $mail->isHTML(true); //allows to use HTML content
 //send email when admin accepts or rejects the account
 if(isset($_SESSION["uID"])){
 	$uID = $_SESSION["uID"];
-	echo "iD: ".$uID;
 	$sql = "SELECT email FROM USERS WHERE userID=$uID";
 	$result = $conn->query($sql);
 	$email = "";
@@ -42,7 +41,7 @@ if(isset($_SESSION["uID"])){
 		}
 		else if ($accepted == -1){
 			$message = "<span style='font-size:16px;font-weight:bold'>Unfortunately,</span><br/><br/>";
-			$message .=	"Your account in ChildsPlay website is rejected by admin!";
+			$message .=	"Your account in ChildsPlay website is declined by admin!";
 		}
 	}
 	$mail->Body = $message; // Set a plain text body.
@@ -73,6 +72,7 @@ if(isset($_SESSION["uEmail"])){
 	
 	if ($mail->send()) {
 		echo "Your message was sent successfully!";
+		header("Location: thankyouForRegister.html");
 	} else {
 		echo "Mailer Error: " . $mail->ErrorInfo;
 	}
