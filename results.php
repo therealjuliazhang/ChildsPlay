@@ -10,11 +10,11 @@ else
 if(isset($_SESSION["testID"])){
 	//session_destroy();
 	unset($_SESSION["testID"]);
-}
+}/*
 if(isset($_GET["testID"])){
 	$testID = $_GET["testID"];
 	$_SESSION["testID"] = $testID;
-}
+}*/
 include_once 'resultQueries.php';
 ?>
     <head>
@@ -73,7 +73,7 @@ include_once 'resultQueries.php';
         <!--end header-->
         <!--side bar-->
 	<ul id="sidebar" class="sidenav sidenav-fixed" >
-		<li><h5><a href="#" data-target="slide-out" class="dropdown-trigger">More Tests</a></h5></li>
+		<!--<li><h5><a href="#" data-target="slide-out" class="dropdown-trigger">More Tests</a></h5></li>
 		<ul class="dropdown-content" id="slide-out">
 		<li><a href="results.php">All tests</a></li>
 		<?php
@@ -82,12 +82,31 @@ include_once 'resultQueries.php';
 		while($row = mysqli_fetch_assoc($result))
 			echo "<li><a href='?testID=".$row["testID"]."'>".$row["title"]."</a></li>";
 		?>
-		</ul>
+		</ul>--->
 		
-		<li><h5>Filter Results By:</h5></li>
+		<li><h5>Filter Results:</h5></li>
 		<form action="" method="post">
-		<!--Collapsible group tab-->
-		<ul class="collapsible">
+			<!--Collapsible tests tab-->
+			<ul class="collapsible">
+				<li>
+					<div class="collapsible-header"><i class="material-icons">assessment</i><h6>Tests</h6></div>
+					<div class="collapsible-body">
+					<div class="container">
+					<p><label><input type="checkbox" class="filled-in" /><span>All tests</span></label></p>
+					<?php
+					$testQuery = "SELECT testID, title FROM TEST";
+					$result = $conn->query($testQuery);
+					while($row = mysqli_fetch_assoc($result)){
+						echo "<p><label><input type='checkbox' name='test[]' value='".$row["testID"]."' class='filled-in' />".
+						"<span>".$row["title"]."</span></label></p>";
+					}
+					?>
+					</div>
+					</div>
+				</li>
+			</ul>
+			<!--Collapsible group tab-->
+			<ul class="collapsible">
 			<li>
 		   	<div class="collapsible-header"><i class="material-icons">group</i><h6>Group</h6></div>
 		    <div class="collapsible-body">
@@ -171,36 +190,36 @@ include_once 'resultQueries.php';
 		</ul>
 		<!--End Collapsible group Tab-->
 		
-		<!--Collapsible Individual Tab-->
-		<ul class="collapsible">
-					<li>
-						<div class="collapsible-header"><i class="material-icons">person</i><h6>Individual</h6></div>
-						<div class="collapsible-body">
-							<div class="container">
-							<?php
-								$childQuery = "SELECT DISTINCT name, preID FROM PRESCHOOLER";
-								if(isset($testID))
-									$childQuery .= " ";
-								$childResult = $conn->query($childQuery);
-								while($row = mysqli_fetch_assoc($childResult)){
-									echo "<p><label><input type='checkbox' name='name[]' value='".$row["preID"]."' class='filled-in' />".
-										 "<span>".$row["name"]."</span></label></p>";
-									}
-								CloseCon($conn);
-							?>
-							</div>
+			<!--Collapsible Individual Tab-->
+			<ul class="collapsible">
+				<li>
+					<div class="collapsible-header"><i class="material-icons">person</i><h6>Individual</h6></div>
+					<div class="collapsible-body">
+						<div class="container">
+						<?php
+							$childQuery = "SELECT DISTINCT name, preID FROM PRESCHOOLER";
+							if(isset($testID))
+								$childQuery .= " ";
+							$childResult = $conn->query($childQuery);
+							while($row = mysqli_fetch_assoc($childResult)){
+								echo "<p><label><input type='checkbox' name='name[]' value='".$row["preID"]."' class='filled-in' />".
+									 "<span>".$row["name"]."</span></label></p>";
+								}
+							CloseCon($conn);
+						?>
 						</div>
-					</li>
-				</ul>
-				<!--End Collapsible Individual Tab-->
-				<ul class="collapsible">
+					</div>
+				</li>
+			</ul>
+			<!--End Collapsible Individual Tab-->
+			<ul class="collapsible">
 				<li>
 					<br/>
 					<div class="center-align">
 						<button class="btn waves-effect waves-light blue darken-4 sortButton" type="submit" name="submitGroup">Filter</button>
 					</div>
 				</li>
-				</ul>
+			</ul>
 		</form>
 	<!--end filter result form-->		
 	</ul>
@@ -208,8 +227,7 @@ include_once 'resultQueries.php';
         <!-- body content -->
         <div id="body">
 			<!--end slide out menu-->
-			<div align="right" style="position:fixed;top:77px;right:25px"><a href="exportData.php" ><img src="images/Excel-2-icon.png" width="33px" height="33px"/></a></div>
-			<div style="position:fixed;top:77px;right:63px;"><a><img src="images/icons8-export-csv-80.png" width="38px" height="38px"/></a></div>
+			<div align="right" style="position:fixed;top:80px;right:25px"><a href="exportData.php" ><img src="images/Excel-2-icon.png" width="40px" height="40px"/></a></div>
 			<div id="results">
 			</div>
 		</div>

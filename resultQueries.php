@@ -27,14 +27,25 @@ $query4 = "SELECT R.testID, TEST.title, R.taskID, T.taskTitle, orderInTest, T.ac
 $testFilter = "";
 $filter = "";
 //get the selected testID from the list
-if(isset($_SESSION["testID"])){	
-	$testID = $_SESSION["testID"];
-	$testFilter = "R.testID=".$testID;
+if(isset($_POST["test"])){
+	$i = 0;
+	$countIDs = count($_POST["test"]);
+	$selected = "";
+	while($i < $countIDs){
+		$selected .= $_POST["test"][$i];
+		//echo "Select testID: ".$selected;
+		if($i < $countIDs - 1){
+			$selected .= ",";
+		}
+		$i++;
+	}
+	$testFilter = "R.testID IN (".$selected.")";
 	$query1 .= " AND ".$testFilter;
 	$query2 .= " AND ".$testFilter;
 	$query3 .= " AND ".$testFilter;
 	$query4 .= " WHERE ".$testFilter;
-}		
+}
+
 //if(isset($_POST["submitGroup"])){
 	$locationQuery = "SELECT groupID FROM GROUPTEST";
 	$groupList = array();
