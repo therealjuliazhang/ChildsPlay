@@ -6,7 +6,7 @@ if(isset($_SESSION["userID"]))
 else
 	$userID = 1;
 	//header("Location: login.php");
-	
+
 //get mode from session to check if preview mode
 if (isset($_SESSION['mode']))
 	$mode = $_SESSION['mode'];
@@ -21,7 +21,7 @@ if (isset($_SESSION['tasks']))
 //get task index from url
 if (isset($_GET['taskIndex']))
 	$taskIndex = $_GET['taskIndex'];
-	
+
 //the group used for previewing tests
 $previewGroupID = 4;
 $isPreview = false;
@@ -85,7 +85,7 @@ CloseCon($conn);
 	var isPreview = <?php echo(json_encode($isPreview)); ?>;
 	var from; //if preview check if from edit page or available test page ect.
 	if(isPreview)
-		from = <?php echo(json_encode($from)); ?>; // checks from which page preview was opened 
+		from = <?php echo(json_encode($from)); ?>; // checks from which page preview was opened
 	var taskIndex = <?php echo(json_encode($taskIndex)); ?>;
 	var testID = <?php echo(json_encode($testID)); ?>;
 	var taskID = <?php echo(json_encode($taskID)); ?>;
@@ -169,7 +169,7 @@ CloseCon($conn);
 	}
 	//Next participant
 	function goNext(){
-		if(clicked == true){
+		if(clicked == true || isTaskPreview){
 		preschoolerIndex++;
 		if(preschoolerIndex == preschoolers.length){
 			imageIndex++;

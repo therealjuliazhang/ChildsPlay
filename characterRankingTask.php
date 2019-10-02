@@ -112,7 +112,7 @@ CloseCon($conn);
 	}
 	//Next participant
 	function goNext(){
-		if(clicked == true){
+		if(clicked == true || isTaskPreview){
 		preschoolerNumber++;
 		if(preschoolerNumber == preschoolers.length){
 			var taskIndex = <?php echo $taskIndex ?>;
@@ -154,7 +154,7 @@ CloseCon($conn);
 			div.setAttribute('points', 0);
 			div.setAttribute('imageID', images[i]['imageID']);
 			div.appendChild(img);
-			
+
 				div.onclick = function(){
 					clicked = true;
 					this.setAttribute('points', parseInt(this.getAttribute("points")) + pointsToGive);
@@ -176,7 +176,7 @@ CloseCon($conn);
 					pointsToGive -= pointsInterval;
 					this.classList.add("chosen");
 				//only save results if task is in start mode
-				if(!isTaskPreview){	
+				if(!isTaskPreview){
 					//send results to php file
 					$.ajax({
 							 type: 'POST',
@@ -185,7 +185,7 @@ CloseCon($conn);
 					});
 				}
 				};
-			
+
 			document.getElementById("characters").appendChild(div);
 		}
 	}
