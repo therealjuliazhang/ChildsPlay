@@ -169,7 +169,7 @@ CloseCon($conn);
 	}
 	//Next participant
 	function goNext(){
-		if(clicked == true || isTaskPreview){
+		if(clicked == true || isPreview){
 		preschoolerIndex++;
 		if(preschoolerIndex == preschoolers.length){
 			imageIndex++;

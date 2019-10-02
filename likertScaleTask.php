@@ -141,7 +141,7 @@
 		document.getElementById("preschoolerName").innerHTML = preschoolers[0]['name'];
 		document.getElementById("participant").className = 'row ' + colours[preschoolerIndex % colours.length];
 		function goNext(){
-			if(faceClicked == true || isTaskPreview){
+			if(faceClicked == true || isPreview){
 				preschoolerIndex++;
 				if(preschoolerIndex == preschoolers.length){
 					var taskIndex = <?php echo $taskIndex ?>;

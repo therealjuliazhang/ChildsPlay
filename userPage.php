@@ -11,6 +11,8 @@
 
   <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.1/js/jquery.tablesorter.min.js"></script>
+
 </head>
 <body>
   <!--header-->
@@ -34,7 +36,7 @@
         <div class="indicator blue darken-2" style="z-index:1" id="tabIndicator"></div>
       </ul>
       <!-- pending users tab-->
-      <table id="pendingUsers" class="striped">
+      <table id="pendingUsers" class="striped tablesorter">
         <thead class="blue-text darken-2">
           <tr>
             <th>Name</th>
@@ -46,63 +48,63 @@
           </tr>
         </thead>
         <tbody class="grey-text text-darken-1">
-            <?php
-            session_start();
-            include 'db_connection.php';
-            $conn = OpenCon();
-            //get pending users from database
-            $sql = "SELECT * FROM USERS WHERE accepted = 0";
+          <?php
+          session_start();
+          include 'db_connection.php';
+          $conn = OpenCon();
+          //get pending users from database
+          $sql = "SELECT * FROM USERS WHERE accepted = 0";
 
-            $result = $conn->query($sql);
-            $users = array();
-            while($row = mysqli_fetch_assoc($result))
-            {
-              $users[] = $row;
-            }
+          $result = $conn->query($sql);
+          $users = array();
+          while($row = mysqli_fetch_assoc($result))
+          {
+            $users[] = $row;
+          }
 
-            foreach($users as $user)
+          foreach($users as $user)
+          {
+            echo "<tr><td>".$user["fullName"]."</td><td>".$user["email"]."</td>";
+            //get information about location
+            $newQuery = "SELECT L.name FROM LOCATION L JOIN LOCATIONASSIGNMENT LA ON L.locationID = LA.locationID WHERE LA.userID=".$user["userID"];
+            $newResult = $conn->query($newQuery);
+            $rowcount = mysqli_num_rows($newResult);
+            $newLoc = "<td>";
+            $count=0;
+            while($row = mysqli_fetch_assoc($newResult))
             {
-              echo "<tr><td>".$user["fullName"]."</td><td>".$user["email"]."</td>";
-              //get information about location
-              $newQuery = "SELECT L.name FROM LOCATION L JOIN LOCATIONASSIGNMENT LA ON L.locationID = LA.locationID WHERE LA.userID=".$user["userID"];
-              $newResult = $conn->query($newQuery);
-              $rowcount = mysqli_num_rows($newResult);
-              $newLoc = "<td>";
-              $count=0;
-              while($row = mysqli_fetch_assoc($newResult))
+              $newLoc .= $row["name"];
+              if($count < $rowcount - 1)
               {
-                $newLoc .= $row["name"];
-                if($count < $rowcount - 1)
-                {
-                  $newLoc .= ", ";
-                }
-                $count++;
+                $newLoc .= ", ";
               }
-              echo $newLoc."</td>";
-              if($user["accountType"]==0)
-              {
-                echo "<td>Educator</td>";
-              }else
-              {
-                echo "<td>Admin</td>";
-              }
-	      //print buttons
-              echo "<td><a href='updateUserPage.php?uid=".$user["userID"]."&accepted=1' class='waves-effect waves-light btn acceptButton'>Accept</a></td>";
-              echo "<td><a href='updateUserPage.php?uid=".$user["userID"]."&accepted=-1' class='waves-effect waves-light btn #ff5252 red accent-2 declineButton'>Decline</a></td></tr>";
+              $count++;
             }
-            ?>
+            echo $newLoc."</td>";
+            if($user["accountType"]==0)
+            {
+              echo "<td>Educator</td>";
+            }else
+            {
+              echo "<td>Admin</td>";
+            }
+            //print buttons
+            echo "<td><a href='updateUserPage.php?uid=".$user["userID"]."&accepted=1' class='waves-effect waves-light btn acceptButton'>Accept</a></td>";
+            echo "<td><a href='updateUserPage.php?uid=".$user["userID"]."&accepted=-1' class='waves-effect waves-light btn #ff5252 red accent-2 declineButton'>Decline</a></td></tr>";
+          }
+          ?>
         </tbody>
       </table>
 
       <!-- educators tab-->
       <div id="educators">
-        <table class="striped">
+        <table class="striped tablesorter">
           <thead class="blue-text darken-2">
             <tr>
               <th>Name</th>
               <th>Email</th>
               <th>Organisation</th>
-              <th>Accessible Tests</th>
+
             </tr>
           </thead>
           <tbody class="grey-text text-darken-1">
@@ -144,7 +146,7 @@
       </div>
       <!--Admin Tab-->
       <div id="admin">
-        <table class="striped">
+        <table class="striped tablesorter">
           <thead class="blue-text darken-2">
             <tr>
               <th>Name</th>
@@ -176,6 +178,10 @@
     <!--end body content-->
   </body>
   <script>
+  //Sorting The table contents
+  $(document).ready(function() {
+  $("table").tablesorter();
+  });
   //Initialise tabs
   $(document).ready(function(){
     $('.tabs').tabs();
@@ -193,21 +199,21 @@
 
 <style media="screen">
 .container{
-		margin-top: 25px;
+  margin-top: 25px;
 }
 
 
 .tabs .tab a:focus, .tabs .tab a:focus.active {
-    background-color: rgba(38, 166, 154, 0.2);
-    outline: none;
+  background-color: rgba(38, 166, 154, 0.2);
+  outline: none;
 }
 .tabs .tab a:hover, .tabs .tab a.active {
-    background-color: rgba(38, 166, 154, 0.2);
-    color: #ee6e73;
+  background-color: rgba(38, 166, 154, 0.2);
+  color: #ee6e73;
 }
 #profileLinkButton {
-    padding-left: 16px;
-    padding-right: 16px;
+  padding-left: 16px;
+  padding-right: 16px;
 }
 #profileLinkIcon{
   font-size: 24px;
@@ -218,10 +224,20 @@ ul.tabs {
   overflow-x: hidden;
 }
 .tabs{
-		margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 .tabs .tab {
-    text-transform: none;
-  }
+  text-transform: none;
+}
+
+.tablesorter-header {
+  cursor: pointer;
+  outline: none;
+}
+.tablesorter-header-inner::after {
+  content: '▼';
+  font-size: 12px;
+  margin-left: 5px;
+}
 </style>
 </html>
