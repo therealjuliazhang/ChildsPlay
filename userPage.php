@@ -89,15 +89,8 @@
 	      //print buttons
               echo "<td><a href='updateUserPage.php?uid=".$user["userID"]."&accepted=1' class='waves-effect waves-light btn acceptButton'>Accept</a></td>";
               echo "<td><a href='updateUserPage.php?uid=".$user["userID"]."&accepted=-1' class='waves-effect waves-light btn #ff5252 red accent-2 declineButton'>Decline</a></td></tr>";
-
-
             }
-
             ?>
-
-          <?php
-
-          ?>
         </tbody>
       </table>
 

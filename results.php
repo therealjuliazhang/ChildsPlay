@@ -84,7 +84,7 @@ include_once 'resultQueries.php';
 		?>
 		</ul>--->
 		
-		<li><h5>Filter Results:</h5></li>
+		<div><li><h5 style="padding-left:18px;">Filter By</h5></li></div>
 		<form action="" method="post">
 			<!--Collapsible tests tab-->
 			<ul class="collapsible">
@@ -92,13 +92,13 @@ include_once 'resultQueries.php';
 					<div class="collapsible-header"><i class="material-icons">assessment</i><h6>Tests</h6></div>
 					<div class="collapsible-body">
 					<div class="container">
-					<p><label><input type="checkbox" class="filled-in" /><span>All tests</span></label></p>
+					<div><label><input type="checkbox" class="filled-in" /><span>All tests</span></label></div>
 					<?php
 					$testQuery = "SELECT testID, title FROM TEST";
 					$result = $conn->query($testQuery);
 					while($row = mysqli_fetch_assoc($result)){
-						echo "<p><label><input type='checkbox' name='test[]' value='".$row["testID"]."' class='filled-in' />".
-						"<span>".$row["title"]."</span></label></p>";
+						echo "<div><label><input type='checkbox' name='test[]' value='".$row["testID"]."' class='filled-in' />".
+						"<span>".$row["title"]."</span></label></div>";
 					}
 					?>
 					</div>
@@ -108,11 +108,11 @@ include_once 'resultQueries.php';
 			<!--Collapsible group tab-->
 			<ul class="collapsible">
 			<li>
-		   	<div class="collapsible-header"><i class="material-icons">group</i><h6>Group</h6></div>
+		   	<div class="collapsible-header"><i class="material-icons">group</i><h6>Group Results</h6></div>
 		    <div class="collapsible-body">
 				<ul class="collapsible">
 					<li>
-						<div class="collapsible-header"><h6>Location</h6></div>
+						<div class="collapsible-header"><h6 style="padding-left:6px">Location</h6></div>
 						<div class="collapsible-body">
 							<div class="container">
 								<!--start checkbox-->
@@ -120,8 +120,8 @@ include_once 'resultQueries.php';
 								$locationQuery = "SELECT * FROM LOCATION WHERE locationID != 1";
 								$locationResult = $conn->query($locationQuery);
 								while($row = mysqli_fetch_assoc($locationResult)){
-									echo "<p><label><input type='checkbox' name='location[]' value='".$row["locationID"]."' class='filled-in' />".
-									     "<span>".$row["name"]."</span></label></p>";
+									echo "<div><label><input type='checkbox' name='location[]' value='".$row["locationID"]."' class='filled-in' />".
+									     "<span>".$row["name"]."</span></label></div>";
 								}
 								?>
 								<!--end checkbox-->
@@ -131,7 +131,7 @@ include_once 'resultQueries.php';
 				</ul>
 				<ul class="collapsible">
 					<li>
-						<div class="collapsible-header"><h6>Group</h6></div>
+						<div class="collapsible-header"><h6 style="padding-left:6px">Group</h6></div>
 						<div class="collapsible-body">
 							<div class="container">
 								<!--start checkbox-->
@@ -139,8 +139,8 @@ include_once 'resultQueries.php';
 								$groupQuery = "SELECT * FROM GROUPTEST";
 								$groupResult = $conn->query($groupQuery);
 								while($row = mysqli_fetch_assoc($groupResult)){
-									echo "<p><label><input type='checkbox' name='group[]' value='".$row["groupID"]."' class='filled-in' />".
-									     "<span>".$row["name"]."</span></label></p>";
+									echo "<div><label><input type='checkbox' name='group[]' value='".$row["groupID"]."' class='filled-in' />".
+									     "<span>".$row["name"]."</span></label></div>";
 								}
 								?>
 								<!--end checkbox-->
@@ -150,7 +150,7 @@ include_once 'resultQueries.php';
 				</ul>
 				<ul class="collapsible">
 					<li>
-						<div class="collapsible-header"><h6>Gender</h6></div>
+						<div class="collapsible-header"><h6 style="padding-left:6px">Gender</h6></div>
 						<div class="collapsible-body">
 							<div class="container">
 								<!--start checkbox-->
@@ -158,8 +158,8 @@ include_once 'resultQueries.php';
 								$genderQuery = "SELECT DISTINCT gender FROM PRESCHOOLER";
 								$genderResult = $conn->query($genderQuery);
 								while($row = mysqli_fetch_assoc($genderResult)){
-									echo "<p><label><input type='checkbox' name='gender[]' value='".$row["gender"]."' class='filled-in' />".
-									     "<span>".$row["gender"]."</span></label></p>";
+									echo "<div><label><input type='checkbox' name='gender[]' value='".$row["gender"]."' class='filled-in' />".
+									     "<span>".$row["gender"]."</span></label></div>";
 								}
 								?>
 								<!--end checkbox-->
@@ -169,15 +169,15 @@ include_once 'resultQueries.php';
 				</ul>
 				<ul class="collapsible">
 					<li>
-						<div class="collapsible-header"><h6>Age</h6></div>
+						<div class="collapsible-header"><h6 style="padding-left:6px">Age</h6></div>
 						<div class="collapsible-body">
 							<div class="container">
 								<?php
 								$ageQuery = "SELECT DISTINCT age FROM PRESCHOOLER";
 								$ageResult = $conn->query($ageQuery);
 								while($row = mysqli_fetch_assoc($ageResult)){
-									echo "<p><label><input type='checkbox' name='age[]' value='".$row["age"]."' class='filled-in' />".
-									     "<span>".$row["age"]."</span></label></p>";
+									echo "<div><label><input type='checkbox' name='age[]' value='".$row["age"]."' class='filled-in' />".
+									     "<span>".$row["age"]."</span></label></div>";
 								}
 								?>
 								<!--end checkbox-->
@@ -193,7 +193,7 @@ include_once 'resultQueries.php';
 			<!--Collapsible Individual Tab-->
 			<ul class="collapsible">
 				<li>
-					<div class="collapsible-header"><i class="material-icons">person</i><h6>Individual</h6></div>
+					<div class="collapsible-header"><i class="material-icons">person</i><h6>Individual Results</h6></div>
 					<div class="collapsible-body">
 						<div class="container">
 						<?php
@@ -202,8 +202,8 @@ include_once 'resultQueries.php';
 								$childQuery .= " ";
 							$childResult = $conn->query($childQuery);
 							while($row = mysqli_fetch_assoc($childResult)){
-								echo "<p><label><input type='checkbox' name='name[]' value='".$row["preID"]."' class='filled-in' />".
-									 "<span>".$row["name"]."</span></label></p>";
+								echo "<div><label><input type='checkbox' name='name[]' value='".$row["preID"]."' class='filled-in' />".
+									 "<span>".$row["name"]."</span></label></div>";
 								}
 							CloseCon($conn);
 						?>

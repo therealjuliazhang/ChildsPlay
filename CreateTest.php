@@ -13,24 +13,20 @@ else
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="childsPlayStyle.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
+	
 </head>
-<body>
-    <!--header-->
-    <div id="InsertHeader"></div>
-    <script>
+<script>
         //Read header
         $(function() {
             document.addEventListener('DOMContentLoaded', function() {
                 var elem = document.querySelectorAll('.tooltipped');
                 var instance = M.Tooltip.init(elem);
             });
-            $("#InsertHeader").load("header.html");
+            
             //Places error element next to invalid inputs
             $.validator.setDefaults({
                 errorElement: 'div',
@@ -97,6 +93,17 @@ else
 
 
     </script>
+<body>
+    <!--header-->
+		<div id="InsertHeader"></div>
+		<script>
+			//Read header
+			$(function(){
+			    $("#InsertHeader").load("header.html");
+			});
+		</script>
+        <!--end header-->
+    
     <!-- body content -->
     <div class="container">
         <form id="form" action="insertTest.php" method="post" class="col s12">
