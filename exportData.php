@@ -15,14 +15,19 @@ if(isset($_SESSION["records"])){
 	//create a file pointer
 	$file = fopen("php://output", "w");
 	//set column headers
-	$fields = array('Activity Style', 'Instruction', 'Image', 'Happy', 'Likert Count', 'Coordinate X', 'Coordinate Y', 'Preferred Mechanics', 'Mechanics Count', 'Other Comment', 'Points Interval', 'Total Scores', 'General Comment');
+	$fields = array('Activity Style', 'Instruction', 'Image', 'Likert Scale', 'Likert Count', 'Coordinate X', 'Coordinate Y', 'Preferred Mechanics', 'Mechanics Count', 'Other Specified', 'Points Interval', 'Total Scores', 'Comment');
 	fputcsv($file, $fields, $delimiter);
 	
 	foreach($records as $value){
 		//output each row of the data, format line as csv and write to file pointer
 		$split = explode("/", $value["address"]);
 		$image = $split[1];
-		$happy = isset($value["happy"]) ? $value["happy"] : "";
+		$happyValue = isset($value["happy"]) ? $value["happy"] : "";
+		$happy = "";
+		if($happyValue == "1")
+			$happy = "happy";
+		else if($happyValue == "0")
+			$happy = "sad";
 		$likertCount = isset($value["likertCount"]) ? $value["likertCount"] : "";
 		$x = isset($value["x"]) ? $value["x"] : "";
 		$y = isset($value["y"]) ? $value["y"] : "";
