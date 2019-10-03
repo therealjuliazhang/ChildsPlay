@@ -84,15 +84,13 @@
     </head>
     <body>
     <!--header-->
-        <div class="row">
-            <div class="navbar-fixed">
-            <nav class="nav-extended blue darken-4">
-            <div class="nav-wrapper">
-                <a href="#" class="brand-logo left"><img src="images/logo1.png" ></a>
-            </div>
-        </nav>
-    </div>
-    </div>
+		<div id="InsertHeader"></div>
+		<script>
+		//Read header
+		$(function(){
+			$("#InsertHeader").load("testingHeader.html");
+		});
+		</script>
     <!--end header-->
         <!-- body content -->
 		<img id="button" src="images/greyCircle.png" width="7%" align="right" onclick="goNext();"></img>

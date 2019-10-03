@@ -216,13 +216,13 @@ $(document).ready(function(){
 </head>
 <body>
 	<!--Header-->
-	<div class="navbar-fixed">
-		<nav class="nav-extended blue darken-4">
-			<div class="nav-wrapper">
-				<a href="#" class="brand-logo left"><img src="images/logo1.png" ></a>
-			</div>
-		</nav>
-	</div>
+	<div id="InsertHeader"></div>
+	<script>
+	//Read header
+	$(function(){
+		$("#InsertHeader").load("testingHeader.html");
+	});
+	</script>
 	<!--End Header-->
 	<!--Sidebar-->
 	<div>

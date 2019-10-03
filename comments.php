@@ -12,21 +12,21 @@
 		$groupID = $_SESSION['groupID'];
 	if(isset($_SESSION['testID']))
 		$testID = $_SESSION['testID'];
-	
+
 	if(isset($_GET["taskIndex"]))
 		$taskIndex = $_GET['taskIndex'];
-	
+
 	if(isset($_SESSION['tasks'])){
 		$tasks = $_SESSION['tasks'];
 		$taskID = $tasks[$taskIndex]['taskID'];
 	}
 	if(isset($_SESSION["testID"]))
 		$testID = $_SESSION['testID'];
-	
-	
+
+
 	if(isset($_SESSION["taskID"]))
 		$taskID = $_SESSION["taskID"];
-	
+
 	if(isset($_GET["from"])){
 		$from = $_GET["from"];
 		$_SESSION["from"] = $from;
@@ -53,22 +53,13 @@
     <!--all the linking's been done, so you shouldn't need to download anything from Materialise-->
     <body>
         <!--header-->
-        <div class="row">
-        <nav class="nav-extended blue darken-4">
-            <div class="nav-wrapper">
-				<div class="row">
-					<div class="col s10">
-						<a href="#" class="brand-logo"><img src="images/logo1.png" height="200px"></a>
-					</div>
-					<!--
-					<div class="col s2 offset-s10">
-						<a class="waves-effect waves-light btn blue darken-2 right logout" onclick="logout()">Logout</a>
-					</div>
-				-->
-				</div>
-            </div>
-        </nav>
-        </div>
+				<div id="InsertHeader"></div>
+				<script>
+				//Read header
+				$(function(){
+					$("#InsertHeader").load("testingHeader.html");
+				});
+				</script>
         <!--end header-->
 
         <!-- body content -->
@@ -115,7 +106,7 @@ if(isset($_POST['nextButton'])){
 		return $text;
 	}
 	$comment = processText($_POST['area1']);
-	
+
 	if($_SESSION["mode"] == "preview"){
 		if($taskIndex == (sizeof($tasks)-1)){
 			if($from == "existingTasks"){

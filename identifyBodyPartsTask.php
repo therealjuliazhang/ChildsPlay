@@ -252,15 +252,13 @@ CloseCon($conn);
 <body>
 	<!-- body content -->
     <!--header-->
-    <div class="row">
-        <div class="navbar-fixed">
-            <nav class="nav-extended blue darken-4">
-            <div class="nav-wrapper">
-                <a href="#" class="brand-logo left"><img src="images/logo1.png" ></a>
-            </div>
-            </nav>
-        </div>
-    </div>
+		<div id="InsertHeader"></div>
+		<script>
+		//Read header
+		$(function(){
+			$("#InsertHeader").load("testingHeader.html");
+		});
+		</script>
     <!--end header-->
 	<img id="button" src="images/greyCircle.png" alt= "image not workning" width="7%" onclick="goNext();"></img>
 
