@@ -14,6 +14,9 @@ function displayResults(results, isGroupResults){
         displayHeaders(taskID, taskResults, activityStyle);
         //displays graph results if likert or mechanics task
         displayGraph(taskResults, activityStyle);
+        //display preferred mechanics "other" option comments
+        if(activityStyle == "Preferred Mechanics")
+            displayOtherComments(taskResults);
         //display ranking table if character ranking task
         if(activityStyle == "Character Ranking")
             displayRankingTable(taskResults);
@@ -261,4 +264,18 @@ function displayComments(taskResults){
     .append([$('<textarea/>', { class: "materialize-textarea", id:"textarea1", text: taskResults[0].comments}), $('<label/>', { for: "textarea1", class:"materialize-textarea", text:"Comments" })])
     .appendTo('#results'); 
     M.textareaAutoResize($('#textarea1'));
+}
+
+//display preferred mechanics "other" option comments
+function displayOtherComments(taskResults){
+    taskResults.forEach(function(results){
+        if(results.otherComment != null){
+            $('<div/>', { class: "row" })
+            .append($('<form/>', { class: "col s12" }))
+            .append($('<div/>', { class: "input-field col s8" }))
+            .append([$('<textarea/>', { class: "materialize-textarea", id:"textarea2", text: results.otherComment}), $('<label/>', { for: "textarea2", class:"materialize-textarea", text:"Other Mechanic" })])
+            .appendTo('#results'); 
+            M.textareaAutoResize($('#textarea2'));
+        }
+    });
 }
