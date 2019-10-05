@@ -80,7 +80,7 @@ $(document).ready(function() {
   $('.tooltipped').tooltip();
   //Initialize Selector
   $(document).ready(function(){
-    $('select').formSelect();
+    $('select').material_select();
   });
   //initiate select input
   $('select').material_select();

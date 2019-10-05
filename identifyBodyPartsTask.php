@@ -6,7 +6,7 @@ if(isset($_SESSION["userID"]))
 else
 	$userID = 1;
 	//header("Location: login.php");
-	
+
 //get mode from session to check if preview mode
 if (isset($_SESSION['mode']))
 	$mode = $_SESSION['mode'];
@@ -21,7 +21,7 @@ if (isset($_SESSION['tasks']))
 //get task index from url
 if (isset($_GET['taskIndex']))
 	$taskIndex = $_GET['taskIndex'];
-	
+
 //the group used for previewing tests
 $previewGroupID = 4;
 $isPreview = false;
@@ -85,7 +85,7 @@ CloseCon($conn);
 	var isPreview = <?php echo(json_encode($isPreview)); ?>;
 	var from; //if preview check if from edit page or available test page ect.
 	if(isPreview)
-		from = <?php echo(json_encode($from)); ?>; // checks from which page preview was opened 
+		from = <?php echo(json_encode($from)); ?>; // checks from which page preview was opened
 	var taskIndex = <?php echo(json_encode($taskIndex)); ?>;
 	var testID = <?php echo(json_encode($testID)); ?>;
 	var taskID = <?php echo(json_encode($taskID)); ?>;
@@ -169,7 +169,7 @@ CloseCon($conn);
 	}
 	//Next participant
 	function goNext(){
-		if(clicked == true){
+		if(clicked == true || isPreview){
 		preschoolerIndex++;
 		if(preschoolerIndex == preschoolers.length){
 			imageIndex++;
@@ -252,15 +252,13 @@ CloseCon($conn);
 <body>
 	<!-- body content -->
     <!--header-->
-    <div class="row">
-        <div class="navbar-fixed">
-            <nav class="nav-extended blue darken-4">
-            <div class="nav-wrapper">
-                <a href="#" class="brand-logo left"><img src="images/logo1.png" ></a>
-            </div>
-            </nav>
-        </div>
-    </div>
+		<div id="InsertHeader"></div>
+		<script>
+		//Read header
+		$(function(){
+			$("#InsertHeader").load("testingHeader.html");
+		});
+		</script>
     <!--end header-->
 	<img id="button" src="images/greyCircle.png" alt= "image not workning" width="7%" onclick="goNext();"></img>
 

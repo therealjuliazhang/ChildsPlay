@@ -7,7 +7,7 @@
 	else
 		// $userID = 1;
 		header("Location: login.php");
-		
+
 	//get mode from session to check if preview mode
 	if (isset($_SESSION['mode']))
 		$mode = $_SESSION['mode'];
@@ -21,7 +21,7 @@
 	//get task index from url
 	if (isset($_GET['taskIndex']))
 		$taskIndex = $_GET['taskIndex'];
-	
+
 	//the group used for previewing tests
 	$previewGroupID = 4;
 	$isPreview = false;
@@ -29,7 +29,7 @@
 	$from = "";
 	if (isset($_GET['from']))
 		$from = $_GET['from'];
-	
+
 	if($mode == "preview"){
 		$isPreview = true;
 		$groupID = $previewGroupID;
@@ -46,7 +46,7 @@
 		$taskID = $tasks[$taskIndex]['taskID'];
 	}
 	$_SESSION["taskID"] = $taskID;
-	
+
 	include 'db_connection.php';
 	$conn = OpenCon();
 	//fetch images
@@ -80,19 +80,17 @@
         <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
 		<!--link for font awesome icons-->
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">		
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <body>
     <!--header-->
-        <div class="row">
-            <div class="navbar-fixed">
-            <nav class="nav-extended blue darken-4">
-            <div class="nav-wrapper">
-                <a href="#" class="brand-logo left"><img src="images/logo1.png" ></a>
-            </div>
-        </nav>
-    </div>
-    </div>
+		<div id="InsertHeader"></div>
+		<script>
+		//Read header
+		$(function(){
+			$("#InsertHeader").load("testingHeader.html");
+		});
+		</script>
     <!--end header-->
         <!-- body content -->
 		<img id="button" src="images/greyCircle.png" width="7%" align="right" onclick="goNext();"></img>
@@ -124,7 +122,7 @@
 		var from; //if preview check if from edit page or available test page ect.
 		if(isPreview)
 			from = <?php echo(json_encode($from)); ?>; // checks from which page preview was opened
-		
+
 		var taskIndex = <?php echo(json_encode($taskIndex)); ?>;
 		var testID = <?php echo(json_encode($testID)); ?>;
 		var taskID = <?php echo(json_encode($taskID)); ?>;
@@ -141,7 +139,7 @@
 		document.getElementById("preschoolerName").innerHTML = preschoolers[0]['name'];
 		document.getElementById("participant").className = 'row ' + colours[preschoolerIndex % colours.length];
 		function goNext(){
-			if(faceClicked == true){
+			if(faceClicked == true || isPreview){
 				preschoolerIndex++;
 				if(preschoolerIndex == preschoolers.length){
 					var taskIndex = <?php echo $taskIndex ?>;
