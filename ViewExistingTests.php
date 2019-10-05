@@ -157,11 +157,11 @@ table {
   width: 30%;
 }
 .createdCol{
-  width: width: 10%;
+  width: 10%;
   text-align: center;
 }
 .lastEditCol{
-  width: width: 10%;
+  width: 10%;
   text-align: center;
 }
 .previewCol{

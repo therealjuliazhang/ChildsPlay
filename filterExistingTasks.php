@@ -13,6 +13,27 @@
   <script type = "text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.js"></script>
 </head>
 <!--code for jquery-->
+<script>
+//save filtering values when reload the page
+$(document).ready(function(){
+	var start = sessionStorage.getItem("start");
+	var end = sessionStorage.getItem("end");
+	var activityStyle = sessionStorage.getItem("activityStyle");
+	$("#startDate").val(start);
+	$("#endDate").val(end);
+	$("#activityStyle").val(activityStyle);
+	sessionStorage.clear();
+});
+
+function filter(){
+	var start = $("#startDate").val();
+	var end = $("#endDate").val();
+	var activityStyle = $("#activityStyle option:selected").val();
+	sessionStorage.setItem("start", start);
+	sessionStorage.setItem("end", end);
+	sessionStorage.setItem("activityStyle", activityStyle);
+}
+</script>
 
 <!--the stuff in the head is all the linking things to Materialize-->
 <!--all the linking's been done, so you shouldn't need to download anything from Materialise-->
@@ -27,6 +48,13 @@
   </script>
   <!--end header-->
   <!-- body content -->
+  <?php
+	session_start();
+	if (isset($_SESSION['userID']))
+		$userID = $_SESSION['userID'];
+	else
+		header('location: login.php');
+  ?>
   <div class="container">
     <h5 class="blue-text darken-2">Filter By:</h5>
     <h6 class="blue-text darken-2 header">Date Created</h6>
@@ -34,36 +62,27 @@
     <div class="row">
       <div class="col s6">Start date</div>
       <div class="col s6">End date</div>
-      <div class="col s6"><input type="text" class="datepicker" id="startDate"></div>
-      <div class="col s6"><input type="text" class="datepicker" id="endDate"></div>
+      <div class="col s6"><input type="text" class="datepicker" id="startDate" name="startDate"></div>
+      <div class="col s6"><input type="text" class="datepicker" id="endDate" name="endDate"></div>
     </div>
 
 		<h6 class="blue-text darken-2 header">Activity Style</h6>
 		<div class="row">
 		  <div class="input-field col s6">
-			<select class="" name="activityStyle">
+			<select class="" name="activityStyle" id="activityStyle">
 			  <option value="" selected disabled>Select Activity Style:</option>
 			  <option value="Identify Body Parts">Identify Body Parts</option>
 			  <option value="Character Ranking">Character Ranking</option>
 			  <option value="Likert Scale">Likert Scale</option>
-			  <option value="Preferred Mechanic">Preferred Mechanics</option>
+			  <option value="Preferred Mechanics">Preferred Mechanics</option>
 			</select>
 		  </div>
 		</div>
 		<div class="row">
-			<button class="btn waves-effect waves-light blue darken-4 sortButton" type="submit" name="submitFilter">Filter</button>
+			<button class="btn waves-effect waves-light blue darken-4 sortButton" type="submit" name="submitFilter" onclick="filter()">Filter</button>
 		</div>
 	</form>
 	<br/>
-    <!--
-    <ul id = "dropdown" class = "dropdown-content">
-    <li><a href = "#">Identify Body Parts</a></li>
-    <li><a href = "#">Character Ranking</a></li>
-    <li><a href = "#">Likert Scale</a></li>
-    <li><a href = "#">Preferred Mechanics</a></li>
-    <a class = "btn dropdown-button blue darken-4" href = "#" data-activates = "dropdown">Task Type</a>
-  </ul>
--->
 <!--table for holding tasks-->
 <div style="overflow:auto">
 <table class="striped">
@@ -80,29 +99,22 @@
   </thead>
   <tbody>
   <?php
-  session_start();
-  if (isset($_SESSION['userID']))
-		$userID = $_SESSION['userID'];
-	else
-		header('location: login.php');
-
-  //unset the sessions for preview tasks in filter existing tasks from comments.php
-  if(isset($_SESSION["create"]))
-    unset($_SESSION["create"]);
-  if(isset($_SESSION["edit"]))
-    unset($_SESSION["edit"]);
+	//unset the sessions for preview tasks in filter existing tasks from comments.php
+	if(isset($_SESSION["create"]))
+		unset($_SESSION["create"]);
+	if(isset($_SESSION["edit"]))
+		unset($_SESSION["edit"]);
 
 	if(isset($_GET["from"])){
 		$from = $_GET["from"];
 		$_SESSION["from"] = $from;
-  }
+	}
 	if(isset($_GET["testID"])){
 		$testID = $_GET["testID"];
 		$_SESSION["testID"] = $testID;
-  }
-  $from = "filterExistingTasks";
-  include_once 'filterTasks.php';
-  //CloseCon($conn);
+	}
+	$from = "filterExistingTasks";
+	include_once 'filterTasks.php';
   ?>
   </tbody>
   </div>

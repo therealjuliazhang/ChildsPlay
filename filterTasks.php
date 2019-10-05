@@ -2,7 +2,7 @@
 /*
  Author: Phuong Linh Bui (5624095)
 */
-// session_start();
+
 if (isset($_SESSION["from"]))
 	$from = $_SESSION["from"];
 if (isset($_GET["from"]))
@@ -10,21 +10,26 @@ if (isset($_GET["from"]))
 
 include 'db_connection.php';
 $conn = OpenCon();
+
 //if editing test, get taskIDs in test
 if ($from == "edit") {
 	$taskIDs = array();
 	$query = "SELECT taskID FROM TASKASSIGNMENT WHERE testID = ".$testID;
 	$taskIDsResult = $conn->query($query);
 	
-	$sql = "SELECT T.*, TEST.testID, MIN(TEST.dateCreated) AS date FROM TASK T JOIN TASKASSIGNMENT TA ON T.taskID = TA.taskID JOIN TEST ON TEST.testID = TA.testID WHERE T.taskID NOT IN (";
-	$index = 0;
-	while ($row = mysqli_fetch_assoc($taskIDsResult)){
-		$sql .= $row["taskID"];
-		if($index < mysqli_num_rows($taskIDsResult) - 1)
-			$sql .= ",";
-		$index++;
+	$sql = "SELECT T.*, TEST.testID, MIN(TEST.dateCreated) AS date FROM TASK T JOIN TASKASSIGNMENT TA ON T.taskID = TA.taskID JOIN TEST ON TEST.testID = TA.testID";
+	if(mysqli_num_rows($taskIDsResult)> 0){
+		$sql .= " WHERE T.taskID NOT IN (";
+		//$sql = "SELECT T.*, TEST.testID, MIN(TEST.dateCreated) AS date FROM TASK T JOIN TASKASSIGNMENT TA ON T.taskID = TA.taskID JOIN TEST ON TEST.testID = TA.testID WHERE T.taskID NOT IN (";
+		$index = 0;
+		while ($row = mysqli_fetch_assoc($taskIDsResult)){
+			$sql .= $row["taskID"];
+			if($index < mysqli_num_rows($taskIDsResult) - 1)
+				$sql .= ",";
+			$index++;
+		}
+		$sql .= ")";
 	}
-	$sql .= ")";
 } else
 	$sql = "SELECT T.*, TEST.testID, MIN(TEST.dateCreated) AS date FROM TASK T JOIN TASKASSIGNMENT TA ON T.taskID = TA.taskID JOIN TEST ON TEST.testID = TA.testID";
 $startDate = "";
@@ -48,19 +53,23 @@ if (isset($_POST["submitFilter"])) {
 	}
 
 	$subqueryDate = "";
-
-	if ($startDate != "") {
-		$subqueryDate .= " WHERE dateCreated >= $startDate";
-	} else if ($endDate != "")
-		$subqueryDate .= " WHERE dateCreated <= $endDate";
-	else if ($startDate != "" && $endDate != "")
-		$subqueryDate .= " WHERE dateCreated BETWEEN $startDate AND $endDate";
+	
+	if (strpos($sql, "WHERE") !== false)
+		$connector = " AND";
+	else
+		$connector = " WHERE";
+	if ($sDate != "" && $eDate != "") {
+		$subqueryDate .= $connector." dateCreated BETWEEN $startDate AND $endDate";
+	} else if ($eDate != "")
+		$subqueryDate .= $connector." dateCreated <= $endDate";
+	else if ($sDate != "")
+		$subqueryDate .= $connector." dateCreated >= $startDate";
 
 	$sql .= $subqueryDate;
 
 	if ($activityStyle != "") {
 		$connector = "";
-		if (strpos($query, 'WHERE') !== false)
+		if (strpos($sql, "WHERE") !== false)
 			$connector = " AND";
 		else
 			$connector = " WHERE";

@@ -59,6 +59,7 @@ Last Edited Date: 23 Sep 2019;
 			var imageAddress = $("#imageAddress").val();
 			var instruction = $("#instruction").val();
 			var activityStyle = $("#activityStyle option:selected").val();
+			var taskTitle = $("#taskTitle").val()
 			
 			var pointsInterval = 0;
 			if(activityStyle == "Character Ranking")
@@ -87,7 +88,8 @@ Last Edited Date: 23 Sep 2019;
 						activityStyle: activityStyle,
 						testID: testID,
 						orderInTest: orderInTest,
-						pointsInterval: pointsInterval
+						pointsInterval: pointsInterval,
+						taskTitle: taskTitle
 					},
 					function(data){
 						//show errors
@@ -98,9 +100,9 @@ Last Edited Date: 23 Sep 2019;
 							taskID = data;
 							$("#results").html(data);
 							//redirect back to page
-							if(from == "edit")
-								window.location = "editTest.php?testID=" + testID;
-							else if(from == "create")
+							/*if(from == "edit")
+								window.location = "editTest.php?testID=" + testID;*/
+							if(from == "create")
 								window.location = "createTest.php?taskID=" + taskID;
 							/*if(exist == true)
 								window.location = "filterExistingTasks.php";*/
@@ -200,7 +202,7 @@ Last Edited Date: 23 Sep 2019;
 							Task Title:
 						</h5>
 						<div class="input-field">
-							<input id="title" name="title" type="text" value=<?php echo isset($taskTitle) ? $taskTitle:"";?>>
+							<input id="taskTitle" name="taskTitle" type="text" value="<?php echo isset($taskTitle) ? $taskTitle:"";?>" >
 						</div>
                     </div>
                     <div class="col s6">
