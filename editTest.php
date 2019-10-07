@@ -160,7 +160,7 @@ CloseCon($conn);
                             text: "Preview",
                             href: previewURL
                         })
-                    ),
+                    ),/*
                     $('<td/>').append(
                         $('<a/>', {
                             class: "waves-effect waves-light btn blue darken-4",
@@ -168,7 +168,7 @@ CloseCon($conn);
                             //href: "EditTaskInEditTest.php?from=edit&testID=" + testID + "&taskID=" + task.taskID
                             href: "createNewTaskInCreateTest.php?from=edit&testID=" + testID + "&taskID=" + task.taskID
                         })
-                    ),
+                    ),*/
                     $('<td/>').append(
                         $('<a/>', {
                             class: "waves-effect waves-light btn #0d47a1 red darken-1",
@@ -223,9 +223,6 @@ CloseCon($conn);
                         <td>TaskID&nbsp;&nbsp;</td>
                         <td width="20%">Activity Style</td>
                         <td>Instruction</td>
-                        <!-- <td>Preview</td>
-                        <td>Edit</td>
-                        <td>Remove</td> -->
                     </tr>
                 </thead>
                 <tbody id="tableBody">

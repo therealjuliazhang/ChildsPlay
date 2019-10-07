@@ -24,8 +24,9 @@ $errorMsg = "";
 $instructionValue = '"'.$instruction.'"';
 $styleValue = '"'.$activityStyle.'"';
 $taskTitle = '"'.$title.'"';
+$dateCreated = '"'.date("Y-m-d").'"';
 //insert task into database
-$sql = "INSERT INTO TASK (taskTitle, instruction, activityStyle) VALUES ($taskTitle, $instructionValue, $styleValue)"; 
+$sql = "INSERT INTO TASK (taskTitle, instruction, activityStyle, dateCreated) VALUES ($taskTitle, $instructionValue, $styleValue, $dateCreated)"; 
 if ($conn->query($sql) === TRUE){ 
     //get ID of inserted task
     $taskID = $conn->insert_id;
@@ -41,14 +42,16 @@ if ($conn->query($sql) === TRUE){
 				$insertValuesSQL = "('".$id["imageID"]."', ".$taskID.")";
 				//Assign an image to a task in database	
 				$insertQuery = "INSERT INTO IMAGEASSIGNMENT VALUES $insertValuesSQL";
-				$result = $conn->query($insertQuery);
+				/*$result = $conn->query($insertQuery);
 					
 				if(!$result)
+					$errorMsg .= "<span style='color:red'>Failed to add image record!<br/>".mysqli_error($conn)."</span><br/>";*/
+				/**/
+				if($conn->query($insertQuery) === FALSE){
+					//$errorMsg = "Successful";
 					$errorMsg .= "<span style='color:red'>Failed to add image record!<br/>".mysqli_error($conn)."</span><br/>";
-				/*if($conn->query($insertQuery) === TRUE){
-					$errorMsg = "Successfull";
 				}
-				*/
+				
 			}
 			else{
 				//insert an image to the database if it doesn't exist

@@ -1,9 +1,40 @@
 <?php
+/*
+Author: Phuong Linh Bui (5624095)
+*/
+
 session_start();
 if(isset($_SESSION['userID']))
     $userID = $_SESSION['userID'];
 else
     header('login.php');
+
+unset($_SESSION["createURL"]);
+//get the url of the current page
+$_SESSION["createURL"] = basename($_SERVER["REQUEST_URI"]);
+
+$index = 0;
+$taskIdList = array();
+//get the list of parameters in the url
+foreach($_GET as $key => $value){
+	if($index == 0)
+		array_push($taskIdList, $value);
+	else
+		array_push($taskIdList, $key);
+	$index++;
+}
+
+include 'db_connection.php';
+$conn = OpenCon();
+$tasks = array();
+if (count($taskIdList) > 0) {
+    foreach ($taskIdList as $id) {
+        $query = "SELECT * FROM TASK WHERE taskID=$id";
+        $result = $conn->query($query);
+        $row = mysqli_fetch_assoc($result);
+		$tasks[] = $row;
+	}
+}                     
 ?>
 <!DOCTYPE html>
 <html>
@@ -65,33 +96,63 @@ else
 			var description = localStorage.getItem('description');
 			$("#testTitle").val(testTitle);
 			$("#description").val(description);
-			localStorage.removeItem( 'testTitle' );
-			localStorage.removeItem( 'description' );
+			//localStorage.removeItem( 'testTitle' );
+			//localStorage.removeItem( 'description' );
         });
 		function storeValues(){
 			//store input values
 			var testTitle = $("#testTitle").val();
 			var description = $("#description").val();
-			localStorage.setItem( 'testTitle', testTitle );
-			localStorage.setItem( 'description', description );
+			localStorage.setItem( "testTitle", testTitle );
+			localStorage.setItem( "description", description );
 		}
-
-		function showWarning(){
-			//javascript: return confirm('Are you sure you wish to remove this task from this test?');
-			//alert("Are you sure you wish to remove this task from this test?");
-		}/*
-		$('</tr>').append(
-			$('<td/>').append(
-                $('<a/>', {
-                    class: "waves-effect waves-light btn #0d47a1 red darken-1",
-                    text: "Remove",
-                    href: "removeTask.php?testID=" + testID + "&taskID=" + task.taskID,
-                    onclick: "javascript: return confirm('Are you sure you wish to remove this task from this test?');"
-                })
-			)
-		)*/
-
-
+		
+		var tasks = <?php echo json_encode($tasks); ?>;
+		$(document).ready(function(){
+			displayTasks();
+			/*var testTitle = sessionStorage.getItem("testTitle");
+			var description = sessionStorage.getItem("description");
+			$("#testTitle").val(testTitle);
+			$("#description").val(description);
+			
+			console.log("testTitle: " + testTitle);*/
+			//sessionStorage.clear();
+		});
+		//display all tasks
+        function displayTasks() {
+            //create table row for each task
+            tasks.forEach(function displaytask(task) {
+                //get preview link for task
+                var previewURL;
+				previewURL = "instruction.php?from=edit&mode=preview&taskID=" + task.taskID;
+                $('<tr/>').append([
+                    $('<td/>', {
+                        text: task.taskTitle
+                    }),
+                    $('<td/>', {
+                        text: task.activityStyle
+                    }),
+                    $('<td/>', {
+                        text: task.instruction
+                    }),
+                    $('<td/>').append(
+                        $('<a/>', {
+                            class: "waves-effect waves-light btn blue darken-2",
+                            text: "Preview",
+                            href: previewURL
+                        })
+                    ),
+                    $('<td/>').append(
+                        $('<a/>', {
+                            class: "waves-effect waves-light btn #0d47a1 red darken-1",
+                            text: "Remove",
+                            href: "removeTask.php?taskID=" + task.taskID,
+                            onclick: "javascript: return confirm('Are you sure you wish to remove this task from this test?');"
+                        })
+                    )
+                ]).appendTo('#tableBody');
+            });
+        }
     </script>
 <body>
     <!--header-->
@@ -142,69 +203,10 @@ else
                         <td>TaskID&nbsp;&nbsp;</td>
                         <td>Activity Style</td>
                         <td>Instruction</td>
-                        <!-- <td>Preview</td>
-                        <td>Remove</td> -->
                     </tr>
                 </thead>
                 <!--List of tasks--->
-                <tbody>
-                    <?php
-                    /*
-					author: Phuong Linh Bui (5624095)
-					*/
-                    include 'db_connection.php';
-                    $conn = OpenCon();
-                    $taskList = array();
-                    $idList = array();
-
-                    //session_destroy();
-                    //unset($_GET["list"]);
-
-                    //get a list of newly created tasks and store it in SESSION
-                    if (isset($_GET["taskID"])) {
-                        $taskID = $_GET["taskID"];
-                        if (!isset($_SESSION["list"])) {
-                            $_SESSION["list"] = $taskID;
-                            array_push($idList, $taskID);
-                        } else {
-                            $taskList = explode(",", $_SESSION["list"]);
-                            if (!in_array($taskID, $taskList)) {
-                                $_SESSION["list"] .= "," . $taskID;
-                            }
-                            $idList = explode(",", $_SESSION["list"]);
-                        }
-                        if (isset($_GET["remove"])) {
-                            $taskID = $_GET["taskID"];
-							//remove the selected task from the list
-                            if (($key = array_search($taskID, $idList)) !== false) {
-                                unset($idList[$key]);
-                                if (count($idList) > 0)
-                                    $_SESSION["list"] = join(",", $idList);
-                                else {
-                                    //session_destroy();
-                                    unset($_SESSION["list"]);
-                                }
-                            }
-							//if the task is not in the idList (when remove the last task in the list)
-							else{
-								unset($_SESSION["list"]);
-							}
-                        }
-                    }
-                    //display the newly created task(s) into the list of tasks
-                    if (count($idList) > 0) {
-                        foreach ($idList as $id) {
-                            $query = "SELECT * FROM TASK WHERE taskID=$id";
-                            $result = $conn->query($query);
-                            $row = mysqli_fetch_assoc($result);
-                            echo "<tr><td>" . $row["taskTitle"] . "</td>" .
-                                "<td>" . $row["activityStyle"] . "</td>" .
-                                "<td width='45%'>" . $row["instruction"] . "</td>" .
-                                "<td><a class='waves-effect waves-light btn blue darken-2'>Preview</a></td>" .
-                                "<td><a class='waves-effect waves-light btn red' href='?taskID=" . $row["taskID"] . "&remove=true' onclick='showWarning();'>Remove</a></td></tr>";
-                        }
-                    }
-                    ?>
+                <tbody id="tableBody">
                 </tbody>
             </table>
 			<br/>

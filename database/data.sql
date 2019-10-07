@@ -259,32 +259,37 @@ INSERT INTO TESTASSIGNMENT(userID, testID, dateConducted) VALUES (@userID, @test
 SET
 @taskTitle = "Task 1",
 @instruction = "Do you like this monster? Touch the smiley face if you like it and touch the sad face if you don't like it.",
-@activityStyle = "Likert Scale";
-INSERT INTO TASK(taskTitle, instruction, activityStyle) VALUES (@taskTitle, @instruction, @activityStyle);
+@activityStyle = "Likert Scale",
+@dateCreated = "2019-01-15";
+INSERT INTO TASK(taskTitle, instruction, activityStyle, dateCreated) VALUES (@taskTitle, @instruction, @activityStyle, @dateCreated);
 
 SET
 @taskTitle = "Task 2",
 @instruction = "Can you see the monster's eyes? Touch the monster's eyes.",
-@activityStyle = "Identify Body Parts";
-INSERT INTO TASK(taskTitle, instruction, activityStyle) VALUES (@taskTitle, @instruction, @activityStyle);
+@activityStyle = "Identify Body Parts",
+@dateCreated = "2019-03-24";
+INSERT INTO TASK(taskTitle, instruction, activityStyle, dateCreated) VALUES (@taskTitle, @instruction, @activityStyle, @dateCreated);
 
 SET
 @taskTitle = "Task 3",
 @instruction = "What are your favourite monsters? Select the monsters in order of your favourite to least favourite.",
-@activityStyle = "Character Ranking";
-INSERT INTO TASK(taskTitle, instruction, activityStyle) VALUES (@taskTitle, @instruction, @activityStyle);
+@activityStyle = "Character Ranking",
+@dateCreated = "2019-05-04";
+INSERT INTO TASK(taskTitle, instruction, activityStyle, dateCreated) VALUES (@taskTitle, @instruction, @activityStyle, @dateCreated);
 
 SET
 @taskTitle = "Task 4",
 @instruction = "How would you make the monster bigger if the paper was a touch screen?",
-@activityStyle = "Preferred Mechanics";
-INSERT INTO TASK(taskTitle, instruction, activityStyle) VALUES (@taskTitle, @instruction, @activityStyle);
+@activityStyle = "Preferred Mechanics",
+@dateCreated = "2019-09-18";
+INSERT INTO TASK(taskTitle, instruction, activityStyle, dateCreated) VALUES (@taskTitle, @instruction, @activityStyle, @dateCreated);
 
 SET
 @taskTitle = "Task 5",
 @instruction = "How would you move the monster into the box if this was a touch screen?",
-@activityStyle = "Preferred Mechanics";
-INSERT INTO TASK(taskTitle, instruction, activityStyle) VALUES (@taskTitle, @instruction, @activityStyle);
+@activityStyle = "Preferred Mechanics",
+@dateCreated = "2019-12-05";
+INSERT INTO TASK(taskTitle, instruction, activityStyle, dateCreated) VALUES (@taskTitle, @instruction, @activityStyle, @dateCreated);
 
 /*TASKASSIGNMENT*/
 SET
@@ -353,14 +358,6 @@ SET
 INSERT INTO IMAGE(address) VALUES (@address);
 
 SET
-@address = "images/Puff.png";
-INSERT INTO IMAGE(address) VALUES (@address);
-
-SET
-@address = "images/Puff.png";
-INSERT INTO IMAGE(address) VALUES (@address);
-
-SET
 @address = "images/orbi.jpg";
 INSERT INTO IMAGE(address) VALUES (@address);
 
@@ -370,14 +367,6 @@ INSERT INTO IMAGE(address) VALUES (@address);
 
 SET
 @address = "images/pod.jpg";
-INSERT INTO IMAGE(address) VALUES (@address);
-
-SET
-@address = "images/spike.jpg";
-INSERT INTO IMAGE(address) VALUES (@address);
-
-SET
-@address = "images/spike.jpg";
 INSERT INTO IMAGE(address) VALUES (@address);
 
 SET
@@ -411,22 +400,22 @@ SET
 INSERT INTO IMAGEASSIGNMENT VALUES (@imageID, @taskID);
 
 SET
-@imageID = 6,
+@imageID = 1,
 @taskID = 3;
 INSERT INTO IMAGEASSIGNMENT VALUES (@imageID, @taskID);
 
 SET
-@imageID = 7,
+@imageID = 2,
 @taskID = 3;
 INSERT INTO IMAGEASSIGNMENT VALUES (@imageID, @taskID);
 
 SET
-@imageID = 8,
+@imageID = 3,
 @taskID = 4;
 INSERT INTO IMAGEASSIGNMENT VALUES (@imageID, @taskID);
 
 SET
-@imageID = 9,
+@imageID = 4,
 @taskID = 5;
 INSERT INTO IMAGEASSIGNMENT VALUES (@imageID, @taskID);
 

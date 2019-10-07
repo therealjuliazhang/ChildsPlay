@@ -88,6 +88,7 @@ CREATE TABLE TASK(
 	taskID					INTEGER			AUTO_INCREMENT,
 	instruction				VARCHAR(700)	NOT NULL,
 	activityStyle			VARCHAR(500)	NOT NULL,
+	dateCreated				DATE			NOT NULL,
 	CONSTRAINT task_pk PRIMARY KEY (taskID)
 );
 

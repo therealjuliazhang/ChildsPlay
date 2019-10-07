@@ -20,6 +20,8 @@
   //Read header
   $(document).ready(function(){
     $("#InsertHeader").load("header.html");
+	localStorage.removeItem( 'testTitle' );
+	localStorage.removeItem( 'description' );
   });
   function showError(title){
     //var error = document.getElementById("error");

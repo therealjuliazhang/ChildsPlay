@@ -43,9 +43,7 @@ if(isset($_POST["createTest"])){
 			$errorFlag = false;
 	}
 	if($errorFlag == false){
-		//session_destroy();
-		unset($_SESSION["list"]);
+		unset($_SESSION["createURL"]);
 		header("Location: viewExistingTests.php");
-		//header("Location: CreateTest.php");
 	}
 }

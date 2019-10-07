@@ -35,7 +35,7 @@ Last Edited Date: 23 Sep 2019;
 		if(isset($_GET["taskID"])){
 			$taskID = $_GET["taskID"];
 			$query = "SELECT taskTitle, instruction, activityStyle, address, pointsInterval FROM TASK T JOIN IMAGEASSIGNMENT IA ON T.taskID = IA.taskID".
-					" JOIN IMAGE I ON IA.imageID = I.imageID JOIN TASKASSIGNMENT TA ON TA.taskID = T.taskID WHERE T.taskID = $taskID";
+					" JOIN IMAGE I ON IA.imageID = I.imageID JOIN TASKASSIGNMENT TA ON TA.taskID = T.taskID WHERE T.taskID = $taskID GROUP BY address";
 			$result = $conn->query($query);
 			while($row = mysqli_fetch_assoc($result)){
 				$taskTitle = $row["taskTitle"];
@@ -100,8 +100,8 @@ Last Edited Date: 23 Sep 2019;
 							taskID = data;
 							$("#results").html(data);
 							//redirect back to page
-							/*if(from == "edit")
-								window.location = "editTest.php?testID=" + testID;*/
+							if(from == "edit")
+								window.location = "editTest.php?testID=" + testID;
 							if(from == "create")
 								window.location = "createTest.php?taskID=" + taskID;
 							/*if(exist == true)

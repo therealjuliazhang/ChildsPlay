@@ -88,7 +88,7 @@ function filter(){
 <table class="striped">
   <thead>
     <tr class="blue-text darken-2">
-      <th class='taskIdCol'>TaskID</th>
+      <th class='taskIdCol'>Title</th>
       <th class='instructionCol'>Instruction</th>
       <th class='activityStyleCol'>Activity Style</th>
       <th class='dateCreatedCol'>Date Created</th>
