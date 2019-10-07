@@ -16,7 +16,7 @@
       </div>
     </div>
   </div>
-  <hr>
+  
   <!-- body content -->
   <div class="container bodyContainer">
     <div id="cardWrapper" class="row valign-wrapper">
@@ -43,6 +43,7 @@
                 echo "<span style=\"font-size: 12px; color: #EC453C;\">Incorrect username or password.</span>";
               }
               ?>
+			  <br/>
               <div class="row">
                 <div class="col s12">
                   <input type="submit" value="Login" class="btn blue darken-4 middle loginButton">
@@ -51,9 +52,11 @@
               <div class="col s12 center">
                 <a href="#">Forgot your password?</a>
               </div>
+			  <br/><br/><br/>
               <div class="row">
                 <div class="col s12">
-                  <hr>
+				<div class="divider"></div>
+                  <!--<hr style="border:1px" />--->
                 </div>
               </div>
               <div class="row">
