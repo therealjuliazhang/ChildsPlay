@@ -28,7 +28,7 @@
     {
         echo "Record updated successfully";
 		include 'sendEmail.php';
-        //header('location: userPage.php');
+        header('location: userPage.php');
     }
     else
     {
