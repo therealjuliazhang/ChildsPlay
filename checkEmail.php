@@ -1,3 +1,7 @@
+<!--
+Title:Check Email; 
+Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789); 
+-->
 <?php
     include 'db_connection.php';
     $conn = OpenCon();

@@ -1,8 +1,6 @@
 <!--
-Title: Create New Task In Create Test; 
-Author: Kate, Alex,Zhixing, Julia; 
-Date Created: 31 Aug 2019;
-Last Edited Date: 23 Sep 2019;
+Title:Create New Task In Create Test; 
+Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Julia Aoqi Zhang (5797585); 
 -->
 <!DOCTYPE html>
 <html>

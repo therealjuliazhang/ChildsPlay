@@ -1,3 +1,7 @@
+<!--
+Title:Update Admin; 
+Author:Alex Satoru Hanrahan (4836789), Andre Knell (5741622); 
+-->
 <?php 
 include 'db_connection.php';
 $conn = OpenCon();

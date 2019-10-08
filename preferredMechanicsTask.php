@@ -1,3 +1,7 @@
+<!--
+Title:Preferred Mechanics Task; 
+Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679527); 
+-->
 <?php
 //get information
 session_start();

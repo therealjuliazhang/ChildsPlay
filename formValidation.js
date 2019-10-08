@@ -1,3 +1,7 @@
+/*
+Title:Form Validation; 
+Author:Alex Satoru Hanrahan (4836789); 
+*/
 $(document).ready(function() {
     //Places error element next to invalid inputs
     $.validator.setDefaults({

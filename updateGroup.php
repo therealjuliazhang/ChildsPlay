@@ -1,3 +1,7 @@
+<!--
+Title:Update Group; 
+Author:Alex Satoru Hanrahan (4836789); 
+-->
 <?php 
 include 'db_connection.php';
 $conn = OpenCon();

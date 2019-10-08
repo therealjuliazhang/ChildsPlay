@@ -1,7 +1,9 @@
+<!--
+Title:Send Email; 
+Author:Phuong Linh Bui (5624095); 
+-->
 <?php
-/*
-Author: Phuong Linh Bui (5624095)
-*/
+
 
 date_default_timezone_set('Etc/UTC');
 

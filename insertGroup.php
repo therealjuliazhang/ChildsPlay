@@ -1,3 +1,7 @@
+<!--
+Title:Insert Group; 
+Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789); 
+-->
 <?php 
 if(isset($_POST["submit"])){
 	$check = false;

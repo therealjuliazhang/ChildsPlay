@@ -1,3 +1,7 @@
+<!--
+Title:Filter Existing Tasks; 
+Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679527); 
+-->
 <!DOCTYPE html>
 <html>
 <head>

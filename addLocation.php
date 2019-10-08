@@ -1,3 +1,7 @@
+<!--
+Title:Add Location; 
+Author:Andre Knell (5741622);
+-->
 <?php 
 include 'db_connection.php';
 $conn = OpenCon();

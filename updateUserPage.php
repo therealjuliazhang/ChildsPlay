@@ -1,3 +1,7 @@
+<!--
+Title:Update User Page; 
+Author:Phuong Linh Bui (5624095), Julia Aoqi Zhang (5797585); 
+-->
 <?php
     session_start();
     include 'db_connection.php';

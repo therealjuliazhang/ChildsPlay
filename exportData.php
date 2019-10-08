@@ -1,7 +1,9 @@
+<!--
+Title:Export Data; 
+Author:Phuong Linh Bui (5624095); 
+-->
 <?php
-/*
-Author: Phuong Linh Bui (5624095)
-*/
+
 session_start();
 
 if(isset($_SESSION["records"])){
