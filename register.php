@@ -257,7 +257,7 @@ body{
     margin-bottom: 20px;
 }
 .btn02{
-  background-color:#FF8C18
+  background-color:#FF8C18;
 }
 .divider{
 	margin: 50px 0px;

@@ -1,6 +1,6 @@
 <!--
-Title:Filter Existing Tasks; 
-Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679527); 
+Title:Filter Existing Tasks;
+Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679527);
 -->
 <!DOCTYPE html>
 <html>
@@ -127,7 +127,7 @@ function filter(){
 <div class="row">
 	<div class="col s1 offset-s11">
 		<!--<a class="waves-effect waves-light btn #2196f3 blue right" id="cancelButton">Cancel</a>-->
-		<a class="waves-effect waves-light btn blue darken-4" onClick="javascript:history.go(-1)">Cancel</a>
+		<a class="waves-effect waves-light btn red" onClick="javascript:history.go(-1)">Cancel</a>
 	</div>
 </div>
 </div>

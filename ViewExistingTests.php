@@ -1,6 +1,6 @@
 <!--
-Title:View Existing Test; 
-Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Julia Aoqi Zhang (5797585), Ren Sugie(5679527); 
+Title:View Existing Test;
+Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Julia Aoqi Zhang (5797585), Ren Sugie(5679527);
 -->
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -98,12 +98,12 @@ Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4
 				$taskQuery = "SELECT TA.*, T.taskTitle FROM TASKASSIGNMENT TA INNER JOIN TASK T WHERE TA.taskID = T.taskID AND testID=".$value["testID"];
 				$result = $conn->query($taskQuery);
 				if(mysqli_num_rows($result) == 0){
-					echo '</td><td class="previewCol"><a class="btn dropdown-button blue darken-4" onclick="showError('.$title.')"; >Preview</a>';
+					echo '</td><td class="previewCol"><a class="btn dropdown-button blue darken-2" onclick="showError('.$title.')"; >Preview</a>';
 				}
 				else{
 					$previewURL = "instruction.php?testID=".$value['testID']."&mode=preview&from=existingTests";
 					//echo $previewURL;
-					echo '</td><td class="previewCol"><a class="btn buttonsInTable blue darken-4" href="'.$previewURL.'">Preview</a>';
+					echo '</td><td class="previewCol"><a class="btn buttonsInTable blue darken-2" href="'.$previewURL.'">Preview</a>';
 					/*
 					echo '</td><td class="previewCol"><a class="btn dropdown-button blue darken-4" data-activates="dropdown'.$index.'">Preview</a>';
 					echo "<ul id='dropdown".$index."' class='dropdown-content'>";
@@ -182,5 +182,6 @@ table {
 .buttonsInTable{
   width: 90px;
 }
+
 
 </style>
