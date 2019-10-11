@@ -1,3 +1,7 @@
+<!--
+Title:Edit Test;
+Author:Phuong Linh Bui (5624095);
+-->
 <!DOCTYPE html>
 <html>
 <?php
@@ -46,7 +50,7 @@ while ($row = mysqli_fetch_assoc($taskIDsResult)) {
 }
 CloseCon($conn);
 ?>
-    
+
 <head>
     <title>Child'sPlay</title>
     <meta name="viewport" content="width = device-width, initial-scale = 1">
@@ -242,8 +246,8 @@ CloseCon($conn);
             </div>--->
 			<br/><br/>
 			<div align="right">
-				<button style="width:95px" name="submit" type="submit" class="submit waves-effect waves-light btn blue darken-2">Save</button>
-				<a style="width:95px" class="waves-effect waves-light btn blue darken-4" href="viewExistingTests.php">Cancel</a>
+        <a style="width:95px" class="waves-effect waves-light btn red" href="viewExistingTests.php">Cancel</a>
+				<button style="width:95px" name="submit" type="submit" class="submit waves-effect waves-light btn blue darken-4">Save</button>
 			</div>
         </form>
     </div>

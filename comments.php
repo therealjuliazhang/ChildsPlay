@@ -1,3 +1,7 @@
+<!--
+Title:Comments;
+Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679527);
+-->
 <!DOCTYPE html>
 <html>
 	<?php
@@ -64,7 +68,7 @@
 
         <!-- body content -->
 
-        <div class="container grey-text text-darken-1 content">
+        <div class="container content">
 			<div class="row">
 				<div class="col s12">
 					<h5 class="blue-text darken-2">Any Comments?</h5>
@@ -85,7 +89,7 @@
 				  <div class="row">
 				<div class="col s12">
 					<div class="right-align">
-						<button type="submit" class="waves-effect waves-light btn blue darken-2" name="nextButton" ><!--onclick="next();"-->Next</button>
+						<button type="submit" class="waves-effect waves-light btn blue darken-4" name="nextButton" ><!--onclick="next();"-->Next</button>
 						<!--<button class="waves-effect waves-light btn blue darken-4" name="backButton">Back</button>-->
 					</div>
 				</div>

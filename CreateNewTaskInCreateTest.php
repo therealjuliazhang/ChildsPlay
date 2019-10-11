@@ -1,8 +1,6 @@
 <!--
-Title: Create New Task In Create Test; 
-Author: Kate, Alex,Zhixing, Julia; 
-Date Created: 31 Aug 2019;
-Last Edited Date: 23 Sep 2019;
+Title:Create New Task In Create Test;
+Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Julia Aoqi Zhang (5797585);
 -->
 <!DOCTYPE html>
 <html>
@@ -22,13 +20,13 @@ Last Edited Date: 23 Sep 2019;
 		if(isset($_GET['testID']))
 		 	$testID = $_GET['testID'];
 		//$testID = 2; //remove after admin pages are linked up
-		$from = "";	
-		
+		$from = "";
+
 		if(isset($_GET["from"]))
 			$from = $_GET["from"];
 		//get the orderInTest of a task
 		if(isset($_GET["index"])){
-			$index = $_GET["index"]; 
+			$index = $_GET["index"];
 		}
 		//retrieve task data in Edit Test
 		$imageAddresses = array();
@@ -60,11 +58,11 @@ Last Edited Date: 23 Sep 2019;
 			var instruction = $("#instruction").val();
 			var activityStyle = $("#activityStyle option:selected").val();
 			var taskTitle = $("#taskTitle").val()
-			
+
 			var pointsInterval = 0;
 			if(activityStyle == "Character Ranking")
 				pointsInterval = $("#points").val();
-			
+
 			var testID = <?php if(isset($testID))
 								$testID = $testID;
 							  else $testID = 0;
@@ -75,14 +73,14 @@ Last Edited Date: 23 Sep 2019;
 							  else $index = 0;
 					       	echo json_encode($index);?>;
 			var div = document.getElementById("results");
-			
+
 			if(imageAddress == ""){
 				div.style.color = "red";
 				div.style.fontStyle = "italic";
 				div.innerHTML = "Please select image(s) to upload!";
 			}
 			else{
-				$.post("createTask.php", 
+				$.post("createTask.php",
 					{	imageAddress: imageAddress,
 						instruction: instruction,
 						activityStyle: activityStyle,
@@ -106,7 +104,7 @@ Last Edited Date: 23 Sep 2019;
 								window.location = "createTest.php?taskID=" + taskID;
 							/*if(exist == true)
 								window.location = "filterExistingTasks.php";*/
-						}	
+						}
 					}
 				);
 			}
@@ -114,13 +112,13 @@ Last Edited Date: 23 Sep 2019;
 	/**/
 		function selectActivityStyle(){
 			var pointsInterval = 0;
-			var activityStyle = <?php 
+			var activityStyle = <?php
 			if(isset($activityStyle))
 				echo json_encode($activityStyle);
 			else
 				echo json_encode("");  ?>;
 			if((activityStyle) == "Character Ranking"){
-				pointsInterval = <?php if(isset($pointsInterval)) 
+				pointsInterval = <?php if(isset($pointsInterval))
 										echo json_encode($pointsInterval);
 									else
 										echo json_encode(0);
@@ -150,7 +148,7 @@ Last Edited Date: 23 Sep 2019;
 						var wrapper = document.getElementById("pointRow");
 						wrapper.appendChild(header);
 						wrapper.appendChild(div);
-						
+
 						//delete the previous label
 						upload.removeChild(upload.lastChild);
 						//add the label telling user that they can upload multiple images for Character Ranking task
@@ -192,7 +190,7 @@ Last Edited Date: 23 Sep 2019;
         <!-- body content -->
         <div id="body" class="container">
 			<!--start form-->
-            <form action="" method="post">	
+            <form action="" method="post">
 				<div class="row">
                     <div class="col s6">
 						<h5 class="blue-text darken-2 header">
@@ -223,7 +221,7 @@ Last Edited Date: 23 Sep 2019;
 						</div>
                     </div>
 				</div>
-                <div class="row">   
+                <div class="row">
                     <h5 class="blue-text darken-2 header">
                         <a class="tooltipped" data-position="left" data-tooltip="Activity for Task">
                             <i class="material-icons">help_outline</i>
@@ -252,19 +250,19 @@ Last Edited Date: 23 Sep 2019;
 							</div>
 							<div class="file-path-wrapper" id="upload">
 								<input class="file-path validate" type="text" name="imageFileName" id="imageAddress"
-								value="<?php 
+								value="<?php
 								$index = 0;
 								if(count($imageAddresses) > 0){
 									foreach($imageAddresses as $imageAddress){
-										$image = explode("/",$imageAddress); 
+										$image = explode("/",$imageAddress);
 										echo $image[1];
 										if($index < count($imageAddresses) - 1)
 											echo ", ";
 										$index++;
 									}
-								}	
+								}
 								?>" webkitdirectory directory multiple/>
-								
+
 							</div>
 						</div>
 						</form>
@@ -276,8 +274,8 @@ Last Edited Date: 23 Sep 2019;
 				<div class="row">
 					<div class="col s12">
 						<p align="right">
-							<button name="createTaskBtn" id="submitBtn" class="submit waves-effect waves-light btn blue darken-2" onclick="createNewTask();">Create Task</button>
-							<a class="waves-effect waves-light btn blue darken-4" onClick="javascript:history.go(-1)">Cancel</a>
+              <a class="waves-effect waves-light btn red darken-1" onClick="javascript:history.go(-1)">Cancel</a>
+							<button name="createTaskBtn" id="submitBtn" class="submit waves-effect waves-light btn blue darken-4" onclick="createNewTask();">Create Task</button>
 						</p>
 					</div>
 				</div>

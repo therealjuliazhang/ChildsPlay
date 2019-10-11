@@ -1,3 +1,7 @@
+<!--
+Title:Login;
+Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679527);
+-->
 <html>
 <head>
   <title>Childplay Login</title>
@@ -9,6 +13,7 @@
   <script type = "text/javascript" src = "https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
 </head>
 <body>
+  <!-- logo -->
   <div class="container">
     <div class="row">
       <div class="col s12 center">
@@ -16,8 +21,8 @@
       </div>
     </div>
   </div>
-  
-  <!-- body content -->
+
+  <!--card -->
   <div class="container bodyContainer">
     <div id="cardWrapper" class="row valign-wrapper">
       <div class="col s12 center-align">
@@ -25,11 +30,13 @@
           <div class="card-content">
             <form id="form" action="loginUser.php" method="post">
               <div class="row">
+                <div class="col s12"> <br> </div>
                 <div class="input-field col s12">
                   <input id="userName" placeholder="Username" name="username" type="text" class="validate">
                 </div>
               </div>
               <div class="row">
+                <div class="col s12"> <br> </div>
                 <div class="input-field col s12">
                   <input id="password" placeholder="Password" name="password" type="password" class="validate">
                 </div>
@@ -43,8 +50,8 @@
                 echo "<span style=\"font-size: 12px; color: #EC453C;\">Incorrect username or password.</span>";
               }
               ?>
-			  <br/>
               <div class="row">
+                <div class="col s12"> <br> <br> </div>
                 <div class="col s12">
                   <input type="submit" value="Login" class="btn blue darken-4 middle loginButton">
                 </div>
@@ -52,20 +59,18 @@
               <div class="col s12 center">
                 <a href="#">Forgot your password?</a>
               </div>
-			  <br/><br/><br/>
+
               <div class="row">
                 <div class="col s12">
-				<div class="divider"></div>
-                  <!--<hr style="border:1px" />--->
+                  <div class="divider"></div>
                 </div>
-              </div>
-              <div class="row">
+
                 <div class="col s12">
-                  <h5>Don't have an account?</h5>
+                  <h6>Don't have an account?</h6>
                 </div>
                 <div class="col s12"> <br> </div>
                 <div class="col s12">
-                  <a href="register.php" class="waves-effect waves-light btn orange darken-4">Sign up for Child'sPlay</a>
+                  <a href="register.php" class="waves-effect waves-light btn btn02">Sign up</a>
                 </div>
               </div>
 
@@ -75,10 +80,7 @@
       </div>
     </div>
   </div>
-
-
-
-  <!--end body content-->
+  <!--end card-->
 </body>
 <script>
 $(document).ready(function() {
@@ -108,7 +110,7 @@ $(document).ready(function() {
 </script>
 <style>
 .logoImg{
-  height: 50px;
+  height: 70px;
   margin-top: 20px;
 }
 body{
@@ -118,14 +120,29 @@ body{
   width: 30%;
 }
 .card{
-  height: 800px;
+  height: 700px;
 }
 .loginButton{
   margin-bottom: 20px;
 }
 .btn{
-  width: 100%;
+  width: 70%;
+  border-radius: 20px;
 }
+
+.divider{
+  margin: 50px 0px;
+}
+.card .card-content {
+    padding: 50px;
+}
+.btn02{
+  background-color:#FF8C18
+}
+.btn:hover, .btn-large:hover {
+    background-color: #FF8C18;
+}
+
 
 
 </style>

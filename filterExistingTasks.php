@@ -1,3 +1,7 @@
+<!--
+Title:Filter Existing Tasks;
+Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679527);
+-->
 <!DOCTYPE html>
 <html>
 <head>
@@ -121,9 +125,9 @@ function filter(){
 </table>
 </div>
 <div class="row">
-	<div class="col s1 offset-s11">
+	<div class="col s12">
 		<!--<a class="waves-effect waves-light btn #2196f3 blue right" id="cancelButton">Cancel</a>-->
-		<a class="waves-effect waves-light btn blue darken-4" onClick="javascript:history.go(-1)">Cancel</a>
+		<a class="waves-effect waves-light btn red cancelButton right" onClick="javascript:history.go(-1)">Cancel</a>
 	</div>
 </div>
 </div>
@@ -189,8 +193,9 @@ function checkDate(){
 .header{
   margin-top: 30px;
 }
-#cancelButton{
+.cancelButton{
   margin-top: 15px;
+  width: 100px;
 }
 .datepicker-date-display {
   background-color: #1976D2;
@@ -201,6 +206,13 @@ function checkDate(){
 }
 .datepicker-table td.is-selected {
   background-color: #1976D2;
+}
+.sortButton{
+  width: 100px;
+}
+
+td .btn{
+  width: 100px;
 }
 /* tbody {
   display:block;

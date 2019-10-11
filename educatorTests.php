@@ -1,3 +1,7 @@
+<!--
+Title:Educator Tests;
+Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679527);
+-->
 <!DOCTYPE html>
 <html>
 	<?php
@@ -53,7 +57,7 @@
 						<th>Start Testing</th> -->
 					</tr>
 				</thead>
-				<tbody class="grey-text text-darken-1">
+				<tbody>
 				<?php
 				//get tests from database
 				$sql1 = "SELECT testID FROM TESTASSIGNMENT WHERE userID=".$userID;
@@ -71,14 +75,14 @@
 						if(mysqli_num_rows($resultQuery) != 0){
 							$previewURL = "instruction.php?testID=".$value['testID']."&mode=preview&from=educatorTests";
 							$startURL = "selectGroupForTask.php?testID=".$value['testID']."&mode=start";
-							echo '</td><td><a href="'.$previewURL.'" class="waves-effect waves-light btn blue darken-4">Preview</a></td>';
-							echo '</td><td><a href="'.$startURL.'" class="waves-effect waves-light btn blue darken-2 ">Start</a></td></tr>';
+							echo '</td><td><a href="'.$previewURL.'" class="waves-effect waves-light btn blue darken-2">Preview</a></td>';
+							echo '</td><td><a href="'.$startURL.'" class="waves-effect waves-light btn blue darken-4">Start</a></td></tr>';
 						}
 						//show error if there is no task in the test
 						else{
 							$parameter = "'".$value['title']."'";
-							echo '</td><td><a class="waves-effect waves-light btn blue darken-4" onclick="showError('.$parameter.');">Preview</a></td>';
-							echo '</td><td><a class="waves-effect waves-light btn blue darken-2" onclick="showError('.$parameter.');">Start</a></td></tr>';
+							echo '</td><td><a class="waves-effect waves-light btn blue darken-2" onclick="showError('.$parameter.');">Preview</a></td>';
+							echo '</td><td><a class="waves-effect waves-light btn blue darken-4" onclick="showError('.$parameter.');">Start</a></td></tr>';
 						}
 					}
 				}
@@ -96,7 +100,7 @@
 							<!-- <th>Edit Group</th> -->
 						</tr>
 					</thead>
-					<tbody class="grey-text text-darken-1">
+					<tbody>
 					<?php
 					//get groups from database
 					$sql = "SELECT groupID FROM GROUPASSIGNMENT WHERE userID=".$userID." GROUP BY groupID";
@@ -120,13 +124,13 @@
 							if($count == sizeof($names)) break;
 							echo ", ";
 						}
-						echo '</td><td><a href="educatorEditGroup.php?userID='.$userID.'&groupID=', $row["groupID"] ,'" class="waves-effect waves-light btn blue darken-4 ">Edit</a></td></tr>';
+						echo '</td><td><a href="educatorEditGroup.php?userID='.$userID.'&groupID=', $row["groupID"] ,'" class="waves-effect waves-light btn blue darken-4 right editButton">Edit</a></td></tr>';
 					}
 					CloseCon($conn);
 					?>
 					</tbody>
 				</table>
-				<a href="educatorAddGroup.php" class="waves-effect waves-light btn blue darken-4 right">Add New Group</a>
+				<a href="educatorAddGroup.php" class="waves-effect waves-light btn blue darken-4 right addNewGroupButton">Add New Group</a>
 			</div>
         </div>
         <!--end body content-->
@@ -170,7 +174,15 @@
 	.tabs .tab {
 	    text-transform: none;
 	}
-
+	.addNewGroupButton{
+    margin-top: 20px;
+	}
+	td .btn{
+		width: 100px;
+	}
+	.editButton{
+		margin-right: 30px;
+	}
 
     </style>
 </html>

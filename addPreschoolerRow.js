@@ -1,3 +1,7 @@
+/*
+Title:Add Preschooler Row; 
+Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789); 
+*/
 //creates a row for inputing for preschool data
 function addRow(preschooler=0){
     var newRow = document.createElement("div");

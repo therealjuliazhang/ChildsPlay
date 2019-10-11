@@ -1,11 +1,15 @@
+<!--
+Title:Educator Profile;
+Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Julia Aoqi Zhang (5797585), Ren Sugie(5679527);
+-->
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <?php
    include 'db_connection.php';
    $conn = OpenCon();
- 
+
    session_start();
- 
+
    if(isset($_SESSION["userID"]))
      $userID = $_SESSION["userID"];
 
@@ -113,7 +117,7 @@
             <option value="3">Keiraville Community Preschool</option>
           </select>
         </div>
-        <div class='col s1 hide removeCell'><a class='waves-effect waves-light btn removeButton'><i class='material-icons'>remove</i></a></div>
+        <div class='col s1 hide removeCell'><a class='waves-effect waves-light btn removeButton red'><i class='material-icons'>remove</i></a></div>
       </div>
     </div>
   </div>
@@ -121,7 +125,7 @@
   <div class="container" id="educatorProfileButtonsContainer">
     <div class="row">
       <div class="col s1 offset-s11"><a class="waves-effect waves-light btn blue darken-4 addCell hide" id="addButton" onclick="appendSelect()"><i class="material-icons">add</i></a></div>
-      <div class="col s1 offset-s11" id="editBUttonDiv"><a class="waves-effect waves-light btn #2196f3 blue" id="editButton">Edit</a></div>
+      <div class="col s1 offset-s11" id="editBUttonDiv"><a class="waves-effect waves-light btn blue darken-4" id="editButton">Edit</a></div>
       <div class="col s1 offset-s11 hide" id="saveButtonDiv"><a class="waves-effect waves-light btn blue darken-2" id="saveButton">Save</a></div>
     </div>
   </div>
@@ -173,10 +177,10 @@ function appendSelect() {
   var location01 = "KU Gwynneville Preschool";
   var location02 = "Wollongong Preschool";
   var location03 = "Keiraville Community Preschool";
-  var removeButton = "<a class='waves-effect waves-light btn removeButton'><i class='material-icons' >remove</i></a>";
+  var removeButton = "<a class='waves-effect waves-light btn removeButton red'><i class='material-icons' >remove</i></a>";
   locations.forEach(function(result)
       {
-        
+
         format
       });
   var locationsDisplay = "<div class='removable'><div class='col s3'></div><div class='input-field col s8 locationCell'><select class='selectLocation'><option value='1' disabled selected>Choose location<option>";
@@ -208,11 +212,11 @@ alert('More than 1280');
 }
 */
 
- //load user's data for profile onto page 
+ //load user's data for profile onto page
  function loadProfileInfo()
     {
       var user = <?php echo json_encode($userArray); ?>;
-      //display the data on page 
+      //display the data on page
       $("#fullNameTop").text(user[0].fullName);
       $("#mailInCell").text(user[0].email);
       $("#email").val(user[0].email);
@@ -244,6 +248,11 @@ alert('More than 1280');
 
 <style>
 
-
+#editBUttonDiv .btn{
+  width: 100px;
+}
+#saveButtonDiv .btn{
+  width: 100px;
+}
 </style>
 </html>

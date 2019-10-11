@@ -1,7 +1,9 @@
+<!--
+Title:Upload Image; 
+Author:Phuong Linh Bui (5624095); 
+-->
 <?php
-/*
-author: Phuong Linh Bui (5624095)
-*/
+
 
 $UploadFolder = "images";
 

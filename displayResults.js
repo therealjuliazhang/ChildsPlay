@@ -1,3 +1,7 @@
+/*
+Title:Display Results; 
+Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Andre Knell (5741622); 
+*/
 //needed for not putting padding-top on first header
 var firstHeader = true;
 //display all results for one activity style

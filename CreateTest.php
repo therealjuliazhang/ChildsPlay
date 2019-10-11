@@ -1,7 +1,9 @@
+<!--
+Title:Create Test;
+Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679527), Julia Aoqi Zhang (5797585);
+-->
+
 <?php
-/*
-Author: Phuong Linh Bui (5624095)
-*/
 
 session_start();
 if(isset($_SESSION['userID']))
@@ -34,7 +36,7 @@ if (count($taskIdList) > 0) {
         $row = mysqli_fetch_assoc($result);
 		$tasks[] = $row;
 	}
-}                     
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -43,12 +45,13 @@ if (count($taskIdList) > 0) {
     <meta name="viewport" content="width = device-width, initial-scale = 1">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="childsPlayStyle.css">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
-	
+
 </head>
 <script>
         //Read header
@@ -57,7 +60,7 @@ if (count($taskIdList) > 0) {
                 var elem = document.querySelectorAll('.tooltipped');
                 var instance = M.Tooltip.init(elem);
             });
-            
+
             //Places error element next to invalid inputs
             $.validator.setDefaults({
                 errorElement: 'div',
@@ -106,7 +109,7 @@ if (count($taskIdList) > 0) {
 			localStorage.setItem( "testTitle", testTitle );
 			localStorage.setItem( "description", description );
 		}
-		
+
 		var tasks = <?php echo json_encode($tasks); ?>;
 		$(document).ready(function(){
 			displayTasks();
@@ -114,7 +117,7 @@ if (count($taskIdList) > 0) {
 			var description = sessionStorage.getItem("description");
 			$("#testTitle").val(testTitle);
 			$("#description").val(description);
-			
+
 			console.log("testTitle: " + testTitle);*/
 			//sessionStorage.clear();
 		});
@@ -164,7 +167,7 @@ if (count($taskIdList) > 0) {
 			});
 		</script>
         <!--end header-->
-    
+
     <!-- body content -->
     <div class="container">
         <form id="form" action="insertTest.php" method="post" class="col s12">
@@ -222,8 +225,8 @@ if (count($taskIdList) > 0) {
 			<br/>
             <p align="right">
                 <!-- <button type="submit" name="createTest" class="waves-effect waves-light btn blue darken-2">Create Test</button> -->
-                <input type="submit" name="createTest" class="submit waves-effect waves-light btn blue darken-2 right" value="Create Test">
-                <a class="waves-effect waves-light btn blue darken-4 right" href="viewExistingTests.php">Cancel</a>
+                <input style="width:120px" type="submit" name="createTest" class="submit waves-effect waves-light btn blue darken-4 right" value="Create Test">
+                <a style="width:120px" class="waves-effect waves-light btn red darken-1 right" href="viewExistingTests.php">Cancel</a>
             </p>
         </form>
     </div>

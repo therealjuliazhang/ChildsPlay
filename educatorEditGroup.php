@@ -1,3 +1,7 @@
+<!--
+Title:Educator Edit Group;
+Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679527);
+-->
 <!DOCTYPE html>
 
 <html>
@@ -71,7 +75,7 @@
         </script>
         <!--end header-->
         <!-- body content -->
-        <div class="container grey-text text-darken-1" style="font-size:18px">
+        <div class="container" style="font-size:18px">
                 <h5 class="blue-text darken-2">Edit Group</h5>
                  <form id="form" style="font-size:18px" action='updateGroup.php?userID=<?php echo json_encode($userID); ?>&groupID=<?php echo json_encode($groupID); ?>' method="post">
                     <div class="row">
@@ -94,8 +98,8 @@
                         <a class="waves-effect waves-light btn blue darken-4 tooltipped" data-position="right" data-tooltip="Add more" onclick="addRow()"><i class="material-icons"style="font-size:30px;">add</i></a>
                     </div>
                     <div class="row right-align">
-                        <input type="submit" id="startButton" class="submit waves-effect waves-light btn blue darken-2" value="Save Changes">
-                        <a href="educatorTests.php#groups" class="waves-effect waves-light btn blue darken-4">Cancel</a>
+                        <a href="educatorTests.php#groups" class="waves-effect waves-light btn red">Cancel</a>
+                        <input type="submit" id="startButton" class="submit waves-effect waves-light btn blue darken-4" value="Save Changes">
                     </div>
                 </form>
         </div>

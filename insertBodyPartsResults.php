@@ -1,3 +1,7 @@
+<!--
+Title:Insert Body Parts Results; 
+Author:Phuong Linh Bui (5624095); 
+-->
 <?php 
 header('Access-Control-Allow-Origin: *');
 include 'db_connection.php';

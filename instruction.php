@@ -1,3 +1,7 @@
+<!--
+Title:Instruction;
+Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Julia Aoqi Zhang (5797585), Ren Sugie(5679527);
+-->
 <html>
 <?php
 session_start();
@@ -115,7 +119,7 @@ $bodyPart = "eye";
 	</script>
 	<!--end header-->
 	<!-- body content -->
-	<div class="container grey-text text-darken-1">
+	<div class="container">
 		<div class="row">
 			<div class="col s12">
 				<div style="font-size:18px">
@@ -195,7 +199,7 @@ $bodyPart = "eye";
 			<div class="row">
 				<div class="col s12">
 					<div class="right-align">
-						<a href= <?php echo $taskTypeUrl; ?> class="waves-effect waves-light btn blue darken-2">
+						<a href= <?php echo $taskTypeUrl; ?> class="waves-effect waves-light btn blue darken-4">
 							<?php
 							if($mode == "preview"){
 								echo "Start Preview";

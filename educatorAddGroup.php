@@ -1,3 +1,7 @@
+<!--
+Title:Educator Add Group;
+Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679527);
+-->
 <!DOCTYPE html>
 
 <html>
@@ -44,7 +48,7 @@ while($row = mysqli_fetch_assoc($result)){
   </script>
   <!--end header-->
   <!-- body content -->
-  <div class="container grey-text text-darken-1" style="font-size:18px">
+  <div class="container" style="font-size:18px">
     <h5 class="blue-text darken-2">Add New Group</h5>
     <form id="form" style="font-size:18px" action="insertGroup.php" method="post">
       <div class="row">
@@ -67,8 +71,8 @@ while($row = mysqli_fetch_assoc($result)){
         <a class="waves-effect waves-light btn blue darken-4 tooltipped" data-position="right" data-tooltip="Add more" onclick="addRow(); updateToolTips()"><i class="material-icons"style="font-size:30px;">add</i></a>
       </div>
       <div class="row right-align">
-        <input type="submit" name="submit" class="submit waves-effect waves-light btn blue darken-2" value="Save Changes">
-        <a href="educatorTests.php#groups" class="waves-effect waves-light btn blue darken-4 ">Cancel</a>
+        <a style=""href="educatorTests.php#groups" class="waves-effect waves-light btn red buttons">Cancel</a>
+        <input type="submit" name="submit" class="submit waves-effect waves-light btn blue darken-4 buttons" value="Save">
       </div>
     </form>
   </div>
@@ -176,6 +180,10 @@ label[data-error] {
 /*changes cursor when hovring over remove button*/
 .changeCursor {
   cursor: pointer;
+}
+
+.buttons{
+  width: 100px;
 }
 </style>
 </html>

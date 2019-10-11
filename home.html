@@ -1,3 +1,7 @@
+<!--
+Title:Home;
+Author:Phuong Linh Bui (5624095), Ren Sugie(5679527);
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Child's Play Top Page</title>
   <!-- CSS  -->
-  <link rel="stylesheet" type="text/css" href="childsPlayStyle.css">
+  <!-- <link rel="stylesheet" type="text/css" href="childsPlayStyle.css"> -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <!--  Scripts-->
@@ -16,15 +20,15 @@
 <body>
   <!--Header-->
   <div class="navbar-fixed">
-      <nav class="nav-extended" style="background-color:#081754">
-          <div class="nav-wrapper">
-              <a href="#" class="brand-logo left"><img src="images/logo1.png" ></a>
-              <ul class="right hide-on-med-and-down">
-                <li><a class="waves-effect waves-light btn blue darken-4 login" href="login.php">Login</a></li>
-                <li><a class="waves-effect waves-light btn blue darken-4 register" href="register.php">Register</a></li>
-              </ul>
-          </div>
-      </nav>
+    <nav class="nav-extended" style="background-color:#081754">
+      <div class="nav-wrapper">
+        <a href="#" class="brand-logo left"><img src="images/logo1.png" ></a>
+        <ul class="right hide-on-med-and-down">
+          <li><a class="waves-effect waves-light btn blue darken-4 login" href="login.php">Login</a></li>
+          <!-- <li><a class="waves-effect waves-light btn blue darken-4 register" href="register.php">Register</a></li> -->
+        </ul>
+      </div>
+    </nav>
   </div>
 
   <!--Content section - Slider -->
@@ -38,62 +42,77 @@
   </div>
 
   <div class="slider backgroundDiv" >
-   <ul class="slides">
-     <li>
-       <img class="backgroundImage" src="images/hpBackground1.png">
-     </li>
-     <li>
-       <img class="backgroundImage" src="images/hpBackground2.jpg">
-     </li>
-     <li>
-       <img class="backgroundImage" src="images/hpBackground3.jpg">
-     </li>
-     <li>
-       <img class="backgroundImage" src="images/hpBackground4.jpg">
-     </li>
-   </ul>
- </div>
+    <ul class="slides">
+      <li>
+        <img class="backgroundImage" src="images/hpBackground1.png">
+      </li>
+      <li>
+        <img class="backgroundImage" src="images/hpBackground2.jpg">
+      </li>
+      <li>
+        <img class="backgroundImage" src="images/hpBackground3.jpg">
+      </li>
+      <li>
+        <img class="backgroundImage" src="images/hpBackground4.jpg">
+      </li>
+    </ul>
+  </div>
 </div>
 
 <!--  Icon Section  -->
-  <div class="container">
-    <div class="section">
-      <div class="row">
-        <div class="col s12 m6">
-          <div class="icon-block">
-            <h2 class="center blue-text text-darken-4"><i class="material-icons">content_paste</i></h2>
-            <h5 class="center blue-text text-darken-4">Generate Test Data</h5>
-            <p class="light">Enables flexible data collection practices for researchers working with pre-schoolers in IT design.</p>
-          </div>
-        </div>
-
-        <div class="col s12 m6">
-          <div class="icon-block">
-            <h2 class="center blue-text text-darken-4"><i class="material-icons">create</i></h2>
-            <h5 class="center blue-text text-darken-4">Create and Conduct Test</h5>
-            <p class="light">Register as an administrator to start creating tests for research on your designs or register as an educator to facilitate usability tests.</p>
-          </div>
+<div class="container valign-wrapper">
+    <div class="row ">
+      <div class="col s12 m6">
+        <div class="icon-block">
+          <h2 class="center blue-text text-darken-4"><i class="material-icons">create</i></h2>
+          <h5 class="center blue-text text-darken-4">Create / Edit Test</h5>
+          <p class="light">Enables flexible data collection practices for researchers working with pre-schoolers in IT design.</p>
         </div>
       </div>
 
+      <div class="col s12 m6">
+        <div class="icon-block">
+          <h2 class="center blue-text text-darken-4"><i class="material-icons">people</i></h2>
+          <h5 class="center blue-text text-darken-4">Manage Users</h5>
+          <p class="light">You can easily add pre-school educators or research supporters so you can expand your research area.</p>
+        </div>
+      </div>
+
+      <div class="col s12 m6">
+        <div class="icon-block">
+          <h2 class="center blue-text text-darken-4"><i class="material-icons">insert_chart</i></h2>
+          <h5 class="center blue-text text-darken-4">Analyse Results</h5>
+          <p class="light center">Evaluating digital products, feature or prototype with preschoolers. Test data can be exported as csv file to review.</p>
+        </div>
+      </div>
+
+      <div class="col s12 m6">
+        <div class="icon-block">
+          <h2 class="center blue-text text-darken-4"><i class="material-icons">devices</i></h2>
+          <h5 class="center blue-text text-darken-4">Conduct Test</h5>
+          <p class="light">Effective user testing platform for preschoolers to support the conducting of tests, recording of test data as well as the instruction of the adult supervisors.</p>
+        </div>
+      </div>
+    </div>
+</div>
+
+<!--Project bio section-->
+<div style="background-color:#FF8C18" >
+  <div class="backgroundInBio">
+    <div class="container valign-wrapper">
+      <div class="row">
+        <div class="col s6">
+          <h4 class="white-text">Project Bio</h4>
+          <p class="grey-text text-lighten-4 projectBioDescription">We are a group of six students studying at the University if Wollongong that has banded together to make "Cultural Pentagon". Our name "Cultural Pentagon" may be confusing as there are six of us, however our name shows the five different cultures (Japan, Vietnam, China, Phillippines, Australia) that we represent. Our logo is a wave in a pentagon, which represents our group name. The pentagon refers to the pentagon part of our name, however the wave represents the sea or the letter "C" representing the cultural part in our name - in other words, it's a bad pun.</p>
+        </div>
+        <div class="col s6">
+        </div>
+      </div>
     </div>
   </div>
+</div>
 
-  <footer class="page-footer" style="background-color:#FF8C18">
-    <div class="container">
-      <div class="row">
-        <div class="col s12">
-          <h5 class="white-text">Project Bio</h5>
-          <p class="grey-text text-lighten-4">We can write something like "We are a team of college students working on this project like it's our full time job. Any amount would help support and continue development on this project and is greatly appreciated."</p>
-        </div>
-      </div>
-    </div>
-	<!--
-    <div class="blue darken-4">
-      caption
-    </div>--->
-  </footer>
-  </body>
+</body>
 </html>
 
 <script type="text/javascript">
@@ -108,13 +127,75 @@
 
 //slider
 $(document).ready(function(){
-    $('.slider').slider({
-        full_width: true,
-        height : 600, // default - height : 400
-        interval: 2500, // default - interval: 6000
-        duration: 2000,
-        indicators: false
-    });
+  $('.slider').slider({
+    full_width: true,
+    height : 600, // default - height : 400
+    interval: 2500, // default - interval: 6000
+    duration: 2000,
+    indicators: false
   });
+});
 
 </script>
+
+<style media="screen">
+.brand-logo{
+    margin-top:-67px;
+}
+nav ul a,
+nav .brand-logo {
+  color: #444;
+}
+
+p {
+  line-height: 2rem;
+}
+
+.sidenav-trigger {
+  color: #26a69a;
+}
+
+.icon-block {
+  padding: 0 15px;
+}
+.icon-block .material-icons {
+  font-size: inherit;
+}
+
+footer.page-footer {
+  margin: 0;
+}
+
+
+.login{
+  margin-top: 15px;
+  margin-right:15px;
+}
+.backgroundDiv{
+  position: relative;
+}
+.backgroundImage{
+  height: 100vh;
+}
+.coolWords{
+  position: absolute;
+  z-index: 3;
+  padding-top: 150px;
+  padding-left: 100px;
+}
+.container{
+  height: 100vh;
+}
+.projectBioDescription{
+  font-size: 20px;
+}
+.slider{
+  height: 100vh;
+}
+.backgroundInBio{
+  background-image : url(images/sample01.jpg);
+  background-repeat: no-repeat;
+  background-size: 50% 100%;
+  background-position: right;
+}
+</style>

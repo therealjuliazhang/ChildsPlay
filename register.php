@@ -1,3 +1,7 @@
+<!--
+Title:Register;
+Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679527);
+-->
 <!DOCTYPE html>
 <html>
 <?php
@@ -134,6 +138,8 @@ $locations[] = $row;
 </head>
 <!--the stuff in the head is all the linking things to Materialize-->
 <!--all the linking's been done, so you shouldn't need to download anything from Materialise-->
+
+<!-- logo -->
 <body>
 	<div class="container">
     <div class="row">
@@ -142,8 +148,8 @@ $locations[] = $row;
       </div>
     </div>
   </div>
-	<hr>
-	<!-- body content -->
+
+	<!-- card -->
 	<div class="container bodyContainer">
 		<div id="cardWrapper">
 			<div class="col s12 valign">
@@ -199,9 +205,20 @@ $locations[] = $row;
 								</div>
 							</div>
 							<div class="row">
-								<div class="card-action center-align">
-									<input type="submit" value="Register" class="btn orange darken-4" id="submit"/>
+								<div class="col s12 center">
+									<input type="submit" value="Register" class="btn blue darken-4" id="submit"/>
 								</div>
+							</div>
+							<div class="row center">
+								<div class="col s12">
+                  <div class="divider"></div>
+                </div>
+								<div class="col s12">
+                  <h6>Already have an account?</h6>
+                </div>
+								<div class="col s12">
+                  <a href="login.php" class="waves-effect waves-light btn btn02">LOGIN</a>
+                </div>
 							</div>
 						</form>
 					</div>
@@ -210,11 +227,11 @@ $locations[] = $row;
 		</div>
 	</div>
 </div>
-<!--end body content-->
+<!--end card-->
 </body>
 <style>
 .logoImg{
-  height: 50px;
+  height: 70px;
   margin-top: 20px;
 }
 body{
@@ -224,13 +241,32 @@ body{
   width: 30%;
 }
 .card{
-  height: 1000px;
+  height: 1100px;
 }
 .loginButton{
   margin-bottom: 20px;
 }
 .btn{
-  width: 100%;
+	width: 70%;
+  border-radius: 20px;
+}
+.card .card-content {
+    padding: 50px;
+}
+.row {
+    margin-bottom: 20px;
+}
+.btn02{
+  background-color:#FF8C18;
+}
+.divider{
+	margin: 50px 0px;
+}
+h6{
+	margin-bottom: 20px;
+}
+.btn:hover, .btn-large:hover {
+    background-color: #FF8C18;
 }
 
 </style>

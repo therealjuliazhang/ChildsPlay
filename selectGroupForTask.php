@@ -1,5 +1,8 @@
+<!--
+Title:Select Group For Task;
+Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679527);
+-->
 <!DOCTYPE html>
-
 <html>
 	<?php
 	session_start();
@@ -48,10 +51,10 @@
 					<tr>
 						<th>Name</th>
 						<th>Members</th>
-						<th>Select Group</th>
+						<th></th>
 					</tr>
 				</thead>
-				<tbody class="grey-text text-darken-1">
+				<tbody class="">
 		<?php
 		//get groups from database
 		$sql = "SELECT groupID FROM GROUPASSIGNMENT WHERE userID=".$userID." GROUP BY groupID";
@@ -75,18 +78,15 @@
 				if($count == sizeof($names)) break;
 				echo ", ";
 			}
-			echo '</td><td><a href="instruction.php?groupID='.$row["groupID"].'" class="waves-effect waves-light btn blue darken-2">Select</a></td></tr>';
+			echo '</td><td><a href="instruction.php?groupID='.$row["groupID"].'" class="waves-effect waves-light btn blue darken-4 right">Select</a></td></tr>';
 		}
 		CloseCon($conn);
 		?>
 				</tbody>
 			</table>
-			<br/><br/><br/>
 			<div class="row">
 				<div class="col s12">
-					<div class="right-align">
-						<a class="waves-effect waves-light btn blue darken-4" href="educatorTests.php#tests">Cancel</a>
-					</div>
+						<a class="waves-effect waves-light btn red cancelButton right" href="educatorTests.php#tests">Cancel</a>
 				</div>
 			</div>
         </div>
@@ -99,6 +99,10 @@
 	.logout{
 		margin-top: 15px;
 		margin-right:15px;
+	}
+	.cancelButton{
+		margin-top: 20px;
+		width: 80px;
 	}
     </style>
 </html>

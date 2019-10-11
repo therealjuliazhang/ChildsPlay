@@ -1,3 +1,7 @@
+<!--
+Title:Admin Profile;
+Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Julia Aoqi Zhang (5797585), Andre Knell (5741622), Ren Sugie(5679527);
+-->
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <?php
@@ -43,7 +47,7 @@ $locationArray[] = $row;
     //$(function(){
     $("#InsertHeader").load("header.html");
   });
-  
+
   function logout(){
 	  window.location = "home.html";
   }
@@ -51,7 +55,7 @@ $locationArray[] = $row;
   <!--Content User Information under the header-->
   <div class="navbar-fixed">
     <table id="infoTable" height="200px" class="white-text">
-      <tbody class="#1565c0 blue darken-3">
+      <tbody class="#1565c0 blue darken-2">
 	  <form action="" method="post">
         <tr>
           <td width="50%">
@@ -66,7 +70,7 @@ $locationArray[] = $row;
 				<i class="medium material-icons" id="mailIcon">account_box</i>
 				<span id="userType">Admin</span><br>
 				<!--<a class="waves-effect waves-light btn #2196f3 blue right" id="logoutButton" onclick="logout()">Logout</a>--->
-				<button type="submit" name="btnLogout" class="waves-effect waves-light btn #2196f3 blue right">Logout</button>
+				<button type="submit" name="btnLogout" class="waves-effect waves-light btn blue darken-1 right">Logout</button>
 				<?php
 				if(isset($_POST["btnLogout"])){
 					unset($_SESSION['userID']);
@@ -113,8 +117,8 @@ $locationArray[] = $row;
         </div>
         <div class="container">
           <div class="row">
-            <div class="col s1 offset-s11" id="editButtonDiv"><a class="waves-effect waves-light btn #2196f3 blue right" id="editButton">Edit</a></div>
-            <div class="col s1 offset-s11 hide" id="saveButtonDiv"><button class="submit waves-effect waves-light btn blue darken-2 right" id="saveButton" type="submit" value="submit">Save</button>
+            <div class="col s1 offset-s11" id="editButtonDiv"><a class="waves-effect waves-light btn blue darken-4 right" id="editButton">Edit</a></div>
+            <div class="col s1 offset-s11 hide" id="saveButtonDiv"><button class="submit waves-effect waves-light btn blue darken-4 right" id="saveButton" type="submit" value="submit">Save</button>
             </div>
           </div>
         </div>
@@ -127,13 +131,13 @@ $locationArray[] = $row;
   <div class="container">
       <div class="row" id="locationInfo">
         <div class="col s11 blue-text darken-2"><h5>Name</h5></div>
-      
+
      </div>
 
        <div class="row">
-         <div class="col s1 offset-s11"><a class="waves-effect waves-light btn blue darken-4 addCell hide right" id="addButtonB" onclick="appendRow()"><i class="material-icons">add</i></a></div>
-         <div class="col s1 offset-s10"><a class="waves-effect waves-light btn #2196f3 blue right" id="editButtonB">Edit</a></div>
-         <div class="col s1"><button class="waves-effect waves-light btn blue darken-2 right" id="saveButtonB" type="submit" value = "submit">Save</button></div>
+         <div class="col s1 offset-s11"><a class="waves-effect waves-light btn blue darken-2 addCell hide right" id="addButtonB" onclick="appendRow()"><i class="material-icons">add</i></a></div>
+         <div class="col s1 offset-s10"><a class="waves-effect waves-light btn #2196f3 blue darken-4 right" id="editButtonB">Edit</a></div>
+         <div class="col s1"><button class="waves-effect waves-light btn blue darken-4 right" id="saveButtonB" type="submit" value = "submit">Save</button></div>
        </div>
 
     </div>
@@ -143,7 +147,7 @@ $locationArray[] = $row;
   </body>
 
 <script>
-  
+
 
 //enable input
 $(document).ready(function(){
@@ -186,7 +190,7 @@ function loadProfileInfo()
   if (user[0].accountType == 1)
   {
     var user = <?php echo json_encode($users); ?>;
-    //display fullname 
+    //display fullname
     $("#fullNameTop").text(user[0].fullName);
     $("#mailInCell").text(user[0].email);
     $("#email").val(user[0].email);
@@ -196,7 +200,7 @@ function loadProfileInfo()
     {
       $("#userType").text("Admin");
     }
-    else 
+    else
     {
       $("#userType").text("NotAdmin");
     }
@@ -293,7 +297,7 @@ function loadLocationInfo(){
   });
 }
 
- 
+
 
      //enable input for location tab
       $(document).ready(function(){
@@ -315,7 +319,7 @@ function loadLocationInfo(){
 
       //Function for adding and deleting rows
       function appendRow() {
-      
+
         //variables for a new row
         var locationNameInput = "<div class='col s11'><input name='rowNum[]' value='default' type='text' class='validate inputInColB'></div>";
 
@@ -331,7 +335,7 @@ function loadLocationInfo(){
         });
 
       };
-      
+
       //remove existing rows
       $('.removeButtonB').click(function() {
         $(this).closest('.removable').remove();
@@ -340,13 +344,13 @@ function loadLocationInfo(){
       function loadLocationInfo(){
       var location = <?php echo json_encode($locationArray); ?>;
       var format;
-     
-      //display data 
+
+      //display data
       location.forEach(function(result){
-    
+
         var locationNameInput = "<div class='col s11'><input readonly name='locRow[]' value='"+ result.name +"' type='text' class='validate inputInColB'></div>";
 
-        
+
 
         var format = "<div class='removable'>" + locationNameInput + "</div>";
         $("#locationInfo").append(format);
@@ -354,5 +358,11 @@ function loadLocationInfo(){
     }
 
  </script>
+
+<style media="screen">
+.container .btn{
+  width: 80px;
+}
+</style>
 
 </html>
