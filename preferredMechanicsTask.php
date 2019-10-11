@@ -1,6 +1,6 @@
 <!--
-Title:Preferred Mechanics Task; 
-Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679527); 
+Title:Preferred Mechanics Task;
+Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679527);
 -->
 <?php
 //get information
@@ -286,7 +286,7 @@ $(document).ready(function(){
 						</div>
 					</div>
 				</div>
-				<div class="col s12"><a onclick="save()" class="waves-effect waves-light btn blue darken-2 right" id="saveButton">Next</a></div>
+				<div class="col s12"><a onclick="save()" class="waves-effect waves-light btn blue darken-4 right" id="saveButton">Next</a></div>
 			</div>
 		</div>
 	</body>

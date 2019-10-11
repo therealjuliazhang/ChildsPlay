@@ -1,6 +1,6 @@
 <!--
-Title:Thank You; 
-Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679527); 
+Title:Thank You;
+Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679527);
 -->
 <!DOCTYPE html>
 
@@ -15,7 +15,7 @@ Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4
     unset($_SESSION['groupID']);
     unset($_SESSION['tasks']);
     unset($_SESSION['mode']);
-	
+
 	if(isset($_SESSION["from"]))
 	{
 		$from = $_SESSION["from"];
@@ -45,7 +45,7 @@ Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4
 
         <!-- body content -->
 
-        <div class="container grey-text text-darken-1 content">
+        <div class="container content">
 			<div class="row">
 				<div class="col s12">
 					<h5 class="blue-text darken-2">Thank You!</h5>
@@ -56,11 +56,11 @@ Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4
                     </br>
 					<?php
 					if($from == "existingTests")
-						echo '<a href="viewExistingTests.php" class="waves-effect waves-light btn blue darken-2 right" name="button1">Finish</a>';
+						echo '<a href="viewExistingTests.php" class="waves-effect waves-light btn blue darken-4 right" name="button1">Finish</a>';
 					else
-						echo '<a href="educatorTests.php" class="waves-effect waves-light btn blue darken-2 right" name="button1">Finish</a>';
+						echo '<a href="educatorTests.php" class="waves-effect waves-light btn blue darken-4 right" name="button1">Finish</a>';
 					?>
-                    
+
 				</div>
 			</div>
         </div>

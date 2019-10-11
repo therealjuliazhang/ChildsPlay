@@ -225,8 +225,8 @@ if (count($taskIdList) > 0) {
 			<br/>
             <p align="right">
                 <!-- <button type="submit" name="createTest" class="waves-effect waves-light btn blue darken-2">Create Test</button> -->
-                <input type="submit" name="createTest" class="submit waves-effect waves-light btn blue darken-4 right" value="Create Test">
-                <a class="waves-effect waves-light btn red darken-1 right" href="viewExistingTests.php">Cancel</a>
+                <input style="width:120px" type="submit" name="createTest" class="submit waves-effect waves-light btn blue darken-4 right" value="Create Test">
+                <a style="width:120px" class="waves-effect waves-light btn red darken-1 right" href="viewExistingTests.php">Cancel</a>
             </p>
         </form>
     </div>

@@ -359,4 +359,10 @@ function loadLocationInfo(){
 
  </script>
 
+<style media="screen">
+.container .btn{
+  width: 80px;
+}
+</style>
+
 </html>

@@ -93,8 +93,8 @@ Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4
               echo "<td>Admin</td>";
             }
             //print buttons
-            echo "<td><a href='updateUserPage.php?uid=".$user["userID"]."&accepted=1' class='waves-effect waves-light btn #0d47a1 blue darken-4 acceptButton'>Accept</a></td>";
-            echo "<td><a href='updateUserPage.php?uid=".$user["userID"]."&accepted=-1' class='waves-effect waves-light btn #ff5252 red accent-2 declineButton'>Decline</a></td></tr>";
+            echo "<td><a href='updateUserPage.php?uid=".$user["userID"]."&accepted=1' class='waves-effect waves-light btn  blue darken-4 acceptButton'>Accept</a></td>";
+            echo "<td><a href='updateUserPage.php?uid=".$user["userID"]."&accepted=-1' class='waves-effect waves-light btn red  declineButton'>Decline</a></td></tr>";
           }
           ?>
         </tbody>
@@ -242,6 +242,9 @@ ul.tabs {
   content: '▼';
   font-size: 12px;
   margin-left: 5px;
+}
+td .btn{
+  width: 120px;
 }
 </style>
 </html>

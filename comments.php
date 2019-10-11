@@ -68,7 +68,7 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679
 
         <!-- body content -->
 
-        <div class="container grey-text text-darken-1 content">
+        <div class="container content">
 			<div class="row">
 				<div class="col s12">
 					<h5 class="blue-text darken-2">Any Comments?</h5>
