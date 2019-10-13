@@ -52,8 +52,9 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Julia Aoqi Zha
     <!--end header-->
 <!--Body part-->
     <div class="navbar-fixed">
-    <table id="infoTable" height="200px" class="white-text">
-      <tbody class="#1565c0 blue darken-3">
+    <table id="infoTable" style="background-color:#FF8C18" height="200px" class="white-text">
+		<tbody> <!-- class="#1565c0 blue darken-3"-->
+		<form action="" method="post">
         <tr>
           <td width="50%">
           <div class="tableLeft">
@@ -67,7 +68,7 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Julia Aoqi Zha
               <i class="medium material-icons" id="mailIcon">account_box</i>
               <span id="userType">Educator</span><br>
               <!--<a href="home.html" class="waves-effect waves-light btn #2196f3 blue right" id="logoutButton" onclick="logout()">Logout</a>--->
-			  <button type="submit" name="btnLogout" class="waves-effect waves-light btn #2196f3 blue right">Logout</button>
+              <button type="submit" name="btnLogout" class="waves-effect waves-light btn blue darken-4 right" style="right:67px;top:18px;position:relative;">Logout</button>
 				<?php
 				if(isset($_POST["btnLogout"])){
 					unset($_SESSION['userID']);
@@ -77,6 +78,7 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Julia Aoqi Zha
             </div>
           </td>
         </tr>
+		</form>
       </tbody>
     </table>
   </div>
@@ -88,27 +90,27 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Julia Aoqi Zha
   <div class="container" id="educatorProfileContainer">
     <div class="row" id="userDetail">
       <div class="col s12 blue-text darken-2"><h5>Account Information</h5></div>
-      <div class="col s3 column01"><h5 class="hInCol">Username:</h5></div>
+      <div class="col s3 column01"><h6 class="hInCol">Username:</h6></div>
       <div class='input-field col s9'>
         <input id="uName" disabled value='Alex Satoru' type='text' class='validate inputInCol'>
       </div>
-      <div class="col s3 column01"><h5 class="hInCol">Password:</h5></div>
+      <div class="col s3 column01"><h6 class="hInCol">Password:</h6></div>
       <div class='input-field col s9'>
         <input id="password" disabled value='********' type='text' class='validate inputInCol'>
       </div>
       <!--Password confirm Section-->
       <div class="hide passwordComfirmationRow">
-        <div class="col s3 column01"><h5 class="hInCol">Comfirm Password:</h5></div>
+        <div class="col s3 column01"><h6 class="hInCol">Comfirm Password:</h6></div>
         <div class='input-field col s9'>
           <input id="password" value='' type='text' class='validate inputInCol'>
         </div>
       </div>
       <div class="col s12 blue-text darken-2"><h5>Personal Information</h5></div>
-      <div class="col s3 valign-wrapper column01"><h5 class="hInCol">Email:</h5></div>
+      <div class="col s3 valign-wrapper column01"><h6 class="hInCol">Email:</h6></div>
       <div class='input-field col s9'>
         <input id="email" disabled value='ash@gmail.com' type='text' class='validate inputInCol'>
       </div>
-      <div class="col s3 column01"><h5 class="hInCol">Location:</h5></div>
+      <div class="col s3 column01"><h6 class="hInCol">Location:</h6></div>
       <div class="removable">
         <div class="input-field col s8 locationCell">
           <select class="selectLocation" disabled>

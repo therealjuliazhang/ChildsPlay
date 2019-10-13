@@ -29,7 +29,7 @@ while($row = mysqli_fetch_assoc($result))
 $locationArray[] = $row;
 ?>
 <head>
-  <title>ProfilePage</title>
+  <title>Profile Page</title>
   <meta name = "viewport" content = "width = device-width, initial-scale = 1">
   <link rel="stylesheet" type="text/css" href="childsPlayStyle.css">
   <link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -54,8 +54,8 @@ $locationArray[] = $row;
   </script>
   <!--Content User Information under the header-->
   <div class="navbar-fixed">
-    <table id="infoTable" height="200px" class="white-text">
-      <tbody class="#1565c0 blue darken-2">
+    <table id="infoTable" style="background-color:#FF8C18" height="200px" class="white-text">
+      <tbody> <!--class="#1565c0 blue darken-1"-->
 	  <form action="" method="post">
         <tr>
           <td width="50%">
@@ -70,7 +70,7 @@ $locationArray[] = $row;
 				<i class="medium material-icons" id="mailIcon">account_box</i>
 				<span id="userType">Admin</span><br>
 				<!--<a class="waves-effect waves-light btn #2196f3 blue right" id="logoutButton" onclick="logout()">Logout</a>--->
-				<button type="submit" name="btnLogout" class="waves-effect waves-light btn blue darken-1 right">Logout</button>
+        <button type="submit" name="btnLogout" class="waves-effect waves-light btn blue darken-4 right" style="right:67px;top:18px;position:relative;">Logout</button>
 				<?php
 				if(isset($_POST["btnLogout"])){
 					unset($_SESSION['userID']);
@@ -98,18 +98,18 @@ $locationArray[] = $row;
       <!--html for profile tab-->
       <div class="panel  is-show">
         <div class="container">
-          <div class="row" id="userDetail">
+          <div class="row" id="userDetail" style="margin-left:40px">
             <div class="col s12 blue-text darken-2"><h5>Account Information</h5></div>
-            <div class="col s3 column01"><h5 class="hInCol">Username:</h5></div>
+            <div class="col s3 column01"><h6 class="hInCol">Username:</h6></div>
             <div class='input-field col s9'>
               <input id="uName" name="uName" readonly type='text' class='validate inputInCol'>
             </div>
-            <div class="col s3 column01"><h5 class="hInCol">Password:</h5></div>
+            <div class="col s3 column01"><h6 class="hInCol">Password:</h6></div>
             <div class='input-field col s9'>
               <input id="password" name="password" readonly value='********' type='text' class='validate inputInCol'>
             </div>
             <div class="col s12 blue-text darken-2"><h5>Personal Information</h5></div>
-            <div class="col s3 valign-wrapper column01"><h5 class="hInCol">Email:</h5></div>
+            <div class="col s3 valign-wrapper column01"><h6 class="hInCol">Email:</h6></div>
             <div class='input-field col s9'>
               <input id="email" name="mailInput" readonly type='text' class='validate inputInCol'>
             </div>

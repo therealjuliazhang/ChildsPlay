@@ -60,16 +60,18 @@ $locations[] = $row;
 					element.after(error);
 				}
 			}
-		})
+		})/**/
+		
 		//set up rules and messages for errors
 		$("#form").validate({
 			rules: {
+				fullname: "required",
 				username: {
 					required: true,
 					remote: {
 						url: "checkUsername.php",
 						type: "post"
-					}
+                    }
 				},
 				email: {
 					required: true,
@@ -86,26 +88,27 @@ $locations[] = $row;
 				password2: {
 					required: true,
 					minlength: 5,
-					equalTo: "#password1"
+					equalTo: password1
 				}
 			},
 			messages: {
-				accountType: "Pick an account type.",
-				location: "Pick your location from the drop down menu.",
+				//location: "Pick your location from the drop down menu.",
+				fullname: { required: "Please enter your full name"},
 				username: {
-					required: "Enter a username.",
+					required: "Please enter a username.",
 					remote: jQuery.validator.format("Username {0} is already taken.")
 				},
 				email: {
-					required: "Enter an email.",
-					email: "Enter a valid email address."
+					required: "Please enter an email.",
+					email: "Please enter a valid email address.",
+					remote: jQuery.validator.format("Email address {0} is already taken.")
 				},
 				password1: {
-					required: "Enter a password.",
+					required: "Please enter a password.",
 					minlength: "Password must be at least 5 characters long."
 				},
 				password2: {
-					required: "Confirm your password.",
+					required: "Please confirm your password.",
 					minlength: "Password must be at least 5 characters long.",
 					equalTo: "Passwords entered are different."
 				}
@@ -135,6 +138,46 @@ $locations[] = $row;
 		document.getElementById("10").style.display="none";
 	}
 	</script>
+	<style>
+.logoImg{
+  height: 70px;
+  margin-top: 20px;
+}
+body{
+  background-color: #081754;
+}
+.bodyContainer{
+  width: 30%;
+}
+.card{
+  height: 1100px;
+}
+.loginButton{
+  margin-bottom: 20px;
+}
+.btn{
+	width: 70%;
+  border-radius: 20px;
+}
+.card .card-content {
+    padding: 50px;
+}
+.row {
+    margin-bottom: 20px;
+}
+.btn02{
+  background-color:#FF8C18;
+}
+.divider{
+	margin: 50px 0px;
+}
+h6{
+	margin-bottom: 20px;
+}/*
+.btn:hover, .btn-large:hover {
+    background-color: #FF8C18 !important;
+}*/
+</style>
 </head>
 <!--the stuff in the head is all the linking things to Materialize-->
 <!--all the linking's been done, so you shouldn't need to download anything from Materialise-->
@@ -158,9 +201,9 @@ $locations[] = $row;
 						<span class="card-title"><h5 class="center-align">Create Your Account</h5></span>
 						<form id="form" action="registerAccount.php" method="post">
 							<div class="row valign-wrapper">
-								<div class="col s4">Register as an</div>
+								<div class="col s4">Register as</div>
 								<div class="input-field col s8">
-									<select  onchange="chg(this)" name="accountType" required>
+									<select onchange="chg(this)" name="accountType" required>
 										<option value="" disabled selected>Choose your option</option>
 										<option value="admin">Admin</option>
 										<option value="educator">Educator</option>
@@ -198,27 +241,27 @@ $locations[] = $row;
 								</div>
 							</div>
 							<div class="row valign-wrapper" >
-								<div class="input-field col s12" style="display:none"  id="10">
+								<div class="input-field col s12" style="display:none" id="10">
 									<select name="location[]" id="location" class="materialSelect" required multiple>
-										<option value=""disabled selected >Location</option>
+										<option value="" disabled selected>Location</option>
 									</select>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col s12 center">
-									<input type="submit" value="Register" class="btn blue darken-4" id="submit"/>
+									<input type="submit" value="Register" class="btn blue darken-4" name="register" id="submit" <?php echo isset($_POST["register"]) ? 'disabled="true"' : ''; ?> />
 								</div>
 							</div>
 							<div class="row center">
 								<div class="col s12">
-                  <div class="divider"></div>
-                </div>
+									<div class="divider"></div>
+								</div>
 								<div class="col s12">
-                  <h6>Already have an account?</h6>
-                </div>
+									<h6>Already have an account?</h6>
+								</div>
 								<div class="col s12">
-                  <a href="login.php" class="waves-effect waves-light btn btn02">LOGIN</a>
-                </div>
+									<a href="login.php" class="waves-effect waves-light btn btn02">LOGIN</a>
+								</div>
 							</div>
 						</form>
 					</div>
@@ -226,48 +269,7 @@ $locations[] = $row;
 			</div>
 		</div>
 	</div>
-</div>
 <!--end card-->
 </body>
-<style>
-.logoImg{
-  height: 70px;
-  margin-top: 20px;
-}
-body{
-  background-color: #081754;
-}
-.bodyContainer{
-  width: 30%;
-}
-.card{
-  height: 1100px;
-}
-.loginButton{
-  margin-bottom: 20px;
-}
-.btn{
-	width: 70%;
-  border-radius: 20px;
-}
-.card .card-content {
-    padding: 50px;
-}
-.row {
-    margin-bottom: 20px;
-}
-.btn02{
-  background-color:#FF8C18;
-}
-.divider{
-	margin: 50px 0px;
-}
-h6{
-	margin-bottom: 20px;
-}
-.btn:hover, .btn-large:hover {
-    background-color: #FF8C18;
-}
 
-</style>
 </html>

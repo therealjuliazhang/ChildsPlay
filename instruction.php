@@ -71,8 +71,6 @@ else{
 	}
 }
 
-
-
 //get tasks and set to session
 function getTasks($conn, $testID, $taskID){
 	$tasksArray = array();
@@ -156,7 +154,7 @@ $bodyPart = "eye";
 								<img src='images/greyCircle.png' width='60px'>
 								";
 								break;
-								case "Character Ranking":
+							case "Character Ranking":
 								echo "<h4 class='blue-text text-darken-2'>Character Ranking</h4><br>";
 								echo "<h5 class='blue-text text-darken-2'>Task Instructions:</h5>";
 								echo $tasks[$taskIndex]['instruction'];
@@ -164,16 +162,14 @@ $bodyPart = "eye";
 								echo "</br></br>After the participant has completed their task, select the grey, quarter-circle button on the top right
 								of the screen to go to the next participant's turn.
 								</br>
-								<img src='images/greyCircle.png' width='60px'>
-								";
+								<img src='images/greyCircle.png' width='60px'>";
 								break;
-								case "Preferred Mechanics":
+							case "Preferred Mechanics":
 								echo "<h4 class='blue-text text-darken-2'>Preferred Mechanics</h4><br>";
 								echo "<h5 class='blue-text text-darken-2'>Task Instructions:</h5>";
 								echo $tasks[$taskIndex]['instruction'];
 								$taskTypeUrl = "preferredMechanicsTask.php?taskIndex=" . $taskIndex."&from=".$from;
 								echo "</br></br>After the participant has completed their task, click the next button to go to the next participant's turn.	</br>";
-
 								break;
 							}
 						}

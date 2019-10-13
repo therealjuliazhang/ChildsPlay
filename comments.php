@@ -110,7 +110,6 @@ if(isset($_POST['nextButton'])){
 		return $text;
 	}
 	$comment = processText($_POST['area1']);
-
 	if($_SESSION["mode"] == "preview"){
 		if($taskIndex == (sizeof($tasks)-1)){
 			if($from == "existingTasks"){

@@ -20,7 +20,8 @@ CREATE TABLE USERS (
 	email					VARCHAR(100)	NOT NULL,
 	accountType				BOOLEAN			NOT NULL,
 	fullName				VARCHAR(300)	NOT NULL,
-	accepted				INTEGER		NOT NULL,			
+	accepted				INTEGER			NOT NULL,
+	token					VARCHAR(300)  	NULL,			
 	CONSTRAINT users_pk PRIMARY KEY (userID)
 );
 

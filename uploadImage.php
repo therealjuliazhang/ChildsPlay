@@ -3,8 +3,6 @@ Title:Upload Image;
 Author:Phuong Linh Bui (5624095); 
 -->
 <?php
-
-
 $UploadFolder = "images";
 
 if(isset($_FILES["files"])){

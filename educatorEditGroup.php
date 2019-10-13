@@ -96,10 +96,10 @@ Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4
                     <div id ="rows"></div>
                     <div class="row right-align">
                         <a class="waves-effect waves-light btn blue darken-4 tooltipped" data-position="right" data-tooltip="Add more" onclick="addRow()"><i class="material-icons"style="font-size:30px;">add</i></a>
-                    </div>
+                    </div><br/>
                     <div class="row right-align">
-                        <a href="educatorTests.php#groups" class="waves-effect waves-light btn red">Cancel</a>
-                        <input type="submit" id="startButton" class="submit waves-effect waves-light btn blue darken-4" value="Save Changes">
+						<input type="submit" id="startButton" class="submit waves-effect waves-light btn blue darken-2" value="Save Changes">
+                        <a href="educatorTests.php#groups" class="waves-effect waves-light btn blue darken-4">Cancel</a>
                     </div>
                 </form>
         </div>

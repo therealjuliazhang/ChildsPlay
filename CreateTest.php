@@ -4,7 +4,6 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679
 -->
 
 <?php
-
 session_start();
 if(isset($_SESSION['userID']))
     $userID = $_SESSION['userID'];

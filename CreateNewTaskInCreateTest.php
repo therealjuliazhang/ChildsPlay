@@ -213,7 +213,7 @@ Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4
 						<div class="input-field">
 							<select name="activityStyle" id="activityStyle" onchange="loadContent()">
 							<?php echo "Style: ".$activityStyle;?>
-							<option <?php if(isset($activityStyle)){ if($activityStyle == "Identify Body Part") echo "selected";}?> value="Identify Body Part">Identify Body Part</option>
+							<option <?php if(isset($activityStyle)){ if($activityStyle == "Identify Body Parts") echo "selected";}?> value="Identify Body Parts">Identify Body Part</option>
 							<option <?php if(isset($activityStyle)){ if($activityStyle == "Likert Scale") echo "selected";}?> value="Likert Scale">Likert Scale</option>
 							<option <?php if(isset($activityStyle)){ if($activityStyle == "Character Ranking") echo "selected";}?> value="Character Ranking">Character Ranking</option>
 							<option <?php if(isset($activityStyle)) if($activityStyle == "Preferred Mechanics") echo "selected";?> value="Preferred Mechanics">Preferred Mechanics</option>

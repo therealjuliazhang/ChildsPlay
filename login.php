@@ -57,7 +57,7 @@ Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4
                 </div>
               </div>
               <div class="col s12 center">
-                <a href="#">Forgot your password?</a>
+                <a href="forgotPassword.php">Forgot your password?</a>
               </div>
 
               <div class="row">
