@@ -41,7 +41,7 @@ while($row = mysqli_fetch_assoc($testIDsResult)){
   <link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+  <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </head>
 <body>
   <!--header-->
@@ -55,7 +55,7 @@ while($row = mysqli_fetch_assoc($testIDsResult)){
   <!--end header-->
   <!-- body content -->
   <div class="container">
-    <h5 class="blue-text darken-2 header">Tests accessible to <span id="fullName"></span></h5>
+    <h4 class="blue-text text-darken-4 header">Tests accessible to <span id="fullName"></span></h4>
     <div id="testsAccessible">
       <table class="striped centered">
         <thead class="blue-text darken-2">
@@ -153,5 +153,9 @@ $(document).ready(function() {
 td .btn{
   width: 100px;
 }
+#addTest:hover {
+  background-color: #FF8C18!important;
+}
+
 </style>
 </html>

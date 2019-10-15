@@ -68,7 +68,7 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Julia Aoqi Zha
               <i class="medium material-icons" id="mailIcon">account_box</i>
               <span id="userType">Educator</span><br>
               <!--<a href="home.html" class="waves-effect waves-light btn #2196f3 blue right" id="logoutButton" onclick="logout()">Logout</a>--->
-              <button type="submit" name="btnLogout" class="waves-effect waves-light btn blue darken-4 right" style="right:67px;top:18px;position:relative;">Logout</button>
+              <button type="submit" id="logoutButton" name="btnLogout" class="waves-effect waves-light btn blue darken-4 right" style="right:67px;top:18px;position:relative;">Logout</button>
 				<?php
 				if(isset($_POST["btnLogout"])){
 					unset($_SESSION['userID']);
@@ -89,7 +89,7 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Julia Aoqi Zha
 
   <div class="container" id="educatorProfileContainer">
     <div class="row" id="userDetail">
-      <div class="col s12 blue-text darken-2"><h5>Account Information</h5></div>
+      <div class="col s12 blue-text text-darken-4"><h4>Account Information</h4></div>
       <div class="col s3 column01"><h6 class="hInCol">Username:</h6></div>
       <div class='input-field col s9'>
         <input id="uName" disabled value='Alex Satoru' type='text' class='validate inputInCol'>
@@ -105,7 +105,7 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Julia Aoqi Zha
           <input id="password" value='' type='text' class='validate inputInCol'>
         </div>
       </div>
-      <div class="col s12 blue-text darken-2"><h5>Personal Information</h5></div>
+      <div class="col s12 blue-text text-darken-4"><h4>Personal Information</h4></div>
       <div class="col s3 valign-wrapper column01"><h6 class="hInCol">Email:</h6></div>
       <div class='input-field col s9'>
         <input id="email" disabled value='ash@gmail.com' type='text' class='validate inputInCol'>
@@ -128,7 +128,7 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Julia Aoqi Zha
     <div class="row">
       <div class="col s1 offset-s11"><a class="waves-effect waves-light btn blue darken-4 addCell hide" id="addButton" onclick="appendSelect()"><i class="material-icons">add</i></a></div>
       <div class="col s1 offset-s11" id="editBUttonDiv"><a class="waves-effect waves-light btn blue darken-4" id="editButton">Edit</a></div>
-      <div class="col s1 offset-s11 hide" id="saveButtonDiv"><a class="waves-effect waves-light btn blue darken-2" id="saveButton">Save</a></div>
+      <div class="col s1 offset-s11 hide" id="saveButtonDiv"><a class="waves-effect waves-light btn blue darken-4" id="saveButton">Save</a></div>
     </div>
   </div>
 </body>
@@ -255,6 +255,9 @@ alert('More than 1280');
 }
 #saveButtonDiv .btn{
   width: 100px;
+}
+#editButton:hover, #saveButton:hover, #addButton:hover, #logoutButton:hover{
+  background-color: #FF8C18!important;
 }
 </style>
 </html>

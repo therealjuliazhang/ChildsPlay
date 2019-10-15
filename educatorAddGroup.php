@@ -49,7 +49,7 @@ while($row = mysqli_fetch_assoc($result)){
   <!--end header-->
   <!-- body content -->
   <div class="container" style="font-size:18px">
-    <h5 class="blue-text darken-2">Add New Group</h5>
+    <h4 class="blue-text text-darken-4">Add New Group</h4>
     <form id="form" style="font-size:18px" action="insertGroup.php" method="post">
       <div class="row">
         <div class="input-field col s12">
@@ -68,7 +68,7 @@ while($row = mysqli_fetch_assoc($result)){
       Please input the details for each test participant:
       <div id ="rows"></div>
       <div class="row right-align">
-        <a class="waves-effect waves-light btn blue darken-4 tooltipped" data-position="right" data-tooltip="Add more" onclick="addRow(); updateToolTips()"><i class="material-icons"style="font-size:30px;">add</i></a>
+        <a class="addButton waves-effect waves-light btn blue darken-4 tooltipped" data-position="right" data-tooltip="Add more" onclick="addRow(); updateToolTips()"><i class="material-icons"style="font-size:30px;">add</i></a>
       </div>
       <div class="row right-align">
         <a style=""href="educatorTests.php#groups" class="waves-effect waves-light btn red buttons">Cancel</a>
@@ -184,6 +184,9 @@ label[data-error] {
 
 .buttons{
   width: 100px;
+}
+.submit:hover, .addButton:hover {
+  background-color: #FF8C18!important;
 }
 </style>
 </html>
