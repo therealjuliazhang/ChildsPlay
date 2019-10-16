@@ -25,6 +25,15 @@ while ($row = mysqli_fetch_assoc($result))
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
 	<script>
 		$(document).ready(function() {
+			// var xhttp = new XMLHttpRequest();
+			// $('#username').change(function() {
+			// 	xhttp.open("POST", "checkUsername.php", true);
+			// 	xhttp.send();
+			// });
+			// $('#username').addClass("invalid");
+			// $('#username').attr("aria-invalid", "false");
+			// $('#username').attr("aria-describedby", "username-error");
+			// $('#usernameLabel').attr("data-error", "ooooooooooooo");
 			//inititate select drop down
 			$('select').material_select();
 			$("select[required]").css({
@@ -36,7 +45,7 @@ while ($row = mysqli_fetch_assoc($result))
 			$('.materialSelect').on('contentChanged', function() {
 				$(this).material_select();
 			});
-			//set locations into select options
+			// set locations into select options
 			var locations = <?php echo json_encode($locations); ?>;
 			for (var i = 0; i < locations.length; i++) {
 				var option = document.createElement("option");
@@ -64,6 +73,7 @@ while ($row = mysqli_fetch_assoc($result))
 			//set up rules and messages for errors
 			$("#form").validate({
 				rules: {
+					fullname: "required",
 					username: {
 						required: true,
 						remote: {
@@ -94,8 +104,8 @@ while ($row = mysqli_fetch_assoc($result))
 					location: "Pick your location from the drop down menu.",
 					username: {
 						required: "Enter a username.",
-						// remote: jQuery.validator.format("Username {0} is already taken.")
-						remote: "Username is already taken."
+						remote: jQuery.validator.format("Username {0} is already taken.")
+						// remote: "Username is already taken."
 					},
 					email: {
 						required: "Enter an email.",
@@ -124,7 +134,6 @@ while ($row = mysqli_fetch_assoc($result))
 	</script>
 </head>
 <!-- logo -->
-
 <body>
 	<div class="container">
 		<div class="row">
@@ -143,7 +152,7 @@ while ($row = mysqli_fetch_assoc($result))
 						<span class="card-title">
 							<h5 class="center-align">Create Your Account</h5>
 						</span>
-						<form id="form" action="registerAccount.php" method="POST">
+						<form id="form" action="registerAccount.php" method="POST" novalidate="novalidate">
 							<div class="row valign-wrapper">
 								<div class="col s4">Register as</div>
 								<div class="input-field col s8">
@@ -156,14 +165,14 @@ while ($row = mysqli_fetch_assoc($result))
 							</div>
 							<div class="row">
 								<div class="input-field col s12">
-									<input id="fullname" name="fullname" type="text" class="validate">
+									<input id="fullname" name="fullname" type="text" class="validate" required="" aria-required="true">
 									<label for="fullname">Full Name</label>
 								</div>
 							</div>
 							<div class="row">
 								<div class="input-field col s12">
 									<input id="username" name="username" type="text" class="validate">
-									<label for="username">User Name</label>
+									<label id="usernameLabel" for="username">User Name</label>
 								</div>
 							</div>
 							<div class="row">

@@ -1,7 +1,3 @@
-<!--
-Title:Check Group Name; 
-Author:Alex Satoru Hanrahan (4836789); 
--->
 <?php
     //get input
     if(isset($_REQUEST['groupName']))
