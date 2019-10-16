@@ -49,4 +49,4 @@ if($accountType == 0){
     }
 }
 $_SESSION['userID'] = $userID;
-//header('location: thankyouForRegister.html');
+header('location: thankyouForRegister.html');

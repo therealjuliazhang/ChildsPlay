@@ -15,7 +15,7 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679
 		header('location: login.php');
 	?>
     <head>
-        <title>Available Tests and Groups for Educator</title>
+        <title>Available Tests and Groups</title>
         <meta name = "viewport" content = "width = device-width, initial-scale = 1">
         <link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
@@ -43,13 +43,13 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679
         <!-- body content -->
         <div class="container" id="tabs">
 			<ul class="tabs ">
-				<li class="tab col s3"><a class="blue-text darken-2" href="#tests"><h5>Tests</h5></a></li>
-				<li class="tab col s3"><a class="blue-text darken-2" href="#groups"><h5>Groups</h5></a></li>
+				<li class="tab col s3"><a class="blue-text text-darken-4" href="#tests"><h5>Tests</h5></a></li>
+				<li class="tab col s3"><a class="blue-text text-darken-4" href="#groups"><h5>Groups</h5></a></li>
 				<div class="indicator blue darken-2" style="z-index:1" id="tabIndicator"></div>
 			</ul>
 			<div id="tests" >
 			<table class="striped">
-				<thead class="blue-text darken-2">
+				<thead class="blue-text text-darken-4">
 					<tr>
 						<th>Name</th>
 						<th>Description</th>
@@ -93,7 +93,7 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679
 			</div>
 			<div id="groups">
 				<table>
-					<thead class="blue-text darken-2">
+					<thead class="blue-text text-darken-4">
 						<tr>
 							<th>Name</th>
 							<th>Members</th>
@@ -182,6 +182,9 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679
 	}
 	.editButton{
 		margin-right: 30px;
+	}
+	.btn:hover{
+	  background-color: #FF8C18!important;
 	}
 
     </style>

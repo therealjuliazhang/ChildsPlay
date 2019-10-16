@@ -1,10 +1,8 @@
 <!--
-Title:Send Email; 
-Author:Phuong Linh Bui (5624095); 
+Title: Send Email; 
+Author: Phuong Linh Bui (5624095); 
 -->
 <?php
-
-
 date_default_timezone_set('Etc/UTC');
 
 // Edit this path if PHPMailer is in a different location
@@ -23,7 +21,7 @@ $mail->setFrom('childsplay@gmail.com', 'ChildsPlay Website'); // Set the sender 
 $mail->Subject = 'ChildsPlay Account Registration Notification'; // The subject of the message.
 $mail->isHTML(true); //allows to use HTML content
 
-//send email when admin accepts or rejects the account
+//send email to user when admin accepts or rejects the account
 if(isset($_SESSION["uID"])){
 	$uID = $_SESSION["uID"];
 	$sql = "SELECT email FROM USERS WHERE userID=$uID";
@@ -79,6 +77,41 @@ if(isset($_SESSION["uEmail"])){
 		echo "Mailer Error: " . $mail->ErrorInfo;
 	}
 }
-unset($_SESSION["uID"]);
-unset($_SESSION["accepted"]);
-unset($_SESSION["uEmail"]);
+
+//send reset password link to user email
+if(isset($_POST["resetEmail"])){
+if(isset($_SESSION["resetPwEmail"])){
+	$email = $_SESSION["resetPwEmail"];
+
+	$password = rand(999, 99999);
+	$password_hash = md5($password);
+	echo "Hash: ".$password_hash;
+	//$url = "http://localhost/CSIT321/ChildsPlay/resetPassword.php?token=$password_hash";
+	//echo "url: ".$url;
+
+	$sql = "UPDATE USERS SET token='$password_hash' WHERE email='$email'";
+	$result = $conn->query($sql);
+	$count = mysqli_affected_rows($conn);
+	if($count == 1){
+		$mail->Subject = 'ChildsPlay Reset Password Notification';
+		$mail->addAddress($email); // Set the recipient of the message.
+		$url = "http://localhost/CSIT321/ChildsPlay/resetPassword.php?token=$password_hash"; //NEED TO CHANGE TO MATCH WITH THE ONLINE WEB SERVER
+		$message = "<span style='font-size:16px;font-weight:bold'>Reset Password Link</span><br/><br/>";
+		$message .=	"A reset password has been made in ChildsPlay website with the email address $email! Please click this <a href=$url >link</a> to reset your password!";
+		$mail->Body = $message;
+		
+		if ($mail->send()) {
+			echo "Your message was sent successfully!";
+			//exit;
+		} else {
+			echo "Mailer Error: " . $mail->ErrorInfo;
+		}/**/
+	}
+	else
+	echo "Failed.";
+}
+}
+if(isset($_SESSION["uID"])) unset($_SESSION["uID"]);
+if(isset($_SESSION["accepted"])) unset($_SESSION["accepted"]);
+if(isset($_SESSION["uEmail"])) unset($_SESSION["uEmail"]);
+if(isset($_SESSION["resetPwEmail"])) unset($_SESSION["resetPwEmail"]);

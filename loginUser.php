@@ -24,13 +24,13 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789);
 				//set user ID to session
 				$userID = $user['userID'];
 				$_SESSION['userID'] = $userID;
+				//check if admin or educator and redirect to correct page
+				if($user['accountType']== 1)
+					header('location: viewExistingTests.php');
+				else
+					header('location: educatorTests.php');
 			}
-            //check if admin or educator and redirect to correct page
-            if($user['accountType']== 1)
-                header('location: viewExistingTests.php');
-            else
-                header('location: educatorTests.php');
   	}else {
-            header('location: login.php?msg=failed');
+        header('location: login.php?msg=failed');
   	}
 ?>

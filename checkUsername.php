@@ -1,9 +1,8 @@
 <?php
     include 'db_connection.php';
     $conn = OpenCon();
-    $input = "";
-    if(isset($_REQUEST['username']))
-        $input = $_REQUEST['username'];
+    if(isset($_POST['username']))
+        $input = $_POST['username'];
     //check for existing username by selecting user from database
     $sql = "SELECT * FROM USERS WHERE username = '" .$input. "'";
     $result = $conn->query($sql);

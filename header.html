@@ -12,7 +12,7 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679
   <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
   <!--  Scripts-->
-  <!-- <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script> -->
+  <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <!-- <script type = "text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.js"></script> -->
 </head>
 <body>
@@ -22,10 +22,10 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679
       <div class="nav-wrapper">
         <a href="viewExistingTests.php" class="brand-logo left"><img src="images/logo1.png" ></a>
         <ul id="nav-mobile" class="hide-on-med-and-down">
-          <li><a href="viewExistingTests.php" style="color:white">Tests</a></li>
-          <li><a href="createTest.php" style="color:white">Create</a></li> <!--change to php file once it's made-->
-          <li><a href="results.php" style="color:white">Results</a></li>
-          <li><a href="userPage.php" style="color:white">Users</a></li>
+          <li id="testsList" class=""><a href="viewExistingTests.php" style="color:white">Tests</a></li>
+          <li id="createList" class=""><a href="createTest.php" style="color:white">Create</a></li> <!--change to php file once it's made-->
+          <li id="resultsList" class=""><a href="results.php" style="color:white">Results</a></li>
+          <li id="usersList" class=""><a href="userPage.php" style="color:white">Users</a></li>
         </ul>
 
         <ul class="right hide-on-med-and-down">
@@ -40,9 +40,33 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679
   nav ul a:hover {
     background-color:#FF8C18;
   }
-  /* #profileLinkButton{
+  nav ul li.active {
     background-color:#FF8C18;
-  } */
-</style>
+  }
 
+  /* #profileLinkButton{
+  background-color:#FF8C18;
+} */
+</style>
 </html>
+
+<script type="text/javascript">
+
+  $(document).ready(function(){
+    var pathname = window.location.pathname;
+    if(pathname === "/viewExistingTests.php"){
+      $("#testsList").addClass("active");
+    }
+    else if(pathname === "/createTest.php"){
+      $("#createList").addClass("active");
+    }
+    else if(pathname === "/results.php"){
+      $("#resultsList").addClass("active");
+    }
+    else if(pathname === "/userPage.php"){
+      $("#usersList").addClass("active");
+    }
+    // alert(pathname);
+  });
+
+</script>

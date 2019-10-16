@@ -71,7 +71,7 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679
         <div class="container content">
 			<div class="row">
 				<div class="col s12">
-					<h5 class="blue-text darken-2">Any Comments?</h5>
+					<h4 class="blue-text text-darken-4">Any Comments?</h4>
 					<div style="font-size:18px">
 						Input any relevant information about anything that occurred during the test task:
 					</div>
@@ -110,7 +110,6 @@ if(isset($_POST['nextButton'])){
 		return $text;
 	}
 	$comment = processText($_POST['area1']);
-
 	if($_SESSION["mode"] == "preview"){
 		if($taskIndex == (sizeof($tasks)-1)){
 			if($from == "existingTasks"){
@@ -179,5 +178,9 @@ if(isset($_POST['nextButton'])){
 		font-style: italic;
 		color: red;
 	}
+	.btn:hover {
+	  background-color: #FF8C18!important;
+	}
+
     </style>
 </html>
