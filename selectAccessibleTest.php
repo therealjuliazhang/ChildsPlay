@@ -51,10 +51,10 @@ $availableTests[] = $row;
   <!--end header-->
   <!-- body content -->
   <div class="container">
-    <h5 class="blue-text darken-2 header">Available Tests</h5>
+    <h4 class="blue-text text-darken-4 header">Available Tests</h4>
     <div id="availableTest">
       <table class="striped centered">
-        <thead class="blue-text darken-2">
+        <thead class="blue-text text-darken-4">
           <tr>
             <th>Name</th>
             <th>Description</th>
@@ -88,7 +88,7 @@ $(document).ready(function() {
       $('<td/>', { text: test.dateEdited }),
       $('<td/>').append(
         $('<a/>', {
-          class: "waves-effect waves-light btn #0d47a1 blue darken-4",
+          class: "waves-effect waves-light btn blue darken-4 assignButton",
           href: "assignTest.php?userID=" + selectedUserID + "&testID=" + test.testID,
           text: "Assign"
         })
@@ -127,7 +127,13 @@ $(document).ready(function() {
 }
 #back{
   margin-top:20px;
-  width: 83px;
+  width: 95px;
+}
+.assignButton{
+  width: 95px;
+}
+.assignButton:hover{
+  background-color: #FF8C18!important;
 }
 </style>
 </html>

@@ -130,8 +130,8 @@ $bodyPart = "eye";
 					if(count($tasks) > 0){
 						switch($tasks[$taskIndex]["activityStyle"]){
 							case "Likert Scale":
-							echo "<h4 class='blue-text text-darken-2'>Likert Scale</h4><br>";
-							echo "<h5 class='blue-text text-darken-2'>Task Instructions:</h5>";
+							echo "<h4 class='blue-text text-darken-4'>Likert Scale</h4><br>";
+							echo "<h5 class='blue-text text-darken-4'>Task Instructions:</h5>";
 							echo $tasks[$taskIndex]['instruction'] .
 							"</br>
 							<img src=\"images/happy.png\" width=\"75px\"><img src=\"images/sad.png\" width=\"75px\">
@@ -144,8 +144,8 @@ $bodyPart = "eye";
 							";
 							break;
 							case "Identify Body Parts":
-								echo "<h4 class='blue-text text-darken-2'>Identify Body Parts</h4><br>";
-								echo "<h5 class='blue-text text-darken-2'>Task Instructions:</h5>";
+								echo "<h4 class='blue-text text-darken-4'>Identify Body Parts</h4><br>";
+								echo "<h5 class='blue-text text-darken-4'>Task Instructions:</h5>";
 								echo $tasks[$taskIndex]['instruction'];
 								$taskTypeUrl = "identifyBodyPartsTask.php?taskIndex=" . $taskIndex."&from=".$from;
 								echo "</br></br>After the participant has completed their task, select the grey, quarter-circle button on the top right
@@ -155,8 +155,8 @@ $bodyPart = "eye";
 								";
 								break;
 							case "Character Ranking":
-								echo "<h4 class='blue-text text-darken-2'>Character Ranking</h4><br>";
-								echo "<h5 class='blue-text text-darken-2'>Task Instructions:</h5>";
+								echo "<h4 class='blue-text text-darken-4'>Character Ranking</h4><br>";
+								echo "<h5 class='blue-text text-darken-4'>Task Instructions:</h5>";
 								echo $tasks[$taskIndex]['instruction'];
 								$taskTypeUrl = "characterRankingTask.php?taskIndex=" . $taskIndex."&from=".$from;
 								echo "</br></br>After the participant has completed their task, select the grey, quarter-circle button on the top right
@@ -165,8 +165,8 @@ $bodyPart = "eye";
 								<img src='images/greyCircle.png' width='60px'>";
 								break;
 							case "Preferred Mechanics":
-								echo "<h4 class='blue-text text-darken-2'>Preferred Mechanics</h4><br>";
-								echo "<h5 class='blue-text text-darken-2'>Task Instructions:</h5>";
+								echo "<h4 class='blue-text text-darken-4'>Preferred Mechanics</h4><br>";
+								echo "<h5 class='blue-text text-darken-4'>Task Instructions:</h5>";
 								echo $tasks[$taskIndex]['instruction'];
 								$taskTypeUrl = "preferredMechanicsTask.php?taskIndex=" . $taskIndex."&from=".$from;
 								echo "</br></br>After the participant has completed their task, click the next button to go to the next participant's turn.	</br>";
@@ -176,7 +176,7 @@ $bodyPart = "eye";
 						?>
 
 					</div>
-					<h5 class="blue-text darken-2">Images Under Test:</h5>
+					<h5 class="blue-text text-darken-4">Images Under Test:</h5>
 					<?php
 					//display images under test
 					if(count($tasks) > 0){
@@ -243,6 +243,9 @@ $bodyPart = "eye";
 	.logout{
 		margin-top: 15px;
 		margin-right:15px;
+	}
+	.btn:hover{
+	  background-color: #FF8C18!important;
 	}
 	</style>
 	</html>

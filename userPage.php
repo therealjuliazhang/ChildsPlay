@@ -34,14 +34,14 @@ Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4
 
     <div class="container">
       <ul class="tabs">
-        <li class="tab col s4"><a class="blue-text darken-2" href="#pendingUsers"><h5>Pending Users</h5></a></li>
-        <li class="tab col s4"><a class="blue-text darken-2" href="#educators"><h5>Educators</h5></a></li>
-        <li class="tab col s4"><a class="blue-text darken-2" href="#admin"><h5>Admin</h5></a></li>
+        <li class="tab col s4"><a class="blue-text text-darken-4" href="#pendingUsers"><h5>Pending Users</h5></a></li>
+        <li class="tab col s4"><a class="blue-text text-darken-4" href="#educators"><h5>Educators</h5></a></li>
+        <li class="tab col s4"><a class="blue-text text-darken-4" href="#admin"><h5>Admin</h5></a></li>
         <div class="indicator blue darken-2" style="z-index:1" id="tabIndicator"></div>
       </ul>
       <!-- pending users tab-->
       <table id="pendingUsers" class="striped tablesorter">
-        <thead class="blue-text darken-2">
+        <thead class="blue-text text-darken-4">
           <tr>
             <th>Name</th>
             <th>Email</th>
@@ -51,7 +51,7 @@ Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4
             <th width="10%">Decline</th> -->
           </tr>
         </thead>
-        <tbody class="grey-text text-darken-1">
+        <tbody class="">
           <?php
           session_start();
           include 'db_connection.php';
@@ -103,7 +103,7 @@ Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4
       <!-- educators tab-->
       <div id="educators">
         <table class="striped tablesorter">
-          <thead class="blue-text darken-2">
+          <thead class="blue-text text-darken-4">
             <tr>
               <th>Name</th>
               <th>Email</th>
@@ -111,7 +111,7 @@ Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4
 
             </tr>
           </thead>
-          <tbody class="grey-text text-darken-1">
+          <tbody class="">
             <?php
             //include 'db_connection.php';
             //$conn = OpenCon();
@@ -141,7 +141,7 @@ Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4
                 $i++;
               }
               echo $location."</td>";
-              echo '<td><a class="waves-effect waves-light btn #0d47a1 blue darken-4" href="accessibleTest.php?userID='.$educator["userID"].'">Tests</a></td></tr>';
+              echo '<td><a class="waves-effect waves-light btn blue darken-4 testButton" href="accessibleTest.php?userID='.$educator["userID"].'">Tests</a></td></tr>';
             }
 
             ?>
@@ -151,14 +151,14 @@ Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4
       <!--Admin Tab-->
       <div id="admin">
         <table class="striped tablesorter">
-          <thead class="blue-text darken-2">
+          <thead class="blue-text text-darken-4">
             <tr>
               <th>Name</th>
               <th>Email</th>
               <th>Organisation</th>
             </tr>
           </thead>
-          <tbody class="grey-text text-darken-1">
+          <tbody class="">
             <?php
             $conn = OpenCon();
             $sql = "SELECT * FROM USERS WHERE accountType = 1 AND accepted = 1"; //accepted admin
@@ -246,5 +246,9 @@ ul.tabs {
 td .btn{
   width: 120px;
 }
+.acceptButton:hover, .testButton:hover{
+  background-color: #FF8C18!important;
+}
+
 </style>
 </html>
