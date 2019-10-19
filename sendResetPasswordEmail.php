@@ -1,3 +1,7 @@
+<!--
+Title:Reset password;
+Author:Phuong Linh Bui (5624095);
+-->
 <?php
 session_start();
 include "db_connection.php";
@@ -23,14 +27,10 @@ $mail->isHTML(true); //allows to use HTML content
 
 //send reset password link to user email
 if(isset($_POST["resetEmail"])){
-if(isset($_SESSION["resetPwEmail"])){
-	$email = $_SESSION["resetPwEmail"];
+	$email = $_POST["resetEmail"];
 
 	$password = rand(999, 99999);
 	$password_hash = md5($password);
-	echo "Hash: ".$password_hash;
-	//$url = "http://localhost/CSIT321/ChildsPlay/resetPassword.php?token=$password_hash";
-	//echo "url: ".$url;
 
 	$sql = "UPDATE USERS SET token='$password_hash' WHERE email='$email'";
 	$result = $conn->query($sql);
@@ -45,13 +45,11 @@ if(isset($_SESSION["resetPwEmail"])){
 		
 		if ($mail->send()) {
 			echo "Your message was sent successfully!";
-			//exit;
 		} else {
 			echo "Mailer Error: " . $mail->ErrorInfo;
-		}/**/
+		}
 	}
 	else
-	echo "Failed.";
-}
+		echo "Failed.";
 }
 ?>

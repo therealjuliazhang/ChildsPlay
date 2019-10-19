@@ -62,8 +62,10 @@ if(isset($_SESSION["uID"])){
 	}
 }
 //send email to admin when there's a new registered account
-if(isset($_SESSION["uEmail"])){
-	$email = $_SESSION["uEmail"];
+if(isset($_POST["registerEmail"])){
+//if(isset($_SESSION["uEmail"])){
+	$email = $_POST["registerEmail"];
+	//$email = $_SESSION["uEmail"];
 	$mail->addAddress("childsplaycsit321@gmail.com"); // Set the recipient of the message.
 	$url = "http://localhost/CSIT321/ChildsPlay/userPage.php"; //NEED TO CHANGE TO MATCH WITH THE ONLINE WEB SERVER
 	$message = "<span style='font-size:16px;font-weight:bold'>Notification!</span><br/><br/>";

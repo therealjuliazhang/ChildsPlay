@@ -1,8 +1,7 @@
-<!--
-Title:Check Group Name; 
-Author:Alex Satoru Hanrahan (4836789); 
--->
 <?php
+/*Title: Check group name 
+Author: Alex Satoru Hanrahan (4836789)
+*/
     //get input
     if(isset($_REQUEST['groupName']))
         $input = $_REQUEST['groupName'];
@@ -11,7 +10,7 @@ Author:Alex Satoru Hanrahan (4836789);
     if(isset($_POST['currentGroupName']))
         $currentGroupName = $_POST['currentGroupName'];
     if($input == $currentGroupName){
-        echo json_encode("true");
+        echo json_encode(true);
     }
     else{
         //check if group name already taken by selecting it from database
@@ -20,9 +19,9 @@ Author:Alex Satoru Hanrahan (4836789);
         $sql = "SELECT * FROM GROUPTEST WHERE name = '" .$input. "'";
         $result = $conn->query($sql);
         //return "" for error, true for no error
-        if(mysqli_num_rows($result) > 0)
-            echo json_encode("");
+        if(mysqli_num_rows($result) != 1)
+            echo json_encode(true);
         else
-            echo json_encode("true");
+            echo json_encode(false);
     }
 ?>

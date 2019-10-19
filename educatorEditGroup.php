@@ -40,7 +40,7 @@ Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4
 				$locations[] = $value;
 		}
         //fetch preschoolerIDs from groupassignment table
-        $sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID = " . $groupID ." AND userID=".$userID;
+        $sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID = " . $groupID;// ." AND userID=".$userID;
         $result = $conn->query($sql);
         $preschoolerIDs = array();
         while($row = mysqli_fetch_assoc($result))

@@ -64,23 +64,27 @@ INSERT INTO LOCATION(name) VALUES (@name);
 /*GROUPTEST*/
 SET
 @name = "Group 1",
-@locationID = 1;
-INSERT INTO GROUPTEST(name, locationID) VALUES(@name, @locationID);
+@locationID = 1,
+@userID = 3;
+INSERT INTO GROUPTEST(name, locationID, userID) VALUES(@name, @locationID, @userID);
 
 SET
 @name = "Group 2",
-@locationID = 2;
-INSERT INTO GROUPTEST(name, locationID) VALUES(@name, @locationID);
+@locationID = 2,
+@userID = 3;
+INSERT INTO GROUPTEST(name, locationID, userID) VALUES(@name, @locationID, @userID);
 
 SET
 @name = "Group 3",
-@locationID = 3;
-INSERT INTO GROUPTEST(name, locationID) VALUES(@name, @locationID);
+@locationID = 3,
+@userID = 4;
+INSERT INTO GROUPTEST(name, locationID, userID) VALUES(@name, @locationID, @userID);
 
 SET
 @name = "Group 4",
-@locationID = 2;
-INSERT INTO GROUPTEST(name, locationID) VALUES(@name, @locationID);
+@locationID = 2,
+@userID = 6;
+INSERT INTO GROUPTEST(name, locationID, userID) VALUES(@name, @locationID, @userID);
 
 /*PRESCHOOLER*/
 SET 
@@ -116,53 +120,45 @@ INSERT INTO PRESCHOOLER(name, age, gender) VALUES (@name, @age, @gender);
 /*GROUPASSIGNMENT*/
 SET
 @groupID = 1,
-@preID = 1,
-@userID = 1;
-INSERT INTO GROUPASSIGNMENT(groupID, preID, userID) VALUES (@groupID, @preID, @userID);
+@preID = 1;
+INSERT INTO GROUPASSIGNMENT(groupID, preID) VALUES (@groupID, @preID);
 
 SET
 @groupID = 1,
-@preID = 2,
-@userID = 1;
-INSERT INTO GROUPASSIGNMENT(groupID, preID, userID) VALUES (@groupID, @preID, @userID);
+@preID = 2;
+INSERT INTO GROUPASSIGNMENT(groupID, preID) VALUES (@groupID, @preID);
 
 SET
 @groupID = 1,
-@preID = 3,
-@userID = 1;
-INSERT INTO GROUPASSIGNMENT(groupID, preID, userID) VALUES (@groupID, @preID, @userID);
+@preID = 3;
+INSERT INTO GROUPASSIGNMENT(groupID, preID) VALUES (@groupID, @preID);
 
 /*Group 2*/
 SET
 @groupID = 2,
-@preID = 1,
-@userID = 1;
-INSERT INTO GROUPASSIGNMENT(groupID, preID, userID) VALUES (@groupID, @preID, @userID);
+@preID = 1;
+INSERT INTO GROUPASSIGNMENT(groupID, preID) VALUES (@groupID, @preID);
 
 SET
 @groupID = 2,
-@preID = 4,
-@userID = 1;
-INSERT INTO GROUPASSIGNMENT(groupID, preID, userID) VALUES (@groupID, @preID, @userID);
+@preID = 4;
+INSERT INTO GROUPASSIGNMENT(groupID, preID) VALUES (@groupID, @preID);
 
 SET
 @groupID = 2,
-@preID = 3,
-@userID = 1;
-INSERT INTO GROUPASSIGNMENT(groupID, preID, userID) VALUES (@groupID, @preID, @userID);
+@preID = 3;
+INSERT INTO GROUPASSIGNMENT(groupID, preID) VALUES (@groupID, @preID);
 
 /*Group 4*/
 SET
 @groupID = 4,
-@preID = 2,
-@userID = 1;
-INSERT INTO GROUPASSIGNMENT(groupID, preID, userID) VALUES (@groupID, @preID, @userID);
+@preID = 2;
+INSERT INTO GROUPASSIGNMENT(groupID, preID) VALUES (@groupID, @preID);
 
 SET
 @groupID = 4,
-@preID = 5,
-@userID = 1;
-INSERT INTO GROUPASSIGNMENT(groupID, preID, userID) VALUES (@groupID, @preID, @userID);
+@preID = 5;
+INSERT INTO GROUPASSIGNMENT(groupID, preID) VALUES (@groupID, @preID);
 
 
 /*TEST*/

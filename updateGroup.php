@@ -76,7 +76,8 @@ function deleteGroupAssignments($conn, $groupID){
 //update preschooler to group assignment into groupAssignment table
 function insertGroupAssignment($conn, $groupID, $preID, $userID){
     //insert new group assignment
-    $sql = "INSERT INTO GROUPASSIGNMENT (groupID, preID, userID) VALUES (".$groupID.", ".$preID.", ".$userID.")";
+    //$sql = "INSERT INTO GROUPASSIGNMENT (groupID, preID, userID) VALUES (".$groupID.", ".$preID.", ".$userID.")";
+	$sql = "INSERT INTO GROUPASSIGNMENT (groupID, preID) VALUES (".$groupID.", ".$preID.")";
     if ($conn->query($sql) === TRUE)
         echo "Record inserted successfully";
     else

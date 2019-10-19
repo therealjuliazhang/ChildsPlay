@@ -36,6 +36,7 @@ while ($row = mysqli_fetch_assoc($result))
 			$('.materialSelect').on('contentChanged', function() {
 				$(this).material_select();
 			});
+			/*
 			//set locations into select options
 			var locations = <?php echo json_encode($locations); ?>;
 			for (var i = 0; i < locations.length; i++) {
@@ -43,47 +44,65 @@ while ($row = mysqli_fetch_assoc($result))
 				option.value = locations[i]['locationID'];
 				option.name = locations[i]['name'];
 				option.innerHTML = locations[i]['name'];
-				$("select").append(option);
-				$("select").trigger('contentChanged');
-			}
+				$("#location").append(option);
+				$("#location").trigger('contentChanged');
+			}*/
 
 			//Places error element next to invalid inputs
 			$.validator.setDefaults({
 				errorElement: 'div',
 				errorClass: 'invalid',
 				errorPlacement: function(error, element) {
+					//element.next("div").remove();
+						var e = document.createElement("div");
+						$(e).append(error.text()).addClass("showError");
 					if (element.attr('type') == "text" || element.attr('type') == "email" || element.attr('type') == "password") {
+						$(element).nextAll("div").remove();
 						$(element)
 							.closest("form")
 							.find("label[for='" + element.attr("id") + "']")
-							.attr('data-error', error.text());
+							.after(e);
+						/*$(element)
+							.closest("form")
+							.find("label[for='" + element.attr("id") + "']")
+							.attr('data-error', error.text())
+							.addClass("showError");*/
 					} else if (element.hasClass("materialSelect")) {
-						element.after(error);
+						//console.log(element.next("div").text());
+						//$("element + div").remove();
+						$(element).next("div").remove();
+						$(element).after(e);
+						//element.next("div").remove();
 					}
+				},
+				success: function(div){
+					$(div).remove();
 				}
-			})
+			});
 			//set up rules and messages for errors
 			$("#form").validate({
 				rules: {
 					fullname: "required",
+					accountType: "required",
 					username: {
 						required: true,
 						remote: {
 							url: "checkUsername.php",
 							type: "post"
-						}
+						}/**/
 					},
 					email: {
 						required: true,
-						email: true,
-						remote: {
+						email: true
+						/*remote: {
 							url: "checkEmail.php",
 							type: "post"
-						}
+						}*/
 					},
 					password1: {
 						required: true,
-						minlength: 5
+						minlength: 5,
+						pwcheck: true
 					},
 					password2: {
 						required: true,
@@ -93,33 +112,74 @@ while ($row = mysqli_fetch_assoc($result))
 				},
 				messages: {
 					fullname: { required: "Please enter your full name"},
-					accountType: "Pick an account type.",
+					accountType: "Please pick an account type.",
 					location: "Pick your location from the drop down menu.",
 					username: {
-						required: "Enter a username.",
-						// remote: jQuery.validator.format("Username {0} is already taken.")
-						remote: "Username is already taken."
+						required: "Please enter a username.",
+						remote: jQuery.validator.format("Username {0} is already taken.")
+						//remote: "Username is already taken."
 					},
 					email: {
-						required: "Enter an email.",
-						email: "Enter a valid email address."
+						required: "Please enter a valid email address.",
+						email: "Please enter a valid email address."
+						//remote: "Username is already taken."
 					},
 					password1: {
-						required: "Enter a password.",
-						minlength: "Password must be at least 5 characters long."
+						required: "Please enter a password.",
+						minlength: "Password must be at least 5 characters long.",
+						pwcheck: "Password must include at least one digit and one lowercase letter and no spaces."
 					},
 					password2: {
-						required: "Confirm your password.",
+						required: "Please confirm your password.",
 						minlength: "Password must be at least 5 characters long.",
 						equalTo: "Passwords entered are different."
 					}
+				},
+				submitHandler: function(form) { 
+					var email = $("#email").val();
+					var fullname = $("#fullname").val();
+					var accountType = $("#accountType option:selected").val();
+					var location = $("#location").val();
+					var username = $("#username").val();
+					var password1 = $("#password1").val();
+					$.post("registerAccount.php",
+					{	email: email,
+						fullname: fullname,
+						accountType: accountType,
+						location: location,
+						username: username,
+						password1: password1
+					},
+					function(data){
+						//show errors
+						if(data.includes("span")){
+							$("#results").html(data);
+						}
+						else{
+							//$("#results").html(data);
+                            $("#submitBtn").prop('disabled', true);
+							window.location = "thankyouForRegister.html";
+                            /*$.post(
+                                "sendEmail.php",
+                                {registerEmail: email}
+                            );*/
+						}
+					}
+					);
+					//alert("email: " + email + ", account: " + accountType + ", location: " + location);
+					
 				}
+			});
+			//password regular expressions
+			$.validator.addMethod("pwcheck", function(value) {
+				var regex = /^(?!.*\s)(?=.*\d)(?=.*[a-z]).{5,}$/;
+				return regex.test(value);
 			});
 		});
 	</script>
 	<script>
 		function chg(obj) {
-			if (obj.options[obj.selectedIndex].value == "educator")
+			if (obj.options[obj.selectedIndex].value == "0")
 				document.getElementById("10").style.display = "";
 			else
 				document.getElementById("10").style.display = "none";
@@ -146,17 +206,19 @@ while ($row = mysqli_fetch_assoc($result))
 						<span class="card-title">
 							<h5 class="center-align">Create Your Account</h5>
 						</span>
-						<form id="form" action="registerAccount.php" method="POST">
-							<div class="row valign-wrapper">
+						<form id="form" action="" method="POST">
+							<div class="row valign-wrapper" style="margin-bottom:-5px">
 								<div class="col s4">Register as</div>
 								<div class="input-field col s8">
-									<select onchange="chg(this)" name="accountType" required>
+									<select onchange="chg(this)" id="accountType" name="accountType" class="materialSelect" required>
 										<option value="" disabled selected>Choose your option</option>
-										<option value="admin">Admin</option>
-										<option value="educator">Educator</option>
+										<option value="1">Admin</option>
+										<option value="0">Educator</option>
 									</select>
 								</div>
 							</div>
+						<!---	--->
+								
 							<div class="row">
 								<div class="input-field col s12">
 									<input id="fullname" name="fullname" type="text" class="validate">
@@ -166,12 +228,12 @@ while ($row = mysqli_fetch_assoc($result))
 							<div class="row">
 								<div class="input-field col s12">
 									<input id="username" name="username" type="text" class="validate">
-									<label for="username">User Name</label>
+									<label for="username">Username</label>
 								</div>
 							</div>
 							<div class="row">
-								<div name="email" class="input-field col s12">
-									<input name="email" type="email" class="validate">
+								<div class="input-field col s12">
+									<input id="email" name="email" type="email" class="validate">
 									<label for="email">Email</label>
 								</div>
 							</div>
@@ -184,20 +246,33 @@ while ($row = mysqli_fetch_assoc($result))
 							<div class="row">
 								<div class="input-field col s12">
 									<input id="password2" name="password2" type="password" class="validate">
-									<label for="password2">Password Again</label>
+									<label for="password2">Confirm Password</label>
 								</div>
 							</div>
 							<div class="row valign-wrapper" >
 								<div class="input-field col s12" style="display:none" id="10">
+								
+							<select name="location[]" id="location" class="materialSelect" required multiple>
+							<?php
+							foreach($locations as $location){
+								echo "<option value='".$location["locationID"]."'>".$location["name"]."</option>";
+							}
+							?>
+							</select>
+						
+
+								<!---
 									<select name="location[]" id="location" class="materialSelect" required multiple>
 										<option value="" disabled selected>Location</option>
 									</select>
+								--->
 								</div>
-							</div>
+							</div><br/>
 							<div class="row">
 								<div class="col s12 center">
-									<!---<input type="submit" value="Register" class="btn blue darken-4" name="register" id="submit" <?php echo isset($_POST["register"]) ? 'disabled="true"' : ''; ?> />--->
-									<button type="submit" class="btn blue darken-4" id="submit">Register</button>
+									<input type="submit" value="Register" name="submitBtn" id="submitBtn" class="btn blue darken-4 middle submitBtn" <?php echo (isset($_POST["submitBtn"])) ? 'disabled="true"' : ''; ?>>
+									
+									<!---<button type="submit" class="btn blue darken-4"  id="submitBtn">Register</button>-->
 								</div>
 							</div>
 							<div class="row center">
@@ -212,6 +287,7 @@ while ($row = mysqli_fetch_assoc($result))
 								</div>
 							</div>
 						</form>
+						<div id="results"></div>
 					</div>
 				</div>
 			</div>
@@ -220,6 +296,13 @@ while ($row = mysqli_fetch_assoc($result))
 	<!--end card-->
 </body>
 <style>
+	.showError{
+		top:10px;
+		width:300px !important;
+		font-style: italic;
+		color: red;
+	}
+
 	.logoImg {
 		height: 70px;
 		margin-top: 20px;
@@ -269,6 +352,12 @@ while ($row = mysqli_fetch_assoc($result))
 	.btn:hover,
 	.btn-large:hover {
 		background-color: #FF8C18;
+	}
+	#accountType-error, #location-error{
+		color: red;
+		top: -17px;
+		position: relative;
+		font-style: italic;
 	}
 </style>
 </html>

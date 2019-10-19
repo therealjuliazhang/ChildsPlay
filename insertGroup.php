@@ -21,7 +21,8 @@ if(isset($_POST["groupName"]))
 if(isset($_POST["locationSelect"]))
     $location = $_POST["locationSelect"];
 //insert group into grouptest table
-$sql = "INSERT INTO GROUPTEST (name, locationID)VALUES ('".$groupName."', '".$location."')"; 
+//$sql = "INSERT INTO GROUPTEST (name, locationID)VALUES ('".$groupName."', '".$location."')";
+$sql = "INSERT INTO GROUPTEST (name, locationID, userID)VALUES ('".$groupName."', '".$location."', '".$userID."')";  
 if ($conn->query($sql) === TRUE){ 
 	echo "New record created successfully";
 	$check = true;
@@ -50,7 +51,7 @@ foreach ($_POST as $key => $value) {
             $preschooler->gender = $value;
             insertPreschooler($conn, $preschooler, $check);
             $preID = getPreID($conn, $preschooler);
-            insertGroupAssignment($conn, $groupID, $preID, $userID, $check);
+            insertGroupAssignment($conn, $groupID, $preID, $check);
         }
     }
 }
@@ -79,8 +80,9 @@ function getPreID($conn, $preschooler){
     return $row['preID'];
 }
 //insert preschooler to group assignment into groupAssignment table
-function insertGroupAssignment($conn, $groupID, $preID, $userID, $check){
-    $sql = "INSERT INTO GROUPASSIGNMENT (groupID, preID, userID) VALUES ('".$groupID."', '".$preID."', '".$userID."')";
+function insertGroupAssignment($conn, $groupID, $preID, $check){
+    //$sql = "INSERT INTO GROUPASSIGNMENT (groupID, preID, userID) VALUES ('".$groupID."', '".$preID."', '".$userID."')";
+	$sql = "INSERT INTO GROUPASSIGNMENT (groupID, preID) VALUES ('".$groupID."', '".$preID."')";
     if ($conn->query($sql) === TRUE){
         echo "New record created successfully";
 		$check = true;
