@@ -241,7 +241,7 @@ $(document).ready(function(){
 			<div class="container" id="mainContainer">
 				<div class="row">
 					<!--1st row-->
-					<div class="col s12" id="questionCol"><h5 class="blue-text darken-2">How does <span id="nameSpan"></span> interact with the image?</h5></div>
+					<div class="col s12" id="questionCol"><h5 class="blue-text text-darken-4">How does <span id="nameSpan"></span> interact with the image?</h5></div>
 					<!--2nd row-->
 					<form required>
 						<div class="col s3 operationCol"><p class="operation">Press:</p></div>
@@ -276,17 +276,19 @@ $(document).ready(function(){
 								</div>
 							</form>
 						</form>
-					</div>
+
 					<!--Comment Section-->
 					<div class="hide commentSection">
 						<br/><br/>
-						<div class="col s12" id="commentCol"><h6 class="blue-text darken-2">Comment:</h6></div>
+						<div class="col s12" id="commentCol"><h6 class="blue-text text-darken-4">Comment:</h6></div>
 						<div class="input-field col s11">
 							<textarea id="textarea1" class="materialize-textarea"></textarea>
 						</div>
+						<div class="col s1"></div>
 					</div>
+					<div class="col s11"><a onclick="save()" class="waves-effect waves-light btn blue darken-4 right" id="saveButton">Next</a></div>
 				</div>
-				<div class="col s12"><a onclick="save()" class="waves-effect waves-light btn blue darken-4 right" id="saveButton">Next</a></div>
+					</div>
 			</div>
 		</div>
 	</body>
@@ -335,8 +337,8 @@ $(document).ready(function(){
 		margin-right: 100px;
 	}
 	#saveButton{
-		margin-right: 70px;
 		margin-top: 40px;
+		width: 95px;
 	}
 	#questionCol{
 		height: 70px;
@@ -352,6 +354,9 @@ $(document).ready(function(){
 	}
 	.is-active{
 		background-color: #eceff1;
+	}
+	#saveButton:hover{
+	  background-color: #FF8C18!important;
 	}
 
 	</style>

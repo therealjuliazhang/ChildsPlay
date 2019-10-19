@@ -1,6 +1,6 @@
 /*
-Title:Display Results; 
-Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Andre Knell (5741622); 
+Title:Display Results;
+Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Andre Knell (5741622);
 */
 //needed for not putting padding-top on first header
 var firstHeader = true;
@@ -24,7 +24,7 @@ function displayResults(results, isGroupResults){
         //display ranking table if character ranking task
         if(activityStyle == "Character Ranking")
             displayRankingTable(taskResults);
-        //display image results for body parts 
+        //display image results for body parts
         if(activityStyle == "Identify Body Parts")
             displayBodyPartResult(taskResults);
         //display comments if displaying group results
@@ -49,23 +49,23 @@ function getTaskType(result){
 function displayHeaders(taskID, taskResults, activityStyle){
     //if first header dont add padding-top, else put padding
     if(firstHeader){
-        $('<h5/>', {
-            class: "blue-text darken-2 header",
+        $('<h4/>', {
+            class: "blue-text text-darken-4 header",
             text: activityStyle + " - Task ID: " + taskID
-        }).appendTo('#results');  
-        firstHeader = false; 
+        }).appendTo('#results');
+        firstHeader = false;
     }
     else{
-        $('<h5/>', {
-            class: "blue-text darken-2 header topPadding",
+        $('<h4/>', {
+            class: "blue-text text-darken-4 header topPadding",
             text: activityStyle + " - Task ID: " + taskID
-        }).appendTo('#results');   
+        }).appendTo('#results');
     }
     $('<h6/>', {
-        class: "blue-text darken-2 header",
+        class: "header",
         text: "Instruction: " + taskResults[0]["instruction"]
-    }).appendTo('#results'); 
-    //display image if likert or mechanics task  
+    }).appendTo('#results');
+    //display image if likert or mechanics task
     if(activityStyle == "Likert Scale" || activityStyle == "Preferred Mechanics"){
         $('<img/>', {
             class: "image",
@@ -74,9 +74,9 @@ function displayHeaders(taskID, taskResults, activityStyle){
         }).appendTo('#results');
     }
     $('<h5/>', {
-        class: "blue-text darken-2 header",
+        class: "blue-text text-darken-4 header",
         text: "Results"
-    }).appendTo('#results');  
+    }).appendTo('#results');
 }
 //displays results graph if likert or mechanics task
 function displayGraph(taskResults, activityStyle){
@@ -87,7 +87,7 @@ function displayGraph(taskResults, activityStyle){
         }).appendTo('#results');
         var ctx = $("canvas").last()[0].getContext('2d');
         //create labels and data
-        var labels = []; 
+        var labels = [];
         var data = [];
         //get labels and data
         var noLikes = true;
@@ -191,7 +191,7 @@ function displayRankingTable(results){
     var tableHeader = "<div id=\"tableDiv\"><table class=\"centered\"><thead><tr><th>Rank: </th><th>Points: </th><th>Image: </th></tr></thead>";
     var tableBody = "<tbody>" + createTableRows(results) + "</tbody></table></div>";
     var table = tableHeader + tableBody;
-    $("#results").append(table); 
+    $("#results").append(table);
 }
 
 //create html for the ranking results table rows
@@ -221,11 +221,11 @@ function createTableRows(results){
         }
         return number + "th";
     }
-    
+
 }
 
 function displayBodyPartResult(results){
-    //make canvas 
+    //make canvas
     $('<canvas/>', {
         //800 * 0.35
         width: "15%",
@@ -266,7 +266,7 @@ function displayComments(taskResults){
     .append($('<form/>', { class: "col s12" }))
     .append($('<div/>', { class: "input-field col s8" }))
     .append([$('<textarea/>', { class: "materialize-textarea", id:"textarea1", text: taskResults[0].comments}), $('<label/>', { for: "textarea1", class:"materialize-textarea", text:"Comments" })])
-    .appendTo('#results'); 
+    .appendTo('#results');
     M.textareaAutoResize($('#textarea1'));
 }
 
@@ -278,7 +278,7 @@ function displayOtherComments(taskResults){
             .append($('<form/>', { class: "col s12" }))
             .append($('<div/>', { class: "input-field col s8" }))
             .append([$('<textarea/>', { class: "materialize-textarea", id:"textarea2", text: results.otherComment}), $('<label/>', { for: "textarea2", class:"materialize-textarea", text:"Other Mechanic" })])
-            .appendTo('#results'); 
+            .appendTo('#results');
             M.textareaAutoResize($('#textarea2'));
         }
     });

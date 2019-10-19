@@ -99,7 +99,7 @@ $locationArray[] = $row;
       <div class="panel  is-show">
         <div class="container">
           <div class="row" id="userDetail" style="margin-left:40px">
-            <div class="col s12 blue-text darken-2"><h5>Account Information</h5></div>
+            <div class="col s12 blue-text text-darken-4"><h4>Account Information</h4></div>
             <div class="col s3 column01"><h6 class="hInCol">Username:</h6></div>
             <div class='input-field col s9'>
               <input id="uName" name="uName" readonly type='text' class='validate inputInCol'>
@@ -108,7 +108,7 @@ $locationArray[] = $row;
             <div class='input-field col s9'>
               <input id="password" name="password" readonly value='********' type='text' class='validate inputInCol'>
             </div>
-            <div class="col s12 blue-text darken-2"><h5>Personal Information</h5></div>
+            <div class="col s12 blue-text text-darken-4"><h4>Personal Information</h4></div>
             <div class="col s3 valign-wrapper column01"><h6 class="hInCol">Email:</h6></div>
             <div class='input-field col s9'>
               <input id="email" name="mailInput" readonly type='text' class='validate inputInCol'>
@@ -129,8 +129,8 @@ $locationArray[] = $row;
 <form method = "post" action="addLocation.php">
 <div class="panel">
   <div class="container">
-      <div class="row" id="locationInfo">
-        <div class="col s11 blue-text darken-2"><h5>Name</h5></div>
+      <div class="row" id="locationInfo" style="margin-left:40px">
+        <div class="col s11 blue-text text-darken-4"><h4>Location Names:</h4></div>
 
      </div>
 
@@ -362,6 +362,9 @@ function loadLocationInfo(){
 <style media="screen">
 .container .btn{
   width: 80px;
+}
+.btn:hover {
+  background-color: #FF8C18!important;
 }
 </style>
 

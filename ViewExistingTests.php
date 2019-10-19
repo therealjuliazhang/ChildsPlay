@@ -24,23 +24,23 @@ Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4
   //Read header
   $(document).ready(function(){
     $("#InsertHeader").load("header.html");
-	localStorage.removeItem( 'testTitle' );
-	localStorage.removeItem( 'description' );
+    localStorage.removeItem( 'testTitle' );
+    localStorage.removeItem( 'description' );
   });
   function showError(title){
     //var error = document.getElementById("error");
     //error.innerText = "There is no task in " + title;
-	alert("There is no task in " + title);
+    alert("There is no task in " + title);
   }
   </script>
 
   <!--body part-->
   <div class="container">
-    <h5 class="blue-text darken-2 header">Available Tests</h5>
+    <h4 class="blue-text text-darken-4 header">Available Tests</h4>
 
     <table class="striped">
       <thead>
-        <tr class="blue-text darken-2">
+        <tr class="blue-text text-darken-4">
           <th class='nameCol'>Name</th>
           <th class='descriptionCol'>Description</th>
           <th class='createdCol'>Created</th>
@@ -54,9 +54,9 @@ Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4
         <?php
         session_start();
         if(isset($_SESSION["userID"]))
-          $userID = $_SESSION["userID"];
+        $userID = $_SESSION["userID"];
         else
-          header("Location: login.php");
+        header("Location: login.php");
         include 'db_connection.php';
         $conn = OpenCon();
         //get tests from database
@@ -68,73 +68,73 @@ Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4
         //for each group, get preschooler's names and display information
         $index = 0;
         foreach ($tests as $value) {
-			$index++;
-			$createDate = strtotime($value["dateCreated"]);
-			$formattedCreateDate = date("d/m/Y", $createDate ); //j F Y for the following date format: 15 January 2019
+          $index++;
+          $createDate = strtotime($value["dateCreated"]);
+          $formattedCreateDate = date("d/m/Y", $createDate ); //j F Y for the following date format: 15 January 2019
 
-			$editDate = strtotime($value["dateEdited"]);
-			$formattedEditDate = date("d/m/Y", $editDate );
-			echo "<tr><td class='nameCol'>".$value["title"]."</td><td class='descriptionCol'>".$value["description"];
+          $editDate = strtotime($value["dateEdited"]);
+          $formattedEditDate = date("d/m/Y", $editDate );
+          echo "<tr><td class='nameCol'>".$value["title"]."</td><td class='descriptionCol'>".$value["description"];
 
-			$title = "'".$value["title"]."'";
+          $title = "'".$value["title"]."'";
 
-			echo "</td><td class='createdCol'>".$formattedCreateDate."</td><td class='lastEditCol'>".$formattedEditDate;
-			/*
-			$taskQuery = "SELECT * FROM TASKASSIGNMENT WHERE testID=".$value["testID"];
-			$result = $conn->query($taskQuery);
-			if(mysqli_num_rows($result) == 0){
-				echo '</td><td class="previewCol"><a class="btn dropdown-button blue darken-4" onclick="showError('.$title.')"; >Preview</a>';
-			}
-			else{
-				echo '</td><td class="previewCol"><a class="btn dropdown-button blue darken-4" data-activates="dropdown'.$index.'">Preview</a>';
-				echo "<ul id='dropdown".$index."' class='dropdown-content'>";
-				//display the list of tasks in the test
-				while($row = mysqli_fetch_assoc($result)){
-				  echo "<li><a href='instruction.php?testID=".$value["testID"]."&taskID=".$row["taskID"]."&mode=preview&from=availableTests'>".$row["taskTitle"]."</a></li>";
-				}
-				echo "</ul></td>";
-			}
-			*/
-				$taskQuery = "SELECT TA.*, T.taskTitle FROM TASKASSIGNMENT TA INNER JOIN TASK T WHERE TA.taskID = T.taskID AND testID=".$value["testID"];
-				$result = $conn->query($taskQuery);
-				if(mysqli_num_rows($result) == 0){
-					echo '</td><td class="previewCol"><a class="btn dropdown-button blue darken-2" onclick="showError('.$title.')"; >Preview</a>';
-				}
-				else{
-					$previewURL = "instruction.php?testID=".$value['testID']."&mode=preview&from=existingTests";
-					//echo $previewURL;
-					echo '</td><td class="previewCol"><a class="btn buttonsInTable blue darken-2" href="'.$previewURL.'">Preview</a>';
-					/*
-					echo '</td><td class="previewCol"><a class="btn dropdown-button blue darken-4" data-activates="dropdown'.$index.'">Preview</a>';
-					echo "<ul id='dropdown".$index."' class='dropdown-content'>";
-					//display the list of tasks in the test
-					while($row = mysqli_fetch_assoc($result)){
-						echo "<li><a href='instruction.php?testID=".$value["testID"]."&taskID=".$row["taskID"]."&mode=preview&from=availableTests'>".$row["taskTitle"]."</a></li>";
-					}
-					echo "</ul></td>";*/
-				}
+          echo "</td><td class='createdCol'>".$formattedCreateDate."</td><td class='lastEditCol'>".$formattedEditDate;
+          /*
+          $taskQuery = "SELECT * FROM TASKASSIGNMENT WHERE testID=".$value["testID"];
+          $result = $conn->query($taskQuery);
+          if(mysqli_num_rows($result) == 0){
+          echo '</td><td class="previewCol"><a class="btn dropdown-button blue darken-4" onclick="showError('.$title.')"; >Preview</a>';
+        }
+        else{
+        echo '</td><td class="previewCol"><a class="btn dropdown-button blue darken-4" data-activates="dropdown'.$index.'">Preview</a>';
+        echo "<ul id='dropdown".$index."' class='dropdown-content'>";
+        //display the list of tasks in the test
+        while($row = mysqli_fetch_assoc($result)){
+        echo "<li><a href='instruction.php?testID=".$value["testID"]."&taskID=".$row["taskID"]."&mode=preview&from=availableTests'>".$row["taskTitle"]."</a></li>";
+      }
+      echo "</ul></td>";
+    }
+    */
+    $taskQuery = "SELECT TA.*, T.taskTitle FROM TASKASSIGNMENT TA INNER JOIN TASK T WHERE TA.taskID = T.taskID AND testID=".$value["testID"];
+    $result = $conn->query($taskQuery);
+    if(mysqli_num_rows($result) == 0){
+      echo '</td><td class="previewCol"><a class="btn  buttonsInTable dropdown-button blue darken-2" onclick="showError('.$title.')"; >Preview</a>';
+    }
+    else{
+      $previewURL = "instruction.php?testID=".$value['testID']."&mode=preview&from=existingTests";
+      //echo $previewURL;
+      echo '</td><td class="previewCol"><a class="btn buttonsInTable blue darken-2" href="'.$previewURL.'">Preview</a>';
+      /*
+      echo '</td><td class="previewCol"><a class="btn dropdown-button blue darken-4" data-activates="dropdown'.$index.'">Preview</a>';
+      echo "<ul id='dropdown".$index."' class='dropdown-content'>";
+      //display the list of tasks in the test
+      while($row = mysqli_fetch_assoc($result)){
+      echo "<li><a href='instruction.php?testID=".$value["testID"]."&taskID=".$row["taskID"]."&mode=preview&from=availableTests'>".$row["taskTitle"]."</a></li>";
+    }
+    echo "</ul></td>";*/
+  }
 
-        echo "<td><a class='btn buttonsInTable blue darken-4' href='editTest.php?testID=".$value["testID"]."'>Edit</a></td>";
-        echo "<td><a class='btn buttonsInTable blue darken-4' href='results.php?testID=".$value["testID"]."'>Result</a></td>";
+  echo "<td><a class='btn buttonsInTable blue darken-4' href='editTest.php?testID=".$value["testID"]."'>Edit</a></td>";
+  echo "<td><a class='btn buttonsInTable blue darken-4' href='results.php?testID=".$value["testID"]."'>Result</a></td>";
 
 
-				// echo "<td><a href='#?testID=".$value["testID"]."' class='btn dropdown-button blue darken-4' data-activates='dropdownTask".$index."'>...</a>";
-				// echo "<ul id='dropdownTask".$index."' class='dropdown-content'>";
-				// echo "<li><a href='editTest.php?testID=".$value["testID"]."'>Edit</a></li>";
-				// echo "<li><a href='results.php?testID=".$value["testID"]."'>Result</a></li>";
-				// echo "</ul></td></tr>";
-			}
-		?>
+  // echo "<td><a href='#?testID=".$value["testID"]."' class='btn dropdown-button blue darken-4' data-activates='dropdownTask".$index."'>...</a>";
+  // echo "<ul id='dropdownTask".$index."' class='dropdown-content'>";
+  // echo "<li><a href='editTest.php?testID=".$value["testID"]."'>Edit</a></li>";
+  // echo "<li><a href='results.php?testID=".$value["testID"]."'>Result</a></li>";
+  // echo "</ul></td></tr>";
+}
+?>
 
-       </tbody>
-	   <span id="error" style="color:red;font-style:italic;"></span>
-     </table>
-		<?php
-			if(isset($_GET["empty"]))
-				echo "<span id='error' style='color:red;font-style=italic;'>There is no task in this test!</span>";
-		?>
+</tbody>
+<span id="error" style="color:red;font-style:italic;"></span>
+</table>
+<?php
+if(isset($_GET["empty"]))
+echo "<span id='error' style='color:red;font-style=italic;'>There is no task in this test!</span>";
+?>
 </div>
-  </body>
+</body>
 </html>
 <style media="screen">
 .container{
@@ -182,6 +182,8 @@ table {
 .buttonsInTable{
   width: 90px;
 }
-
+.buttonsInTable:hover{
+  background-color: #FF8C18!important;
+}
 
 </style>

@@ -1,7 +1,3 @@
-<!--
-Title:Check Test Title; 
-Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789);
--->
 <?php
     //get input test title
     if(isset($_REQUEST['testTitle']))

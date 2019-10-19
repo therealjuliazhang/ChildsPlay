@@ -1,6 +1,6 @@
 <!--
-Title:Filter Tasks; 
-Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679527); 
+Title:Filter Tasks;
+Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679527);
 -->
 <?php
 
@@ -18,7 +18,7 @@ if(strpos($url, "?") === false)
 	$url .= "?taskID=";
 else
 	$url .= "&";
-	
+
 include 'db_connection.php';
 $conn = OpenCon();
 
@@ -28,9 +28,9 @@ if ($from == "edit") {
 	$taskIDs = array();
 	$query = "SELECT taskID FROM TASKASSIGNMENT WHERE testID = ".$testID;
 	$taskIDsResult = $conn->query($query);
-	
+
 	//$sql = "SELECT T.*, TEST.testID, MIN(TEST.dateCreated) AS date FROM TASK T JOIN TASKASSIGNMENT TA ON T.taskID = TA.taskID JOIN TEST ON TEST.testID = TA.testID";
-	
+
 	if(mysqli_num_rows($taskIDsResult)> 0){
 		$sql .= " WHERE taskID NOT IN (";
 		//$sql = "SELECT T.*, TEST.testID, MIN(TEST.dateCreated) AS date FROM TASK T JOIN TASKASSIGNMENT TA ON T.taskID = TA.taskID JOIN TEST ON TEST.testID = TA.testID WHERE T.taskID NOT IN (";
@@ -67,7 +67,7 @@ if (isset($_POST["submitFilter"])) {
 	}
 
 	$subqueryDate = "";
-	
+
 	if (strpos($sql, "WHERE") !== false)
 		$connector = " AND";
 	else
@@ -103,12 +103,12 @@ else {
 		"<td style='width:28%' class='indtructionCol'>".$row["instruction"]."</td>".
 		"<td style='width:16%' class='activityStyleCol' >".$row["activityStyle"]."</td>".
 		"<td style='width:9%' class='dateCreatedCol'>".$formattedCreateDate."</td>".
-		"<td style='width:10%' class='previewCol'><a class='waves-effect waves-light btn blue darken-2' href='instruction.php?taskID=".$row["taskID"].
+		"<td style='width:10%' class='previewCol'><a class='waves-effect waves-light btn blue darken-2 previewButton' href='instruction.php?taskID=".$row["taskID"].
 		"&mode=preview&from=existingTasks&".$from."'>Preview</a></td>";
 		if($from == "create"){
-			echo "<td style='width:7%' class='editCol'><a class='waves-effect waves-light btn blue darken-4'".
+			echo "<td style='width:7%' class='editCol'><a class='waves-effect waves-light btn blue darken-4 editButton'".
 			" href='createNewTaskInCreateTest.php?exist=true&taskID=".$row["taskID"]."&from=".$from."'>Edit</a></td>";
-			echo "<td style='width:7%' class='addCol'><a class='waves-effect waves-light btn blue darken-4' href='" .$url. $row["taskID"] . "'>Add</a></td>";
+			echo "<td style='width:7%' class='addCol'><a class='waves-effect waves-light btn blue darken-4 addButton' href='" .$url. $row["taskID"] . "'>Add</a></td>";
 		}
 		/*"<td style='width:7%' class='editCol'><a class='waves-effect waves-light btn blue darken-4'".
 		" href='CreateNewTaskInCreateTest.php?exist=true&taskID=".$row["taskID"]."&testID=".$_SESSION["testID"]."&from=".$from."'>Edit</a></td>";
