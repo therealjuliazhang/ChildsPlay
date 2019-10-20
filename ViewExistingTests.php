@@ -32,6 +32,10 @@ Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4
     //error.innerText = "There is no task in " + title;
     alert("There is no task in " + title);
   }
+  //detect browser size and alert if its small
+  if ($(window).width() < 930) {
+     alert('This website does not support this browser size. Please use a browser wider than 930px.');
+  }
   </script>
 
   <!--body part-->

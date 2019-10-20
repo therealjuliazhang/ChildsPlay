@@ -71,8 +71,8 @@ while($row = mysqli_fetch_assoc($result)){
         <a class="addButton waves-effect waves-light btn blue darken-4 tooltipped" data-position="right" data-tooltip="Add more" onclick="addRow(); updateToolTips()"><i class="material-icons"style="font-size:30px;">add</i></a>
       </div>
       <div class="row right-align">
-        <a style=""href="educatorTests.php#groups" class="waves-effect waves-light btn red buttons">Cancel</a>
-        <input type="submit" name="submit" class="submit waves-effect waves-light btn blue darken-4 buttons" value="Save">
+        <input type="submit" name="submit" class="submit waves-effect waves-light btn blue darken-2 buttons" value="Save">
+        <a style=""href="educatorTests.php#groups" class="waves-effect waves-light btn blue darken-4  buttons">Cancel</a>
       </div>
     </form>
   </div>
@@ -185,7 +185,7 @@ label[data-error] {
 .buttons{
   width: 100px;
 }
-.submit:hover, .addButton:hover {
+.submit:hover, .addButton:hover, .buttons:hover{
   background-color: #FF8C18!important;
 }
 </style>

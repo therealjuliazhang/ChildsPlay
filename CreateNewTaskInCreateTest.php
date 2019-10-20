@@ -275,8 +275,8 @@ function selectActivityStyle(){
       <div class="row">
         <div class="col s12">
           <p align="right">
-            <a class="waves-effect waves-light btn red darken-1" onClick="javascript:history.go(-1)">Cancel</a>
-            <button name="createTaskBtn" id="submitBtn" class="submit waves-effect waves-light btn blue darken-4" onclick="createNewTask();">Create Task</button>
+            <button name="createTaskBtn" id="submitBtn" class="submit waves-effect waves-light btn blue darken-2" onclick="createNewTask();">Create Task</button>
+            <a class="waves-effect waves-light btn blue darken-4 cancelButton" onClick="javascript:history.go(-1)">Cancel</a>
           </p>
         </div>
       </div>
@@ -309,7 +309,7 @@ function selectActivityStyle(){
 .container .btn{
   width: 120px;
 }
-#submitBtn:hover {
+#submitBtn:hover, .cancelButton:hover{
   background-color: #FF8C18!important;
 }
 </style>

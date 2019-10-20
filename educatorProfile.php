@@ -128,7 +128,7 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Julia Aoqi Zha
     <div class="row">
       <div class="col s1 offset-s11"><a class="waves-effect waves-light btn blue darken-4 addCell hide" id="addButton" onclick="appendSelect()"><i class="material-icons">add</i></a></div>
       <div class="col s1 offset-s11" id="editBUttonDiv"><a class="waves-effect waves-light btn blue darken-4" id="editButton">Edit</a></div>
-      <div class="col s1 offset-s11 hide" id="saveButtonDiv"><a class="waves-effect waves-light btn blue darken-4" id="saveButton">Save</a></div>
+      <div class="col s1 offset-s11 hide" id="saveButtonDiv"><a class="waves-effect waves-light btn blue darken-2" id="saveButton">Save</a></div>
     </div>
   </div>
 </body>

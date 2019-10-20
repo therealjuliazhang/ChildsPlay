@@ -259,9 +259,7 @@ function backToTop(){
 		padding-left: 0;
 	}
 }
-.brand-logo{
-	margin-top:-67px;
-}
+
 .logout{
 	margin-top: 15px;
 	margin-right:15px;

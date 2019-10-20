@@ -118,7 +118,7 @@ $locationArray[] = $row;
         <div class="container">
           <div class="row">
             <div class="col s1 offset-s11" id="editButtonDiv"><a class="waves-effect waves-light btn blue darken-4 right" id="editButton">Edit</a></div>
-            <div class="col s1 offset-s11 hide" id="saveButtonDiv"><button class="submit waves-effect waves-light btn blue darken-4 right" id="saveButton" type="submit" value="submit">Save</button>
+            <div class="col s1 offset-s11 hide" id="saveButtonDiv"><button class="submit waves-effect waves-light btn blue darken-2 right" id="saveButton" type="submit" value="submit">Save</button>
             </div>
           </div>
         </div>
@@ -135,9 +135,9 @@ $locationArray[] = $row;
      </div>
 
        <div class="row">
-         <div class="col s1 offset-s11"><a class="waves-effect waves-light btn blue darken-2 addCell hide right" id="addButtonB" onclick="appendRow()"><i class="material-icons">add</i></a></div>
+         <div class="col s1 offset-s11"><a class="waves-effect waves-light btn blue darken-4 addCell hide right" id="addButtonB" onclick="appendRow()"><i class="material-icons">add</i></a></div>
          <div class="col s1 offset-s10"><a class="waves-effect waves-light btn #2196f3 blue darken-4 right" id="editButtonB">Edit</a></div>
-         <div class="col s1"><button class="waves-effect waves-light btn blue darken-4 right" id="saveButtonB" type="submit" value = "submit">Save</button></div>
+         <div class="col s1"><button class="waves-effect waves-light btn blue darken-2 right" id="saveButtonB" type="submit" value = "submit">Save</button></div>
        </div>
 
     </div>
@@ -363,7 +363,7 @@ function loadLocationInfo(){
 .container .btn{
   width: 80px;
 }
-.btn:hover {
+#editButton:hover, #saveButton:hover, #editButtonB:hover, #saveButtonB:hover, #addButtonB:hover {
   background-color: #FF8C18!important;
 }
 </style>
