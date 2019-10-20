@@ -86,7 +86,7 @@ $conn = OpenCon();
 		</table>
 		<div class="row">
 			<div class="col s12">
-				<a class="waves-effect waves-light btn red cancelButton right" href="educatorTests.php#tests">Cancel</a>
+				<a class="waves-effect waves-light btn blue darken-4 cancelButton right" href="educatorTests.php#tests">Cancel</a>
 			</div>
 		</div>
 	</div>
@@ -110,7 +110,7 @@ $conn = OpenCon();
 .row.btn{
 	width: 100px;
 }
-.selectButton:hover{
+.selectButton:hover, .cancelButton:hover{
 	 background-color: #FF8C18!important;
 }
 </style>
