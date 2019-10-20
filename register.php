@@ -36,7 +36,6 @@ $locations[] = $row;
 			$('.materialSelect').on('contentChanged', function() {
 				$(this).material_select();
 			});
-			/*
 			//set locations into select options
 			var locations = <?php echo json_encode($locations); ?>;
 			for (var i = 0; i < locations.length; i++) {
@@ -46,8 +45,8 @@ $locations[] = $row;
 				option.innerHTML = locations[i]['name'];
 				$("#location").append(option);
 				$("#location").trigger('contentChanged');
-			}*/
-
+			}
+			
 			//Places error element next to invalid inputs
 			$.validator.setDefaults({
 				errorElement: 'div',
@@ -68,11 +67,9 @@ $locations[] = $row;
 							.attr('data-error', error.text())
 							.addClass("showError");*/
 					} else if (element.hasClass("materialSelect")) {
-						//console.log(element.next("div").text());
 						//$("element + div").remove();
 						$(element).next("div").remove();
 						$(element).after(e);
-						//element.next("div").remove();
 					}
 				},
 				success: function(div){
@@ -86,18 +83,19 @@ $locations[] = $row;
 					accountType: "required",
 					username: {
 						required: true,
+						usernamevalidate: true,
 						remote: {
 							url: "checkUsername.php",
 							type: "post"
-						}/**/
+						}
 					},
 					email: {
 						required: true,
-						email: true
-						/*remote: {
+						emailvalidate: true,
+						remote: {
 							url: "checkEmail.php",
 							type: "post"
-						}*/
+						}
 					},
 					password1: {
 						required: true,
@@ -116,13 +114,13 @@ $locations[] = $row;
 					location: "Pick your location from the drop down menu.",
 					username: {
 						required: "Please enter a username.",
+						usernamevalidate: "Username cannot have space!",
 						remote: jQuery.validator.format("Username {0} is already taken.")
-						//remote: "Username is already taken."
 					},
 					email: {
 						required: "Please enter a valid email address.",
-						email: "Please enter a valid email address."
-						//remote: "Username is already taken."
+						emailvalidate: "Please enter a valid email address.",
+						remote: jQuery.validator.format("Email address {0} is already registered.")
 					},
 					password1: {
 						required: "Please enter a password.",
@@ -156,18 +154,15 @@ $locations[] = $row;
 							$("#results").html(data);
 						}
 						else{
-							//$("#results").html(data);
                             $("#submitBtn").prop('disabled', true);
 							window.location = "thankyouForRegister.html";
-                            /*$.post(
+                            $.post(
                                 "sendEmail.php",
                                 {registerEmail: email}
-                            );*/
+                            );
 						}
 					}
 					);
-					//alert("email: " + email + ", account: " + accountType + ", location: " + location);
-					
 				}
 			});
 			//password regular expressions
@@ -175,105 +170,24 @@ $locations[] = $row;
 				var regex = /^(?!.*\s)(?=.*\d)(?=.*[a-z]).{5,}$/;
 				return regex.test(value);
 			});
-/*
-	$(document).ready(function() {
-		//inititate select drop down
-		$('select').material_select();
-		$("select[required]").css({
-			display: "inline",
-			height: 0,
-			padding: 0,
-			width: 0
-		});
-		$('.materialSelect').on('contentChanged', function() {
-			$(this).material_select();
-		});
-		//set locations into select options
-		var locations = <?php echo json_encode($locations); ?>;
-		for (var i = 0; i < locations.length; i++) {
-			var option = document.createElement("option");
-			option.value = locations[i]['locationID'];
-			option.name = locations[i]['name'];
-			option.innerHTML = locations[i]['name'];
-			$("select").append(option);
-			$("select").trigger('contentChanged');
-		}
-
-		//Places error element next to invalid inputs
-		$.validator.setDefaults({
-			errorElement: 'div',
-			errorClass: 'invalid',
-			errorPlacement: function(error, element) {
-				if (element.attr('type') == "text" || element.attr('type') == "email" || element.attr('type') == "password") {
-					$(element)
-					.closest("form")
-					.find("label[for='" + element.attr("id") + "']")
-					.attr('data-error', error.text());
-				} else if (element.hasClass("materialSelect")) {
-					element.after(error);
-				}
-			}
-		})
-		//set up rules and messages for errors
-		$("#form").validate({
-			rules: {
-				fullname: "required",
-				username: {
-					required: true,
-					remote: {
-						url: "checkUsername.php",
-						type: "post"
-					}
-				},
-				email: {
-					required: true,
-					email: true,
-					remote: {
-						url: "checkEmail.php",
-						type: "post"
-					}
-				},
-				password1: {
-					required: true,
-					minlength: 5
-				},
-				password2: {
-					required: true,
-					minlength: 5,
-					equalTo: "#password1"
-				}
-			},
-			messages: {
-				fullname: { required: "Please enter your full name"},
-				accountType: "Pick an account type.",
-				location: "Pick your location from the drop down menu.",
-				username: {
-					required: "Enter a username.",
-					remote: jQuery.validator.format("Username {0} is already taken.")
-				},
-				email: {
-					required: "Enter an email.",
-					email: "Enter a valid email address."
-				},
-				password1: {
-					required: "Enter a password.",
-					minlength: "Password must be at least 5 characters long."
-				},
-				password2: {
-					required: "Confirm your password.",
-					minlength: "Password must be at least 5 characters long.",
-					equalTo: "Passwords entered are different."
-				}
-			}
-		});*/
+			//email regular expressions
+			$.validator.addMethod("emailvalidate", function(value){
+				var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+				return regex.test(value);
+			});
+			//username validation not allow space
+			$.validator.addMethod("usernamevalidate", function(value){
+				var regex = /^(?!.*\s)([a-zA-Z0-9_.+-])+$/;
+				return regex.test(value);
+			});
 	});
 	</script>
 	<script>
 	function chg(obj) {
 		if (obj.options[obj.selectedIndex].value == "educator")
-		document.getElementById("10").style.display = "";
+			document.getElementById("10").style.display = "";
 		else
-		document.getElementById("10").style.display = "none";
+			document.getElementById("10").style.display = "none";
 	}
 	</script>
 </head>
@@ -296,19 +210,17 @@ $locations[] = $row;
 						<span class="card-title">
 							<h5 class="center-align">Create Your Account</h5>
 						</span>
-						<form id="form" action="registerAccount.php" method="POST" novalidate="novalidate">
+						<form id="form" action="" method="POST" novalidate="novalidate">
 							<div class="row valign-wrapper">
 								<div class="col s4">Register as</div>
 								<div class="input-field col s8">
-									<select onchange="chg(this)" name="accountType" required>
-										<option value="" disabled>Choose your option</option>
+									<select onchange="chg(this)" class="materialSelect" id="accountType" name="accountType" required>
+										<option value="" selected disabled>Choose your option</option>
 										<option value="admin">Admin</option>
 										<option value="educator">Educator</option>
 									</select>
 								</div>
 							</div>
-						<!---	--->
-								
 							<div class="row">
 								<div class="input-field col s12">
 									<input id="fullname" name="fullname" type="text" class="validate">
@@ -322,7 +234,7 @@ $locations[] = $row;
 								</div>
 							</div>
 							<div class="row">
-								<div name="email" class="input-field col s12">
+								<div class="input-field col s12">
 									<input id="email" name="email" type="email" class="validate">
 									<label  class="labelInCard" for="email">Email</label>
 								</div>
@@ -341,28 +253,19 @@ $locations[] = $row;
 							</div>
 							<div class="row valign-wrapper" >
 								<div class="input-field col s12" style="display:none" id="10">
-								
-							<select name="location[]" id="location" class="materialSelect" required multiple>
-							<?php
-							foreach($locations as $location){
-								echo "<option value='".$location["locationID"]."'>".$location["name"]."</option>";
-							}
-							?>
-							</select>
-						
-
-								<!---
 									<select name="location[]" id="location" class="materialSelect" required multiple>
 										<option value="" disabled selected>Location</option>
+									<?php
+									/*foreach($locations as $location){
+										echo "<option value='".$location["locationID"]."'>".$location["name"]."</option>";
+									}*/
+									?>
 									</select>
-								--->
 								</div>
 							</div><br/>
 							<div class="row">
 								<div class="col s12 center">
 									<input type="submit" value="Register" name="submitBtn" id="submitBtn" class="btn blue darken-4 middle submitBtn" <?php echo (isset($_POST["submitBtn"])) ? 'disabled="true"' : ''; ?>>
-									
-									<!---<button type="submit" class="btn blue darken-4"  id="submitBtn">Register</button>-->
 								</div>
 							</div>
 							<div class="row center">
@@ -424,7 +327,7 @@ body {
 }
 
 .row {
-	margin-bottom: 20px;
+	margin-bottom: 5px;
 }
 
 .btn02 {

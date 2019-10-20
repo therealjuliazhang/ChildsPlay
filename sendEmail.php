@@ -1,8 +1,9 @@
-<!--
+<?php
+/*
 Title: Send Email; 
 Author: Phuong Linh Bui (5624095); 
--->
-<?php
+*/
+
 date_default_timezone_set('Etc/UTC');
 
 // Edit this path if PHPMailer is in a different location
@@ -74,7 +75,6 @@ if(isset($_POST["registerEmail"])){
 	
 	if ($mail->send()) {
 		echo "Your message was sent successfully!";
-		header("Location: thankyouForRegister.html");
 	} else {
 		echo "Mailer Error: " . $mail->ErrorInfo;
 	}
@@ -87,9 +87,6 @@ if(isset($_SESSION["resetPwEmail"])){
 
 	$password = rand(999, 99999);
 	$password_hash = md5($password);
-	echo "Hash: ".$password_hash;
-	//$url = "http://localhost/CSIT321/ChildsPlay/resetPassword.php?token=$password_hash";
-	//echo "url: ".$url;
 
 	$sql = "UPDATE USERS SET token='$password_hash' WHERE email='$email'";
 	$result = $conn->query($sql);

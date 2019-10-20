@@ -48,5 +48,5 @@ if($accountType == 0){
             echo "<span style='color:red;font-style:italic'>Error: " . $query . "<br>" . $conn->error."</span>";
     }
 }
-$_SESSION['userID'] = $userID;
-header('location: thankyouForRegister.html');
+//$_SESSION['userID'] = $userID;
+//header('location: thankyouForRegister.html');

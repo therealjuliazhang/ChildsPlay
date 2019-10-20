@@ -10,6 +10,6 @@
     if(mysqli_num_rows($result)==0)
         echo json_encode(true);
     else
-        echo json_encode("");
+        echo json_encode(false);
     CloseCon($conn);
 ?>
