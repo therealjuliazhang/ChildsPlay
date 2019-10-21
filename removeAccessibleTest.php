@@ -1,8 +1,8 @@
-<!--
-Title:Remove Accessible Test; 
-Author:Alex Satoru Hanrahan (4836789); 
--->
 <?php
+/*
+Title:Remove Accessible Test; 
+Author:Alex Satoru Hanrahan (4836789);
+*/
     /*
     session_start();
     if(isset($_SESSION["userID"]))

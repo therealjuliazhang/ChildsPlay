@@ -6,12 +6,13 @@ Last Edited: 21/10/2019;
 <!DOCTYPE html>
 <html>
 <?php
-session_start();
+//session_start();
+/*
 if(isset($_SESSION['userID']))
 	$userID = $_SESSION['userID'];
 else
 	header('Location: login.php');
-
+*/
 if(isset($_SESSION["testID"])){
 	unset($_SESSION["testID"]);
 }/*

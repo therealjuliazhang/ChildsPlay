@@ -1,15 +1,17 @@
-<!--
-Title:Login User; 
-Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789); 
--->
 <?php
+/*
+Title:Login User; 
+Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789);
+*/
     session_start();
     include 'db_connection.php';
     $conn = OpenCon();
-    if(isset($_SESSION["userID"]))
+    /*
+	if(isset($_SESSION["userID"]))
 		$userID = $_SESSION["userID"];
 	else
 		header("Location: login.php");
+	*/
     //Get inputs
     if(isset($_POST["username"]))
         $username = mysqli_real_escape_string($conn, $_POST["username"]);

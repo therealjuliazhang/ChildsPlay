@@ -103,7 +103,7 @@ if(isset($_SESSION["resetPwEmail"])){
 			//exit;
 		} else {
 			echo "Mailer Error: " . $mail->ErrorInfo;
-		}/**/
+		}
 	}
 	else
 	echo "Failed.";

@@ -1,8 +1,8 @@
-<!--
+<?php
+/*
 Title:Remove Task; 
 Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789); 
--->
-<?php
+*/
 //session_start();
 include "adminAccess.php";
     //get task ID
