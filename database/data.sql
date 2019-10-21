@@ -83,7 +83,7 @@ INSERT INTO GROUPTEST(name, locationID, userID) VALUES(@name, @locationID, @user
 SET
 @name = "Group 4",
 @locationID = 2,
-@userID = 6;
+@userID = 5;
 INSERT INTO GROUPTEST(name, locationID, userID) VALUES(@name, @locationID, @userID);
 
 /*PRESCHOOLER*/
