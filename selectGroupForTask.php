@@ -1,7 +1,7 @@
-<!--
+<!--========================================================================================================
 Title:Select Group For Task;
 Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679527);
--->
+=========================================================================================================-->
 <!DOCTYPE html>
 <html>
 <?php
@@ -56,20 +56,17 @@ $conn = OpenCon();
 			</thead>
 			<tbody class="">
 				<?php
-				//get groups from database
-				$sql = "SELECT groupID FROM GROUPASSIGNMENT WHERE userID=".$userID." GROUP BY groupID";
+				//get group IDs from GROUPTEST table
+				$sql = "SELECT groupID, name FROM GROUPTEST WHERE userID=".$userID;
 				$result = $conn->query($sql);
+				//get groups from database
 				while($row = mysqli_fetch_assoc($result)){
-					$sql2 = "SELECT name FROM GROUPTEST WHERE groupID=".$row["groupID"];
+						echo '<tr><td>', $row['name'], '</td>', '<td>'; //print out group name
+					$sql2 =  "SELECT name FROM PRESCHOOLER P JOIN GROUPASSIGNMENT GA ON P.preID = GA.preID WHERE GA.groupID=".$row["groupID"];
 					$result2 = $conn->query($sql2);
-					while($row2 = mysqli_fetch_assoc($result2)){
-						echo '<tr><td>', $row2['name'], '</td>', '<td>'; //print out group name
-					}
-					$sql3 =  "SELECT name FROM PRESCHOOLER P JOIN GROUPASSIGNMENT GA ON P.preID = GA.preID WHERE GA.groupID=".$row["groupID"]." AND GA.userID=".$userID;
-					$result3 = $conn->query($sql3);
 					$names = array();
-					while($row3 = mysqli_fetch_assoc($result3)){
-						$names[] = $row3;
+					while($row2 = mysqli_fetch_assoc($result2)){
+						$names[] = $row2;
 					}
 					$count = 0;
 					foreach ($names as $value) {
