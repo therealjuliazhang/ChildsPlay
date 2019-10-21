@@ -3,11 +3,14 @@ Title:Remove Accessible Test;
 Author:Alex Satoru Hanrahan (4836789); 
 -->
 <?php
+    /*
     session_start();
     if(isset($_SESSION["userID"]))
         $userID = $_SESSION["userID"];
     else
         header("Location: login.php");
+    */
+    include "adminAccess.php";
     //get test ID
     if(isset($_GET["testID"]))
         $testID = $_GET["testID"];

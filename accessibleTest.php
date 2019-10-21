@@ -3,17 +3,19 @@ Title:Accessible Test;
 Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Julia Aoqi Zhang (5797585), Ren Sugie(5679527);
 -->
 <!DOCTYPE html>
-
 <html>
 <?php
 $baseURL = "localhost";
+include "adminAccess.php";
 include 'db_connection.php';
 $conn = OpenCon();
+/*
 session_start();
 if(isset($_SESSION['userID']))
 $userID = $_SESSION['userID'];
 else
 header('login.php');
+*/
 //get select users ID
 if(isset($_GET['userID']))
 $selectedUserID = $_GET['userID'];

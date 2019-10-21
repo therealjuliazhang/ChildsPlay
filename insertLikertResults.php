@@ -3,6 +3,7 @@ Title:Insert Likert Results;
 Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789); 
 -->
 <?php
+    include "educatorAccess.php";
     // get data
     if(isset($_POST["happy"]))
         $happy = $_POST["happy"];

@@ -4,12 +4,13 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679
 -->
 
 <?php
-session_start();
+/*session_start();
 if(isset($_SESSION['userID']))
 $userID = $_SESSION['userID'];
 else
 header('login.php');
-
+*/
+include "adminAccess.php";
 unset($_SESSION["createURL"]);
 //get the url of the current page
 $_SESSION["createURL"] = basename($_SERVER["REQUEST_URI"]);

@@ -3,13 +3,10 @@ Title:Result Queries;
 Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789); 
 -->
 <?php
-/*
-	Author: Phuong Linh Bui (5624095)
-*/
-
 //connect to database
 include 'db_connection.php';
 $conn = OpenCon();
+include "adminAccess.php";
 $filteredPreIDs = array();
 $isGroupResults = true;
 //likert result query

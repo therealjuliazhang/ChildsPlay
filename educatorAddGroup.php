@@ -8,11 +8,14 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679
 <?php
 include 'db_connection.php';
 $conn = OpenCon();
+include "educatorAccess.php";
+/*
 session_start();
 if(isset($_SESSION['userID']))
     $userID = $_SESSION['userID'];
 else
-    header('login.php');
+    header('Location: login.php');
+*/
 //fetch locations for select drop down
 $locations = array();
 $sql = "SELECT locationID FROM LOCATIONASSIGNMENT WHERE userID=".$userID;
@@ -21,7 +24,7 @@ while($row = mysqli_fetch_assoc($result)){
   $sql2 = "SELECT * FROM LOCATION WHERE locationID=".$row["locationID"];
   $result2 = $conn->query($sql2);
   while($value = mysqli_fetch_assoc($result2))
-  $locations[] = $value;
+    $locations[] = $value;
 }
 ?>
 <head>
@@ -140,9 +143,11 @@ $(document).ready(function() {
     messages: {
       groupName: {
         required: "Enter a group name.",
-        remote: jQuery.validator.format("{0} is already used by an existing group.")
+        remote: jQuery.validator.format("{0} is already an existing group made by other user.")
       },
-      locationSelect: "Pick your location from the drop down menu."
+      locationSelect: {
+        required: "Please pick your location from the drop down menu."
+      }
     }
   });
 });

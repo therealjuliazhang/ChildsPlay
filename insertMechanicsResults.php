@@ -3,6 +3,7 @@ Title:Insert Mechanics Results;
 Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789); 
 -->
 <?php
+include "educatorAccess.php";
     // get data
     if(isset($_POST["mechanic"]))
         $mechanic = $_POST["mechanic"];

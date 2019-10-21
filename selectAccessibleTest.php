@@ -5,12 +5,15 @@ Author:Zhixing Yang(5524726), Alex Satoru Hanrahan (4836789), Ren Sugie(5679527)
 <!DOCTYPE html>
 <html>
 <?php
+/*
 //get user ID
 session_start();
 if(isset($_SESSION['userID']))
-$userID = $_SESSION['userID'];
+  $userID = $_SESSION['userID'];
 else
-header('login.php');
+  header('login.php');
+*/
+include "adminAccess.php";
 //open connection to database
 include 'db_connection.php';
 $conn = OpenCon();

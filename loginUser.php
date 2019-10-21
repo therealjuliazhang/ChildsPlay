@@ -6,6 +6,10 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789);
     session_start();
     include 'db_connection.php';
     $conn = OpenCon();
+    if(isset($_SESSION["userID"]))
+		$userID = $_SESSION["userID"];
+	else
+		header("Location: login.php");
     //Get inputs
     if(isset($_POST["username"]))
         $username = mysqli_real_escape_string($conn, $_POST["username"]);
@@ -25,10 +29,14 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789);
 				$userID = $user['userID'];
 				$_SESSION['userID'] = $userID;
 				//check if admin or educator and redirect to correct page
-				if($user['accountType']== 1)
-					header('location: viewExistingTests.php');
-				else
-					header('location: educatorTests.php');
+				if($user['accountType']== 1){
+                    $_SESSION['accountType'] = 1;
+                    header('location: viewExistingTests.php');
+                }
+				else{
+                    $_SESSION['accountType'] = 0;
+                    header('location: educatorTests.php');
+                }
 			}
   	}else {
         header('location: login.php?msg=failed');

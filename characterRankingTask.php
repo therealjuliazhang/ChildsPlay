@@ -13,7 +13,7 @@ $conn = OpenCon();
 if (isset($_SESSION['userID']))
 	$userID = $_SESSION['userID'];
 else
-	header('login.php');
+	header('Location: login.php');
 //the group used for previewing tests
 $previewGroupID = 4;
 //get mode from session to check if preview mode

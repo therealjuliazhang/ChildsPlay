@@ -6,9 +6,9 @@ Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4
 //get information
 session_start();
 if(isset($_SESSION["userID"]))
-$userID = $_SESSION["userID"];
+	$userID = $_SESSION["userID"];
 else
-header("Location: login.php");
+	header("Location: login.php");
 
 //get mode from session to check if preview mode
 if (isset($_SESSION['mode']))

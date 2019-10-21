@@ -137,7 +137,7 @@ $locations[] = $row;
 					var email = $("#email").val();
 					var fullname = $("#fullname").val();
 					var accountType = $("#accountType option:selected").val();
-					var location = $("#location").val();
+					var location = $("#location option:selected").val();
 					var username = $("#username").val();
 					var password1 = $("#password1").val();
 					$.post("registerAccount.php",

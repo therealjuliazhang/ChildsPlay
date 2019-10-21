@@ -10,7 +10,6 @@ Sugie(5679527);
 	if(isset($_SESSION["userID"]))
 		$userID = $_SESSION["userID"];
 	else
-		// $userID = 1;
 		header("Location: login.php");
 
 	//get mode from session to check if preview mode

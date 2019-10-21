@@ -34,11 +34,12 @@ Author:Phuong Linh Bui (5624095)
     <meta name = "viewport" content = "width = device-width, initial-scale = 1">
     <link rel="stylesheet" type="text/css" href="childsPlayStyle.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
-	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script><!----->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <script src="educatorProfile.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
   </head>
   <body>
     <!--header-->
@@ -55,7 +56,7 @@ Author:Phuong Linh Bui (5624095)
     <div class="navbar-fixed">
     <table id="infoTable" style="background-color:#FF8C18" height="200px" class="white-text">
 		<tbody>
-		<!--<form action="" method="post">--->
+		<form action="" method="post">
         <tr>
           <td width="50%">
           <div class="tableLeft">
@@ -72,14 +73,15 @@ Author:Phuong Linh Bui (5624095)
               <button type="submit" id="logoutButton" name="btnLogout" class="waves-effect waves-light btn blue darken-4 right" style="right:67px;top:18px;position:relative;">Logout</button>
 				<?php
 				if(isset($_POST["btnLogout"])){
-					unset($_SESSION['userID']);
+          unset($_SESSION['userID']);
+          unset($_SESSION['accountType']);
 					header("Location: home.html");
 				}
 				?>
             </div>
           </td>
         </tr>
-		<!--</form>--->
+		</form>
       </tbody>
     </table>
   </div>
@@ -104,6 +106,7 @@ Author:Phuong Linh Bui (5624095)
             <input id="password2" name="password2" type="password" class="validate">
         </div>
       </div>
+      <a class="waves-effect waves-light btn blue darken-4" id="changeButton">Change password</a>
       <div class="col s12 blue-text text-darken-4"><h4>Personal Information</h4></div>
       <div class="col s3 valign-wrapper column01"><h6 class="hInCol">Email:</h6></div>
       <div class='input-field col s9'>
@@ -137,37 +140,36 @@ Author:Phuong Linh Bui (5624095)
   </div>
   </form>
 </body>
-
 <!--Edit and Save information function-->
 <script>
 //enable inputs
-function getSelectedValues(){
-  //$("#location option:selected").prop("selected", false);
-  var selected = $("#location").val();
-  console.log("Selected: " + selected);
-}
 var locations = <?php echo json_encode($locationArray); ?>;
 var currentLocations = <?php echo json_encode($currentLocationArray); ?>;
 
 $.each(currentLocations, function(i,e){
   $("#location option[value='" + e["name"] + "']").prop("selected", true);
 });
+$("#changeButton").click(function(){
+  $("#password1").prop( "disabled", false );
+  $(".passwordComfirmationRow").removeClass("hide");
+  $(".validate").prop('disabled', false);
+});
 
 $("#editButton").click(function(){
-                $("#password1").val("");
-
-                $("#username").prop( "disabled", false );
-                $("#password1").prop( "disabled", false );
-                $("#email").prop( "disabled", false );
-                $(".selectLocation").prop('disabled', false);
-                $(".validate").prop('disabled', false);
-                $(".removeCell").removeClass("hide");
-                $(".addCell").removeClass("hide");
-                $(".passwordComfirmationRow").removeClass("hide");
-                $("#saveButtonDiv").removeClass("hide");
-                $("#editButtonDiv").addClass("hide");
-                //$('select').formSelect();
-            });
+  //$("#password1").val("");
+  $("#username").prop( "disabled", false );
+  //$("#password1").prop( "disabled", false );
+  $("#email").prop( "disabled", false );
+  $("#location").prop('disabled', false);
+  //$(".validate").prop('disabled', false);
+  $(".removeCell").removeClass("hide");
+  $(".addCell").removeClass("hide");
+  //$(".passwordComfirmationRow").removeClass("hide");
+  $("#saveButtonDiv").removeClass("hide");
+  $("#editButtonDiv").addClass("hide");
+  $("#changeButton").removeClass("hide");
+  $('#location').material_select();
+});
 
 $(document).ready(function(){
     var users = <?php echo json_encode($users); ?>;;
@@ -176,124 +178,92 @@ $(document).ready(function(){
     $("#password1").val(users["password"]);
     var currentEmail = users["email"];
     var currentUsername = users["username"];
-    /*
-    $('.materialSelect').on('contentChanged', function() {
-				$(this).material_select();
-      });
-   */
-$('#location').material_select();
-  
-    $("#username").prop( "disabled", true );
-    $("#password").prop( "disabled", true );
-    $("#email").prop( "disabled", true );
-    $(".selectLocation").prop('disabled', true);
-    $(".validate").prop('disabled', true);
-    $(".removeCell").addClass("hide");
-    $(".addCell").addClass("hide");
-    $(".saveButtonDiv").addClass("hide");
-    $(".passwordComfirmationRow").addClass("hide");
-    $("#saveButtonDiv").addClass("hide");
-    $("#editButtonDiv").removeClass("hide");
 
-    
-
-    //inititate select drop down
-			$('select').material_select();
-			$("select[required]").css({
-				display: "inline",
-				height: 0,
-				padding: 0,
-				width: 0
-			});
-			
-    //Places error element next to invalid inputs
-			$.validator.setDefaults({
-				errorElement: 'div',
-				errorClass: 'invalid',
-				errorPlacement: function(error, element) {
-						var e = document.createElement("div");
-						$(e).append(error.text()).addClass("showError");
-					if (element.attr('type') == "text" || element.attr('type') == "email" || element.attr('type') == "password") {
-						$(element).nextAll("div").remove();
-						$(element)
-							.closest("form")
-							.find("input[name='" + element.attr("id") + "']")
-							.after(e);
-					} else if (element.hasClass("materialSelect")) {
-						$(element).next("div").remove();
-						$(element).after(e);
-					}
-				},
-				success: function(div){
-					$(div).remove();
-				}
-      });
-      
-  $("#form").validate({
-				rules: {
-					password1: {
-						required: true,
-						minlength: 5
-					},
-					password2: {
-						required: true,
-						minlength: 5,
-						equalTo: "#password1"
-					}
-				},
-				messages: {
-					password1: {
-						required: "Please enter a password.",
-						minlength: "Password must be at least 5 characters long."
-					},
-					password2: {
-						required: "Please confirm your password.",
-						minlength: "Password must be at least 5 characters long.",
-						equalTo: "Passwords entered are different."
-					}
-				},
-				submitHandler: function(form) { 
-					var email = $("#email").val();
-          var locations = $("#location").val();
-          //alert(locations);
-          console.log("location: " + locations);
-          /*
-          $("#location option:selected").each(function(){
-            locations.push($(this).val());
-          });*/
-          //alert(locations[0]);
-					var username = $("#username").val();
-					var password1 = $("#password1").val();
-					$.post("updateEducator.php",
-					{	email: email,
-						locations: locations,
-						username: username,
-						password1: password1
-					},
-					function(data){
-						//show errors
-						if(data.includes("span")){
-							$("#results").html(data);
-						}
-						else{
-                            $("#username").prop( "disabled", true );
-                            $("#password1").prop( "disabled", true );
-                            $("#email").prop( "disabled", true );
-                            $(".selectLocation").prop('disabled', true);
-                            $(".validate").prop('disabled', true);
-                            $(".removeCell").addClass("hide");
-                            $(".addCell").addClass("hide");
-                            $(".saveButtonDiv").addClass("hide");
-                            $(".passwordComfirmationRow").addClass("hide");
-                            $("#saveButtonDiv").addClass("hide");
-                            $("#editButtonDiv").removeClass("hide");
-
-							//window.location = "eProfile.php";
-						}
-					}
-					);
-				}
-			});
+    $("#form").validate({
+      rules: {
+        username: {
+          required: true,
+          usernamevalidate: true,
+          remote: {
+            url: "checkUsername.php",
+            type: "post",
+            data: {
+              currentUsername: currentUsername
+            }
+          }
+        },
+        email: {
+          required: true,
+          emailvalidate: true,
+          remote: {
+            url: "checkEmail.php",
+            type: "post",
+            data: {
+              currentEmail: currentEmail
+            }
+          }
+        },
+        password1: {
+          required: true,
+          minlength: 5,
+          pwcheck: true
+        },
+        password2: {
+          required: true,
+          minlength: 5,
+          equalTo: "#password1"
+        }
+      },
+      messages: {
+          location: "Pick your location from the drop down menu.",
+          username: {
+            required: "Please enter a username.",
+            usernamevalidate: "Username cannot have space!",
+            remote: jQuery.validator.format("Username {0} is already taken.")
+          },
+          email: {
+            required: "Please enter a valid email address.",
+            emailvalidate: "Please enter a valid email address.",
+             remote: jQuery.validator.format("Email address {0} is already registered.")
+          },
+          password1: {
+            required: "Please enter a password.",
+            minlength: "Password must be at least 5 characters long.",
+            pwcheck: "Password must include at least one digit and one lowercase letter and no spaces."
+          },
+          password2: {
+            required: "Please confirm your password.",
+            minlength: "Password must be at least 5 characters long.",
+            equalTo: "Passwords entered are different."
+          }
+      },
+      submitHandler: function(form) { 
+        var email = $("#email").val();
+        var locations = $("#location").val();
+        var username = $("#username").val();
+        var password1 = null;
+        if(!$("#password1").prop("disabled"))
+          password1 = $("#password1").val();
+        //alert(md5("plb123"));
+        $.post("updateEducator.php",
+          {	email: email,
+            locations: locations,
+            username: username,
+            password1: password1
+          },
+          function(data){
+            //show errors
+            if(data.includes("span")){
+              $("#results").html(data);
+            }
+            else{
+              $("#saveButton").prop("disabled", true);
+              window.location = "eProfile.php";
+            }
+          }
+        );
+      }
+    });
 });
 </script>
 <style>

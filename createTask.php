@@ -5,12 +5,15 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789);
 <?php
 include 'db_connection.php';
 $conn = OpenCon();
+include "adminAccess.php";
+/*
 session_start();
 if(isset($_SESSION['userID']))
     $userID = $_SESSION['userID'];
 else
-    header('login.php');
-$taskID; //need to select taskID that is just added into database
+	header('login.php');
+*/
+$taskID;
 $UploadFolder = "images";
 $names = $_POST["imageAddress"];
 $instruction = $_POST["instruction"];

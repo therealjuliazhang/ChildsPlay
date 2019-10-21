@@ -19,19 +19,16 @@ else
   header('login.php');
 */
 //get userinfo from database
-$sql = "SELECT * FROM USERS WHERE userID = " .$userID;
-$users = array();
+$sql = "SELECT * FROM USERS WHERE userID = $userID";
 $result = $conn ->query($sql);
-while($row = mysqli_fetch_assoc($result))
-$users[] = $row;
-
+$users = mysqli_fetch_assoc($result);
 
 //get location information from database
 $sql = "SELECT * FROM LOCATION";
 $locationArray = array();
 $result = $conn ->query($sql);
 while($row = mysqli_fetch_assoc($result))
-$locationArray[] = $row;
+    $locationArray[] = $row;
 ?>
 <head>
   <title>Profile Page</title>
@@ -47,7 +44,7 @@ $locationArray[] = $row;
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-    <script src="educatorProfile.js"></script>
+    <script src="adminProfile.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
 
 </head>
@@ -73,9 +70,9 @@ $locationArray[] = $row;
         <tr>
           <td width="50%">
             <div class="tableLeft">
-              <h3 class="" id="fullNameTop"></h3>
+              <h3 id="fullNameTop"><?php echo $users["fullName"]; ?></h3>
               <i class="small material-icons" id="mailIcon">email</i>
-              <span id="mailInCell">mfin@gmail.com</span>
+              <span id="mailInCell"><?php echo $users["email"]; ?></span>
             </div>
           </td>
           <td width="50%">
@@ -101,12 +98,12 @@ $locationArray[] = $row;
 
   <!--Side Bar-->
   <ul id="sidebar" class="sidenav sidenav-fixed #ffffff white">
-    <li class="tab is-active"><a href="#!">Profile</a></li>
+    <li class="tab is-active"><a href="#">Profile</a></li>
     <li class="tab"><a>Location</a></li>
   </ul>
   <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 
-  <form method="post" action="updateAdmin.php">
+  <form id="form" method="post" action="">
     <!--Main contents-->
     <div class="panel-group">
       <!--html for profile tab-->
@@ -116,16 +113,26 @@ $locationArray[] = $row;
             <div class="col s12 blue-text text-darken-4"><h4>Account Information</h4></div>
             <div class="col s3 column01"><h6 class="hInCol">Username:</h6></div>
             <div class='input-field col s9'>
-              <input id="uName" name="uName" readonly type='text' class='validate inputInCol'>
+                <input id="username" name="username" type="text" class="validate">
             </div>
             <div class="col s3 column01"><h6 class="hInCol">Password:</h6></div>
             <div class='input-field col s9'>
-              <input id="password" name="password" readonly value='********' type='text' class='validate inputInCol'>
+                <input id="password1" name="password1" type="password" class="validate">
+            </div>
+            <!--Password confirm Section-->
+            <div class="hide passwordComfirmationRow">
+                <div class="col s3 column01"><h6 class="hInCol">Confirm Password:</h6></div>
+                <div class='input-field col s9'>
+                    <input id="password2" name="password2" type="password" class="validate">
+                </div>
+            </div>
+            <div class="col s3">
+            <a class="waves-effect waves-light btn blue darken-4" id="changeButton">Change password</a>
             </div>
             <div class="col s12 blue-text text-darken-4"><h4>Personal Information</h4></div>
             <div class="col s3 valign-wrapper column01"><h6 class="hInCol">Email:</h6></div>
             <div class='input-field col s9'>
-              <input id="email" name="mailInput" readonly type='text' class='validate inputInCol'>
+                <input id="email" name="email" type="email" class="validate">
             </div>
           </div>
         </div>
@@ -136,6 +143,7 @@ $locationArray[] = $row;
             </div>
           </div>
         </div>
+        <div id="results"></div>
       </form>
     </div>
 
@@ -161,82 +169,111 @@ $locationArray[] = $row;
   </body>
 
 <script>
+$("#editButton").click(function(){
+  $("#username").prop( "disabled", false );
+  $("#email").prop( "disabled", false );
+  $("#saveButtonDiv").removeClass("hide");
+  $("#editButtonDiv").addClass("hide");
+  $("#changeButton").removeClass("hide");
+})
 
-
-//enable input
-$(document).ready(function(){
-  $("#editButton").click(function(){
-    $("#uName").prop( "readonly", false );
-    $("#password").prop( "readonly", false );
-    $("#email").prop( "readonly", false );
-    $("#saveButtonDiv").removeClass("hide");
-    $("#editButtonDiv").addClass("hide");
-
-    testValues();
-  })
-  loadProfileInfo();
-  loadLocationInfo();
+$("#changeButton").click(function(){
+  $("#password1").prop( "disabled", false );
+  $(".passwordComfirmationRow").removeClass("hide");
+  $(".validate").prop('disabled', false);
 });
 //disable input
 $(document).ready(function(){
-  $("#saveButton").click(function(){
-    $("#uName").prop( "readonly", true );
-    $("#password").prop( "readonly", true );
-    $("#email").prop( "readonly", true );
-    $("#saveButtonDiv").addClass("hide");
-    $("#editButtonDiv").removeClass("hide");
+    var users = <?php echo json_encode($users); ?>;;
+    $("#username").val(users["username"]);
+    $("#email").val(users["email"]);
+    $("#password1").val(users["password"]);
+    var currentEmail = users["email"];
+    var currentUsername = users["username"];
 
-  })
+    $("#form").validate({
+      rules: {
+        username: {
+          required: true,
+          usernamevalidate: true,
+          remote: {
+            url: "checkUsername.php",
+            type: "post",
+            data: {
+              currentUsername: currentUsername
+            }
+          }
+        },
+        email: {
+          required: true,
+          emailvalidate: true,
+          remote: {
+            url: "checkEmail.php",
+            type: "post",
+            data: {
+              currentEmail: currentEmail
+            }
+          }
+        },
+        password1: {
+          required: true,
+          minlength: 5,
+          pwcheck: true
+        },
+        password2: {
+          required: true,
+          minlength: 5,
+          equalTo: "#password1"
+        }
+      },
+      messages: {
+          username: {
+            required: "Please enter a username.",
+            usernamevalidate: "Username cannot have space!",
+            remote: jQuery.validator.format("Username {0} is already taken.")
+          },
+          email: {
+            required: "Please enter a valid email address.",
+            emailvalidate: "Please enter a valid email address.",
+             remote: jQuery.validator.format("Email address {0} is already registered.")
+          },
+          password1: {
+            required: "Please enter a password.",
+            minlength: "Password must be at least 5 characters long.",
+            pwcheck: "Password must include at least one digit and one lowercase letter and no spaces."
+          },
+          password2: {
+            required: "Please confirm your password.",
+            minlength: "Password must be at least 5 characters long.",
+            equalTo: "Passwords entered are different."
+          }
+      },
+      submitHandler: function(form) { 
+        var email = $("#email").val();
+        var username = $("#username").val();
+        var password1 = null;
+        if(!$("#password1").prop("disabled"))
+          password1 = $("#password1").val();
+        //alert(md5("plb123"));
+        $.post("updateAdmin.php",
+          {	email: email,
+            username: username,
+            password1: password1
+          },
+          function(data){
+            //show errors
+            if(data.includes("span")){
+              $("#results").html(data);
+            }
+            else{
+              $("#saveButton").prop("disabled", true);
+              window.location = "aProfile.php";
+            }
+          }
+        );
+      }
+    });
 });
-
-
-//loads user info onto page
-function loadProfileInfo()
-{
-  var user = <?php echo json_encode($users); ?>;
-  var format = "apple";
-  //display fullname
-  $("#fullNameTop").text(user[0].fullName);
-  $("#mailInCell").text(user[0].email);
-  $("#email").val(user[0].email);
-  $("#uNameCell").val(user[0].username);
-  $("#uName").val(user[0].username);
-  if (user[0].accountType == 1)
-  {
-    var user = <?php echo json_encode($users); ?>;
-    //display fullname
-    $("#fullNameTop").text(user[0].fullName);
-    $("#mailInCell").text(user[0].email);
-    $("#email").val(user[0].email);
-    $("#uNameCell").val(user[0].username);
-    $("#uName").val(user[0].username);
-    if (user[0].accountType == 1)
-    {
-      $("#userType").text("Admin");
-    }
-    else
-    {
-      $("#userType").text("NotAdmin");
-    }
-  }
-  else
-  {
-    $("#userType").text("NotAdmin");
-  }
-}
-
-
-
-
-
-function testValues(){
-  var x = document.getElementById("uName");
-
-  console.log(x);
-
-
-}
-
 
 //FUnction for switching tabs
 $(function($){
@@ -250,7 +287,6 @@ $(function($){
     $('.panel').eq(index).addClass('is-show');
   });
 });
-
 
 
 //enable input for location tab
@@ -374,8 +410,17 @@ function loadLocationInfo(){
  </script>
 
 <style media="screen">
-.container .btn{
-  width: 80px;
+.showError{
+	top:10px;
+	width:300px !important;
+	font-style: italic;
+	color: red;
+}
+#editButtonDiv .btn{
+  width: 100px;
+}
+#saveButtonDiv .btn{
+  width: 100px;
 }
 .btn:hover {
   background-color: #FF8C18!important;

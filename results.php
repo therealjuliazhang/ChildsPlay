@@ -6,13 +6,12 @@ Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4
 <html>
 <?php
 session_start();
-//include_once 'resultQueries.php';
 if(isset($_SESSION['userID']))
-$userID = $_SESSION['userID'];
+	$userID = $_SESSION['userID'];
 else
-header('login.php');
+	header('Location: login.php');
+
 if(isset($_SESSION["testID"])){
-	//session_destroy();
 	unset($_SESSION["testID"]);
 }/*
 if(isset($_GET["testID"])){

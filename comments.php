@@ -11,7 +11,7 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679
 	if(isset($_SESSION["userID"]))
 		$userID = $_SESSION["userID"];
 	else
-		header('login.php');
+		header('Location: login.php');
 	if(isset($_SESSION['groupID']))
 		$groupID = $_SESSION['groupID'];
 	if(isset($_SESSION['testID']))

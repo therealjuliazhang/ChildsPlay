@@ -7,14 +7,17 @@ Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4
 
 <head>
   <?php
-  session_start();
+  //session_start();
   include 'db_connection.php';
   $conn = OpenCon();
+  include "adminAccess.php";
+  /*
   //get user ID
   if(isset($_SESSION['userID']))
   $userID = $_SESSION['userID'];
   else
-  header('login.php');
+  header('Location: login.php');
+  */
   // $userID = 1; //remove after admin pages are linked up
   //get test ID
   if(isset($_GET['testID']))

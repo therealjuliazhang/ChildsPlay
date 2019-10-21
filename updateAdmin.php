@@ -3,38 +3,38 @@ Title:Update Admin;
 Author:Alex Satoru Hanrahan (4836789), Andre Knell (5741622); 
 -->
 <?php 
+include "adminAccess.php";
 include 'db_connection.php';
 $conn = OpenCon();
+/*
 session_start();
 if(isset($_SESSION["userID"]))
 	$userID = $_SESSION["userID"];
 else
 	header("Location: login.php");
-//get username
-if(isset($_POST["uName"]))
-	$user = $_POST["uName"];
-//get password
-if(isset($_POST["password"]))
-	$password = $_POST["password"];
-//get email
-if(isset($_POST["mailInput"]))
-	$email = $_POST["mailInput"];
-
-
-//updaet details (NEED TO CHANGE AND GET USERID)
-$sql = "UPDATE USERS SET username = '".$user."', password = '".$password."', email = '".$email."' WHERE userID=".$userID;
-    if (mysqli_query($conn, $sql))
-    	header("Refresh:0; url=adminProfile.php");
-    else
-    	echo"error idk";
-
-
-/*
-//updaet details (NEED TO CHANGE AND GET USERID)
-$sql = "UPDATE users SET username = '"$_POST[uName]"', password = '"_$POST[password]"', email = '"$_POST[email]"' WHERE userID=1";
-    if (mysqli_query($conn, $sql))
-    	header("refresh:1; url=adminProfile.php");
-    else
-    	echo "Update failed";
 */
+//get username
+if(isset($_POST["username"]))
+	$username = $_POST["username"];
+//get password
+if(isset($_POST["password1"]))
+	$password = $_POST["password1"];
+//get email
+if(isset($_POST["email"]))
+	$email = $_POST["email"];
+
+//get password
+if(isset($_POST["password1"])){
+	$password = $_POST["password1"];
+	$password = md5($password);
+	//update educator details
+	$sql = "UPDATE USERS SET username = '".$username."', password = '".$password."', email = '".$email."' WHERE userID=$userID";
+}
+else
+	$sql = "UPDATE USERS SET username = '".$username."', email = '".$email."' WHERE userID=$userID";
+if ($conn->query($sql) === TRUE){
+	echo "Successfully updated educator profile!";
+}
+else
+	echo "Failed to update user record!";
 ?>
