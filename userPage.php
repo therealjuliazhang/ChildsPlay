@@ -204,6 +204,7 @@ Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4
 <style media="screen">
 .container{
   margin-top: 25px;
+  width: 900px;
 }
 
 

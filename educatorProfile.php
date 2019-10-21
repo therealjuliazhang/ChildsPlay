@@ -256,7 +256,7 @@ alert('More than 1280');
 #saveButtonDiv .btn{
   width: 100px;
 }
-#editButton:hover, #saveButton:hover, #addButton:hover, #logoutButton:hover{
+#editButton:hover, #saveButton:hover, #addButton:hover{
   background-color: #FF8C18!important;
 }
 </style>

@@ -21,7 +21,6 @@ Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4
       </div>
     </div>
   </div>
-
   <!--card -->
   <div class="container bodyContainer">
     <div id="cardWrapper" class="row valign-wrapper">
