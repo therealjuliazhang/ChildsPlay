@@ -37,6 +37,7 @@ $locationArray[] = $row;
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
 </head>
 <body>
   <!--header-->
@@ -92,7 +93,7 @@ $locationArray[] = $row;
   </ul>
   <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 
-  <form method="post" action="updateAdmin.php">
+  <form id="detailForm" method="post" action="updateAdmin.php">
     <!--Main contents-->
     <div class="panel-group">
       <!--html for profile tab-->
@@ -102,16 +103,16 @@ $locationArray[] = $row;
             <div class="col s12 blue-text text-darken-4"><h4>Account Information</h4></div>
             <div class="col s3 column01"><h6 class="hInCol">Username:</h6></div>
             <div class='input-field col s9'>
-              <input id="uName" name="uName" readonly type='text' class='validate inputInCol'>
+              <input id="uName" name="uName" disabled type='text' class='validate inputInCol'>
             </div>
             <div class="col s3 column01"><h6 class="hInCol">Password:</h6></div>
             <div class='input-field col s9'>
-              <input id="password" name="password" readonly value='********' type='text' class='validate inputInCol'>
+              <input id="password" name="password" disabled value='********' type='text' class='validate inputInCol'>
             </div>
             <div class="col s12 blue-text text-darken-4"><h4>Personal Information</h4></div>
             <div class="col s3 valign-wrapper column01"><h6 class="hInCol">Email:</h6></div>
             <div class='input-field col s9'>
-              <input id="email" name="mailInput" readonly type='text' class='validate inputInCol'>
+              <input id="email" name="mailInput" disabled type='text' class='validate inputInCol'>
             </div>
           </div>
         </div>
@@ -126,7 +127,7 @@ $locationArray[] = $row;
     </div>
 
     <!--html for Location tab-->
-<form method = "post" action="addLocation.php">
+<form id="form" method = "post" action="addLocation.php">
 <div class="panel">
   <div class="container">
       <div class="row" id="locationInfo" style="margin-left:40px">
@@ -137,7 +138,7 @@ $locationArray[] = $row;
        <div class="row">
          <div class="col s1 offset-s11"><a class="waves-effect waves-light btn blue darken-2 addCell hide right" id="addButtonB" onclick="appendRow()"><i class="material-icons">add</i></a></div>
          <div class="col s1 offset-s10"><a class="waves-effect waves-light btn #2196f3 blue darken-4 right" id="editButtonB">Edit</a></div>
-         <div class="col s1"><button class="waves-effect waves-light btn blue darken-4 right" id="saveButtonB" type="submit" value = "submit">Save</button></div>
+         <div class="col s1"><button class=" hide waves-effect waves-light btn blue darken-4 right" id="saveButtonB" type="submit" value = "submit">Save</button></div>
        </div>
 
     </div>
@@ -152,9 +153,9 @@ $locationArray[] = $row;
 //enable input
 $(document).ready(function(){
   $("#editButton").click(function(){
-    $("#uName").prop( "readonly", false );
-    $("#password").prop( "readonly", false );
-    $("#email").prop( "readonly", false );
+    $("#uName").prop( "disabled", false );
+    $("#password").prop( "disabled", false );
+    $("#email").prop( "disabled", false );
     $("#saveButtonDiv").removeClass("hide");
     $("#editButtonDiv").addClass("hide");
 
@@ -164,6 +165,7 @@ $(document).ready(function(){
   loadLocationInfo();
 });
 //disable input
+/*
 $(document).ready(function(){
   $("#saveButton").click(function(){
     $("#uName").prop( "readonly", true );
@@ -174,6 +176,7 @@ $(document).ready(function(){
 
   })
 });
+*/
 
 
 //loads user info onto page
@@ -242,15 +245,16 @@ $(function($){
 //enable input for location tab
 $(document).ready(function(){
   $("#editButtonB").click(function(){
-    $(".inputInColB").prop( "readonly", false );
+    $(".inputInColB").prop( "disabled", false );
     $(".removeButtonB").removeClass("hide");
     $("#addButtonB").removeClass("hide");
-    $("#saveButtonDivB").removeClass("hide");
-    $("#editButtonDivB").addClass("hide");
+    $("#saveButtonB").removeClass("hide");
+    $("#editButtonB").addClass("hide");
   })
 });
 
 //disable input for location tab
+/*
 $(document).ready(function(){
   $("#saveButtonB").click(function(){
     $(".inputInColB").prop( "readonly", true );
@@ -260,23 +264,8 @@ $(document).ready(function(){
     $("#saveButtonDivB").addClass("hide");
   })
 });
+*/
 
-//Function for adding and deleting rows
-function appendRow() {
-  //variables for a new row
-  var locationNameInput = "<div class='col s11'><input value='' type='text' class='validate inputInColB'></div>";
-  var removeButtonB = " <div class='col s1'><div class='col s1 removeCell'><a class='waves-effect waves-light btn removeButtonB'><i class='material-icons'>remove</i></a></div></div>";
-  //insert a new row
-  var locations = "<div class='removable'>" + locationNameInput + removeButtonB + "</div>";
-
-  $("#locationInfo").append(locations);
-
-  //remove added rows
-  $('.removeButtonB').click(function() {
-    $(this).closest('.removable').remove();
-  });
-
-};
 
 //remove existing rows
 $('.removeButtonB').click(function() {
@@ -288,7 +277,7 @@ function loadLocationInfo(){
   var format;
   //display data
   location.forEach(function(result){
-    var locationNameInput = "<div class='col s11'><input disabled value='"+ result.name +"' type='text' class='validate inputInColB'></div>";
+    var locationNameInput = "<div class='col s11'><input disabled value='"+ result.name +"' type='text' class='validate inputInColB' required></div>";
 
     var removeButtonB = " <div class='col s1'><div class='col s1 removeCell'><a class='waves-effect waves-light btn hide removeButtonB'><i class='material-icons'>remove</i></a></div></div>";
 
@@ -310,18 +299,44 @@ function loadLocationInfo(){
 
       //disable input for location tab
       $(document).ready(function(){
+        /*
         $("#saveButtonB").click(function(){
           $(".inputInColB").prop( "readonly", true );
           $(".removeButtonB").addClass("hide");
           $("#addButtonB").addClass("hide");
-        })
+          
+        })*/
+
+        
+    
+        $("#detailForm").validate({
+          rules: {
+            uName: {
+              required: true
+            },
+            mailInput:{
+              required: true,
+              email: true
+            }
+          },
+          messages: {
+            uName: {
+              required: "Username can't be empty"
+              },
+            mailInput: {
+              required: "Email can't be blank",
+              email: "Enter a valid email address"
+            }
+          }
+        });
+        
       });
 
       //Function for adding and deleting rows
       function appendRow() {
 
         //variables for a new row
-        var locationNameInput = "<div class='col s11'><input name='rowNum[]' value='default' type='text' class='validate inputInColB'></div>";
+        var locationNameInput = "<div class='col s11'><input name='rowNum[]' value='default' type='text'  class='validate inputInColB' required><span class='helper-text' data-error='Location cannot be blank'></span></div>";
 
         //insert a new row
         var locations = "<div class='removable'>" + locationNameInput + "</div>";
@@ -348,9 +363,7 @@ function loadLocationInfo(){
       //display data
       location.forEach(function(result){
 
-        var locationNameInput = "<div class='col s11'><input readonly name='locRow[]' value='"+ result.name +"' type='text' class='validate inputInColB'></div>";
-
-
+        var locationNameInput = "<div class='col s11'><input disabled name='locRow[]' value='"+ result.name +"' type='text' class='validate inputInColB' required><span class='helper-text' data-error='Location cannot be blank'></span></div>";
 
         var format = "<div class='removable'>" + locationNameInput + "</div>";
         $("#locationInfo").append(format);
