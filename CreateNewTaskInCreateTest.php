@@ -1,11 +1,10 @@
-<!--========================================================================================
+<!-- ====================================================================================
 Title:Create New Task In Create Test;
 Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), 
-Julia Aoqi Zhang (5797585);
-=========================================================================================-->
+Julia Aoqi Zhang (5797585); 
+===================================================================================== -->
 <!DOCTYPE html>
 <html>
-
 <head>
   <?php
   //session_start();
@@ -99,7 +98,7 @@ Julia Aoqi Zhang (5797585);
               if (from == "edit")
                 window.location = "editTest.php?testID=" + testID;
               if (from == "create")
-                window.location = "createTest.php";
+                window.location = "createTest.php?taskID=" + taskID;
               // window.location = "createTest.php?taskID=" + taskID;
               /*if(exist == true)
               window.location = "filterExistingTasks.php";*/
@@ -110,7 +109,7 @@ Julia Aoqi Zhang (5797585);
     }
     /**/
     function selectActivityStyle() {
-      var pointsInterval = 0;
+      var pointsInterval = 5;
       var activityStyle = <?php
                           if (isset($activityStyle))
                             echo json_encode($activityStyle);

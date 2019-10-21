@@ -1,8 +1,8 @@
 <?php
-/*
+/*====================================
 Title:Select Option; 
-Author:Phuong Linh Bui (5624095);
-*/
+Author:Phuong Linh Bui (5624095); 
+====================================*/
 /*session_start();
 if(isset($_SESSION["userID"]))
     $userID = $_SESSION["userID"];
