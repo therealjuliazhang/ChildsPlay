@@ -110,7 +110,7 @@ Julia Aoqi Zhang (5797585);
     }
     /**/
     function selectActivityStyle() {
-      var pointsInterval = 0;
+      var pointsInterval = 5;
       var activityStyle = <?php
                           if (isset($activityStyle))
                             echo json_encode($activityStyle);
