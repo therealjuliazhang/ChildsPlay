@@ -88,7 +88,6 @@ Julia Aoqi Zhang (5797585);
             taskTitle: taskTitle
           },
           function(data) {
-            console.log(data)
             //show errors
             if (data.includes("span")) {
               $("#results").html(data);
