@@ -54,10 +54,11 @@ header('Access-Control-Allow-Origin: *');
 include 'db_connection.php';
 $conn = OpenCon();
 //fetch names of preschoolers
-if($mode=="preview")
-	$sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$groupID;
-else
-	$sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$groupID." AND userID=".$userID;
+// if($mode=="preview")
+	// $sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$groupID;
+// else
+	// $sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$groupID." AND userID=".$userID;
+$sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$groupID;
 $result = $conn->query($sql);
 $preschoolers = array();
 while($row = mysqli_fetch_assoc($result)){

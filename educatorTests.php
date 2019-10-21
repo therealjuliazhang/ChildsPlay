@@ -26,6 +26,10 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679
         <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
     </head>
 	<script>
+	//detect browser size and alert if its small
+	if ($(window).width() < 930) {
+	   alert('This website does not support this browser size. Please use a browser wider than 930px.');
+	}
 	function showError(title){
 		//var error = document.getElementById("error");
 		//error.innerText = "There is no task in " + title;

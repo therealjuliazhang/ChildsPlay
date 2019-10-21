@@ -249,8 +249,8 @@ CloseCon($conn);
     </div>--->
     <br/><br/>
     <div align="right">
-      <a style="width:95px" class="waves-effect waves-light btn red" href="viewExistingTests.php">Cancel</a>
-      <button style="width:95px" name="submit" type="submit" class="submit waves-effect waves-light btn blue darken-4">Save</button>
+      <button style="width:95px" name="submit" type="submit" class="submit waves-effect waves-light btn blue darken-2">Save</button>
+      <a style="width:95px" class="waves-effect waves-light btn blue darken-4 cancelButton" href="viewExistingTests.php">Cancel</a>
     </div>
   </form>
 </div>

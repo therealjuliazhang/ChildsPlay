@@ -226,8 +226,8 @@ function displayTasks() {
       <br/>
       <p align="right">
         <!-- <button type="submit" name="createTest" class="waves-effect waves-light btn blue darken-2">Create Test</button> -->
-        <input style="width:120px" type="submit" name="createTest" class="submit waves-effect waves-light btn blue darken-4 right" value="Create Test">
-        <a style="width:120px" class="waves-effect waves-light btn red darken-1 right" href="viewExistingTests.php">Cancel</a>
+        <a style="width:120px" class="waves-effect waves-light btn blue darken-4 right cancelButton" href="viewExistingTests.php">Cancel</a>
+        <input style="width:120px" type="submit" name="createTest" class="submit waves-effect waves-light btn blue darken-2 right" value="Create Test">
       </p>
     </form>
   </div>
@@ -245,9 +245,6 @@ function displayTasks() {
   #body {
     padding-left: 0;
   }
-}
-.brand-logo {
-  margin-top: -67px;
 }
 .logout {
   margin-top: 15px;
@@ -271,7 +268,10 @@ label[data-error] {
   font-size: 12px;
   color: #EC453C;
 }
-.submit:hover, .addButton:hover {
+.cancelButton{
+  margin-left: 15px;
+}
+.submit:hover, .addButton:hover, .cancelButton:hover {
   background-color: #FF8C18!important;
 }
 </style>

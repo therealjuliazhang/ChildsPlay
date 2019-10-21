@@ -196,7 +196,7 @@ $locations[] = $row;
 	<div class="container">
 		<div class="row">
 			<div class="col s12 center">
-				<a href="home.html" class="brand-logo"><img class="logoImg" src="images/logo2.png"></a>
+				<a href="home.html" class="brand-logo"><img class="logoImg" src="images/logo3.png"></a>
 			</div>
 		</div>
 	</div>

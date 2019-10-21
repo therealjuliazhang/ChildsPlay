@@ -155,7 +155,7 @@ function filter(){
 <div class="row">
   <div class="col s12">
     <!--<a class="waves-effect waves-light btn #2196f3 blue right" id="cancelButton">Cancel</a>-->
-    <a class="waves-effect waves-light btn red cancelButton right" onClick="javascript:history.go(-1)">Cancel</a>
+    <a class="waves-effect waves-light btn blue darken-4 cancelButton right" onClick="javascript:history.go(-1)">Cancel</a>
   </div>
 </div>
 </div>
@@ -242,7 +242,7 @@ td .btn{
 .input-field {
   margin-top: 0rem;
 }
-.sortButton:hover, .editButton:hover, .addButton:hover, .previewButton:hover{
+.sortButton:hover, .editButton:hover, .addButton:hover, .previewButton:hover, .cancelButton:hover{
   background-color: #FF8C18!important;
 }
 .card-panel {

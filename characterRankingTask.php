@@ -54,10 +54,11 @@ if ($mode == "preview") { //mode is set to preview if a test is being previewed
 }
 $_SESSION["taskID"] = $taskID;
 //fetch preschoolers from database
-if ($mode == "preview")
-	$sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=" . $groupID;
-else
-	$sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=" . $groupID . " AND userID=" . $userID;
+// if ($mode == "preview")
+	// $sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=" . $groupID;
+// else
+	// $sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=" . $groupID . " AND userID=" . $userID;
+$sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=" . $groupID;
 $result = $conn->query($sql);
 $preschoolers = array();
 while ($row = mysqli_fetch_assoc($result)) {

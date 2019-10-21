@@ -1,6 +1,7 @@
 <!--
 Title:Results;
 Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Julia Aoqi Zhang (5797585), Andre Knell (5741622), Ren Sugie(5679527);
+Last Edited: 21/10/2019;
 -->
 <!DOCTYPE html>
 <html>
@@ -30,7 +31,67 @@ include_once 'resultQueries.php';
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
 	<script src="displayResults.js"></script>
 	<script>
+	//rotate arrow icon when tab is clicked
 	$(document).ready(function(){
+		$('.tabsInSidebar').click(function() {
+			var iconId = $(this).children('i').eq(1).attr('id');
+
+			if($(this).closest('li').hasClass( "active" ) == true && iconId == "arrowForTests"){
+				$("#arrowForTests").html("keyboard_arrow_right");
+			}
+			else if($(this).closest('li').hasClass( "active" ) == true && iconId == "arrowForResults"){
+				$("#arrowForResults").html("keyboard_arrow_right");
+			}
+			else if($(this).closest('li').hasClass( "active" ) == true && iconId == "arrowForIndividualResults"){
+				$("#arrowForIndividualResults").html("keyboard_arrow_right");
+			}
+		});
+		$('.tabsInSidebar').click(function() {
+			var iconId = $(this).children('i').eq(1).attr('id');
+
+			if($(this).closest('li').hasClass( "active" ) == false && iconId == "arrowForTests"){
+				$("#arrowForTests").html("keyboard_arrow_down");
+			}
+			else if($(this).closest('li').hasClass( "active" ) == false && iconId == "arrowForResults"){
+				$("#arrowForResults").html("keyboard_arrow_down");
+			}
+			else if($(this).closest('li').hasClass( "active" ) == false && iconId == "arrowForIndividualResults"){
+				$("#arrowForIndividualResults").html("keyboard_arrow_down");
+			}
+		});
+		//rotate arrow icon when tab in group tan section is clicked
+		$('.tabsInGroupResults').click(function() {
+			var iconId = $(this).children('i').eq(0).attr('id');
+			if($(this).closest('li').hasClass( "active" ) == false && iconId == "arrowForLocation"){
+				$("#arrowForLocation").html("keyboard_arrow_down");
+			}
+			else if($(this).closest('li').hasClass( "active" ) == false && iconId == "arrowForGroup"){
+				$("#arrowForGroup").html("keyboard_arrow_down");
+			}
+			else if($(this).closest('li').hasClass( "active" ) == false && iconId == "arrowForGender"){
+				$("#arrowForGender").html("keyboard_arrow_down");
+			}
+			else if($(this).closest('li').hasClass( "active" ) == false && iconId == "arrowForAge"){
+				$("#arrowForAge").html("keyboard_arrow_down");
+			}
+		});
+		$('.tabsInGroupResults').click(function() {
+			var iconId = $(this).children('i').eq(0).attr('id');
+			if($(this).closest('li').hasClass( "active" ) == true && iconId == "arrowForLocation"){
+				$("#arrowForLocation").html("keyboard_arrow_right");
+			}
+			else if($(this).closest('li').hasClass( "active" ) == true && iconId == "arrowForGroup"){
+				$("#arrowForGroup").html("keyboard_arrow_right");
+			}
+			else if($(this).closest('li').hasClass( "active" ) == true && iconId == "arrowForGender"){
+				$("#arrowForGender").html("keyboard_arrow_right");
+			}
+			else if($(this).closest('li').hasClass( "active" ) == true && iconId == "arrowForAge"){
+				$("#arrowForAge").html("keyboard_arrow_right");
+			}
+		});
+
+
 		//initialize materialize sidenav
 		$('.sidenav').sidenav();
 		$('.collapsible').collapsible();
@@ -92,7 +153,7 @@ include_once 'resultQueries.php';
 		<!--Collapsible tests tab-->
 		<ul class="collapsible">
 			<li>
-				<div class="collapsible-header"><i class="material-icons">assessment</i><h6>Tests</h6></div>
+				<div class="collapsible-header tabsInSidebar"><i class="material-icons">assessment</i><h6>Tests</h6><i id="arrowForTests" class="material-icons">keyboard_arrow_right</i></div>
 				<div class="collapsible-body">
 					<div class="container">
 						<div><label><input type="checkbox" class="filled-in" /><span>All tests</span></label></div>
@@ -111,11 +172,11 @@ include_once 'resultQueries.php';
 		<!--Collapsible group tab-->
 		<ul class="collapsible">
 			<li>
-				<div class="collapsible-header"><i class="material-icons">group</i><h6>Group Results</h6></div>
+				<div class="collapsible-header tabsInSidebar"><i class="material-icons">group</i><h6>Group Results</h6><i id="arrowForResults" class="material-icons">keyboard_arrow_right</i></div>
 				<div class="collapsible-body">
 					<ul class="collapsible">
 						<li>
-							<div class="collapsible-header"><h6 style="padding-left:6px">Location</h6></div>
+							<div class="collapsible-header tabsInGroupResults"><h6 style="padding-left:6px">Location</h6><i id="arrowForLocation" class="material-icons right">keyboard_arrow_right</i></div>
 							<div class="collapsible-body">
 								<div class="container">
 									<!--start checkbox-->
@@ -134,7 +195,7 @@ include_once 'resultQueries.php';
 					</ul>
 					<ul class="collapsible">
 						<li>
-							<div class="collapsible-header"><h6 style="padding-left:6px">Group</h6></div>
+							<div class="collapsible-header tabsInGroupResults"><h6 style="padding-left:6px">Group</h6><i id="arrowForGroup" class="material-icons right">keyboard_arrow_right</i></div>
 							<div class="collapsible-body">
 								<div class="container">
 									<!--start checkbox-->
@@ -153,7 +214,7 @@ include_once 'resultQueries.php';
 					</ul>
 					<ul class="collapsible">
 						<li>
-							<div class="collapsible-header"><h6 style="padding-left:6px">Gender</h6></div>
+							<div class="collapsible-header tabsInGroupResults"><h6 style="padding-left:6px">Gender</h6><i id="arrowForGender" class="material-icons right">keyboard_arrow_right</i></div>
 							<div class="collapsible-body">
 								<div class="container">
 									<!--start checkbox-->
@@ -172,7 +233,7 @@ include_once 'resultQueries.php';
 					</ul>
 					<ul class="collapsible">
 						<li>
-							<div class="collapsible-header"><h6 style="padding-left:6px">Age</h6></div>
+							<div class="collapsible-header tabsInGroupResults"><h6 style="padding-left:6px">Age</h6><i id="arrowForAge" class="material-icons right">keyboard_arrow_right</i></div>
 							<div class="collapsible-body">
 								<div class="container">
 									<?php
@@ -196,7 +257,7 @@ include_once 'resultQueries.php';
 		<!--Collapsible Individual Tab-->
 		<ul class="collapsible">
 			<li>
-				<div class="collapsible-header"><i class="material-icons">person</i><h6>Individual Results</h6></div>
+				<div class="collapsible-header tabsInSidebar"><i class="material-icons">person</i><h6>Individual Results</h6><i id="arrowForIndividualResults" class="material-icons right">keyboard_arrow_right</i></div>
 				<div class="collapsible-body">
 					<div class="container">
 						<?php
@@ -258,9 +319,7 @@ function backToTop(){
 		padding-left: 0;
 	}
 }
-.brand-logo{
-	margin-top:-67px;
-}
+
 .logout{
 	margin-top: 15px;
 	margin-right:15px;
@@ -293,6 +352,33 @@ function backToTop(){
 }
 .sortButton:hover{
 	background-color: #FF8C18!important;
+}
+.collapsible-header {
+	border-bottom-color: #D3D3D3!important;
+	border-bottom-style: solid!important;
+	border-bottom-width: 1px!important;
+}
+
+#arrowForTests {
+	padding-left: 150px;
+}
+#arrowForResults {
+	padding-left: 82px;
+}
+#arrowForIndividualResults {
+	padding-left: 40px;
+}
+#arrowForLocation{
+	padding-left: 75px;
+}
+#arrowForGroup{
+	padding-left: 92px;
+}
+#arrowForGender{
+	padding-left: 84px;
+}
+#arrowForAge{
+	padding-left: 109px;
 }
 </style>
 </html>

@@ -5,12 +5,12 @@ Author: Phuong Linh Bui (5624095);
 <html>
 <head>
   <title>Childplay Forgot Password</title>
-  <meta name = "viewport" content = "width = device-width, initial-scale = 1">      
+  <meta name = "viewport" content = "width = device-width, initial-scale = 1">
       <link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
       <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
-      <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>           
+      <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
       <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
-      <script type = "text/javascript" src = "https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script> 
+      <script type = "text/javascript" src = "https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
 <!---
   <meta name = "viewport" content = "width = device-width, initial-scale = 1">
   <link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -47,7 +47,7 @@ label { display: block; width: 200px; text-align: left;}
 </style>
 <script>
 $(document).ready(function(){
-    
+
     $("#forgotForm").validate({
         rules:{
             email: {
@@ -61,7 +61,7 @@ $(document).ready(function(){
                 email: "<div style='color:red;top:70px;position:relative;font-style:italic;font-size:13px;width:300px;'>Please enter a valid email address.</div>"
             }
         },
-        submitHandler: function(form) { 
+        submitHandler: function(form) {
             var email = $("#email").val();
             $.post("submitEmailAddress.php",
                     {email: email},
@@ -90,11 +90,11 @@ $(document).ready(function(){
     <div class="container">
         <div class="row">
         <div class="col s12 center">
-            <a href="home.html" class="brand-logo"><img class="logoImg" src="images/logo2.png"></a>
+            <a href="home.html" class="brand-logo"><img class="logoImg" src="images/logo3.png"></a>
         </div>
         </div>
     </div>
-    
+
     <!--card -->
     <div class="container bodyContainer">
         <div id="cardWrapper" class="row valign-wrapper">
@@ -124,7 +124,7 @@ $(document).ready(function(){
                         </div>
                     </form>
                     <div id="results"></div>
-                    
+
                 </div>
             </div>
         </div>

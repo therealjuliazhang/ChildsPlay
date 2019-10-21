@@ -16,7 +16,7 @@ unset($_SESSION['testID']);
 unset($_SESSION['groupID']);
 unset($_SESSION['tasks']);
 unset($_SESSION['mode']);
-
+$from = "";
 if(isset($_SESSION["from"]))
 {
 	$from = $_SESSION["from"];

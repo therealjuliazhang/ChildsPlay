@@ -20,7 +20,7 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679
   <div class="navbar-fixed">
     <nav class="nav-extended" style="background-color:#081754">
       <div class="nav-wrapper">
-        <a href="viewExistingTests.php" class="brand-logo left"><img src="images/logo1.png" ></a>
+        <a href="viewExistingTests.php" class="brand-logo left"><img src="images/logo3.png" height="50px"></a>
         <ul id="nav-mobile" class="hide-on-med-and-down">
           <li id="testsList" class=""><a href="viewExistingTests.php" style="color:white">Tests</a></li>
           <li id="createList" class=""><a href="createTest.php" style="color:white">Create</a></li> <!--change to php file once it's made-->
@@ -44,9 +44,12 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679
     background-color:#FF8C18;
   }
 
-  /* #profileLinkButton{
-  background-color:#FF8C18;
-} */
+  .brand-logo{
+    margin-top: 5px!important;
+  }
+  #profileLinkButton:hover{
+      background-color: #FF8C18!important;
+  }
 </style>
 </html>
 
@@ -67,6 +70,15 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679
       $("#usersList").addClass("active");
     }
     // alert(pathname);
+  });
+  var resizeTimeout
+  $(window).resize(function(){
+      clearTimeout(resizeTimeout)
+      resizeTimeout = setTimeout(function(){
+        if ($(window).width() < 930) {
+           alert('This website does not support this browser size. Some contents may be not shown properly. Please use a browser wider than 930px.');
+        }
+      },1000)
   });
 
 </script>

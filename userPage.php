@@ -206,6 +206,7 @@ include "adminAccess.php";
 <style media="screen">
 .container{
   margin-top: 25px;
+  width: 900px;
 }
 
 

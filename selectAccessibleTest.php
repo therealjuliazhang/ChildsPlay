@@ -71,7 +71,7 @@ $availableTests[] = $row;
       </table>
       <div class="row">
         <div class="col s12">
-          <a id="back" href="accessibleTest.php?userID=<?php echo $selectedUserID ?>" class="right waves-effect waves-light btn red">Back</a>
+          <a id="back" href="accessibleTest.php?userID=<?php echo $selectedUserID ?>" class="right waves-effect waves-light btn blue darken-4">Back</a>
         </div>
       </div>
     </div>
@@ -135,7 +135,7 @@ $(document).ready(function() {
 .assignButton{
   width: 95px;
 }
-.assignButton:hover{
+.assignButton:hover, #back:hover{
   background-color: #FF8C18!important;
 }
 </style>
