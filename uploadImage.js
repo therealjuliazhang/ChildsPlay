@@ -1,7 +1,7 @@
-/*
+/*================================================================
 Title:Upload Image; 
 Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789); 
-*/
+================================================================*/
 document.addEventListener('DOMContentLoaded', function() {
 	var elems = document.querySelectorAll('select');
 	var instances = M.FormSelect.init(elems);
@@ -60,7 +60,7 @@ function loadContent(){
 		case "Character Ranking":
 				$("#instruction").val("Press your favourite character and then your next favourite until they are all pressed.");
 			break;
-		case "Identify Body Part":
+		case "Identify Body Parts":
 				$("#instruction").val("Can you see the monster's [enter body part]? Touch the monster's [enter body part].");
 			break;
 		case "Preferred Mechanics":

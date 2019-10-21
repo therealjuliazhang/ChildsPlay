@@ -13,14 +13,34 @@ Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
-  <meta name="viewport" content="width=device-width, initial-scale = 1">
   <script type="text/javascript"src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.1/js/jquery.tablesorter.min.js"></script>
+
 </head>
 <body>
-
   <!--header-->
   <div id="InsertHeader"></div>
   <script>
+  //sort table
+  $(function() {
+  $("table").tablesorter();
+  });
+  $(function() {
+  // call the tablesorter plugin
+  $("table").tablesorter({
+    theme : 'blue',
+
+    dateFormat : "ddmmyyyy", // set the default date format
+
+    // or to change the format for specific columns, add the dateFormat to the headers option:
+    headers: {
+      0: { sorter: "shortDate" } //, dateFormat will parsed as the default above
+      // 1: { sorter: "shortDate", dateFormat: "ddmmyyyy" }, // set day first format; set using class names
+      // 2: { sorter: "shortDate", dateFormat: "yyyymmdd" }  // set year first format; set using data attributes (jQuery data)
+    }
+
+  });
+});
   //Read header
   $(document).ready(function(){
     $("#InsertHeader").load("header.html");
@@ -32,31 +52,37 @@ Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4
     //error.innerText = "There is no task in " + title;
     alert("There is no task in " + title);
   }
+  //detect browser size and alert if its small
+  if ($(window).width() < 930) {
+     alert('This website does not support this browser size. Please use a browser wider than 930px.');
+  }
   </script>
 
   <!--body part-->
   <div class="container">
     <h4 class="blue-text text-darken-4 header">Available Tests</h4>
 
-    <table class="striped">
+    <table class="striped tablesorter">
       <thead>
         <tr class="blue-text text-darken-4">
-          <th class='nameCol'>Name</th>
-          <th class='descriptionCol'>Description</th>
-          <th class='createdCol'>Created</th>
-          <th class='lastEditCol'>Last Edit</th>
-          <th class='previewCol'></th>
+          <th class='nameCol'>Name ▼</th>
+          <th class='descriptionCol'>Description ▼</th>
+          <th class='createdCol sorter-shortDate dateFormat-ddmmyyyy'>Created ▼</th>
+          <th class='lastEditCol sorter-shortDate dateFormat-ddmmyyyy'>Last Edit ▼</th>
+          <td class='previewCol'></td>
           <th class='editCol'></th>
           <th class='resultCol'></th>
         </tr>
       </thead>
       <tbody>
         <?php
-        session_start();
+        /*session_start();
         if(isset($_SESSION["userID"]))
-        $userID = $_SESSION["userID"];
+          $userID = $_SESSION["userID"];
         else
         header("Location: login.php");
+        */
+        include "adminAccess.php";
         include 'db_connection.php';
         $conn = OpenCon();
         //get tests from database
@@ -112,7 +138,7 @@ Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4
       echo "<li><a href='instruction.php?testID=".$value["testID"]."&taskID=".$row["taskID"]."&mode=preview&from=availableTests'>".$row["taskTitle"]."</a></li>";
     }
     echo "</ul></td>";*/
-  }
+    }
 
   echo "<td><a class='btn buttonsInTable blue darken-4' href='editTest.php?testID=".$value["testID"]."'>Edit</a></td>";
   echo "<td><a class='btn buttonsInTable blue darken-4' href='results.php?testID=".$value["testID"]."'>Result</a></td>";

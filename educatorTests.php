@@ -6,13 +6,16 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679
 <html>
 	<?php
 	//send user to login if not logged in
-	session_start();
+	//session_start();
 	include 'db_connection.php';
 	$conn = OpenCon();
+	include "educatorAccess.php";
+	/*
 	if (isset($_SESSION['userID']))
 		$userID = $_SESSION['userID'];
 	else
 		header('location: login.php');
+	*/
 	?>
     <head>
         <title>Available Tests and Groups</title>
@@ -23,6 +26,10 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679
         <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
     </head>
 	<script>
+	//detect browser size and alert if its small
+	if ($(window).width() < 930) {
+	   alert('This website does not support this browser size. Please use a browser wider than 930px.');
+	}
 	function showError(title){
 		//var error = document.getElementById("error");
 		//error.innerText = "There is no task in " + title;
@@ -103,7 +110,8 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679
 					<tbody>
 					<?php
 					//get groups from database
-					$sql = "SELECT groupID FROM GROUPASSIGNMENT WHERE userID=".$userID." GROUP BY groupID";
+					//$sql = "SELECT groupID FROM GROUPASSIGNMENT WHERE userID=".$userID." GROUP BY groupID";
+					$sql = "SELECT groupID FROM GROUPTEST WHERE userID=".$userID." GROUP BY groupID";
 					$result = $conn->query($sql);
 					while($row = mysqli_fetch_assoc($result)){
 						$sql2 = "SELECT name FROM GROUPTEST WHERE groupID=".$row["groupID"];
@@ -111,7 +119,7 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679
 						while($row2 = mysqli_fetch_assoc($result2)){
 							echo '<tr><td>', $row2['name'], '</td>', '<td>'; //print out group name
 						}
-						$sql3 =  "SELECT name FROM PRESCHOOLER P JOIN GROUPASSIGNMENT GA ON P.preID = GA.preID WHERE GA.groupID=".$row["groupID"]." AND GA.userID=".$userID;
+						$sql3 =  "SELECT name FROM PRESCHOOLER P JOIN GROUPASSIGNMENT GA ON P.preID = GA.preID WHERE GA.groupID=".$row["groupID"];//." AND GA.userID=".$userID;
 						$result3 = $conn->query($sql3);
 						$names = array();
 						while($row3 = mysqli_fetch_assoc($result3)){

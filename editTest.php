@@ -5,11 +5,12 @@ Author:Phuong Linh Bui (5624095);
 <!DOCTYPE html>
 <html>
 <?php
-session_start();
-/*if(isset($_SESSION['userID']))
+/*session_start();
+if(isset($_SESSION['userID']))
 $userID = $_SESSION['userID'];
 else
 header('login.php');*/
+include "adminAccess.php";
 //$userID = 1; //remove after admin pages are linked up
 //get test ID
 if(isset($_SESSION["testID"]))
@@ -248,8 +249,8 @@ CloseCon($conn);
     </div>--->
     <br/><br/>
     <div align="right">
-      <a style="width:95px" class="waves-effect waves-light btn red" href="viewExistingTests.php">Cancel</a>
-      <button style="width:95px" name="submit" type="submit" class="submit waves-effect waves-light btn blue darken-4">Save</button>
+      <button style="width:95px" name="submit" type="submit" class="submit waves-effect waves-light btn blue darken-2">Save</button>
+      <a style="width:95px" class="waves-effect waves-light btn blue darken-4 cancelButton" href="viewExistingTests.php">Cancel</a>
     </div>
   </form>
 </div>

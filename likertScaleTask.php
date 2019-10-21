@@ -1,7 +1,7 @@
-<!--
+<!--====================================================================================
 Title:Likert Scale Task; 
-Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Julia Aoqi Zhang (5797585), Ren
-Sugie(5679527); 
+Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), 
+Julia Aoqi Zhang (5797585), Ren Sugie(5679527);
 -->
 <html>
 	<?php
@@ -10,7 +10,6 @@ Sugie(5679527);
 	if(isset($_SESSION["userID"]))
 		$userID = $_SESSION["userID"];
 	else
-		// $userID = 1;
 		header("Location: login.php");
 
 	//get mode from session to check if preview mode
@@ -61,10 +60,11 @@ Sugie(5679527);
 	while($row = mysqli_fetch_assoc($result))
 	   $images[] = $row;
 	//fetch preschoolers
-	if($mode=="preview")
-		$sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$groupID;
-	else
-		$sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$groupID." AND userID=".$userID;
+	// if($mode=="preview")
+		// $sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$groupID;
+	// else
+		// $sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$groupID." AND userID=".$userID;
+	$sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$groupID;
 	$result = $conn->query($sql);
 	$preschoolers = array();
 	while($row = mysqli_fetch_assoc($result)){

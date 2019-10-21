@@ -7,12 +7,13 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Julia Aoqi Zha
   <?php
    include 'db_connection.php';
    $conn = OpenCon();
-
+    /*
    session_start();
 
    if(isset($_SESSION["userID"]))
      $userID = $_SESSION["userID"];
-
+    */
+    include "educatorAccess.php";
    //get userinfo from database
    $sql = "SELECT * FROM users WHERE userID = " .$userID;
    $users = array();
@@ -22,11 +23,17 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Julia Aoqi Zha
 
 
     //get location information from database
-    $sql = "SELECT * FROM LOCATION JOIN LOCATIONASSIGNMENT ON LOCATION.locationID = LOCATIONASSIGNMENT.locationID WHERE LOCATIONASSIGNMENT.userID =  " .$userID;
     $locationArray = array();
-    $result = $conn ->query($sql);
+    $locationQuery = "SELECT * FROM LOCATION";
+    $result = $conn ->query($locationQuery);
     while($row = mysqli_fetch_assoc($result))
       $locationArray[] = $row;
+    //get the user current location
+    $currentLocationArray = array();
+    $sql = "SELECT * FROM LOCATION JOIN LOCATIONASSIGNMENT ON LOCATION.locationID = LOCATIONASSIGNMENT.locationID WHERE LOCATIONASSIGNMENT.userID = " .$userID;
+    $result = $conn ->query($sql);
+    while($row = mysqli_fetch_assoc($result))
+      $currentLocationArray[] = $row;
 
 ?>
   <head>
@@ -83,8 +90,6 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Julia Aoqi Zha
     </table>
   </div>
   <!--Side Bar-->
-
-
   <!--main contents-->
 
   <div class="container" id="educatorProfileContainer">
@@ -114,9 +119,14 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Julia Aoqi Zha
       <div class="removable">
         <div class="input-field col s8 locationCell">
           <select class="selectLocation" disabled>
-            <option value="">KU Gwynneville Preschool</option>
+          <?php
+          foreach($locationArray as $location){
+            echo "<option value='".$location["name"]."'>".$location["name"]."</option>";
+          }
+          ?>
+            <!---<option value="">KU Gwynneville Preschool</option>
             <option value="2" selected>Wollongong Preschool</option>
-            <option value="3">Keiraville Community Preschool</option>
+            <option value="3">Keiraville Community Preschool</option>--->
           </select>
         </div>
         <div class='col s1 hide removeCell'><a class='waves-effect waves-light btn removeButton red'><i class='material-icons'>remove</i></a></div>
@@ -128,7 +138,7 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Julia Aoqi Zha
     <div class="row">
       <div class="col s1 offset-s11"><a class="waves-effect waves-light btn blue darken-4 addCell hide" id="addButton" onclick="appendSelect()"><i class="material-icons">add</i></a></div>
       <div class="col s1 offset-s11" id="editBUttonDiv"><a class="waves-effect waves-light btn blue darken-4" id="editButton">Edit</a></div>
-      <div class="col s1 offset-s11 hide" id="saveButtonDiv"><a class="waves-effect waves-light btn blue darken-4" id="saveButton">Save</a></div>
+      <div class="col s1 offset-s11 hide" id="saveButtonDiv"><a class="waves-effect waves-light btn blue darken-2" id="saveButton">Save</a></div>
     </div>
   </div>
 </body>
@@ -176,21 +186,25 @@ $(document).ready(function(){
 function appendSelect() {
   var locations = <?php echo json_encode($locationArray); ?>;
   //insert locations into variable
+  /*
   var location01 = "KU Gwynneville Preschool";
   var location02 = "Wollongong Preschool";
   var location03 = "Keiraville Community Preschool";
+  */
   var removeButton = "<a class='waves-effect waves-light btn removeButton red'><i class='material-icons' >remove</i></a>";
+  var locationsDisplay = "<div class='removable'><div class='col s3'></div><div class='input-field col s8 locationCell'><select class='selectLocation'><option value='' disabled selected>Choose location</option>";
   locations.forEach(function(result)
-      {
-
-        format
-      });
-  var locationsDisplay = "<div class='removable'><div class='col s3'></div><div class='input-field col s8 locationCell'><select class='selectLocation'><option value='1' disabled selected>Choose location<option>";
-
+  {
+    locationsDisplay += "<option value='" + result["name"] + "'>" + result["name"] + "</option>";
+        //format
+  });
+  locationsDisplay += "</select></div><div class='col s1 removeCell'>" + removeButton + "</div></div>";
+/*
   + location01 + "</option><option>"
   + location02 + "</option><option>"
   + location03 + "</option></select></div><div class='col s1 removeCell'>"
   + removeButton + "</div></div>";
+  */
   $("#userDetail").append(locationDisplay);
   $('select').formSelect();
 
@@ -245,18 +259,14 @@ alert('More than 1280');
       counter++;
     }
 </script>
-
-
-
 <style>
-
 #editBUttonDiv .btn{
   width: 100px;
 }
 #saveButtonDiv .btn{
   width: 100px;
 }
-#editButton:hover, #saveButton:hover, #addButton:hover, #logoutButton:hover{
+#editButton:hover, #saveButton:hover, #addButton:hover{
   background-color: #FF8C18!important;
 }
 </style>

@@ -1,6 +1,6 @@
 <!--
-Title:Educator Header; 
-Author:Alex Satoru Hanrahan (4836789), Ren Sugie(5679527); 
+Title:Educator Header;
+Author:Alex Satoru Hanrahan (4836789), Ren Sugie(5679527);
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -20,16 +20,32 @@ Author:Alex Satoru Hanrahan (4836789), Ren Sugie(5679527);
   <div class="navbar-fixed">
     <nav class="nav-extended" style="background-color:#081754">
       <div class="nav-wrapper">
-        <a href="educatorTests.php" class="brand-logo left"><img src="images/logo1.png" ></a>
+        <a href="educatorTests.php" class="brand-logo left"><img src="images/logo3.png" height="50px"></a>
         <ul class="right hide-on-med-and-down">
-          <a class="waves-effect waves-light btn blue darken-2 center-align" href="educatorProfile.php"> <i class="material-icons">account_box</i></a>
+          <a class="waves-effect waves-light btn blue darken-2 center-align" href="eProfile.php" id="profileLinkButton"> <i class="material-icons">account_box</i></a>
         </ul>
       </div>
     </nav>
   </div>
 </body>
-<style>
-
+<style media="screen">
+  .brand-logo{
+    margin-top: 5px!important;
+  }
+  #profileLinkButton:hover{
+      background-color: #FF8C18!important;
+  }
 </style>
-
 </html>
+<script type="text/javascript">
+//detect browser size when the size is changed
+var resizeTimeout
+$(window).resize(function(){
+    clearTimeout(resizeTimeout)
+    resizeTimeout = setTimeout(function(){
+      if ($(window).width() < 930) {
+         alert('This website does not support this browser size. Some contents may be not shown properly. Please use a browser wider than 930px.');
+      }
+    },1000)
+});
+</script>

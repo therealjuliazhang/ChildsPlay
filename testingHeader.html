@@ -1,21 +1,39 @@
 <!--
-Title:Testing Header; 
-Author:Ren Sugie(5679527); 
+Title:Testing Header;
+Author:Ren Sugie(5679527);
 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
 </head>
 <body>
   <!--Header-->
   <div class="row">
-		<div class="navbar-fixed">
-			<nav class="nav-extended" style="background-color:#081754">
-				<div class="nav-wrapper">
-					<a class="brand-logo left"><img src="images/logo1.png" ></a>
-				</div>
-			</nav>
-		</div>
-	</div>
+    <div class="navbar-fixed">
+      <nav class="nav-extended" style="background-color:#081754">
+        <div class="nav-wrapper">
+          <a class="brand-logo left"><img src="images/logo3.png" height="50px"></a>
+        </div>
+      </nav>
+    </div>
+  </div>
 </body>
+<style media="screen">
+  .brand-logo{
+    margin-top: 5px!important;
+  }
+</style>
 </html>
+<script type="text/javascript">
+  //detect browser size when the size is changed
+  var resizeTimeout
+  $(window).resize(function(){
+      clearTimeout(resizeTimeout)
+      resizeTimeout = setTimeout(function(){
+        if ($(window).width() < 930) {
+           alert('This website does not support this browser size. Some contents may be not shown properly. Please use a browser wider than 930px.');
+        }
+      },1000)
+  });
+</script>

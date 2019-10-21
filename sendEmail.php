@@ -1,8 +1,8 @@
-<!--
+<?php
+/*
 Title: Send Email; 
 Author: Phuong Linh Bui (5624095); 
--->
-<?php
+*/
 date_default_timezone_set('Etc/UTC');
 
 // Edit this path if PHPMailer is in a different location
@@ -62,8 +62,10 @@ if(isset($_SESSION["uID"])){
 	}
 }
 //send email to admin when there's a new registered account
-if(isset($_SESSION["uEmail"])){
-	$email = $_SESSION["uEmail"];
+if(isset($_POST["registerEmail"])){
+//if(isset($_SESSION["uEmail"])){
+	$email = $_POST["registerEmail"];
+	//$email = $_SESSION["uEmail"];
 	$mail->addAddress("childsplaycsit321@gmail.com"); // Set the recipient of the message.
 	$url = "http://localhost/CSIT321/ChildsPlay/userPage.php"; //NEED TO CHANGE TO MATCH WITH THE ONLINE WEB SERVER
 	$message = "<span style='font-size:16px;font-weight:bold'>Notification!</span><br/><br/>";
@@ -72,7 +74,6 @@ if(isset($_SESSION["uEmail"])){
 	
 	if ($mail->send()) {
 		echo "Your message was sent successfully!";
-		header("Location: thankyouForRegister.html");
 	} else {
 		echo "Mailer Error: " . $mail->ErrorInfo;
 	}
@@ -85,9 +86,6 @@ if(isset($_SESSION["resetPwEmail"])){
 
 	$password = rand(999, 99999);
 	$password_hash = md5($password);
-	echo "Hash: ".$password_hash;
-	//$url = "http://localhost/CSIT321/ChildsPlay/resetPassword.php?token=$password_hash";
-	//echo "url: ".$url;
 
 	$sql = "UPDATE USERS SET token='$password_hash' WHERE email='$email'";
 	$result = $conn->query($sql);
@@ -105,7 +103,7 @@ if(isset($_SESSION["resetPwEmail"])){
 			//exit;
 		} else {
 			echo "Mailer Error: " . $mail->ErrorInfo;
-		}/**/
+		}
 	}
 	else
 	echo "Failed.";

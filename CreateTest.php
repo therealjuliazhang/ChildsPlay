@@ -1,15 +1,16 @@
-<!--
+<!--=============================================================================================================
 Title:Create Test;
 Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679527), Julia Aoqi Zhang (5797585);
--->
+==============================================================================================================-->
 
 <?php
-session_start();
+/*session_start();
 if(isset($_SESSION['userID']))
 $userID = $_SESSION['userID'];
 else
 header('login.php');
-
+*/
+include "adminAccess.php";
 unset($_SESSION["createURL"]);
 //get the url of the current page
 $_SESSION["createURL"] = basename($_SERVER["REQUEST_URI"]);
@@ -225,8 +226,8 @@ function displayTasks() {
       <br/>
       <p align="right">
         <!-- <button type="submit" name="createTest" class="waves-effect waves-light btn blue darken-2">Create Test</button> -->
-        <input style="width:120px" type="submit" name="createTest" class="submit waves-effect waves-light btn blue darken-4 right" value="Create Test">
-        <a style="width:120px" class="waves-effect waves-light btn red darken-1 right" href="viewExistingTests.php">Cancel</a>
+        <a style="width:120px" class="waves-effect waves-light btn blue darken-4 right cancelButton" href="viewExistingTests.php">Cancel</a>
+        <input style="width:120px" type="submit" name="createTest" class="submit waves-effect waves-light btn blue darken-2 right" value="Create Test">
       </p>
     </form>
   </div>
@@ -244,9 +245,6 @@ function displayTasks() {
   #body {
     padding-left: 0;
   }
-}
-.brand-logo {
-  margin-top: -67px;
 }
 .logout {
   margin-top: 15px;
@@ -270,7 +268,10 @@ label[data-error] {
   font-size: 12px;
   color: #EC453C;
 }
-.submit:hover, .addButton:hover {
+.cancelButton{
+  margin-left: 15px;
+}
+.submit:hover, .addButton:hover, .cancelButton:hover {
   background-color: #FF8C18!important;
 }
 </style>

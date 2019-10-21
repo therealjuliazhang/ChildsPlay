@@ -5,106 +5,109 @@ Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4
 <!DOCTYPE html>
 
 <html>
-<?php
-include 'db_connection.php';
-$conn = OpenCon();
-//get userID
-// if(isset($_GET["userID"]))
-//     $userID = (int)str_replace('"', '', $_GET["userID"]);
-session_start();
-if(isset($_SESSION['userID']))
-$userID = $_SESSION['userID'];
-else
-header('login.php');
-//get groupID
-if(isset($_GET["groupID"]))
-$groupID = (int)str_replace('"', '', $_GET["groupID"]);
-//get current group name from database
-$sql = "SELECT name FROM GROUPTEST WHERE groupID = " . $groupID;
-$result = $conn->query($sql);
-$currentGroupName = mysqli_fetch_assoc($result)["name"];
-//get current location of group
-$sql = "SELECT name, locationID FROM GROUPTEST WHERE groupID=".$groupID;
-$result = $conn->query($sql);
-$values = mysqli_fetch_assoc($result);
-$groupName = $values["name"];
-$currentLocationID = $values["locationID"];
-//fetch locations for select drop down
-$sql2 = "SELECT locationID FROM LOCATIONASSIGNMENT WHERE userID=".$userID;
-$result2 = $conn->query($sql2);
-$locations = array();
-while($row = mysqli_fetch_assoc($result2)){
-  $query = "SELECT * FROM LOCATION WHERE locationID=".$row["locationID"];
-  $qResult = $conn->query($query);
-  while($value = mysqli_fetch_assoc($qResult))
-  $locations[] = $value;
-}
-//fetch preschoolerIDs from groupassignment table
-$sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID = " . $groupID ." AND userID=".$userID;
-$result = $conn->query($sql);
-$preschoolerIDs = array();
-while($row = mysqli_fetch_assoc($result))
-$preschoolerIDs[] = $row;
-//fetch preschoolers from database
-$preschoolers = array();
-foreach($preschoolerIDs as $value){
-  $sql = "SELECT * FROM PRESCHOOLER WHERE preID = " . $value['preID'];
-  $result = $conn->query($sql);
-  while($row = mysqli_fetch_assoc($result))
-  array_push($preschoolers, $row);
-}
-?>
-<head>
-  <title>Edit Group for Educator</title>
-  <meta name = "viewport" content = "width = device-width, initial-scale = 1">
-  <link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
-  <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script type = "text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
-  <script type = "text/javascript" src = "https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
-  <script type = "text/javascript" src = "addPreschoolerRow.js"></script>
-</head>
-<body>
-  <!--header-->
-  <div id="InsertHeader"></div>
-  <script>
-  //Read header
-  $(function(){
-    $("#InsertHeader").load("educatorHeader.html");
-  });
-  </script>
-  <!--end header-->
-  <!-- body content -->
-  <div class="container" style="font-size:18px">
-    <h4 class="blue-text text-darken-4">Edit Group</h4>
-    <form id="form" style="font-size:18px" action='updateGroup.php?userID=<?php echo json_encode($userID); ?>&groupID=<?php echo json_encode($groupID); ?>' method="post">
-      <div class="row">
-        <div class="input-field col s12">
-          <input class="validate" id="groupName" type="text" name="groupName" value="<?php echo $groupName;?>" />
-          <label for="groupName">Group Name</label>
+    <?php
+        include 'db_connection.php';
+        $conn = OpenCon();
+        //get userID
+        // if(isset($_GET["userID"]))
+        //     $userID = (int)str_replace('"', '', $_GET["userID"]);
+        /*
+        session_start();
+        if(isset($_SESSION['userID']))
+            $userID = $_SESSION['userID'];
+        else
+            header('Location: login.php');
+        */
+        include "educatorAccess.php";
+        //get groupID
+        if(isset($_GET["groupID"]))
+            $groupID = (int)str_replace('"', '', $_GET["groupID"]);
+        //get current group name from database
+        $sql = "SELECT name FROM GROUPTEST WHERE groupID = " . $groupID;
+        $result = $conn->query($sql);
+        $currentGroupName = mysqli_fetch_assoc($result)["name"];
+        //get current location of group
+		    $sql = "SELECT name, locationID FROM GROUPTEST WHERE groupID=".$groupID;
+        $result = $conn->query($sql);
+	    	$values = mysqli_fetch_assoc($result);
+		    $groupName = $values["name"];
+        $currentLocationID = $values["locationID"];
+        //fetch locations for select drop down
+        $sql2 = "SELECT locationID FROM LOCATIONASSIGNMENT WHERE userID=".$userID;
+        $result2 = $conn->query($sql2);
+        $locations = array();
+		while($row = mysqli_fetch_assoc($result2)){
+			$query = "SELECT * FROM LOCATION WHERE locationID=".$row["locationID"];
+			$qResult = $conn->query($query);
+			while($value = mysqli_fetch_assoc($qResult))
+				$locations[] = $value;
+		}
+        //fetch preschoolerIDs from groupassignment table
+        $sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID = " . $groupID;// ." AND userID=".$userID;
+        $result = $conn->query($sql);
+        $preschoolerIDs = array();
+        while($row = mysqli_fetch_assoc($result))
+            $preschoolerIDs[] = $row;
+        //fetch preschoolers from database
+        $preschoolers = array();
+        foreach($preschoolerIDs as $value){
+            $sql = "SELECT * FROM PRESCHOOLER WHERE preID = " . $value['preID'];
+            $result = $conn->query($sql);
+            while($row = mysqli_fetch_assoc($result))
+                array_push($preschoolers, $row);
+        }
+    ?>
+    <head>
+        <title>Edit Group for Educator</title>
+        <meta name = "viewport" content = "width = device-width, initial-scale = 1">
+        <link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
+        <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script type = "text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+        <script type = "text/javascript" src = "https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
+        <script type = "text/javascript" src = "addPreschoolerRow.js"></script>
+    </head>
+    <body>
+        <!--header-->
+        <div id="InsertHeader"></div>
+        <script>
+          //Read header
+          $(function(){
+            $("#InsertHeader").load("educatorHeader.html");
+          });
+        </script>
+        <!--end header-->
+        <!-- body content -->
+        <div class="container" style="font-size:18px">
+                <h5 class="blue-text darken-2">Edit Group</h5>
+                 <form id="form" style="font-size:18px" action='updateGroup.php?userID=<?php echo json_encode($userID); ?>&groupID=<?php echo json_encode($groupID); ?>' method="post">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input class="validate" id="groupName" type="text" name="groupName" value="<?php echo $groupName;?>" />
+                            <label for="groupName">Group Name</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <select id="locationSelect" class="materialSelect" name="locationSelect" required>
+                              <option id="currentLocation"></option>
+                            </select>
+                            <label id="locationLabel" for="locationSelect" >Group Location</label>
+                        </div>
+                    </div>
+                    Please input the details for each test participant:
+                    <div id ="rows"></div>
+                    <div class="row right-align">
+                        <a class="waves-effect waves-light btn blue darken-4 tooltipped" data-position="right" data-tooltip="Add more" onclick="addRow()"><i class="material-icons"style="font-size:30px;">add</i></a>
+                    </div><br/>
+                    <div class="row right-align">
+						            <input type="submit" id="startButton" class="submit waves-effect waves-light btn blue darken-2" value="Save">
+                        <a href="educatorTests.php#groups" class="waves-effect waves-light btn blue darken-4">Cancel</a>
+                    </div>
+                </form>
         </div>
-      </div>
-      <div class="row">
-        <div class="input-field col s12">
-          <select id="locationSelect" class="materialSelect" name="locationSelect" required>
-            <!-- <option id="currentLocation"></option> -->
-          </select>
-          <label id="locationLabel" for="locationSelect" >Group Location</label>
-        </div>
-      </div>
-      Please input the details for each test participant:
-      <div id ="rows"></div>
-      <div class="row right-align">
-        <a class="waves-effect waves-light btn blue darken-4 tooltipped addButton" data-position="right" data-tooltip="Add more" onclick="addRow()"><i class="material-icons"style="font-size:30px;">add</i></a>
-      </div><br/>
-      <div class="row right-align">
-        <a href="educatorTests.php#groups" id="cancelButton" class="waves-effect waves-light btn red">Cancel</a>
-        <input type="submit" id="startButton" class="submit waves-effect waves-light btn blue darken-4" value="Save">
-      </div>
-    </form>
-  </div>
   <!--end body content-->
-</body>
+  </body>
 <script>
 $(document).ready(function() {
   Materialize.updateTextFields();

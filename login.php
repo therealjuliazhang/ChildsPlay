@@ -17,11 +17,10 @@ Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4
   <div class="container">
     <div class="row">
       <div class="col s12 center">
-        <a href="home.html" class="brand-logo"><img class="logoImg" src="images/logo2.png"></a>
+        <a href="home.html" class="brand-logo"><img class="logoImg" src="images/logo3.png"></a>
       </div>
     </div>
   </div>
-
   <!--card -->
   <div class="container bodyContainer">
     <div id="cardWrapper" class="row valign-wrapper">
@@ -142,8 +141,5 @@ body{
 .btn:hover, .btn-large:hover {
     background-color: #FF8C18;
 }
-
-
-
 </style>
 </html>

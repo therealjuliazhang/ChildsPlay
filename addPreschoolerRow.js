@@ -54,6 +54,7 @@ function addInput(type, row, preschooler=0){
         newDiv.classList.add("input-field", "col", "s2");
         newInput.id = "age" + num;
         newInput.name = "age" + num;
+        newInput.min = 1;
         if(preschooler!=0)
             newInput.value = preschooler['age'];
         newInput.type = "number";

@@ -1,14 +1,15 @@
-<!--
+<!--====================================================================================
 Title:Instruction;
-Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Julia Aoqi Zhang (5797585), Ren Sugie(5679527);
--->
+Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), 
+Julia Aoqi Zhang (5797585), Ren Sugie(5679527);
+=====================================================================================-->
 <html>
 <?php
 session_start();
 if(isset($_SESSION["userID"]))
-$userID = $_SESSION["userID"];
+	$userID = $_SESSION["userID"];
 else
-header("Location: login.php");
+	header("Location: login.php");
 include 'db_connection.php';
 $conn = OpenCon();
 if(isset($_SESSION["tasks"])){

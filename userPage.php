@@ -2,8 +2,10 @@
 Title:User Page;
 Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Julia Aoqi Zhang (5797585), Ren Sugie(5679527);
 -->
+<?php
+include "adminAccess.php";
+?>
 <!DOCTYPE html>
-
 <html>
 <head>
   <title>User Page</title>
@@ -53,7 +55,7 @@ Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4
         </thead>
         <tbody class="">
           <?php
-          session_start();
+          //session_start();
           include 'db_connection.php';
           $conn = OpenCon();
           //get pending users from database
@@ -204,6 +206,7 @@ Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4
 <style media="screen">
 .container{
   margin-top: 25px;
+  width: 900px;
 }
 
 

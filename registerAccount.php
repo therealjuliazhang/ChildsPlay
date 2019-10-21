@@ -1,11 +1,15 @@
-<!--=============================================================
+<?php
+/*
 Title:Register Account; 
 Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789); 
-==============================================================-->
-<?php
+*/
 session_start();
 include 'db_connection.php';
 $conn = OpenCon();
+if(isset($_SESSION["userID"]))
+	$userID = $_SESSION["userID"];
+else
+	header("Location: login.php");
 //Get inputs
 if(isset($_POST["fullname"]))
     $fullName = mysqli_real_escape_string($conn, $_POST["fullname"]);
@@ -29,13 +33,13 @@ $password = md5($password);//encrypt the password before saving in the database
 $query = "INSERT INTO USERS (username, password, email, accountType, fullName, accepted) VALUES('$username', '$password', '$email', '$accountType', '$fullName', 0)";
 if ($conn->query($query) === TRUE){
 	echo "New record created successfully";
-	$_SESSION["uEmail"] = $email;
-	include 'sendEmail.php';
+	//$_SESSION["uEmail"] = $email;
+	//include 'sendEmail.php';
 }
 else 
-    echo "Error: " . $query . "<br>" . $conn->error;
+    echo "<span style='color:red;font-style:italic'>Error: " . $query . "<br>" . $conn->error."</span>";
 //get user ID and set it to session 
-$query = "SELECT userID FROM USERS WHERE username = '".$username."'";
+$query = "SELECT userID FROM USERS WHERE username='$username'";
 $result = mysqli_query($conn, $query);
 $userID = mysqli_fetch_array($result)['userID'];
 //if educator, enter location assignments
@@ -45,8 +49,8 @@ if($accountType == 0){
         if ($conn->query($query) === TRUE)
             echo "New record created successfully";
         else 
-            echo "Error: " . $query . "<br>" . $conn->error;
+            echo "<span style='color:red;font-style:italic'>Error: " . $query . "<br>" . $conn->error."</span>";
     }
 }
-$_SESSION['userID'] = $userID;
-header('location: thankyouForRegister.html');
+//$_SESSION['userID'] = $userID;
+//header('location: thankyouForRegister.html');

@@ -1,14 +1,14 @@
-<!--
+<?php
+/* 
 Title:Preferred Mechanics Task;
 Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679527);
--->
-<?php
+*/
 //get information
 session_start();
 if(isset($_SESSION["userID"]))
-$userID = $_SESSION["userID"];
+	$userID = $_SESSION["userID"];
 else
-header("Location: login.php");
+	header("Location: login.php");
 
 //get mode from session to check if preview mode
 if (isset($_SESSION['mode']))
@@ -54,10 +54,11 @@ include 'db_connection.php';
 $conn = OpenCon();
 //get task ID
 //fetch preschoolers from database
-if($mode=="preview")
+// if($mode=="preview")
+// $sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=" . $groupID;
+// else
+// $sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=" . $groupID . " AND userID=" . $userID;
 $sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=" . $groupID;
-else
-$sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=" . $groupID . " AND userID=" . $userID;
 $result = $conn->query($sql);
 $preschoolers = array();
 while ($row = mysqli_fetch_assoc($result)) {

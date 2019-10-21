@@ -3,19 +3,19 @@ Title:Thank You;
 Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679527);
 -->
 <!DOCTYPE html>
-
 <html>
 <?php
 session_start();
 if(isset($_SESSION["userID"]))
-$userID = $_SESSION["userID"];
+	$userID = $_SESSION["userID"];
 else
-header("Location: login.php");
+	header("Location: login.php");
+
 unset($_SESSION['testID']);
 unset($_SESSION['groupID']);
 unset($_SESSION['tasks']);
 unset($_SESSION['mode']);
-
+$from = "";
 if(isset($_SESSION["from"]))
 {
 	$from = $_SESSION["from"];

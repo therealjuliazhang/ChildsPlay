@@ -1,18 +1,21 @@
-<!--
+<?php
+/*
 Title:Update Group; 
-Author:Alex Satoru Hanrahan (4836789); 
--->
-<?php 
+Author:Alex Satoru Hanrahan (4836789);
+*/ 
+include "educatorAccess.php";
 include 'db_connection.php';
 $conn = OpenCon();
-session_start();
+//session_start();
 //get userID
 // if(isset($_SESSION["userID"]))
 //     $userID = (int)str_replace('"', '', $_SESSION["userID"]);
+/*
 if(isset($_SESSION["userID"]))
 	$userID = $_SESSION["userID"];
 else
-	header("Location: login.php");
+    header("Location: login.php");
+*/
 //get groupID
 if(isset($_GET["groupID"]))
     $groupID = (int)str_replace('"', '', $_GET["groupID"]);
@@ -76,7 +79,8 @@ function deleteGroupAssignments($conn, $groupID){
 //update preschooler to group assignment into groupAssignment table
 function insertGroupAssignment($conn, $groupID, $preID, $userID){
     //insert new group assignment
-    $sql = "INSERT INTO GROUPASSIGNMENT (groupID, preID, userID) VALUES (".$groupID.", ".$preID.", ".$userID.")";
+    //$sql = "INSERT INTO GROUPASSIGNMENT (groupID, preID, userID) VALUES (".$groupID.", ".$preID.", ".$userID.")";
+	$sql = "INSERT INTO GROUPASSIGNMENT (groupID, preID) VALUES (".$groupID.", ".$preID.")";
     if ($conn->query($sql) === TRUE)
         echo "Record inserted successfully";
     else
@@ -84,7 +88,7 @@ function insertGroupAssignment($conn, $groupID, $preID, $userID){
 }
 //insert preschooler
 function insertPreschooler($conn, $preschooler){
-    $sql = "INSERT INTO PRESCHOOLER (name, age, gender) VALUES ('".$preschooler->name."', '".$preschooler->age."', '".$preschooler->gender."')";
+    $sql = "INSERT INTO PRESCHOOLER (name, age, gender) VALUES ('".$preschooler->name."', ".$preschooler->age.", '".$preschooler->gender."')";
     if ($conn->query($sql) === TRUE) 
         echo "New preschooler added successfully";
     else 
