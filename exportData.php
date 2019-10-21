@@ -1,8 +1,8 @@
-<!--
+<?php
+/*
 Title:Export Data; 
 Author:Phuong Linh Bui (5624095); 
--->
-<?php
+*/
 //session_start();
 include "adminAccess.php";
 if(isset($_SESSION["records"])){
