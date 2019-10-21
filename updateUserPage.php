@@ -33,6 +33,7 @@ Author:Phuong Linh Bui (5624095), Julia Aoqi Zhang (5797585);
     {
         echo "Record updated successfully";
 		include 'sendEmail.php';
+	echo "<br/>i'm back";
         header('location: userPage.php');
     }
     else
