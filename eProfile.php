@@ -115,13 +115,15 @@ Author:Phuong Linh Bui (5624095)
       <div class="col s3 column01"><h6 class="hInCol">Location:</h6></div>
       <div class="removable">
         <div class="input-field col s9 locationCell">
-          <select name="location[]" id="location" class="materialSelect" multiple required>
+          <select name="location" id="location" class="materialSelect" multiple required="required">
           <?php
           foreach($locationArray as $location){
             echo "<option value='".$location["name"]."'>".$location["name"]."</option>";
           }
           ?>
           </select>
+          
+
         </div>
       </div>
     </div>
@@ -172,6 +174,7 @@ $("#editButton").click(function(){
 });
 
 $(document).ready(function(){
+  $("select[required]").css({display: "block", height: 0, padding: 0, width: 0, position: 'absolute'});
     var users = <?php echo json_encode($users); ?>;;
     $("#username").val(users["username"]);
     $("#email").val(users["email"]);
@@ -181,6 +184,7 @@ $(document).ready(function(){
 
     $("#form").validate({
       rules: {
+        location: {required: true},
         username: {
           required: true,
           usernamevalidate: true,
@@ -215,6 +219,7 @@ $(document).ready(function(){
         }
       },
       messages: {
+        location: {required: "test123"},
           location: "Pick your location from the drop down menu.",
           username: {
             required: "Please enter a username.",
