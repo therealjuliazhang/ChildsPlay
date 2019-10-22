@@ -141,8 +141,5 @@ body{
 .btn:hover, .btn-large:hover {
     background-color: #FF8C18;
 }
-
-
-
 </style>
 </html>

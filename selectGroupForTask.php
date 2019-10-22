@@ -5,11 +5,14 @@ Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4
 <!DOCTYPE html>
 <html>
 <?php
+/*
 session_start();
 if(isset($_SESSION['userID']))
-$userID = $_SESSION['userID'];
+	$userID = $_SESSION['userID'];
 else
-header('location: login.php');
+	header('location: login.php');
+*/
+include "educatorAccess.php";
 if(isset($_GET['testID'])){
 	$testID = $_GET['testID'];
 	$_SESSION['testID'] = $testID;

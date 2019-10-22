@@ -3,11 +3,16 @@ Title:Assign Test;
 Author:Alex Satoru Hanrahan (4836789); 
 -->
 <?php
+/*
     session_start();
     if(isset($_SESSION['userID']))
         $userID = $_SESSION['userID'];
     else
         header('login.php');
+*/
+include "adminAccess.php";
+include 'db_connection.php';
+$conn = OpenCon();
     //get user ID
     if(isset($_GET["userID"]))
        $selectedUserID = $_GET["userID"];
@@ -15,9 +20,6 @@ Author:Alex Satoru Hanrahan (4836789);
     //get test ID
     if(isset($_GET["testID"]))
         $testID = $_GET["testID"];
-    //open connection
-    include 'db_connection.php';
-    $conn = OpenCon();  
     //check connection
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);

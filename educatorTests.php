@@ -6,13 +6,16 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679
 <html>
 	<?php
 	//send user to login if not logged in
-	session_start();
+	//session_start();
 	include 'db_connection.php';
 	$conn = OpenCon();
+	include "educatorAccess.php";
+	/*
 	if (isset($_SESSION['userID']))
 		$userID = $_SESSION['userID'];
 	else
 		header('location: login.php');
+	*/
 	?>
     <head>
         <title>Available Tests and Groups</title>

@@ -1,4 +1,5 @@
 <?php
+include "adminAccess.php";
     //get input test title
     if(isset($_REQUEST['testTitle']))
         $inputTitle = $_REQUEST['testTitle'];

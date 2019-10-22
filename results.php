@@ -6,14 +6,14 @@ Last Edited: 21/10/2019;
 <!DOCTYPE html>
 <html>
 <?php
-session_start();
-//include_once 'resultQueries.php';
+//session_start();
+/*
 if(isset($_SESSION['userID']))
-$userID = $_SESSION['userID'];
+	$userID = $_SESSION['userID'];
 else
-header('login.php');
+	header('Location: login.php');
+*/
 if(isset($_SESSION["testID"])){
-	//session_destroy();
 	unset($_SESSION["testID"]);
 }/*
 if(isset($_GET["testID"])){

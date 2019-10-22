@@ -1,10 +1,10 @@
-<!--
-Title:Insert Test; 
-Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789); 
--->
 <?php
-
-session_start();
+/*
+Title:Insert Test; 
+Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789);
+*/
+include "adminAccess.php";
+//session_start();
 include "db_connection.php";
 $conn = OpenCon();
 

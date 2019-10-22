@@ -18,7 +18,6 @@ Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4
 
 </head>
 <body>
-
   <!--header-->
   <div id="InsertHeader"></div>
   <script>
@@ -77,11 +76,13 @@ Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4
       </thead>
       <tbody>
         <?php
-        session_start();
+        /*session_start();
         if(isset($_SESSION["userID"]))
-        $userID = $_SESSION["userID"];
+          $userID = $_SESSION["userID"];
         else
         header("Location: login.php");
+        */
+        include "adminAccess.php";
         include 'db_connection.php';
         $conn = OpenCon();
         //get tests from database
@@ -137,7 +138,7 @@ Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4
       echo "<li><a href='instruction.php?testID=".$value["testID"]."&taskID=".$row["taskID"]."&mode=preview&from=availableTests'>".$row["taskTitle"]."</a></li>";
     }
     echo "</ul></td>";*/
-  }
+    }
 
   echo "<td><a class='btn buttonsInTable blue darken-4' href='editTest.php?testID=".$value["testID"]."'>Edit</a></td>";
   echo "<td><a class='btn buttonsInTable blue darken-4' href='results.php?testID=".$value["testID"]."'>Result</a></td>";

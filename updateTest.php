@@ -1,8 +1,9 @@
-<!--
-Title:Update Test; 
-Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789); 
--->
 <?php 
+/*
+Title:Update Test; 
+Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789);
+*/
+include "adminAccess.php";
 //connect to database
 include 'db_connection.php';
 $conn = OpenCon();

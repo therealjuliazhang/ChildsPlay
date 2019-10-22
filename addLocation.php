@@ -5,6 +5,7 @@ Author:Andre Knell (5741622);
 <?php 
 include 'db_connection.php';
 $conn = OpenCon();
+include "adminAccess.php";
 //insert new rows into database
 if(isset($_POST["rowNum"])){
     //array holding all new locations to be added to database

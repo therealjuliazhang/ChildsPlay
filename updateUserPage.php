@@ -1,9 +1,10 @@
-<!--
+<?php
+/*
 Title:Update User Page; 
 Author:Phuong Linh Bui (5624095), Julia Aoqi Zhang (5797585); 
--->
-<?php
-    session_start();
+*/
+    //session_start();
+    include "adminAccess.php";
     include 'db_connection.php';
     $conn = OpenCon();
     $userID="";
@@ -22,8 +23,8 @@ Author:Phuong Linh Bui (5624095), Julia Aoqi Zhang (5797585);
 		$_SESSION["accepted"] = $accepted;
     }
     
-    echo "This is the user id ".$userID."<br/>";
-    echo "This is the accepted value ".$accepted."<br/>";
+    //echo "This is the user id ".$userID."<br/>";
+    //echo "This is the accepted value ".$accepted."<br/>";
     
     //query works if there is a value for userID
     
@@ -32,6 +33,7 @@ Author:Phuong Linh Bui (5624095), Julia Aoqi Zhang (5797585);
     {
         echo "Record updated successfully";
 		include 'sendEmail.php';
+	echo "<br/>i'm back";
         header('location: userPage.php');
     }
     else

@@ -4,17 +4,19 @@ Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4
 Last Edited: 22/10/2019;
 -->
 <!DOCTYPE html>
-
 <html>
 <?php
 $baseURL = "localhost";
+include "adminAccess.php";
 include 'db_connection.php';
 $conn = OpenCon();
+/*
 session_start();
 if(isset($_SESSION['userID']))
 $userID = $_SESSION['userID'];
 else
 header('login.php');
+*/
 //get select users ID
 if(isset($_GET['userID']))
 $selectedUserID = $_GET['userID'];

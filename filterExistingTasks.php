@@ -2,6 +2,9 @@
 Title:Filter Existing Tasks;
 Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679527);
 -->
+<?php
+include "adminAccess.php";
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -53,11 +56,13 @@ function filter(){
   <!--end header-->
   <!-- body content -->
   <?php
+  /*
   session_start();
   if (isset($_SESSION['userID']))
   $userID = $_SESSION['userID'];
   else
   header('location: login.php');
+  */
   ?>
   <div class="container">
     <h3 class="blue-text text-darken-4">Filter By:</h3>

@@ -12,7 +12,7 @@ $sql = "SELECT * FROM LOCATION";
 $result = $conn->query($sql);
 $locations = array();
 while ($row = mysqli_fetch_assoc($result))
-$locations[] = $row;
+	$locations[] = $row;
 ?>
 
 <head>
@@ -36,6 +36,7 @@ $locations[] = $row;
 			$('.materialSelect').on('contentChanged', function() {
 				$(this).material_select();
 			});
+
 			//set locations into select options
 			var locations = <?php echo json_encode($locations); ?>;
 			for (var i = 0; i < locations.length; i++) {
@@ -46,15 +47,15 @@ $locations[] = $row;
 				$("#location").append(option);
 				$("#location").trigger('contentChanged');
 			}
-			
+
 			//Places error element next to invalid inputs
 			$.validator.setDefaults({
 				errorElement: 'div',
 				errorClass: 'invalid',
 				errorPlacement: function(error, element) {
 					//element.next("div").remove();
-						var e = document.createElement("div");
-						$(e).append(error.text()).addClass("showError");
+					var e = document.createElement("div");
+					$(e).append(error.text()).addClass("showError");
 					if (element.attr('type') == "text" || element.attr('type') == "email" || element.attr('type') == "password") {
 						$(element).nextAll("div").remove();
 						$(element)
@@ -72,7 +73,7 @@ $locations[] = $row;
 						$(element).after(e);
 					}
 				},
-				success: function(div){
+				success: function(div) {
 					$(div).remove();
 				}
 			});
@@ -109,7 +110,9 @@ $locations[] = $row;
 					}
 				},
 				messages: {
-					fullname: { required: "Please enter your full name"},
+					fullname: {
+						required: "Please enter your full name"
+					},
 					accountType: "Please pick an account type.",
 					location: "Pick your location from the drop down menu.",
 					username: {
@@ -133,35 +136,35 @@ $locations[] = $row;
 						equalTo: "Passwords entered are different."
 					}
 				},
-				submitHandler: function(form) { 
+				submitHandler: function(form) {
 					var email = $("#email").val();
 					var fullname = $("#fullname").val();
 					var accountType = $("#accountType option:selected").val();
 					var location = $("#location").val();
 					var username = $("#username").val();
 					var password1 = $("#password1").val();
-					$.post("registerAccount.php",
-					{	email: email,
-						fullname: fullname,
-						accountType: accountType,
-						location: location,
-						username: username,
-						password1: password1
-					},
-					function(data){
-						//show errors
-						if(data.includes("span")){
-							$("#results").html(data);
+					$.post("registerAccount.php", {
+							email: email,
+							fullname: fullname,
+							accountType: accountType,
+							location: location,
+							username: username,
+							password1: password1
+						},
+						function(data) {
+							//show errors
+							if (data.includes("span")) {
+								$("#results").html(data);
+							} else {
+								$("#submitBtn").prop('disabled', true);
+								window.location = "thankyouForRegister.html";
+								$.post(
+									"sendEmail.php", {
+										registerEmail: email
+									}
+								);
+							}
 						}
-						else{
-                            $("#submitBtn").prop('disabled', true);
-							window.location = "thankyouForRegister.html";
-                            $.post(
-                                "sendEmail.php",
-                                {registerEmail: email}
-                            );
-						}
-					}
 					);
 				}
 			});
@@ -171,27 +174,28 @@ $locations[] = $row;
 				return regex.test(value);
 			});
 			//email regular expressions
-			$.validator.addMethod("emailvalidate", function(value){
+			$.validator.addMethod("emailvalidate", function(value) {
 				var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 				return regex.test(value);
 			});
 			//username validation not allow space
-			$.validator.addMethod("usernamevalidate", function(value){
+			$.validator.addMethod("usernamevalidate", function(value) {
 				var regex = /^(?!.*\s)([a-zA-Z0-9_.+-])+$/;
 				return regex.test(value);
 			});
-	});
+		});
 	</script>
 	<script>
-	function chg(obj) {
-		if (obj.options[obj.selectedIndex].value == "educator")
-			document.getElementById("10").style.display = "";
-		else
-			document.getElementById("10").style.display = "none";
-	}
+		function chg(obj) {
+			if (obj.options[obj.selectedIndex].value == "educator")
+				document.getElementById("10").style.display = "";
+			else
+				document.getElementById("10").style.display = "none";
+		}
 	</script>
 </head>
 <!-- logo -->
+
 <body>
 	<div class="container">
 		<div class="row">
@@ -236,7 +240,7 @@ $locations[] = $row;
 							<div class="row">
 								<div class="input-field col s12">
 									<input id="email" name="email" type="email" class="validate">
-									<label  class="labelInCard" for="email">Email</label>
+									<label class="labelInCard" for="email">Email</label>
 								</div>
 							</div>
 							<div class="row">
@@ -251,18 +255,18 @@ $locations[] = $row;
 									<label class="labelInCard" for="password2">Confirm Password</label>
 								</div>
 							</div>
-							<div class="row valign-wrapper" >
+							<div class="row valign-wrapper">
 								<div class="input-field col s12" style="display:none" id="10">
 									<select name="location[]" id="location" class="materialSelect" required multiple>
 										<option value="" disabled selected>Location</option>
-									<?php
-									/*foreach($locations as $location){
+										<?php
+										/*foreach($locations as $location){
 										echo "<option value='".$location["locationID"]."'>".$location["name"]."</option>";
 									}*/
-									?>
+										?>
 									</select>
 								</div>
-							</div><br/>
+							</div><br />
 							<div class="row">
 								<div class="col s12 center">
 									<input type="submit" value="Register" name="submitBtn" id="submitBtn" class="btn blue darken-4 middle submitBtn" <?php echo (isset($_POST["submitBtn"])) ? 'disabled="true"' : ''; ?>>
@@ -289,72 +293,73 @@ $locations[] = $row;
 	<!--end card-->
 </body>
 <style>
-.showError{
-	top:10px;
-	width:300px !important;
-	font-style: italic;
-	color: red;
-}
+	.showError {
+		top: 10px;
+		width: 300px !important;
+		font-style: italic;
+		color: red;
+	}
 
-.logoImg {
-	height: 70px;
-	margin-top: 20px;
-}
+	.logoImg {
+		height: 70px;
+		margin-top: 20px;
+	}
 
-body {
-	background-color: #081754;
-}
+	body {
+		background-color: #081754;
+	}
 
-.bodyContainer {
-	width: 30%;
-}
+	.bodyContainer {
+		width: 30%;
+	}
 
-.card {
-	height: 1100px;
-}
+	.card {
+		height: 1100px;
+	}
 
-.loginButton {
-	margin-bottom: 20px;
-}
+	.loginButton {
+		margin-bottom: 20px;
+	}
 
-.btn {
-	width: 70%;
-	border-radius: 20px;
-}
+	.btn {
+		width: 70%;
+		border-radius: 20px;
+	}
 
-.card .card-content {
-	padding: 50px;
-}
+	.card .card-content {
+		padding: 50px;
+	}
 
-.row {
-	margin-bottom: 5px;
-}
+	.row {
+		margin-bottom: 5px;
+	}
 
-.btn02 {
-	background-color: #FF8C18;
-}
+	.btn02 {
+		background-color: #FF8C18;
+	}
 
-.divider {
-	margin: 50px 0px;
-}
+	.divider {
+		margin: 50px 0px;
+	}
 
-h6 {
-	margin-bottom: 20px;
-}
+	h6 {
+		margin-bottom: 20px;
+	}
 
-.btn:hover,
-.btn-large:hover {
-	background-color: #FF8C18;
-}
+	.btn:hover,
+	.btn-large:hover {
+		background-color: #FF8C18;
+	}
 
-.labelInCard{
-	width: 200px;
-}
-#location-error{
-    color: #F44336;
-}
+	.labelInCard {
+		width: 200px;
+	}
 
-/*
+	#location-error {
+		color: #F44336;
+	}
+
+	/*
 	.btn:hover,
 	.btn-large:hover {
 		background-color: #FF8C18;
@@ -367,4 +372,5 @@ h6 {
 	}
 */
 </style>
+
 </html>

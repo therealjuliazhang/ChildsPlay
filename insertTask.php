@@ -1,8 +1,9 @@
-<!--
+<?php
+/*
 Title:Insert Task; 
 Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789); 
--->
-<?php
+*/
+include "adminAccess.php";
     //get user image directory
     $imageDirectory = "images/";
     //check if editing or creating test

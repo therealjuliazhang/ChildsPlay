@@ -11,11 +11,14 @@ Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4
         //get userID
         // if(isset($_GET["userID"]))
         //     $userID = (int)str_replace('"', '', $_GET["userID"]);
+        /*
         session_start();
         if(isset($_SESSION['userID']))
             $userID = $_SESSION['userID'];
         else
-            header('login.php');
+            header('Location: login.php');
+        */
+        include "educatorAccess.php";
         //get groupID
         if(isset($_GET["groupID"]))
             $groupID = (int)str_replace('"', '', $_GET["groupID"]);
@@ -24,10 +27,10 @@ Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4
         $result = $conn->query($sql);
         $currentGroupName = mysqli_fetch_assoc($result)["name"];
         //get current location of group
-		$sql = "SELECT name, locationID FROM GROUPTEST WHERE groupID=".$groupID;
+		    $sql = "SELECT name, locationID FROM GROUPTEST WHERE groupID=".$groupID;
         $result = $conn->query($sql);
-		$values = mysqli_fetch_assoc($result);
-		$groupName = $values["name"];
+	    	$values = mysqli_fetch_assoc($result);
+		    $groupName = $values["name"];
         $currentLocationID = $values["locationID"];
         //fetch locations for select drop down
         $sql2 = "SELECT locationID FROM LOCATIONASSIGNMENT WHERE userID=".$userID;
@@ -87,7 +90,7 @@ Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4
                     <div class="row">
                         <div class="input-field col s12">
                             <select id="locationSelect" class="materialSelect" name="locationSelect" required>
-                            <!-- <option id="currentLocation"></option> -->
+                              <option id="currentLocation"></option>
                             </select>
                             <label id="locationLabel" for="locationSelect" >Group Location</label>
                         </div>
@@ -98,33 +101,13 @@ Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4
                         <a class="waves-effect waves-light btn blue darken-4 tooltipped" data-position="right" data-tooltip="Add more" onclick="addRow()"><i class="material-icons"style="font-size:30px;">add</i></a>
                     </div><br/>
                     <div class="row right-align">
-						<input type="submit" id="startButton" class="submit waves-effect waves-light btn blue darken-2" value="Save Changes">
+						            <input type="submit" id="startButton" class="submit waves-effect waves-light btn blue darken-2" value="Save">
                         <a href="educatorTests.php#groups" class="waves-effect waves-light btn blue darken-4">Cancel</a>
                     </div>
                 </form>
         </div>
-      </div>
-      <div class="row">
-        <div class="input-field col s12">
-          <select id="locationSelect" class="materialSelect" name="locationSelect" required>
-            <!-- <option id="currentLocation"></option> -->
-          </select>
-          <label id="locationLabel" for="locationSelect" >Group Location</label>
-        </div>
-      </div>
-      Please input the details for each test participant:
-      <div id ="rows"></div>
-      <div class="row right-align">
-        <a class="waves-effect waves-light btn blue darken-4 tooltipped addButton" data-position="right" data-tooltip="Add more" onclick="addRow()"><i class="material-icons"style="font-size:30px;">add</i></a>
-      </div><br/>
-      <div class="row right-align">
-        <a href="educatorTests.php#groups" id="cancelButton" class="waves-effect waves-light btn red">Cancel</a>
-        <input type="submit" id="startButton" class="submit waves-effect waves-light btn blue darken-4" value="Save">
-      </div>
-    </form>
-  </div>
   <!--end body content-->
-</body>
+  </body>
 <script>
 $(document).ready(function() {
   Materialize.updateTextFields();

@@ -3,7 +3,6 @@
 Title: Send Email; 
 Author: Phuong Linh Bui (5624095); 
 */
-
 date_default_timezone_set('Etc/UTC');
 
 // Edit this path if PHPMailer is in a different location
@@ -104,7 +103,7 @@ if(isset($_SESSION["resetPwEmail"])){
 			//exit;
 		} else {
 			echo "Mailer Error: " . $mail->ErrorInfo;
-		}/**/
+		}
 	}
 	else
 	echo "Failed.";
