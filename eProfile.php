@@ -256,9 +256,8 @@ $(document).ready(function(){
               $("#results").html(data);
             }
             else{
-              $("#results").html(data);
               $("#saveButton").prop("disabled", true);
-              //window.location = "eProfile.php";
+              window.location = "eProfile.php";
             }
           }
         );

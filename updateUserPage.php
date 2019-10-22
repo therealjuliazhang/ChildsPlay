@@ -9,36 +9,35 @@ Author:Phuong Linh Bui (5624095), Julia Aoqi Zhang (5797585);
     $conn = OpenCon();
     $userID="";
     $accepted="";
+    $check = false;
     //Get inputs
-    if(isset($_GET["uid"]))
+    if(isset($_POST["userid"]))
     {
-        //echo "post uid exists <br/>";
-        $userID .= $_GET["uid"];
+        $userID = $_POST["userid"];
         $_SESSION["uID"] = $userID;
-    }
-    if(isset($_GET["accepted"]))
-    {
-        //echo "post accepted exists <br/>";
-        $accepted .= $_GET["accepted"];
-		$_SESSION["accepted"] = $accepted;
-    }
-    
-    //echo "This is the user id ".$userID."<br/>";
-    //echo "This is the accepted value ".$accepted."<br/>";
-    
-    //query works if there is a value for userID
-    
-    $query = "UPDATE USERS SET accepted = ".$accepted." WHERE userID = ".$userID;
-    if ($conn->query($query) === TRUE)
-    {
-        echo "Record updated successfully";
-		include 'sendEmail.php';
-        header('Location: userPage.php');
+        $check = true;
     }
     else
+        $check=false;
+    if(isset($_POST["accepted"]))
     {
-        echo "Error: " . $query . "<br>" . $conn->error;
+        $accepted = $_POST["accepted"];
+        $_SESSION["accepted"] = $accepted;
+        $check = true;
     }
-    unset($_SESSION["uID"]);
-    unset($_SESSION["accepted"]);
+    else
+    $check = false;
+    //query works if there is a value for userID
+    if($check){
+        $query = "UPDATE USERS SET accepted = ".$accepted." WHERE userID = ".$userID;
+        if ($conn->query($query) === TRUE)
+        {
+            echo "Record updated successfully";
+            include 'sendEmail.php';
+        }
+        else
+        {
+            echo "Error: " . $query . "<br>" . $conn->error;
+        }
+    }
 ?>
