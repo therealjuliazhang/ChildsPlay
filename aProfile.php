@@ -117,13 +117,13 @@ while($row = mysqli_fetch_assoc($result))
             </div>
             <div class="col s3 column01"><h6 class="hInCol">Password:</h6></div>
             <div class='input-field col s9'>
-                <input id="password1" name="password1" type="password" class="validate">
+                <input id="password1" name="password1" type="password" class="passValidate">
             </div>
             <!--Password confirm Section-->
             <div class="hide passwordComfirmationRow">
                 <div class="col s3 column01"><h6 class="hInCol">Confirm Password:</h6></div>
                 <div class='input-field col s9'>
-                    <input id="password2" name="password2" type="password" class="validate">
+                    <input id="password2" name="password2" type="password" class="passValidate">
                 </div>
             </div>
             <div class="col s3">
@@ -178,7 +178,7 @@ $("#editButton").click(function(){
 $("#changeButton").click(function(){
   $("#password1").prop( "disabled", false );
   $(".passwordComfirmationRow").removeClass("hide");
-  $(".validate").prop('disabled', false);
+  $(".passValidate").prop('disabled', false);
 });
 //disable input
 $(document).ready(function(){
@@ -189,6 +189,7 @@ $(document).ready(function(){
     var currentEmail = users["email"];
     var currentUsername = users["username"];
     loadLocationInfo();
+    
     $("#form").validate({
       rules: {
         username: {
@@ -283,6 +284,7 @@ $(function($){
     // display the new content
     $('.panel').eq(index).addClass('is-show');
   });
+  
 });
 
 
@@ -309,42 +311,6 @@ $(document).ready(function(){
 });
 */
 
-//Function for adding and deleting rows
-function appendRow() {
-  //variables for a new row
-  var locationNameInput = "<div class='col s11'><input value='' type='text' class='validate inputInColB'></div>";
-  var removeButtonB = " <div class='col s1'><div class='col s1 removeCell'><a class='waves-effect waves-light btn removeButtonB'><i class='material-icons'>remove</i></a></div></div>";
-  //insert a new row
-  var locations = "<div class='removable'>" + locationNameInput + removeButtonB + "</div>";
-
-  $("#locationInfo").append(locations);
-
-  //remove added rows
-  $('.removeButtonB').click(function() {
-    $(this).closest('.removable').remove();
-  });
-
-};
-
-//remove existing rows
-$('.removeButtonB').click(function() {
-  $(this).closest('.removable').remove();
-});
-
-function loadLocationInfo(){
-  var location = <?php echo json_encode($locationArray); ?>;
-  var format;
-  //display data
-  location.forEach(function(result){
-    var locationNameInput = "<div class='col s11'><input disabled value='"+ result.name +"' type='text' class='validate inputInColB'></div>";
-
-    var removeButtonB = " <div class='col s1'><div class='col s1 removeCell'><a class='waves-effect waves-light btn hide removeButtonB'><i class='material-icons'>remove</i></a></div></div>";
-
-    var format = "<div class='removable'>" + locationNameInput + removeButtonB + "</div>";
-    $("#locationInfo").append(format);
-  });
-}
-
 
 
      //enable input for location tab
@@ -354,6 +320,7 @@ function loadLocationInfo(){
           $(".removeButtonB").removeClass("hide");
           $("#addButtonB").removeClass("hide");
           $("#saveButtonB").removeClass("hide");
+          $("#editButtonB").addClass("hide");
         })
       });
 

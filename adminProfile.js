@@ -27,6 +27,11 @@ $(document).ready(function () {
                     .find("input[name='" + element.attr("id") + "']")
                     .after(e);
             }
+            else if (element.hasClass("materialSelect")) {
+                //$("element + div").remove();
+                $(element).next("div").remove();
+                $(element).after(e);
+            }
         },
         success: function (div) {
             $(div).remove();
