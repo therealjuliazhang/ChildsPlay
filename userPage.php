@@ -67,7 +67,7 @@ include "adminAccess.php";
           {
             $users[] = $row;
           }
-
+          //print out the pending user table
           foreach($users as $user)
           {
             echo "<tr><td>".$user["fullName"]."</td><td>".$user["email"]."</td>";

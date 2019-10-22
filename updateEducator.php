@@ -24,12 +24,14 @@ if(isset($_POST["locations"]))
 //get password
 if(isset($_POST["password1"])){
 	$password = $_POST["password1"];
-	$password = md5($password);
-	//update educator details
-	$sql = "UPDATE USERS SET username = '".$username."', password = '".$password."', email = '".$email."' WHERE userID=$userID";
+	if($password != ""){
+		$password = md5($password);
+		//update educator details
+		$sql = "UPDATE USERS SET username = '".$username."', password = '".$password."', email = '".$email."' WHERE userID=$userID";
+	}
+	else
+		$sql = "UPDATE USERS SET username = '".$username."', email = '".$email."' WHERE userID=$userID";	
 }
-else
-	$sql = "UPDATE USERS SET username = '".$username."', email = '".$email."' WHERE userID=$userID";
 if ($conn->query($sql) === TRUE){
 	echo "Successfully updated educator profile!";
 }

@@ -244,7 +244,6 @@ $(document).ready(function(){
         var password1 = null;
         if(!$("#password1").prop("disabled"))
           password1 = $("#password1").val();
-        //alert(md5("plb123"));
         $.post("updateEducator.php",
           {	email: email,
             locations: locations,
@@ -257,8 +256,9 @@ $(document).ready(function(){
               $("#results").html(data);
             }
             else{
+              $("#results").html(data);
               $("#saveButton").prop("disabled", true);
-              window.location = "eProfile.php";
+              //window.location = "eProfile.php";
             }
           }
         );

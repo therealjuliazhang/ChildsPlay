@@ -153,9 +153,7 @@ while($row = mysqli_fetch_assoc($result))
   <div class="container">
       <div class="row" id="locationInfo" style="margin-left:40px">
         <div class="col s11 blue-text text-darken-4"><h4>Location Names:</h4></div>
-
      </div>
-
        <div class="row">
          <div class="col s1 offset-s11"><a class="waves-effect waves-light btn blue darken-2 addCell hide right" id="addButtonB" onclick="appendRow()"><i class="material-icons">add</i></a></div>
          <div class="col s1 offset-s10"><a class="waves-effect waves-light btn #2196f3 blue darken-4 right" id="editButtonB">Edit</a></div>
@@ -254,7 +252,6 @@ $(document).ready(function(){
         var password1 = null;
         if(!$("#password1").prop("disabled"))
           password1 = $("#password1").val();
-        //alert(md5("plb123"));
         $.post("updateAdmin.php",
           {	email: email,
             username: username,

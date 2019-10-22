@@ -33,12 +33,12 @@ Author:Phuong Linh Bui (5624095), Julia Aoqi Zhang (5797585);
     {
         echo "Record updated successfully";
 		include 'sendEmail.php';
-	echo "<br/>i'm back";
-        header('location: userPage.php');
+        header('Location: userPage.php');
     }
     else
     {
         echo "Error: " . $query . "<br>" . $conn->error;
     }
-    
+    unset($_SESSION["uID"]);
+    unset($_SESSION["accepted"]);
 ?>
