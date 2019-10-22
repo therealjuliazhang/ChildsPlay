@@ -148,7 +148,7 @@ while($row = mysqli_fetch_assoc($result))
     </div>
 
     <!--html for Location tab-->
-<form method = "post" action="addLocation.php">
+<form id="form2" method = "post" action="addLocation.php">
 <div class="panel">
   <div class="container">
       <div class="row" id="locationInfo" style="margin-left:40px">
@@ -159,7 +159,7 @@ while($row = mysqli_fetch_assoc($result))
        <div class="row">
          <div class="col s1 offset-s11"><a class="waves-effect waves-light btn blue darken-2 addCell hide right" id="addButtonB" onclick="appendRow()"><i class="material-icons">add</i></a></div>
          <div class="col s1 offset-s10"><a class="waves-effect waves-light btn #2196f3 blue darken-4 right" id="editButtonB">Edit</a></div>
-         <div class="col s1"><button class="waves-effect waves-light btn blue darken-4 right" id="saveButtonB" type="submit" value = "submit">Save</button></div>
+         <div class="col s1"><button class="hide waves-effect waves-light btn blue darken-4 right" id="saveButtonB" type="submit" value = "submit">Save</button></div>
        </div>
 
     </div>
@@ -190,7 +190,7 @@ $(document).ready(function(){
     $("#password1").val(users["password"]);
     var currentEmail = users["email"];
     var currentUsername = users["username"];
-
+    loadLocationInfo();
     $("#form").validate({
       rules: {
         username: {
@@ -292,14 +292,14 @@ $(function($){
 //enable input for location tab
 $(document).ready(function(){
   $("#editButtonB").click(function(){
-    $(".inputInColB").prop( "readonly", false );
+    $(".inputInColB").prop( "disabled", false );
     $(".removeButtonB").removeClass("hide");
     $("#addButtonB").removeClass("hide");
     $("#saveButtonDivB").removeClass("hide");
     $("#editButtonDivB").addClass("hide");
   })
 });
-
+/*
 //disable input for location tab
 $(document).ready(function(){
   $("#saveButtonB").click(function(){
@@ -310,6 +310,7 @@ $(document).ready(function(){
     $("#saveButtonDivB").addClass("hide");
   })
 });
+*/
 
 //Function for adding and deleting rows
 function appendRow() {
@@ -352,9 +353,10 @@ function loadLocationInfo(){
      //enable input for location tab
       $(document).ready(function(){
         $("#editButtonB").click(function(){
-          $(".inputInColB").prop( "readonly", false );
+          $(".inputInColB").prop( "disabled", false );
           $(".removeButtonB").removeClass("hide");
           $("#addButtonB").removeClass("hide");
+          $("#saveButtonB").removeClass("hide");
         })
       });
 
@@ -371,10 +373,11 @@ function loadLocationInfo(){
       function appendRow() {
 
         //variables for a new row
-        var locationNameInput = "<div class='col s11'><input name='rowNum[]' value='default' type='text' class='validate inputInColB'></div>";
+        var locationNameInput = "<div class='col s10'><input name='rowNum[]' value='default' type='text'  class='validate inputInColB' required /><span class='helper-text' data-error='Location cannot be blank'></span></div>";
+        var removeButtonB = " <div class='col s1'><div class='col s1 removeCell'><a class='waves-effect waves-light btn  removeButtonB'><i class='material-icons'>remove</i></a></div></div>";
 
         //insert a new row
-        var locations = "<div class='removable'>" + locationNameInput + "</div>";
+        var locations = "<div class='removable'>" + locationNameInput + removeButtonB +"</div>";
 
         $("#locationInfo").append(locations);
 
@@ -398,9 +401,7 @@ function loadLocationInfo(){
       //display data
       location.forEach(function(result){
 
-        var locationNameInput = "<div class='col s11'><input readonly name='locRow[]' value='"+ result.name +"' type='text' class='validate inputInColB'></div>";
-
-
+        var locationNameInput = "<div class='col s10'><input disabled name='locRow[]' value='"+ result.name +"' type='text' class='validate inputInColB' required /><span class='helper-text' data-error='Location cannot be blank'></span></div>";
 
         var format = "<div class='removable'>" + locationNameInput + "</div>";
         $("#locationInfo").append(format);
