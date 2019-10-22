@@ -1,7 +1,9 @@
-<!--
+<!-- ====================================================================================
 Title:Login;
 Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679527);
--->
+Last Edited: 22/10/2019;
+===================================================================================== -->
+<!DOCTYPE html>
 <html>
 <head>
   <title>Childplay Login</title>
@@ -21,7 +23,7 @@ Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4
       </div>
     </div>
   </div>
-  <!--card -->
+  <!-- card -->
   <div class="container bodyContainer">
     <div id="cardWrapper" class="row valign-wrapper">
       <div class="col s12 center-align">
@@ -115,9 +117,12 @@ $(document).ready(function() {
 body{
   background-color: #081754;
 }
-.bodyContainer{
-  width: 30%;
+.container{
+  width: 450px;
 }
+/* .bodyContainer{
+  width: 30%;
+} */
 .card{
   height: 700px;
 }
@@ -133,13 +138,13 @@ body{
   margin: 50px 0px;
 }
 .card .card-content {
-    padding: 50px;
+  padding: 50px;
 }
 .btn02{
   background-color:#FF8C18
 }
 .btn:hover, .btn-large:hover {
-    background-color: #FF8C18;
+  background-color: #FF8C18;
 }
 </style>
 </html>

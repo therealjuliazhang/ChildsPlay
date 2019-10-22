@@ -1,7 +1,8 @@
-<!--
+<!-- ====================================================================================
 Title:View Existing Test;
 Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Julia Aoqi Zhang (5797585), Ren Sugie(5679527);
--->
+Last Edited: 22/10/2019;
+===================================================================================== -->
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
@@ -15,7 +16,6 @@ Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
   <script type="text/javascript"src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.1/js/jquery.tablesorter.min.js"></script>
-
 </head>
 <body>
   <!--header-->
@@ -57,11 +57,9 @@ Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4
      alert('This website does not support this browser size. Please use a browser wider than 930px.');
   }
   </script>
-
   <!--body part-->
   <div class="container">
     <h4 class="blue-text text-darken-4 header">Available Tests</h4>
-
     <table class="striped tablesorter">
       <thead>
         <tr class="blue-text text-darken-4">
@@ -211,5 +209,4 @@ table {
 .buttonsInTable:hover{
   background-color: #FF8C18!important;
 }
-
 </style>

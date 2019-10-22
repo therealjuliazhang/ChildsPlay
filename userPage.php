@@ -1,7 +1,8 @@
-<!--
+<!-- ====================================================================================
 Title:User Page;
 Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Julia Aoqi Zhang (5797585), Ren Sugie(5679527);
--->
+Last Edited: 22/10/2019;
+===================================================================================== -->
 <?php
 include "adminAccess.php";
 ?>
@@ -27,10 +28,7 @@ include "adminAccess.php";
     $("#InsertHeader").load("header.html");
   });
   </script>
-  <!--end header-->
-
   <!-- body content -->
-  <div class="row">
     <div class="container">
       <ul class="tabs">
         <li class="tab col s4"><a class="blue-text text-darken-4" href="#pendingUsers"><h5>Pending Users</h5></a></li>
@@ -46,8 +44,6 @@ include "adminAccess.php";
             <th>Email</th>
             <th>Organization</th>
             <th>Role</th>
-            <!-- <th width="10%">Accept</th>
-            <th width="10%">Decline</th> -->
           </tr>
         </thead>
         <tbody class="">
@@ -97,7 +93,6 @@ include "adminAccess.php";
           ?>
         </tbody>
       </table>
-
       <!-- educators tab-->
       <div id="educators">
         <table class="striped tablesorter">
@@ -171,7 +166,6 @@ include "adminAccess.php";
         </table>
       </div>
     </div>
-    <!--end body content-->
   </body>
   <script>
   //Sorting The table contents
@@ -223,7 +217,6 @@ ul.tabs {
 .tabs .tab {
   text-transform: none;
 }
-
 .tablesorter-header {
   cursor: pointer;
   outline: none;
