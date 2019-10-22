@@ -44,23 +44,27 @@ if (count($taskIdList) > 0) {
   <title>Create Test</title>
   <meta name="viewport" content="width = device-width, initial-scale = 1">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css"> -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-  <link rel="stylesheet" type="text/css" href="childsPlayStyle.css">
+  <!-- <link rel="stylesheet" type="text/css" href="childsPlayStyle.css"> -->
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
-  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <!-- <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script> -->
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
-
 </head>
 <script>
-//Read header
-$(function() {
-  document.addEventListener('DOMContentLoaded', function() {
-    var elem = document.querySelectorAll('.tooltipped');
-    var instance = M.Tooltip.init(elem);
-  });
+//Initialize tooltip
+document.addEventListener('DOMContentLoaded', function() {
+	var elem = document.querySelectorAll('.tooltipped');
+	var instance = M.Tooltip.init(elem);
+});
+// document.addEventListener('DOMContentLoaded', function() {
+//     var elems = document.querySelectorAll('.dropdown-trigger');
+//     var instances = M.Dropdown.init(elems, options);
+// });
 
+$(function() {
   //Places error element next to invalid inputs
   $.validator.setDefaults({
     errorElement: 'div',
@@ -227,7 +231,7 @@ function displayTasks() {
       <p align="right">
         <!-- <button type="submit" name="createTest" class="waves-effect waves-light btn blue darken-2">Create Test</button> -->
         <a style="width:120px" class="waves-effect waves-light btn blue darken-4 right cancelButton" href="viewExistingTests.php">Cancel</a>
-        <input style="width:120px" type="submit" name="createTest" class="submit waves-effect waves-light btn blue darken-2 right" value="Create Test">
+        <input id="createTestInput" style="width:120px" type="submit" name="createTest" class=" submit waves-effect waves-light btn blue darken-2 right" value="Create Test">
       </p>
     </form>
   </div>
@@ -270,6 +274,9 @@ label[data-error] {
 }
 .cancelButton{
   margin-left: 15px;
+}
+#createTestInput{
+    color: white!important;
 }
 .submit:hover, .addButton:hover, .cancelButton:hover {
   background-color: #FF8C18!important;
