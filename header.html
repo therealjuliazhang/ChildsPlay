@@ -1,20 +1,11 @@
-<!--
+<!-- ====================================================================================
 Title:Header;
 Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679527);
 Last Edited: 22/10/2019;
--->
+===================================================================================== -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> -->
-  <!-- <meta name="viewport" content="width=device-width, initial-scale=1"/> -->
-  <!-- CSS  -->
-  <!-- <link rel="stylesheet" type="text/css" href="childsPlayStyle.css"> -->
-  <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
-  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
-  <!--  Scripts-->
-  <!-- <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script> -->
-  <!-- <script type = "text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.js"></script> -->
 </head>
 <body>
   <!--Header-->
@@ -22,15 +13,12 @@ Last Edited: 22/10/2019;
     <nav class="nav-extended" style="background-color:#081754">
       <div class="nav-wrapper">
         <a href="viewExistingTests.php" class="brand-logo left"><img src="images/logo3.png" height="50px"></a>
-        <ul id="nav-mobile" class="hide-on-med-and-down">
+        <ul id="nav-mobile" class="">
           <li id="testsList" class=""><a href="viewExistingTests.php" style="color:white">Tests</a></li>
           <li id="createList" class=""><a href="createTest.php" style="color:white">Create</a></li> <!--change to php file once it's made-->
           <li id="resultsList" class=""><a href="results.php" style="color:white">Results</a></li>
           <li id="usersList" class=""><a href="userPage.php" style="color:white">Users</a></li>
-        </ul>
-
-        <ul class="right hide-on-med-and-down">
-          <a class="waves-effect waves-light btn center-align blue darken-3" href="aProfile.php" id="profileLinkButton"> <i class="material-icons" id="profileLinkIcon">person</i></a>
+          <li class="right"><a class="waves-effect waves-light btn center-align blue darken-3" href="aProfile.php" id="profileLinkButton"><i class="material-icons" id="profileLinkIcon">person</i></a></li>
         </ul>
       </div>
     </nav>
@@ -51,11 +39,14 @@ Last Edited: 22/10/2019;
   #profileLinkButton:hover{
       background-color: #FF8C18!important;
   }
+  nav.nav-extended .nav-wrapper {
+    height: 60px!important;
+}
 </style>
 </html>
 
 <script type="text/javascript">
-
+//change color when specific tab is opened
   $(document).ready(function(){
     var pathname = window.location.pathname;
     if(pathname === "/viewExistingTests.php"){
@@ -71,6 +62,7 @@ Last Edited: 22/10/2019;
       $("#usersList").addClass("active");
     }
   });
+  //alert when screen size is small
   var resizeTimeout
   $(window).resize(function(){
       clearTimeout(resizeTimeout)

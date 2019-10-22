@@ -1,7 +1,8 @@
-<!--
+<!-- ====================================================================================
 Title:User Page;
 Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Julia Aoqi Zhang (5797585), Ren Sugie(5679527);
--->
+Last Edited: 22/10/2019;
+===================================================================================== -->
 <?php
 include "adminAccess.php";
 ?>
@@ -14,11 +15,9 @@ include "adminAccess.php";
   <link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
-
   <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.1/js/jquery.tablesorter.min.js"></script>
-
 </head>
 <body>
   <!--header-->
@@ -29,11 +28,7 @@ include "adminAccess.php";
     $("#InsertHeader").load("header.html");
   });
   </script>
-  <!--end header-->
-
   <!-- body content -->
-  <div class="row">
-
     <div class="container">
       <ul class="tabs">
         <li class="tab col s4"><a class="blue-text text-darken-4" href="#pendingUsers"><h5>Pending Users</h5></a></li>
@@ -49,8 +44,6 @@ include "adminAccess.php";
             <th>Email</th>
             <th>Organization</th>
             <th>Role</th>
-            <!-- <th width="10%">Accept</th>
-            <th width="10%">Decline</th> -->
           </tr>
         </thead>
         <tbody class="">
@@ -60,7 +53,6 @@ include "adminAccess.php";
           $conn = OpenCon();
           //get pending users from database
           $sql = "SELECT * FROM USERS WHERE accepted = 0";
-
           $result = $conn->query($sql);
           $users = array();
           while($row = mysqli_fetch_assoc($result))
@@ -95,13 +87,12 @@ include "adminAccess.php";
               echo "<td>Admin</td>";
             }
             //print buttons
-            echo "<td><a href='updateUserPage.php?uid=".$user["userID"]."&accepted=1' class='waves-effect waves-light btn  blue darken-4 acceptButton'>Accept</a></td>";
-            echo "<td><a href='updateUserPage.php?uid=".$user["userID"]."&accepted=-1' class='waves-effect waves-light btn red  declineButton'>Decline</a></td></tr>";
+            echo "<td><a href='loading.php?uid=".$user["userID"]."&accepted=1' class='waves-effect waves-light btn  blue darken-4 acceptButton'>Accept</a></td>";
+            echo "<td><a href='loading.php?uid=".$user["userID"]."&accepted=-1' class='waves-effect waves-light btn red  declineButton'>Decline</a></td></tr>";
           }
           ?>
         </tbody>
       </table>
-
       <!-- educators tab-->
       <div id="educators">
         <table class="striped tablesorter">
@@ -110,13 +101,10 @@ include "adminAccess.php";
               <th>Name</th>
               <th>Email</th>
               <th>Organisation</th>
-
             </tr>
           </thead>
           <tbody class="">
             <?php
-            //include 'db_connection.php';
-            //$conn = OpenCon();
             /*
             $sql = "SELECT fullName, email, LOCATION.name FROM LOCATIONASSIGNMENT LA JOIN USERS U ON U.userID = LA.userID ".
             "JOIN LOCATION L ON LA.locationID = L.locationID WHERE accountType = 0";*/
@@ -145,7 +133,6 @@ include "adminAccess.php";
               echo $location."</td>";
               echo '<td><a class="waves-effect waves-light btn blue darken-4 testButton" href="accessibleTest.php?userID='.$educator["userID"].'">Tests</a></td></tr>';
             }
-
             ?>
           </tbody>
         </table>
@@ -172,16 +159,13 @@ include "adminAccess.php";
               echo "<tr><td>".$row["fullName"]."</td>".
               "<td>".$row["email"]."</td>".
               "<td>".$location["name"]."</td></tr>";
-
             }
             CloseCon($conn);
             ?>
           </tbody>
-
         </table>
       </div>
     </div>
-    <!--end body content-->
   </body>
   <script>
   //Sorting The table contents
@@ -200,7 +184,6 @@ include "adminAccess.php";
   $('.acceptButton').click(function() {
     $(this).closest('tr').remove();
   });
-
 </script>
 
 <style media="screen">
@@ -208,8 +191,6 @@ include "adminAccess.php";
   margin-top: 25px;
   width: 900px;
 }
-
-
 .tabs .tab a:focus, .tabs .tab a:focus.active {
   background-color: rgba(38, 166, 154, 0.2);
   outline: none;
@@ -236,7 +217,6 @@ ul.tabs {
 .tabs .tab {
   text-transform: none;
 }
-
 .tablesorter-header {
   cursor: pointer;
   outline: none;
@@ -252,6 +232,5 @@ td .btn{
 .acceptButton:hover, .testButton:hover{
   background-color: #FF8C18!important;
 }
-
 </style>
 </html>

@@ -14,7 +14,14 @@ include "adminAccess.php";
 unset($_SESSION["createURL"]);
 //get the url of the current page
 $_SESSION["createURL"] = basename($_SERVER["REQUEST_URI"]);
-
+$url = $_SESSION["createURL"];
+/*
+$index = strpos($url,"=");
+$list = substr($url, $index+1);
+$idList = explode("&", $list);
+foreach($idList as $id)
+echo $id." ";
+*/
 $index = 0;
 $taskIdList = array();
 //get the list of parameters in the url

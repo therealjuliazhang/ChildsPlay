@@ -1,19 +1,12 @@
-<!--
+<!-- ====================================================================================
 Title:Educator Header;
 Author:Alex Satoru Hanrahan (4836789), Ren Sugie(5679527);
--->
+Last Edited: 22/10/2019;
+===================================================================================== -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/> -->
-  <!-- CSS  -->
-  <!-- <link rel="stylesheet" type="text/css" href="childsPlayStyle.css">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-  <!--  Scripts-->
-  <!-- <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script type = "text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.js"></script> -->
 </head>
 <body>
   <!--Header-->
@@ -21,7 +14,7 @@ Author:Alex Satoru Hanrahan (4836789), Ren Sugie(5679527);
     <nav class="nav-extended" style="background-color:#081754">
       <div class="nav-wrapper">
         <a href="educatorTests.php" class="brand-logo left"><img src="images/logo3.png" height="50px"></a>
-        <ul class="right hide-on-med-and-down">
+        <ul class="right">
           <a class="waves-effect waves-light btn blue darken-2 center-align" href="eProfile.php" id="profileLinkButton"> <i class="material-icons">account_box</i></a>
         </ul>
       </div>
@@ -38,7 +31,7 @@ Author:Alex Satoru Hanrahan (4836789), Ren Sugie(5679527);
 </style>
 </html>
 <script type="text/javascript">
-//detect browser size when the size is changed
+  //alert when screen size is small
 var resizeTimeout
 $(window).resize(function(){
     clearTimeout(resizeTimeout)

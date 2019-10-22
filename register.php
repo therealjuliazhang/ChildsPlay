@@ -1,6 +1,7 @@
 <!--=========================================================================================================
 Title: Register
-Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679527)
+Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679527);
+Last Edited: 22/10/2019;
 ==========================================================================================================-->
 <!DOCTYPE html>
 <html>
@@ -194,7 +195,6 @@ while ($row = mysqli_fetch_assoc($result))
 	</script>
 </head>
 <!-- logo -->
-
 <body>
 	<div class="container">
 		<div class="row">
@@ -203,7 +203,6 @@ while ($row = mysqli_fetch_assoc($result))
 			</div>
 		</div>
 	</div>
-
 	<!-- card -->
 	<div class="container bodyContainer">
 		<div id="cardWrapper">
@@ -308,9 +307,9 @@ while ($row = mysqli_fetch_assoc($result))
 		background-color: #081754;
 	}
 
-	.bodyContainer {
-		width: 30%;
-	}
+.container{
+	width: 450px;
+}
 
 	.card {
 		height: 1100px;
