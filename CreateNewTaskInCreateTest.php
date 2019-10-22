@@ -97,8 +97,14 @@ Julia Aoqi Zhang (5797585);
               //redirect back to page
               if (from == "edit")
                 window.location = "editTest.php?testID=" + testID;
-              if (from == "create")
-                window.location = "createTest.php?taskID=" + taskID;
+              if (from == "create"){
+                var para = <?php echo json_encode($_SESSION["createURL"]); ?>;
+                if(para.indexOf("taskID=") !== -1) //if para contains "taskID="
+                  window.location = "createTest.php?" + para + "&" + taskID;
+                else
+                  window.location = "createTest.php?taskID=" + taskID;
+              }
+                
               // window.location = "createTest.php?taskID=" + taskID;
               /*if(exist == true)
               window.location = "filterExistingTasks.php";*/
@@ -107,7 +113,7 @@ Julia Aoqi Zhang (5797585);
         );
       }
     }
-    /**/
+    
     function selectActivityStyle() {
       var pointsInterval = 5;
       var activityStyle = <?php
@@ -325,5 +331,4 @@ Julia Aoqi Zhang (5797585);
     background-color: #FF8C18 !important;
   }
 </style>
-
 </html>

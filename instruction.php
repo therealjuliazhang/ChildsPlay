@@ -19,30 +19,34 @@ else{
 	$tasks = array();
 }
 $from="";
+/*
+if(isset($_SESSION["from"]))
+	$from = $_SESSION["from"];
+*/
 if(isset($_GET["from"])){
 	$from = $_GET["from"];
 	$_SESSION["from"] = $from;
 }
 else if(isset($_SESSION["from"]))
-$from = $_SESSION["from"];
+	$from = $_SESSION["from"];
 
 //find out if it's from edit or create test page to display the appropriate Add button in FilterExistingTasks page
 if(isset($_GET["edit"]))
-$_SESSION["edit"] = "edit";
+	$_SESSION["edit"] = "edit";
 else if(isset($_GET["create"]))
-$_SESSION["create"] = "create";
+	$_SESSION["create"] = "create";
 
 if(isset($_GET["testID"])){
 	$testID = $_GET["testID"];
 	$_SESSION["testID"] = $testID;
 }
 else if(isset($_SESSION["testID"]))
-$testID = $_SESSION["testID"];
+	$testID = $_SESSION["testID"];
 else
-$testID = 0;
+	$testID = 0;
 
 if(isset($_SESSION["groupID"]))
-$groupID = $_SESSION["groupID"];
+	$groupID = $_SESSION["groupID"];
 
 $taskID = isset($_GET["taskID"]) ? $_GET["taskID"]: 0;
 $_SESSION["taskID"] = $taskID;
@@ -189,7 +193,7 @@ $bodyPart = "eye";
 						foreach ($imageAdresses as $value)
 						echo '<img src=' . $value['address'] . ' width="100px">';
 					}
-					//CloseCon($conn);
+					CloseCon($conn);
 					?>
 				</div>
 			</div>
@@ -202,7 +206,7 @@ $bodyPart = "eye";
 								echo "Start Preview";
 							}
 							else if ($mode == "start")
-							echo "Start";
+								echo "Start";
 							?>
 						</a>
 						<!-- <a href="?back=true" class="waves-effect waves-light btn blue darken-4">Back</a> -->
@@ -228,9 +232,9 @@ $bodyPart = "eye";
 		if(taskIndex == 0)
 		//if preview (group is preview group), go back to educator tests page
 		if(groupID == 4)
-		window.location.href = "educatorTests.php";
+			window.location.href = "educatorTests.php";
 		else
-		window.location.href = "selectGroupForTask.php?testID=" + testID;
+			window.location.href = "selectGroupForTask.php?testID=" + testID;
 		else{
 			taskIndex = <?php echo --$taskIndex; ?>;
 			window.location.href = "comments.php?testID=" + testID + "&groupID=" + groupID + "&taskIndex=" + taskIndex;

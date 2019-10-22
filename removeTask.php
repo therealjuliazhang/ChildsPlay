@@ -38,15 +38,19 @@ include "adminAccess.php";
 		//close connection
 		$conn->close();  
 		//remove the selected taskID from the url
-		if(strpos($url, "&$taskID") !== false){
+		if(strpos($url, "&$taskID&") !== false){ 
 			$string = "'&".$taskID."'";
-			$url = str_replace("&$taskID", "", $url);
+			$url = str_replace("&$taskID&", "&", $url);
 		}
 		else if(strpos($url, "?taskID=$taskID") !== false){
 			if(strpos($url, "&") !== false)
 				$url = str_replace("$taskID&", "", $url);
 			else
 				$url = str_replace("?taskID=$taskID", "", $url);
+		}
+		else if(strpos($url, "&$taskID") !== false){
+			$string = "'&".$taskID."'";
+			$url = str_replace("&$taskID", "", $url);
 		}
 		//go back to create Test page
 		header("Location: $url");
