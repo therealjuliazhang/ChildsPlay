@@ -36,7 +36,6 @@ while ($row = mysqli_fetch_assoc($result))
 			$('.materialSelect').on('contentChanged', function() {
 				$(this).material_select();
 			});
-
 			//set locations into select options
 			var locations = <?php echo json_encode($locations); ?>;
 			for (var i = 0; i < locations.length; i++) {

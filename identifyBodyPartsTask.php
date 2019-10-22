@@ -188,7 +188,6 @@ CloseCon($conn);
 		}
 		//Next participant
 		function goNext() {
-			console.log(clicked)
 			if (clicked == true || isPreview) {
 				preschoolerIndex++;
 				if (preschoolerIndex == preschoolers.length) {
