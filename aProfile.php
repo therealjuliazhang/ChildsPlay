@@ -115,16 +115,14 @@ while ($row = mysqli_fetch_assoc($result))
               <h6 class="hInCol">Password:</h6>
             </div>
             <div class='input-field col s9'>
-              <input id="password1" name="password1" type="password" class="validate">
+                <input id="password1" name="password1" type="password" class="passValidate">
             </div>
             <!--Password confirm Section-->
             <div class="hide passwordComfirmationRow">
-              <div class="col s3 column01">
-                <h6 class="hInCol">Confirm Password:</h6>
-              </div>
-              <div class='input-field col s9'>
-                <input id="password2" name="password2" type="password" class="validate">
-              </div>
+                <div class="col s3 column01"><h6 class="hInCol">Confirm Password:</h6></div>
+                <div class='input-field col s9'>
+                    <input id="password2" name="password2" type="password" class="passValidate">
+                </div>
             </div>
             <div class="col s3">
               <a class="waves-effect waves-light btn blue darken-4" id="changeButton">Change password</a>
@@ -174,21 +172,21 @@ while ($row = mysqli_fetch_assoc($result))
 </body>
 
 <script>
-  $("#editButton").click(function() {
-    $("#username").prop("disabled", false);
-    $("#email").prop("disabled", false);
-    $("#saveButtonDiv").removeClass("hide");
-    $("#editButtonDiv").addClass("hide");
-    $("#changeButton").removeClass("hide");
-  })
+$("#editButton").click(function(){
+  $("#username").prop( "disabled", false );
+  $("#email").prop( "disabled", false );
+  $("#saveButtonDiv").removeClass("hide");
+  $("#editButtonDiv").addClass("hide");
+  $("#changeButton").removeClass("hide");
+})
 
-  $("#changeButton").click(function() {
-    $("#password1").prop("disabled", false);
-    $(".passwordComfirmationRow").removeClass("hide");
-    $(".validate").prop('disabled', false);
-  });
-  //disable input
-  $(document).ready(function() {
+$("#changeButton").click(function(){
+  $("#password1").prop( "disabled", false );
+  $(".passwordComfirmationRow").removeClass("hide");
+  $(".passValidate").prop('disabled', false);
+});
+//disable input
+$(document).ready(function(){
     var users = <?php echo json_encode($users); ?>;;
     $("#username").val(users["username"]);
     $("#email").val(users["email"]);
@@ -196,6 +194,7 @@ while ($row = mysqli_fetch_assoc($result))
     var currentEmail = users["email"];
     var currentUsername = users["username"];
     loadLocationInfo();
+    
     $("#form").validate({
       rules: {
         username: {
@@ -294,6 +293,8 @@ while ($row = mysqli_fetch_assoc($result))
     //   }
     // });
   });
+  
+});
 
   //FUnction for switching tabs
   $(function($) {
@@ -392,9 +393,16 @@ while ($row = mysqli_fetch_assoc($result))
   //Function for adding and deleting rows
   // function appendRow() {
 
-  //   //variables for a new row
-  //   var locationNameInput = "<div class='col s10'><input name='rowNum[]' value='default' type='text'  class='validate inputInColB' required /><span style='display:none; color:red;'>This location is already added.</span><span class='helper-text' data-error='Location cannot be blank'></span></div>";
-  //   var removeButtonB = " <div class='col s1'><div class='col s1 removeCell'><a class='waves-effect waves-light btn  removeButtonB'><i class='material-icons'>remove</i></a></div></div>";
+     //enable input for location tab
+      $(document).ready(function(){
+        $("#editButtonB").click(function(){
+          $(".inputInColB").prop( "disabled", false );
+          $(".removeButtonB").removeClass("hide");
+          $("#addButtonB").removeClass("hide");
+          $("#saveButtonB").removeClass("hide");
+          $("#editButtonB").addClass("hide");
+        })
+      });
 
   //   //insert a new row
   //   var locations = "<div class='removable'>" + locationNameInput + removeButtonB + "</div>";

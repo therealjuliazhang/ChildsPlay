@@ -122,8 +122,12 @@ if(isset($_POST['nextButton'])){
 				header("Location: viewExistingTests.php");
 			else if($from == "edit")
 				header("Location: editTest.php");
-			else if($from == "create")
-				header("Location: createTest.php");
+			else if($from == "create"){
+				$url = $_SESSION["createURL"];
+				$index = strpos($url,"taskID");
+				$para = substr($url, $index);
+				header("Location: createTest.php?".$para);
+			}
 			else
 				header("Location: thankyou.php");
 		}

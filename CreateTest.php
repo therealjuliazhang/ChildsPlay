@@ -8,15 +8,22 @@ include "adminAccess.php";
 unset($_SESSION["createURL"]);
 //get the url of the current page
 $_SESSION["createURL"] = basename($_SERVER["REQUEST_URI"]);
-
+$url = $_SESSION["createURL"];
+/*
+$index = strpos($url,"=");
+$list = substr($url, $index+1);
+$idList = explode("&", $list);
+foreach($idList as $id)
+echo $id." ";
+*/
 $index = 0;
 $taskIdList = array();
 //get the list of parameters in the url
 foreach($_GET as $key => $value){
   if($index == 0)
-  array_push($taskIdList, $value);
+    array_push($taskIdList, $value);
   else
-  array_push($taskIdList, $key);
+    array_push($taskIdList, $key);
   $index++;
 }
 
@@ -53,10 +60,6 @@ document.addEventListener('DOMContentLoaded', function() {
 	var elem = document.querySelectorAll('.tooltipped');
 	var instance = M.Tooltip.init(elem);
 });
-// document.addEventListener('DOMContentLoaded', function() {
-//     var elems = document.querySelectorAll('.dropdown-trigger');
-//     var instances = M.Dropdown.init(elems, options);
-// });
 
 $(function() {
   //Places error element next to invalid inputs
@@ -125,7 +128,7 @@ function displayTasks() {
   tasks.forEach(function displaytask(task) {
     //get preview link for task
     var previewURL;
-    previewURL = "instruction.php?from=edit&mode=preview&taskID=" + task.taskID;
+    previewURL = "instruction.php?from=create&mode=preview&taskID=" + task.taskID;
     $('<tr/>').append([
       $('<td/>', {
         text: task.taskTitle
