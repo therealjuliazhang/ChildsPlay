@@ -221,7 +221,7 @@ Julia Aoqi Zhang (5797585);
               <option value="" disabled selected>Choose an option</option>
               <option <?php if (isset($activityStyle)) {
                         if ($activityStyle == "Identify Body Parts") echo "selected";
-                      } ?> value="Identify Body Parts">Identify Body Part</option>
+                      } ?> value="Identify Body Parts">Identify Body Parts</option>
               <option <?php if (isset($activityStyle)) {
                         if ($activityStyle == "Likert Scale") echo "selected";
                       } ?> value="Likert Scale">Likert Scale</option>
