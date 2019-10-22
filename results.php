@@ -83,6 +83,7 @@ include_once 'resultQueries.php';
 					$("#arrowForAge").html("keyboard_arrow_right");
 				}
 			});
+			//make text area scrollable
 			$('textarea').each(function() {
 				this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden;');
 			}).on('input', function() {

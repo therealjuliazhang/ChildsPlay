@@ -1,17 +1,11 @@
-<!--
+<!--================================
 Title:Edit Test;
 Author:Phuong Linh Bui (5624095);
--->
+=================================-->
 <!DOCTYPE html>
 <html>
 <?php
-/*session_start();
-if(isset($_SESSION['userID']))
-$userID = $_SESSION['userID'];
-else
-header('login.php');*/
 include "adminAccess.php";
-//$userID = 1; //remove after admin pages are linked up
 //get test ID
 if(isset($_SESSION["testID"]))
 $testID = $_SESSION["testID"];

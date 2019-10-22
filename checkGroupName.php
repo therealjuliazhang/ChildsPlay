@@ -1,7 +1,8 @@
 <?php
-/*Title: Check group name 
+/*======================================
+Title: Check group name 
 Author: Alex Satoru Hanrahan (4836789)
-*/
+=======================================*/
     //get input
     if(isset($_REQUEST['groupName']))
         $input = $_REQUEST['groupName'];
