@@ -53,7 +53,6 @@ include "adminAccess.php";
           $conn = OpenCon();
           //get pending users from database
           $sql = "SELECT * FROM USERS WHERE accepted = 0";
-
           $result = $conn->query($sql);
           $users = array();
           while($row = mysqli_fetch_assoc($result))
@@ -88,8 +87,8 @@ include "adminAccess.php";
               echo "<td>Admin</td>";
             }
             //print buttons
-            echo "<td><a href='updateUserPage.php?uid=".$user["userID"]."&accepted=1' class='waves-effect waves-light btn  blue darken-4 acceptButton'>Accept</a></td>";
-            echo "<td><a href='updateUserPage.php?uid=".$user["userID"]."&accepted=-1' class='waves-effect waves-light btn red  declineButton'>Decline</a></td></tr>";
+            echo "<td><a href='loading.php?uid=".$user["userID"]."&accepted=1' class='waves-effect waves-light btn  blue darken-4 acceptButton'>Accept</a></td>";
+            echo "<td><a href='loading.php?uid=".$user["userID"]."&accepted=-1' class='waves-effect waves-light btn red  declineButton'>Decline</a></td></tr>";
           }
           ?>
         </tbody>
@@ -106,8 +105,6 @@ include "adminAccess.php";
           </thead>
           <tbody class="">
             <?php
-            //include 'db_connection.php';
-            //$conn = OpenCon();
             /*
             $sql = "SELECT fullName, email, LOCATION.name FROM LOCATIONASSIGNMENT LA JOIN USERS U ON U.userID = LA.userID ".
             "JOIN LOCATION L ON LA.locationID = L.locationID WHERE accountType = 0";*/
@@ -136,7 +133,6 @@ include "adminAccess.php";
               echo $location."</td>";
               echo '<td><a class="waves-effect waves-light btn blue darken-4 testButton" href="accessibleTest.php?userID='.$educator["userID"].'">Tests</a></td></tr>';
             }
-
             ?>
           </tbody>
         </table>
@@ -163,7 +159,6 @@ include "adminAccess.php";
               echo "<tr><td>".$row["fullName"]."</td>".
               "<td>".$row["email"]."</td>".
               "<td>".$location["name"]."</td></tr>";
-
             }
             CloseCon($conn);
             ?>
@@ -189,7 +184,6 @@ include "adminAccess.php";
   $('.acceptButton').click(function() {
     $(this).closest('tr').remove();
   });
-
 </script>
 
 <style media="screen">

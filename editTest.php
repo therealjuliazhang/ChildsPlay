@@ -60,8 +60,14 @@ CloseCon($conn);
   <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>  
   <script>
+//Initialize tooltip
+document.addEventListener('DOMContentLoaded', function() {
+	var elem = document.querySelectorAll('.tooltipped');
+	var instance = M.Tooltip.init(elem);
+});
+
   var test = <?php echo json_encode($test); ?>;
   var tasks = <?php echo json_encode($tasks); ?>;
   var testID = <?php echo json_encode($testID); ?>;

@@ -1,9 +1,11 @@
 <!--
-Title:User Page;
-Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Julia Aoqi Zhang (5797585), Ren Sugie(5679527);
+Title: Loading Page;
+Phuong Linh Bui (5624095);
 -->
 <?php
 include "adminAccess.php";
+include 'db_connection.php';
+$conn = OpenCon();
 ?>
 <!DOCTYPE html>
 <html>
@@ -14,7 +16,6 @@ include "adminAccess.php";
   <link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
-
   <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.1/js/jquery.tablesorter.min.js"></script>
@@ -32,7 +33,8 @@ include "adminAccess.php";
   <!--end header-->
 
   <!-- body content -->
-  <div class="preloader-wrapper big active">
+  <div style="top:100px;width:100%;text-align:center;position:relative;">
+  <div class="preloader-wrapper big active" style="width:200px;height:200px;">
        <div class="spinner-layer spinner-blue">
          <div class="circle-clipper left">
            <div class="circle"></div>
@@ -42,7 +44,6 @@ include "adminAccess.php";
            <div class="circle"></div>
          </div>
        </div>
-
        <div class="spinner-layer spinner-red">
          <div class="circle-clipper left">
            <div class="circle"></div>
@@ -52,7 +53,6 @@ include "adminAccess.php";
            <div class="circle"></div>
          </div>
        </div>
-
        <div class="spinner-layer spinner-yellow">
          <div class="circle-clipper left">
            <div class="circle"></div>
@@ -62,7 +62,6 @@ include "adminAccess.php";
            <div class="circle"></div>
          </div>
        </div>
-
        <div class="spinner-layer spinner-green">
          <div class="circle-clipper left">
            <div class="circle"></div>
@@ -73,77 +72,37 @@ include "adminAccess.php";
          </div>
        </div>
      </div>
+  <div style="position:relative;top:40px;font-style:italic"><h5>Loading...</h5></div>
+  <div id="results"></div>
+  </div>
+  <?php
+  
+  if(isset($_GET["uid"]) && isset($_GET["accepted"])){
+    $userID = $_GET["uid"];
+    $accepted = $_GET["accepted"];
+  }
+  ?>
     <!--end body content-->
   </body>
   <script>
-  //Sorting The table contents
   $(document).ready(function() {
-  $("table").tablesorter();
+    var userid = <?php echo json_encode($userID); ?>;
+    var accepted = <?php echo json_encode($accepted); ?>;
+    $.post("updateUserPage.php",
+          {	
+            userid: userid,
+            accepted: accepted
+          },
+          function(data){
+            //show errors
+            if(data.includes("span")){
+              $("#results").html(data);
+            }
+            else{
+              window.location = "userPage.php";
+            }
+          }
+        );
   });
-  //Initialise tabs
-  $(document).ready(function(){
-    $('.tabs').tabs();
-  });
-  //remove a declined row
-  $('.declineButton').click(function() {
-    $(this).closest('tr').remove();
-  });
-  //remove an accepted row
-  $('.acceptButton').click(function() {
-    $(this).closest('tr').remove();
-  });
-
 </script>
-
-<style media="screen">
-.container{
-  margin-top: 25px;
-  width: 900px;
-}
-
-
-.tabs .tab a:focus, .tabs .tab a:focus.active {
-  background-color: rgba(38, 166, 154, 0.2);
-  outline: none;
-}
-.tabs .tab a:hover, .tabs .tab a.active {
-  background-color: rgba(38, 166, 154, 0.2);
-  color: #ee6e73;
-}
-#profileLinkButton {
-  padding-left: 16px;
-  padding-right: 16px;
-}
-#profileLinkIcon{
-  font-size: 24px;
-}
-ul.tabs {
-  float: center;
-  max-width: 99%;
-  overflow-x: hidden;
-}
-.tabs{
-  margin-bottom: 10px;
-}
-.tabs .tab {
-  text-transform: none;
-}
-
-.tablesorter-header {
-  cursor: pointer;
-  outline: none;
-}
-.tablesorter-header-inner::after {
-  content: '▼';
-  font-size: 12px;
-  margin-left: 5px;
-}
-td .btn{
-  width: 120px;
-}
-.acceptButton:hover, .testButton:hover{
-  background-color: #FF8C18!important;
-}
-
-</style>
 </html>

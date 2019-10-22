@@ -56,7 +56,6 @@ if(isset($_SESSION["uID"])){
 
 	if ($mail->send()) {
 		echo "Your message was sent successfully!";
-		header('Location: userPage.php');
 	} else {
 		echo "Mailer Error: " . $mail->ErrorInfo;
 	}

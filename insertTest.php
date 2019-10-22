@@ -27,6 +27,23 @@ if(isset($_POST["createTest"])){
 	}
 	else{
 		$testID = $conn->insert_id;
+		if(isset($_SESSION["createURL"])){
+			$url = $_SESSION["createURL"];
+			$index = strpos($url,"=");
+			$taskList = substr($url, $index+1);
+			$idList = explode("&", $taskList);
+			$order = 0;
+			foreach($idList as $taskID){
+				$order++;
+				$query = "INSERT INTO TASKASSIGNMENT(testID, taskID, orderInTest) VALUES ($testID, $taskID, $order)";
+				if(!$result = $conn->query($query)){
+					$errorFlag = true;
+					echo "<span style='color:red'>Failed to create a new test! ".mysqli_error($conn)."</span><br/>";
+				}
+				else
+					$errorFlag = false;
+			}
+		}/*
 		if(isset($_SESSION["list"])){
 			$idList = explode(",", $_SESSION["list"]);
 			$index = 0;
@@ -42,7 +59,7 @@ if(isset($_POST["createTest"])){
 			}
 		}
 		else
-			$errorFlag = false;
+			$errorFlag = true;*/
 	}
 	if($errorFlag == false){
 		unset($_SESSION["createURL"]);
