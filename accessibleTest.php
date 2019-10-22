@@ -1,6 +1,7 @@
 <!--
 Title:Accessible Test;
 Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Julia Aoqi Zhang (5797585), Ren Sugie(5679527);
+Last Edited: 22/10/2019;
 -->
 <!DOCTYPE html>
 <html>
@@ -73,8 +74,8 @@ while($row = mysqli_fetch_assoc($testIDsResult)){
       </table>
       <div class="row">
         <div class="s12">
-          <a id="addTest" class="right waves-effect waves-light btn blue darken-4" href="selectAccessibleTest.php?userID=<?php echo $selectedUserID?>">Add Test</a>
-          <a id="back" class="right waves-effect waves-light btn red" href="userPage.php#educators">Back</a>
+          <a id="back" class="right waves-effect waves-light btn blue darken-4" href="userPage.php#educators">Back</a>
+          <a id="addTest" class="right waves-effect waves-light btn blue darken-2" href="selectAccessibleTest.php?userID=<?php echo $selectedUserID?>">Add Test</a>
         </div>
       </div>
 
@@ -152,7 +153,7 @@ $(document).ready(function() {
 td .btn{
   width: 100px;
 }
-#addTest:hover {
+#addTest:hover, #back:hover{
   background-color: #FF8C18!important;
 }
 

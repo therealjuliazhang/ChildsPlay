@@ -265,9 +265,10 @@ function displayComments(taskResults){
     $('<div/>', { class: "row" })
     .append($('<form/>', { class: "col s12" }))
     .append($('<div/>', { class: "input-field col s8" }))
-    .append([$('<textarea/>', { class: "materialize-textarea", id:"textarea1", text: taskResults[0].comments}), $('<label/>', { for: "textarea1", class:"materialize-textarea", text:"Comments" })])
+    .append([$('<textarea/>', { "data-original-height": 0, disabled: "", id:"textarea1", text: taskResults[0].comments, style: "color: black;"}), $('<label/>', { for: "textarea1", text:"Comments" })])
     .appendTo('#results');
     M.textareaAutoResize($('#textarea1'));
+    $('#textarea1').trigger('autoresize'); 
 }
 
 //display preferred mechanics "other" option comments
@@ -277,7 +278,7 @@ function displayOtherComments(taskResults){
             $('<div/>', { class: "row" })
             .append($('<form/>', { class: "col s12" }))
             .append($('<div/>', { class: "input-field col s8" }))
-            .append([$('<textarea/>', { class: "materialize-textarea", id:"textarea2", text: results.otherComment}), $('<label/>', { for: "textarea2", class:"materialize-textarea", text:"Other Mechanic" })])
+            .append([$('<textarea/>', { disabled: "", id:"textarea2", text: results.otherComment, style: "color: black;"}), $('<label/>', { for: "textarea2", text:"Other Mechanic" })])
             .appendTo('#results');
             M.textareaAutoResize($('#textarea2'));
         }

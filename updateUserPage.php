@@ -23,8 +23,8 @@ Author:Phuong Linh Bui (5624095), Julia Aoqi Zhang (5797585);
 		$_SESSION["accepted"] = $accepted;
     }
     
-    echo "This is the user id ".$userID."<br/>";
-    echo "This is the accepted value ".$accepted."<br/>";
+    //echo "This is the user id ".$userID."<br/>";
+    //echo "This is the accepted value ".$accepted."<br/>";
     
     //query works if there is a value for userID
     
