@@ -1,7 +1,9 @@
 <?php
 /*
+=======================================
 Title:Reset password;
 Author:Phuong Linh Bui (5624095);
+=======================================
 */
 session_start();
 include "db_connection.php";
