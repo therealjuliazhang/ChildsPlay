@@ -157,7 +157,7 @@ Julia Aoqi Zhang (5797585);
             //delete the previous label
             upload.removeChild(upload.lastChild);
             //add the label telling user that they can upload multiple images for Character Ranking task
-            noti.innerHTML = "You can upload multiple images for Character Ranking activity style";
+            noti.innerHTML = "You can upload multiple images for Character Ranking activity style by ctrl clicking images";
             upload.appendChild(noti);
           } else {
             input.setAttribute("name", "file");
