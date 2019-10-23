@@ -1,9 +1,9 @@
 <?php 
 /*
-=======================================
+========================================================================
 Title:Insert Group; 
 Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789); 
-=======================================
+========================================================================
 */
 //if(isset($_POST["submit"])){
 	$check = false;
@@ -11,13 +11,6 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789);
 include 'db_connection.php';
 $conn = OpenCon();
 include "educatorAccess.php";
-/*
-session_start();
-if(isset($_SESSION["userID"]))
-	$userID = $_SESSION["userID"];
-else
-    header("Location: login.php");
-*/
 //used to determine what information $value holds
 $valueCount = 0;
 //get groupname and location
@@ -26,17 +19,20 @@ if(isset($_POST["groupName"]))
 if(isset($_POST["locationSelect"]))
     $location = $_POST["locationSelect"];
 //insert group into grouptest table
-//$sql = "INSERT INTO GROUPTEST (name, locationID)VALUES ('".$groupName."', '".$location."')";
-$sql = "INSERT INTO GROUPTEST (name, locationID, userID) VALUES ('".$groupName."', '".$location."', '".$userID."')";  
-if ($conn->query($sql) === TRUE){ 
+$sql = $conn->prepare("INSERT INTO GROUPTEST (name, locationID, userID) VALUES (?, ?, ?)");
+$sql->bind_param("sii", $groupName, $location, $userID);
+if ($sql->execute()){ 
 	echo "New record created successfully";
     $check = true;
     //get groupID of inserted group
-    $sql = "SELECT groupID FROM GROUPTEST WHERE name = '" . $groupName. "' limit 1"; //groupname is unique
-    $result = $conn->query($sql);
-    $row = mysqli_fetch_array($result);
+    $stmt = $conn->prepare("SELECT groupID FROM GROUPTEST WHERE name = ? limit 1"); //groupname is unique
+    $stmt->bind_param("s", $groupName);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
     $groupID;
     $groupID = $row['groupID'];
+    $stmt->close();
     //get preschoolers data and insert into database
     $preschooler = new stdClass();
     // $preschoolers = array();
@@ -55,10 +51,10 @@ if ($conn->query($sql) === TRUE){
             }
         }
     }
-    $conn->close();
+    $sql->close();
+    CloseCon($conn);
         //if($check == true)
-            header('Location: educatorTests.php#groups');
-    
+            header('Location: educatorTests.php#groups');  
 }
 else{
     echo "Error: " . $sql . "<br>" . $conn->error;
@@ -67,34 +63,40 @@ else{
 //}
 //insert preschooler into preschooler table
 function insertPreschooler($conn, $preschooler, $check){
-    $sql = "INSERT INTO PRESCHOOLER (name, age, gender) VALUES ('".$preschooler->name."', '".$preschooler->age."', '".$preschooler->gender."')";
-    if ($conn->query($sql) === TRUE){ 
+    $sql = $conn->prepare("INSERT INTO PRESCHOOLER (name, age, gender) VALUES (?, ?, ?)");
+    $sql->bind_param("sis", $preschooler->name, $preschooler->age, $preschooler->gender);
+    if ($sql->execute()){ 
         echo "New record created successfully";
 		$check = true;
 	}	
     else {
         echo "Error: " . $sql . "<br>" . $conn->error;
 		$check = false;
-	}
+    }
+    $sql->close();
 }
 //get preschooler ID of the preschooler just inserted into database
 function getPreID($conn, $preschooler){
-    $sql = "SELECT preID FROM PRESCHOOLER WHERE name = '" .$preschooler->name. "' AND age = '" .$preschooler->age. "' AND gender = '" .$preschooler->gender. "' limit 1";
-    $result = $conn->query($sql);
-    $row = mysqli_fetch_array($result);
+    $sql = $conn->prepare("SELECT preID FROM PRESCHOOLER WHERE name = ? AND age = ? AND gender = ? limit 1");
+    $sql->bind_param("sis", $preschooler->name, $preschooler->age, $preschooler->gender);
+    $sql->execute();
+    $result = $sql->get_result();
+    $row = $result->fetch_assoc();
+    $sql->close();
     return $row['preID'];
 }
 //insert preschooler to group assignment into groupAssignment table
 function insertGroupAssignment($conn, $groupID, $preID, $check){
-    //$sql = "INSERT INTO GROUPASSIGNMENT (groupID, preID, userID) VALUES ('".$groupID."', '".$preID."', '".$userID."')";
-	$sql = "INSERT INTO GROUPASSIGNMENT (groupID, preID) VALUES ('".$groupID."', '".$preID."')";
-    if ($conn->query($sql) === TRUE){
+    $sql = $conn->prepare("INSERT INTO GROUPASSIGNMENT (groupID, preID) VALUES (?, ?)");
+    $sql->bind_param("ii", $groupID, $preID);
+    if ($sql->execute()){
         echo "New record created successfully";
 		$check = true;
 	}
     else{
         echo "Error: " . $sql . "<br>" . $conn->error;
 		$check = false;
-	}
+    }
+    $sql->close();
 }
 ?>

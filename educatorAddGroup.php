@@ -1,8 +1,8 @@
 <!--
-=======================================
+==========================================================================================
 Title:Educator Add Group;
 Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679527);
-=======================================
+==========================================================================================
 -->
 <!DOCTYPE html>
 
@@ -70,7 +70,7 @@ while($row = mysqli_fetch_assoc($result)){
       </div>
       <div class="row right-align">
         <input type="submit" name="submit" class="submit waves-effect waves-light btn blue darken-2 buttons" value="Save">
-        <a style=""href="educatorTests.php#groups" class="waves-effect waves-light btn blue darken-4  buttons">Cancel</a>
+        <a href="educatorTests.php#groups" class="waves-effect waves-light btn blue darken-4  buttons">Cancel</a>
       </div>
     </form>
   </div>

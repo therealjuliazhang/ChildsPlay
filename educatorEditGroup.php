@@ -1,8 +1,8 @@
 <!--
-=======================================
+===============================================================================================================
 Title:Educator Edit Group;
 Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679527);
-=======================================
+===============================================================================================================
 -->
 <!DOCTYPE html>
 
@@ -118,11 +118,7 @@ $(document).ready(function() {
   $('.materialSelect').on('contentChanged', function() {
     $(this).material_select();
   });
-  //set group name
-  /*var name =
-  $("#groupName").val(name);
-  //document.getElementById("groupName").innerHTML = groupName;
-  */
+  
   //set locations into select options
   var locations = <?php echo json_encode($locations); ?>;
   var currentLocationID = <?php echo json_encode($currentLocationID); ?>;

@@ -1,8 +1,8 @@
 <!--
-=======================================
+=======================================================================================
 Title:Comments;
 Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679527);
-=======================================
+=======================================================================================
 -->
 <!DOCTYPE html>
 <html>
@@ -41,7 +41,6 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679
 		if(isset($_SESSION['from']))
 			$from = $_SESSION['from'];
 	}
-	//CloseCon($conn);
 	?>
     <head>
         <title>Comments</title>
@@ -69,7 +68,6 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679
         <!--end header-->
 
         <!-- body content -->
-
         <div class="container content">
 			<div class="row">
 				<div class="col s12">
@@ -141,12 +139,23 @@ if(isset($_POST['nextButton'])){
 	else{
 		if($comment != ""){
 			//check if comment already exists for task
-			$sql = "SELECT comments FROM TASKASSIGNMENT WHERE taskID = ".$taskID." AND testID=".$testID;
-			$result = $conn->query($sql);
-			$previousComments = mysqli_fetch_assoc($result)['comments'];
-			$comment = $previousComments . "\n" . $comment;
-			$sql = "UPDATE TASKASSIGNMENT SET comments = '". $comment ."' WHERE taskID = ".$taskID." AND testID=".$testID;
-			if(mysqli_query($conn,$sql)){ //check if the query is executed successfully
+			$stmt = $conn->prepare("SELECT comments FROM TASKASSIGNMENT WHERE taskID = ? AND testID = ?");
+			$stmt->bind_param("ii", $taskID, $testID);
+			$stmt->execute();
+			$result = $stmt->get_result();
+			$row = $result->fetch_assoc();
+			$previousComments = $row['comments'];
+			$stmt->close();
+			
+			if($previousComments != null)
+				$comment = $previousComments."\n".$comment;
+			else
+				$comment = $previousComments.$comment;
+			//update comments for the task
+			$sql = $conn->prepare("UPDATE TASKASSIGNMENT SET comments = ? WHERE taskID = ? AND testID = ?");
+			$sql->bind_param('sii', $comment, $taskID, $testID);
+			
+			if($sql->execute()){ //check if the query is executed successfully
 				if($taskIndex == (sizeof($tasks)-1))
 					header("Location: thankyou.php");
 				else{
@@ -156,6 +165,7 @@ if(isset($_POST['nextButton'])){
 			} else{
 				echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
 			}
+			$sql->close();
 		}
 		else{
 			if($taskIndex == (sizeof($tasks)-1)){
@@ -187,6 +197,5 @@ if(isset($_POST['nextButton'])){
 	.btn:hover {
 	  background-color: #FF8C18!important;
 	}
-
     </style>
 </html>

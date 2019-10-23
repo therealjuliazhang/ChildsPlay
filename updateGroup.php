@@ -27,18 +27,22 @@ if(isset($_POST["groupName"]))
 if(isset($_POST["locationSelect"]))
     $location = $_POST["locationSelect"];
 //update groupName
-$sql = "UPDATE GROUPTEST SET name = '" .$groupName. "' WHERE groupID = " .$groupID;
-if ($conn->query($sql) === TRUE)
+$sql = $conn->prepare("UPDATE GROUPTEST SET name = ? WHERE groupID = ?");
+$sql->bind_param("si", $groupName, $groupID);
+if ($sql->execute())
     echo "Record updated successfully";
 else
     echo "Error updating record: " . $conn->error;
+$sql->close();
 //update location if it has been changed ($location will be id instead of name)
 if(is_numeric($location)){
-    $sql = "UPDATE GROUPTEST SET locationID = " .$location. " WHERE groupID = " .$groupID;
-    if ($conn->query($sql) === TRUE)
+    $query = $conn->prepare("UPDATE GROUPTEST SET locationID = ? WHERE groupID = ?");
+    $query->bind_param("ii", $location, $groupID);
+    if ($query->execute())
         echo "Record updated successfully";
     else
         echo "Error updating record: " . $conn->error;
+    $query->close();
 }
 //update preschoolers
 $preschooler = new stdClass();
@@ -64,37 +68,47 @@ $conn->close();
 header('Location: educatorTests.php#groups');
 //insert preschooler if doesnt exist in database and get preschooler ID
 function getID($conn, $preschooler){
-    $sql = "SELECT preID FROM PRESCHOOLER WHERE name = '" .$preschooler->name. "' AND age = '" .$preschooler->age. "' AND gender = '" .$preschooler->gender. "' limit 1";
-    $result = $conn->query($sql);
-    $row = mysqli_fetch_array($result);
+    $sql = $conn->prepare("SELECT preID FROM PRESCHOOLER WHERE name = ? AND age = ? AND gender = ? limit 1");
+    $sql->bind_param("sis", $preschooler->name, $preschooler->age, $preschooler->gender);
+    $sql->execute();
+    $result = $sql->get_result();
+    $row = $result->fetch_assoc();
+    $sql->close();
     return $row['preID'];
 }   
 //delete current group assignments
 function deleteGroupAssignments($conn, $groupID){
-    $sql = "DELETE FROM GROUPASSIGNMENT WHERE groupID = ".$groupID;
-    displaySqlError($conn, $sql);
-    if ($conn->query($sql) === TRUE)
+    $sql = $conn->prepare("DELETE FROM GROUPASSIGNMENT WHERE groupID = ?");
+    $sql->bind_param("i", $groupID);
+    //displaySqlError($conn, $sql);
+    if ($sql->execute())
         echo "Records deleted successfully";
     else
         echo "Error: " . $sql . "<br>" . $conn->error;
+    $sql->close();
 }
 //update preschooler to group assignment into groupAssignment table
 function insertGroupAssignment($conn, $groupID, $preID, $userID){
     //insert new group assignment
-    //$sql = "INSERT INTO GROUPASSIGNMENT (groupID, preID, userID) VALUES (".$groupID.", ".$preID.", ".$userID.")";
-	$sql = "INSERT INTO GROUPASSIGNMENT (groupID, preID) VALUES (".$groupID.", ".$preID.")";
-    if ($conn->query($sql) === TRUE)
+    $sql = $conn->prepare("INSERT INTO GROUPASSIGNMENT (groupID, preID) VALUES (?, ?)");
+    $sql->bind_param("ii", $groupID, $preID);
+	//$sql = "INSERT INTO GROUPASSIGNMENT (groupID, preID) VALUES (".$groupID.", ".$preID.")";
+    if ($sql->execute())
         echo "Record inserted successfully";
     else
         echo "Error: " . $sql . "<br>" . $conn->error;
+    $sql->close();
 }
 //insert preschooler
 function insertPreschooler($conn, $preschooler){
-    $sql = "INSERT INTO PRESCHOOLER (name, age, gender) VALUES ('".$preschooler->name."', ".$preschooler->age.", '".$preschooler->gender."')";
-    if ($conn->query($sql) === TRUE) 
+    $sql = $conn->prepare("INSERT INTO PRESCHOOLER (name, age, gender) VALUES (?, ?, ?)");
+    $sql->bind_param("sis", $preschooler->name, $preschooler->age, $preschooler->gender);
+    //$sql = "INSERT INTO PRESCHOOLER (name, age, gender) VALUES ('".$preschooler->name."', ".$preschooler->age.", '".$preschooler->gender."')";
+    if ($sql->execute()) 
         echo "New preschooler added successfully";
     else 
         echo "Error: " . $sql . "<br>" . $conn->error;
+    $sql->close();
 }
 function displaySqlError($conn, $query){
     $query = mysqli_query($conn, $query);
