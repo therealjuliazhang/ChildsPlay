@@ -1,7 +1,9 @@
 <!--
+=======================================
 Title:Identify Body Parts Task; 
 Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Julia Aoqi Zhang (5797585), Ren
 Sugie(5679527); 
+=======================================
 -->
 <html>
 <?php

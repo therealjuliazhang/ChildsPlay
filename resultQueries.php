@@ -1,8 +1,8 @@
 <?php
-/*
+/*=======================================
 Title:Result Queries; 
 Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789);
-*/
+=======================================*/
 //connect to database
 include 'db_connection.php';
 $conn = OpenCon();

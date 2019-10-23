@@ -1,7 +1,9 @@
 <?php
 /*
+=======================================
 Title:Upload Image; 
 Author:Phuong Linh Bui (5624095); 
+=======================================
 */
 $UploadFolder = "images";
 
