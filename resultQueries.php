@@ -148,7 +148,7 @@ else if(isset($_GET["testID"])){
 		$selected = "";
 		while($i < $countIDs){
 			$selected .= $_POST["age"][$i];
-			echo "Select age: ".$selected;
+
 			if($i < $countIDs - 1){
 				$selected .= ",";
 			}

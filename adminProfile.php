@@ -8,23 +8,12 @@ Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4
 include "adminAccess.php";
 include 'db_connection.php';
 $conn = OpenCon();
-/*
-include 'db_connection.php';
-$conn = OpenCon();
-
-session_start();
-if(isset($_SESSION['userID']))
-  $userID = $_SESSION['userID'];
-else
-  header('login.php');
-*/
 //get userinfo from database
 $sql = "SELECT * FROM USERS WHERE userID = " .$userID;
 $users = array();
 $result = $conn ->query($sql);
 while($row = mysqli_fetch_assoc($result))
 $users[] = $row;
-
 
 //get location information from database
 $sql = "SELECT * FROM LOCATION";

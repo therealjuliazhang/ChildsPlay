@@ -104,7 +104,7 @@ if($groups->num_rows > 0) {
 		$childQuery = "SELECT * FROM PRESCHOOLER WHERE groupID=$groupID";
 		$children = $conn->query($childQuery);
 		echo '<div class="row">
-                        <div class="col s2 tableData">'.$group["groupName"].'</div>
+                        <div class="col s2 tableData">'.$group["name"].'</div>
 						<div class="col s7 tableData">';
 						$count = 0;
 				while($child = $children->fetch_assoc()){
