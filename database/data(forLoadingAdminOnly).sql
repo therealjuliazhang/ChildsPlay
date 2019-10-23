@@ -10,6 +10,7 @@ SET
 INSERT INTO USERS(username, password, email, accountType, fullName, accepted) VALUES (@username, @password, @email, @accountType, @fullName, @accepted);
 
 
+
 /*LOCATION*/
 SET
 @name = "University of Wollongong";
@@ -32,7 +33,7 @@ INSERT INTO LOCATION(name) VALUES (@name);
 SET
 @name = "Group 4",
 @locationID = 2,
-@userID = 5;
+@userID = 1;
 INSERT INTO GROUPTEST(name, locationID, userID) VALUES(@name, @locationID, @userID);
 
 /*PRESCHOOLER*/
@@ -69,27 +70,27 @@ INSERT INTO PRESCHOOLER(name, age, gender) VALUES (@name, @age, @gender);
 /*GROUPASSIGNMENT*/
 /*Group 4*/
 SET
-@groupID = 4,
+@groupID = 1,
 @preID = 2;
 INSERT INTO GROUPASSIGNMENT(groupID, preID) VALUES (@groupID, @preID);
 
 SET
-@groupID = 4,
+@groupID = 1,
 @preID = 5;
 INSERT INTO GROUPASSIGNMENT(groupID, preID) VALUES (@groupID, @preID);
 
 
 /*TEST*/
-/*no tests necessary?*/
+/*no tests necessary*/
 
 /*LOCATIONASSIGNMENT*/
-/*no location necessary?*/
+/*no location necessary*/
 
 /*TESTASSIGNMENT*/
-/*no test assignment?*/
+/*no test assignment*/
 
 /*TASK*/
-/*no tasks?*/
+/*no tasks*/
 
 /*TASKASSIGNMENT*/
 /*no taskassignment?*/

@@ -34,12 +34,23 @@ if(isset($_POST["test"])){
 	$selected = "";
 	while($i < $countIDs){
 		$selected .= $_POST["test"][$i];
-		//echo "Select testID: ".$selected;
 		if($i < $countIDs - 1){
 			$selected .= ",";
 		}
 		$i++;
 	}
+	$testFilter = "R.testID IN (".$selected.")";
+	$query1 .= " AND ".$testFilter;
+	$query2 .= " AND ".$testFilter;
+	$query3 .= " AND ".$testFilter;
+	$query4 .= " WHERE ".$testFilter;
+}
+else if(isset($_GET["testID"])){
+	$i = 0;
+	//$countIDs = count($_POST["test"]);
+	$selected = "";
+	$selected .= $_GET["testID"];
+		
 	$testFilter = "R.testID IN (".$selected.")";
 	$query1 .= " AND ".$testFilter;
 	$query2 .= " AND ".$testFilter;
@@ -137,7 +148,7 @@ if(isset($_POST["test"])){
 		$selected = "";
 		while($i < $countIDs){
 			$selected .= $_POST["age"][$i];
-			echo "Select age: ".$selected;
+
 			if($i < $countIDs - 1){
 				$selected .= ",";
 			}

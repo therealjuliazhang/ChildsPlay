@@ -92,6 +92,8 @@ function selectActivityStyle(){
 				pointInput.setAttribute("id", "points");
 				pointInput.setAttribute("name", "points");
 				pointInput.setAttribute("type", "number");
+				pointInput.setAttribute("min", 1);
+				pointInput.setAttribute("pattern", "\d*");
 				div.appendChild(pointInput);
 				var wrapper = document.getElementById("pointRow");
 				wrapper.appendChild(header);

@@ -334,9 +334,6 @@ function backToTop() {
 .dropdown-content {
 	max-height: 350px;
 }
-
-/**/
-
 #body {
 	padding-left: 330px;
 	padding-bottom: 50px;
