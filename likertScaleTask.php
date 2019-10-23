@@ -98,16 +98,16 @@ Julia Aoqi Zhang (5797585), Ren Sugie(5679527);
 		</script>
     <!--end header-->
         <!-- body content -->
-		<img id="button" src="images/greyCircle.png" width="7%" align="right" onclick="goNext();"></img>
+		<img id="button" src="images/greyCircle.png" width="7%" align="right" onclick="goNext();" />
 		<div class="container">
-			<div class="center-align"><img id="image" height="45%"></img></div>
+			<div class="center-align"><img id="image" height="45%" /></div>
 			<!--all container does is create padding on the left & right sides.-->
 			</div>
 		<div class="bottom">
 			<div id="participant" class="row" style="font-size:18px;font-weight:bold">
 				<div class="bottomInBottom">
-				<div class="col s6 faceCol"><img id="happy" class="right" src="images/happy.png" onclick="happyClicked()" width="150px"></img></div>
-				<div class="col s6 faceCol"><img id="sad"  src="images/sad.png" onclick="sadClicked()" width="150px"></img></div>
+				<div class="col s6 faceCol"><img id="happy" class="right" src="images/happy.png" onclick="happyClicked()" width="150px" /></div>
+				<div class="col s6 faceCol"><img id="sad"  src="images/sad.png" onclick="sadClicked()" width="150px" /></div>
 				<div class="center-align">
                     <div id="nameWrapper" style="font-size:40px;">
 					<span id="preschoolerName">
@@ -145,6 +145,11 @@ Julia Aoqi Zhang (5797585), Ren Sugie(5679527);
 		document.getElementById("participant").className = 'row ' + colours[preschoolerIndex % colours.length];
 		function goNext(){
 			if(faceClicked == true || isPreview){
+				$("#sad").show();
+				$("#happy").show();
+				$("#happy").click(happyClicked);
+				$("#sad").click(sadClicked);
+
 				preschoolerIndex++;
 				if(preschoolerIndex == preschoolers.length){
 					var taskIndex = <?php echo $taskIndex ?>;
@@ -170,7 +175,10 @@ Julia Aoqi Zhang (5797585), Ren Sugie(5679527);
 		}
 		function sadClicked(){
 			faceClicked = true;
-            document.getElementById("sad").src="images/transparent.png";
+			//alert("Sad is clicked");
+			$("#happy").prop("onclick", null).off("click");
+			$("#sad").hide();
+            //document.getElementById("sad").src="images/transparent.png";
 			if(!isPreview){
 			//insert data only when in start mode
 			$.ajax({
@@ -182,7 +190,10 @@ Julia Aoqi Zhang (5797585), Ren Sugie(5679527);
 		}
 		function happyClicked(){
 			faceClicked = true;
-			document.getElementById("happy").src="images/transparent.png";
+			//alert("Happy is clicked");
+			$("#sad").prop("onclick", null).off("click");
+			$("#happy").hide();
+			//document.getElementById("happy").src="images/transparent.png";
 			//insert data only when in start mode
 			if(!isPreview){
 			$.ajax({
