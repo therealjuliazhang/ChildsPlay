@@ -1,7 +1,9 @@
-/*================================================================
+/*
+=======================================
 Title:Upload Image; 
 Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789); 
-================================================================*/
+=======================================
+*/
 document.addEventListener('DOMContentLoaded', function() {
 	var elems = document.querySelectorAll('select');
 	var instances = M.FormSelect.init(elems);
@@ -90,6 +92,8 @@ function selectActivityStyle(){
 				pointInput.setAttribute("id", "points");
 				pointInput.setAttribute("name", "points");
 				pointInput.setAttribute("type", "number");
+				pointInput.setAttribute("min", 1);
+				pointInput.setAttribute("pattern", "\d*");
 				div.appendChild(pointInput);
 				var wrapper = document.getElementById("pointRow");
 				wrapper.appendChild(header);

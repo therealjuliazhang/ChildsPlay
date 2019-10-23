@@ -1,7 +1,9 @@
 <?php
 /*
+=======================================
 Title: Database connection
 Author: Phuong Linh Bui (5624095)
+=======================================
  */
 function OpenCon()
 {

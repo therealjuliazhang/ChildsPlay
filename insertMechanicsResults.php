@@ -1,7 +1,9 @@
 <?php
 /*
+=======================================
 Title:Insert Mechanics Results; 
 Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789);
+=======================================
  */
 include "educatorAccess.php";
     // get data

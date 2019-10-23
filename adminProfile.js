@@ -1,6 +1,8 @@
 
 /*
+=======================================
 Author: Phuong Linh Bui (5624095)
+=======================================
  */
 $(document).ready(function () {
     $("#username").prop("disabled", true);

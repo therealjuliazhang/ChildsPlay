@@ -1,7 +1,9 @@
 <?php 
 /*
+=======================================
 Title:Update Educator; 
 Author:Phuong Linh Bui (5624095), Andre Knell (5741622);
+=======================================
 */
 include "educatorAccess.php";
 include 'db_connection.php';

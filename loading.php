@@ -1,6 +1,8 @@
 <!--
+=======================================
 Title: Loading Page;
 Phuong Linh Bui (5624095);
+=======================================
 -->
 <?php
 include "adminAccess.php";

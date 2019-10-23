@@ -1,6 +1,8 @@
 <!--
+=======================================
 Title:Educator Profile;
 Author:Phuong Linh Bui (5624095)
+=======================================
 -->
 <!DOCTYPE html>
 <html lang="en" dir="ltr">

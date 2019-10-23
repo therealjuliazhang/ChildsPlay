@@ -1,9 +1,11 @@
-<!--=====================================================================================
+<!--
+=======================================
 Title:Results;
 Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789),
 Julia Aoqi Zhang (5797585), Andre Knell (5741622), Ren Sugie(5679527);
 Last Edited: 22/10/2019;
-======================================================================================-->
+=======================================
+-->
 <!DOCTYPE html>
 <html>
 <?php
@@ -332,9 +334,6 @@ function backToTop() {
 .dropdown-content {
 	max-height: 350px;
 }
-
-/**/
-
 #body {
 	padding-left: 330px;
 	padding-bottom: 50px;

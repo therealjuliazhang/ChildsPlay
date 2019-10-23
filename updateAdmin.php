@@ -1,7 +1,9 @@
 <?php
 /*
+=======================================
 Title:Update Admin; 
 Author:Alex Satoru Hanrahan (4836789), Andre Knell (5741622);
+=======================================
 */ 
 include "adminAccess.php";
 include 'db_connection.php';

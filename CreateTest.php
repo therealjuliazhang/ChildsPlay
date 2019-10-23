@@ -1,7 +1,9 @@
-<!--=============================================================================================================
+<!--
+=======================================
 Title:Create Test;
 Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679527), Julia Aoqi Zhang (5797585);
-==============================================================================================================-->
+=======================================
+-->
 
 <?php
 include "adminAccess.php";
@@ -205,7 +207,7 @@ function displayTasks() {
       <table class="striped" id="taskTable">
         <thead>
           <tr class="blueText">
-            <td>TaskID&nbsp;&nbsp;</td>
+            <td width="15%">Task Title&nbsp;&nbsp;</td>
             <td>Activity Style</td>
             <td>Instruction</td>
           </tr>
