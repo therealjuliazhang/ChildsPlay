@@ -21,26 +21,42 @@ $conn = OpenCon();
 //add an existing task to the test
 if(isset($_GET["taskID"])){
   $taskID = $_GET["taskID"];
-  $sql = "SELECT MAX(orderInTest) AS max FROM TASKASSIGNMENT WHERE testID=".$testID;
-  $taskResult = $conn->query($sql);
-  while ($row = mysqli_fetch_assoc($taskResult)) {
+  $sql = $conn->prepare("SELECT MAX(orderInTest) AS max FROM TASKASSIGNMENT WHERE testID=?");
+  $sql->bind_param("i", $testID);
+  $sql->execute();
+  $taskResult = $sql->get_result();
+  
+  //$sql = "SELECT MAX(orderInTest) AS max FROM TASKASSIGNMENT WHERE testID=$testID".$testID;
+  //$taskResult = $conn->query($sql);
+  while ($row = $taskResult->fetch_assoc()) {
     $index = $row["max"] + 1;
-    $sql = "INSERT INTO TASKASSIGNMENT(testID, taskID, orderInTest) VALUES($testID, $taskID, $index)";
-    if(($conn->query($sql) !== TRUE))
-    echo "<span style='color:red'>Failed to add record!".mysqli_error($conn)."</span><br/>";
+    $query = $conn->prepare("INSERT INTO TASKASSIGNMENT(testID, taskID, orderInTest) VALUES (?, ?, ?)");
+    $query->bind_param("iii", $testID, $taskID, $index);
+    
+    //$sql = "INSERT INTO TASKASSIGNMENT(testID, taskID, orderInTest) VALUES($testID, $taskID, $index)";
+    if(!$query->execute())
+      echo "<span style='color:red'>Failed to add record!".mysqli_error($conn)."</span><br/>";
+    $query->close();
   }
   $_SESSION["orderInTest"] = $index;
+  $sql->close();
 }
 //get test name and description from database
-$sql = "SELECT title, description FROM TEST WHERE testID=" . $testID;
-$result = $conn->query($sql);
-$test = mysqli_fetch_assoc($result);
+$sql = $conn->prepare("SELECT title, description FROM TEST WHERE testID=?");
+$sql->bind_param("i", $testID);
+$sql->execute();
+$result = $sql->get_result();
+$test = $result->fetch_assoc();
+$sql->close();
 //get tasks
 $tasks = array();
-$sql = "SELECT taskID FROM TASKASSIGNMENT WHERE testID=" . $testID;
-$taskIDsResult = $conn->query($sql);
-while ($row = mysqli_fetch_assoc($taskIDsResult)) {
-  $sql = "SELECT * FROM TASK WHERE taskID=" . $row["taskID"];
+$query = $conn->prepare("SELECT taskID FROM TASKASSIGNMENT WHERE testID=?");
+$query->bind_param("i", $testID);
+$query->execute();
+$taskIDsResult = $query->get_result();
+$query->close();
+while ($row = $taskIDsResult->fetch_assoc()) {
+  $sql = "SELECT * FROM TASK WHERE taskID=".$row["taskID"];
   $result = $conn->query($sql);
   while ($value = mysqli_fetch_assoc($result))
   $tasks[] = $value;
@@ -51,12 +67,14 @@ CloseCon($conn);
 <head>
   <title>Edit Test</title>
   <meta name="viewport" content="width = device-width, initial-scale = 1">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
-  <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
+  
   <script>
 //Initialize tooltip
 document.addEventListener('DOMContentLoaded', function() {
@@ -67,10 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
   var test = <?php echo json_encode($test); ?>;
   var tasks = <?php echo json_encode($tasks); ?>;
   var testID = <?php echo json_encode($testID); ?>;
-  // document.addEventListener('DOMContentLoaded', function() {
-  //     var elems = document.querySelectorAll('.dropdown-trigger');
-  //     var instances = M.Dropdown.init(elems);
-  // });
+  
   $(document).ready(function() {
     //initialise drop down selector
     $('.dropdown-trigger').dropdown();
@@ -128,7 +143,6 @@ document.addEventListener('DOMContentLoaded', function() {
           required: "Enter a description."
         }
       }
-      //$('#form').submit();
     });
   });
   //display all tasks
@@ -138,20 +152,7 @@ document.addEventListener('DOMContentLoaded', function() {
       //get preview link for task
       var previewURL;
       previewURL = "instruction.php?from=edit&mode=preview&taskID=" + task.taskID;
-      /*switch (task.activityStyle) {
-      case "Likert Scale":
-      previewURL = "likertScaleTask.php?mode=preview&from=edit&taskID=" + task.taskID;
-      break;
-      case "Identify Body Parts":
-      previewURL = "identifyBodyPartsTask.php?mode=preview&from=edit&taskID=" + task.taskID;
-      break;
-      case "Character Ranking":
-      previewURL = "characterRankingTask.php?mode=preview&from=edit&taskID=" + task.taskID;
-      break;
-      case "Preferred Mechanic":
-      previewURL = "preferredMechanicsTask.php?mode=preview&from=edit&taskID=" + task.taskID;
-      break;
-    }*/
+
     $('<tr/>').append([
       $('<td/>', {
         text: task.taskTitle
@@ -168,15 +169,7 @@ document.addEventListener('DOMContentLoaded', function() {
           text: "Preview",
           href: previewURL
         })
-      ),/*
-      $('<td/>').append(
-      $('<a/>', {
-      class: "waves-effect waves-light btn blue darken-4",
-      text: "Edit",
-      //href: "EditTaskInEditTest.php?from=edit&testID=" + testID + "&taskID=" + task.taskID
-      href: "createNewTaskInCreateTest.php?from=edit&testID=" + testID + "&taskID=" + task.taskID
-    })
-  ),*/
+      ),
   $('<td/>').append(
     $('<a/>', {
       class: "waves-effect waves-light btn #0d47a1 red darken-1",
@@ -237,6 +230,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <tbody id="tableBody">
         </tbody>
       </table>
+      <!--
       <div id="addTaskButton" align="right">
         <a class="dropdown-trigger btn blue darken-4" href='#' data-target="dropdown">
           <i class="large material-icons">add</i>
@@ -246,9 +240,17 @@ document.addEventListener('DOMContentLoaded', function() {
           <li><a href='createNewTaskInCreateTest.php?from=edit&testID=<?php echo $testID;?>'>Create New Task</a></li>
         </ul>
       </div>
-      <!--<div id="comfirmButton">
-      <input type="submit" name="submit" class="submit waves-effect waves-light btn blue darken-2 right" value="Save">
-    </div>--->
+      --->
+      <div id="addTaskButton" align="right">
+        <ul id="dropdown" class="dropdown-content">
+          <li><a href="filterExistingTasks.php?from=edit&testID=<?php echo $testID;?>">Existing Tasks</a></li>
+          <li><a href="createNewTaskInCreateTest.php?from=edit&testID=<?php echo $testID;?>">Create New Task</a></li>
+        </ul>
+        <a class="btn dropdown-button blue darken-4 addButton" data-activates="dropdown">
+          <i class="large material-icons">add</i>
+        </a>
+      </div>
+
     <br/><br/>
     <div align="right">
       <button style="width:95px" name="submit" type="submit" class="submit waves-effect waves-light btn blue darken-2">Save</button>

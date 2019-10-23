@@ -1,9 +1,9 @@
 <!-- 
-=======================================
+============================================================================================
 Title:Create New Task In Create Test;
 Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), 
 Julia Aoqi Zhang (5797585); 
-=======================================
+============================================================================================
 -->
 <!DOCTYPE html>
 <html>
@@ -12,6 +12,7 @@ Julia Aoqi Zhang (5797585);
   include 'db_connection.php';
   $conn = OpenCon();
   include "adminAccess.php";
+
   // $userID = 1; //remove after admin pages are linked up
   //get test ID
   if (isset($_GET['testID']))
@@ -92,7 +93,7 @@ Julia Aoqi Zhang (5797585);
               if (from == "edit")
                 window.location = "editTest.php?testID=" + testID;
               if (from == "create"){
-                var para = <?php echo json_encode($_SESSION["createURL"]); ?>;
+                var para = <?php echo isset($_SESSION["createURL"]) ? json_encode($_SESSION["createURL"]) : json_encode(""); ?>;
                 if(para.indexOf("taskID=") !== -1) //if para contains "taskID="
                   window.location = "createTest.php?" + para + "&" + taskID;
                 else

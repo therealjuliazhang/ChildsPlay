@@ -11,13 +11,7 @@ unset($_SESSION["createURL"]);
 //get the url of the current page
 $_SESSION["createURL"] = basename($_SERVER["REQUEST_URI"]);
 $url = $_SESSION["createURL"];
-/*
-$index = strpos($url,"=");
-$list = substr($url, $index+1);
-$idList = explode("&", $list);
-foreach($idList as $id)
-echo $id." ";
-*/
+
 $index = 0;
 $taskIdList = array();
 //get the list of parameters in the url
@@ -47,13 +41,10 @@ if (count($taskIdList) > 0) {
   <title>Create Test</title>
   <meta name="viewport" content="width = device-width, initial-scale = 1">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css"> -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-  <!-- <link rel="stylesheet" type="text/css" href="childsPlayStyle.css"> -->
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
-  <!-- <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script> -->
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
 </head>
 <script>
@@ -116,13 +107,6 @@ function storeValues(){
 var tasks = <?php echo json_encode($tasks); ?>;
 $(document).ready(function(){
   displayTasks();
-  /*var testTitle = sessionStorage.getItem("testTitle");
-  var description = sessionStorage.getItem("description");
-  $("#testTitle").val(testTitle);
-  $("#description").val(description);
-
-  console.log("testTitle: " + testTitle);*/
-  //sessionStorage.clear();
 });
 //display all tasks
 function displayTasks() {
@@ -218,7 +202,7 @@ function displayTasks() {
       </table>
       <br/>
       <div align="right">
-        <ul id="dropdown" class = "dropdown-content">
+        <ul id="dropdown" class="dropdown-content">
           <li><a href="filterExistingTasks.php?from=create">Existing Tasks</a></li>
           <li><a href="createNewTaskInCreateTest.php?from=create">Create New Task</a></li>
         </ul>
@@ -281,5 +265,4 @@ label[data-error] {
   background-color: #FF8C18!important;
 }
 </style>
-
 </html>

@@ -35,13 +35,15 @@ if(isset($_POST["createTest"])){
 				$order = 0;
 				foreach($idList as $taskID){
 					$order++;
-					$query = "INSERT INTO TASKASSIGNMENT(testID, taskID, orderInTest) VALUES ($testID, $taskID, $order)";
-					if(!$result = $conn->query($query)){
+					$query = $conn->prepare("INSERT INTO TASKASSIGNMENT(testID, taskID, orderInTest) VALUES (?, ?, ?)");
+					$query->bind_param("iii", $testID, $taskID, $order);
+					if(!$query->execute()){
 						$errorFlag = true;
 						echo "<span style='color:red'>Failed to create a new test! ".mysqli_error($conn)."</span><br/>";
 					}
 					else
 						$errorFlag = false;
+					$query->close();
 				}
 			}
 		}
