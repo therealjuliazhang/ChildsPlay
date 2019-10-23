@@ -5,17 +5,10 @@ Title:Create Task;
 Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789);
 =======================================
 */
-
 include 'db_connection.php';
 $conn = OpenCon();
 include "adminAccess.php";
-/*
-session_start();
-if(isset($_SESSION['userID']))
-    $userID = $_SESSION['userID'];
-else
-	header('login.php');
-*/
+
 $taskID;
 $UploadFolder = "images";
 $names = $_POST["imageAddress"];
@@ -49,13 +42,8 @@ if ($conn->query($sql) === TRUE){
 				$insertValuesSQL = "('".$id["imageID"]."', ".$taskID.")";
 				//Assign an image to a task in database	
 				$insertQuery = "INSERT INTO IMAGEASSIGNMENT VALUES $insertValuesSQL";
-				/*$result = $conn->query($insertQuery);
-					
-				if(!$result)
-					$errorMsg .= "<span style='color:red'>Failed to add image record!<br/>".mysqli_error($conn)."</span><br/>";*/
-				/**/
+			
 				if($conn->query($insertQuery) === FALSE){
-					//$errorMsg = "Successful";
 					$errorMsg .= "<span style='color:red'>Failed to add image record!<br/>".mysqli_error($conn)."</span><br/>";
 				}
 				
@@ -83,8 +71,6 @@ if ($conn->query($sql) === TRUE){
 	
 	//Only insert into taskassignment when create a new task in Edit test
 	if($testID != 0){
-		//$testID = $_POST["testID"];
-		//insert into task assignment
 		$index = $_POST["orderInTest"] + 1;
 		//check activity style and save pointsInterval for Character Ranking task
 		if($activityStyle == "Character Ranking"){
