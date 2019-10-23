@@ -104,6 +104,7 @@ CloseCon($conn);
 		var preschoolers = <?php echo (json_encode($preschoolers)); ?>;
 		//preschoolerIndex determines whos turn it is
 		var preschoolerIndex = 0;
+
 		//colour of backround of preschoolers names at bottom
 		var colours = ['amber accent-4', 'red', 'deep-purple', 'deep-orange', ' blue accent-4', 'teal', 'indigo accent-4', 'light-green accent-4', 'green', 'lime'];
 		//creates canvas and displays preschoolers name
@@ -125,6 +126,7 @@ CloseCon($conn);
 			canY = e.pageY - canvas.offsetTop;
 			opacity = 1;
 			window.requestAnimationFrame(draw);
+
 			//change coordinates to percentage of image width/height
 			var x = canX / canvas.width;
 			var y = canY / canvas.height;
@@ -284,7 +286,7 @@ CloseCon($conn);
 		});
 	</script>
 	<!--end header-->
-	<img id="button" src="images/greyCircle.png" alt="image not workning" width="7%" onclick="goNext();"></img>
+	<img id="button" src="images/greyCircle.png" alt="image not workning" width="7%" onclick="goNext();"/>
 
 	<canvas id="myCanvas" height="400">
 		Your browser does not support the HTML5 canvas tag.

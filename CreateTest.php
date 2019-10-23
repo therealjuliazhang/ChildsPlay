@@ -211,7 +211,7 @@ function displayTasks() {
       <table class="striped" id="taskTable">
         <thead>
           <tr class="blueText">
-            <td>TaskID&nbsp;&nbsp;</td>
+            <td width="15%">Task Title&nbsp;&nbsp;</td>
             <td>Activity Style</td>
             <td>Instruction</td>
           </tr>

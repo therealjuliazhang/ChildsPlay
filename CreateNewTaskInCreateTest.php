@@ -53,8 +53,64 @@ Julia Aoqi Zhang (5797585);
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
+	
+
   <script src="uploadImage.js"></script>
   <script>
+  $(document).ready(function(){
+    //Places error element next to invalid inputs
+			$.validator.setDefaults({
+				errorElement: 'div',
+				errorClass: 'invalid',
+				errorPlacement: function(error, element) {
+					//element.next("div").remove();
+					var e = document.createElement("div");
+					$(e).append(error.text()).addClass("showError");
+					if (element.attr('type') == "text" || element.attr('type') == "email" || element.attr('type') == "password") {
+						$(element).nextAll("div").remove();
+						$(element)
+							.closest("form")
+							.find("label[for='" + element.attr("id") + "']")
+							.after(e);
+						/*$(element)
+							.closest("form")
+							.find("label[for='" + element.attr("id") + "']")
+							.attr('data-error', error.text())
+							.addClass("showError");*/
+					} else if (element.hasClass("materialSelect")) {
+						//$("element + div").remove();
+						$(element).next("div").remove();
+						$(element).after(e);
+					}
+				},
+				success: function(div) {
+					$(div).remove();
+				}
+			});
+    //validate test title
+    $("#form").validate({
+      rules: {
+        taskTitle: "required",
+        points: "required",
+        instruction: "required"
+      },
+      messages: {
+        taskTitle: "Please provide a task title",
+        points: "Please provide the point interval for the task.",
+        instruction: "Please provide an instruction"
+      },
+			submitHandler: function(form) {
+        alert("Success");
+        createNewTask();
+      }
+    });
+  });
+  
+
     function createNewTask() {
       var imageAddress = $("#imageAddress").val();
       var instruction = $("#instruction").val();
@@ -104,10 +160,6 @@ Julia Aoqi Zhang (5797585);
                 else
                   window.location = "createTest.php?taskID=" + taskID;
               }
-                
-              // window.location = "createTest.php?taskID=" + taskID;
-              /*if(exist == true)
-              window.location = "filterExistingTasks.php";*/
             }
           }
         );
@@ -150,6 +202,13 @@ Julia Aoqi Zhang (5797585);
             pointInput.setAttribute("name", "points");
             pointInput.setAttribute("type", "number");
             pointInput.setAttribute("value", pointsInterval);
+              
+            pointInput.setAttribute("min", 1);
+            pointInput.setAttribute("required", "");
+            pointInput.setAttribute("oninput", "validity.valid||(value='');");
+            //oninput="validity.valid||(value='');"
+            //pointInput.setAttribute("pattern", "[0-9]*");
+
             div.appendChild(pointInput);
             var wrapper = document.getElementById("pointRow");
             wrapper.appendChild(header);
@@ -196,7 +255,7 @@ Julia Aoqi Zhang (5797585);
   <div id="body" class="container">
     <h4 class="blue-text text-darken-4 header">Create New Task</h4>
     <!--start form-->
-    <form action="" method="post">
+    <form id="form" action="" method="post">
       <div class="row">
         <div class="col s6 ">
           <h5 class="blue-text text-darken-4 header">
@@ -206,7 +265,7 @@ Julia Aoqi Zhang (5797585);
             Task Title:
           </h5>
           <div class="input-field">
-            <input id="taskTitle" name="taskTitle" type="text" value="<?php echo isset($taskTitle) ? $taskTitle : ""; ?>">
+            <input id="taskTitle" name="taskTitle" type="text" value="<?php echo isset($taskTitle) ? $taskTitle : ""; ?>" required>
           </div>
         </div>
         <div class="col s6">
@@ -241,7 +300,7 @@ Julia Aoqi Zhang (5797585);
           Instruction
         </h5>
         <div class="input-field col s12">
-          <input id="instruction" name="instruction" value="<?php echo isset($instruction) ? $instruction : ""; ?>" type="text" />
+          <input id="instruction" name="instruction" value="<?php echo isset($instruction) ? $instruction : ""; ?>" type="text" required/>
         </div>
       </div>
       <div class="col s12" id="pointRow"></div>
@@ -280,12 +339,12 @@ Julia Aoqi Zhang (5797585);
           <!--end upload button + path-->
         </div>
       </div>
-      <!--Place to display uploaded image(s)--->
+      <!--Place to display uploaded image(s)   onclick="createNewTask();" --->
       <div id="imageUpload"></div>
       <div class="row">
         <div class="col s12">
           <p align="right">
-            <button name="createTaskBtn" id="submitBtn" class="submit waves-effect waves-light btn blue darken-2" onclick="createNewTask();">Create Task</button>
+            <button type="submit" name="createTaskBtn" id="submitBtn" class="submit waves-effect waves-light btn blue darken-2" >Create Task</button>
             <a class="waves-effect waves-light btn blue darken-4 cancelButton" onClick="javascript:history.go(-1)">Cancel</a>
           </p>
         </div>

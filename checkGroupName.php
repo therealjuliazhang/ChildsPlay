@@ -1,5 +1,7 @@
 <?php
-/*Title: Check group name 
+/*
+==============================
+Title: Check group name 
 Author: Alex Satoru Hanrahan (4836789)
 */
     //get input
