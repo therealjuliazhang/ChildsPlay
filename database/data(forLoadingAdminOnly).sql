@@ -10,7 +10,6 @@ SET
 INSERT INTO USERS(username, password, email, accountType, fullName, accepted) VALUES (@username, @password, @email, @accountType, @fullName, @accepted);
 
 
-
 /*LOCATION*/
 SET
 @name = "University of Wollongong";
