@@ -381,6 +381,11 @@ while ($row = mysqli_fetch_assoc($result))
 
   //function for validating location
   function locationValidation(input) {
+    //remove blank input errors displayed
+    input.target.nextSibling.nextSibling.style.display = "none";
+    input.target.classList.add("valid");
+    input.target.classList.remove("invalid");
+    console.log("remove blank input error")
     //check if multiple inputs are the same
     locationInputs = $('#form2 :input');
     locationNames = [];
@@ -393,22 +398,26 @@ while ($row = mysqli_fetch_assoc($result))
       input.target.classList.add("invalid");
       input.target.nextSibling.style.display = "block";
       form2.addEventListener('submit', preventSubmit, true);
-    } else { //is invalid
+      console.log("multiple same inputs!")
+    } else { //is valid
       input.target.nextSibling.style.display = "none";
       input.target.classList.remove("invalid");
       input.target.classList.add("valid");
       form2.removeEventListener('submit', preventSubmit, true);
-      //check that input not empty
-      if (this.value != "") {
-        input.target.nextSibling.nextSibling.style.display = "none";
-        input.target.classList.remove("invalid");
-        input.target.classList.add("valid");
-        form2.removeEventListener('submit', preventSubmit);
-      } else { //is invalid
-        input.target.classList.remove("valid");
-        input.target.classList.add("invalid");
+      console.log("remove multiple input error")
+      //check if input is empty
+      if (this.value == "") {
         input.target.nextSibling.nextSibling.style.display = "block";
+        input.target.classList.add("invalid");
+        input.target.classList.remove("valid");
         form2.addEventListener('submit', preventSubmit);
+        console.log("empty inputs")
+      } else { //is valid
+        input.target.classList.add("valid");
+        input.target.classList.remove("invalid");
+        input.target.nextSibling.nextSibling.style.display = "none";
+        form2.removeEventListener('submit', preventSubmit);
+        console.log("remove empty input error!!")
         //check if existing location
         $.ajax({
           type: "POST",
@@ -422,11 +431,13 @@ while ($row = mysqli_fetch_assoc($result))
               input.target.classList.remove("invalid");
               input.target.classList.add("valid");
               form2.removeEventListener('submit', preventSubmit, true);
+              console.log("eremove existing inputs error")
             } else { //is invalid
               input.target.classList.remove("valid");
               input.target.classList.add("invalid");
               input.target.nextSibling.style.display = "block";
               form2.addEventListener('submit', preventSubmit, true);
+              console.log("existing inputs")
             }
           },
           error: function(xhr, textStatus, errorThrown) {
@@ -436,7 +447,7 @@ while ($row = mysqli_fetch_assoc($result))
         });
       }
     }
-    validateLocationInputs();
+    // validateLocationInputs();
   }
 
   //Function for adding and deleting rows
@@ -445,7 +456,7 @@ while ($row = mysqli_fetch_assoc($result))
     var inputDiv = $("<div class='col s10'></div>");
     var locationInput = $("<input name='locRow[]' type='text' class='inputInColB'>");
     //bind validation to input
-    locationInput.bind('input', locationValidation);
+    locationInput.on('input', locationValidation); //problem
     var removeButtonB = $("<div class='col s1'><div class='col s1 removeCell'><a class='waves-effect waves-light btn removeButtonB'><i class='material-icons'>remove</i></a></div></div>");
     var errorSpans = $("<span style='display:none; color:red;'>This location is already added.</span><span style='display:none; color:red;'>Location cannot be blank</span>");
     inputDiv.append([locationInput, errorSpans]);
@@ -457,19 +468,42 @@ while ($row = mysqli_fetch_assoc($result))
     $('.removeButtonB').click(function() {
       $(this).closest('.removable').remove();
     });
-    // validateLocationInputs();
   };
 
   //function for validating all location inputs currently on page
   function validateLocationInputs() {
+    console.log("validate")
     const form2 = document.getElementById("form2");
     //for all inputs in locations tab, on input change
-    $('.inputInColB').bind('input', locationValidation);
+    $('.inputInColB').on('input', locationValidation); //problem
     //prevent inputs becoming readonly
     locationInputs.each(function() {
       observer.observe(this, config);
     })
   }
+
+  //prevent submit if input empty
+  $(document).ready(function() {
+    $('form').each(function() {
+      $(this).submit(function(e) {
+        $("form#form2 :input").each(function() {
+          var input = $(this); // This is the jquery object of the input, do what you will
+          if (input.val() == "") {
+            e.preventDefault();
+            input.context.classList.remove("valid");
+            input.context.classList.add("invalid");
+            input.context.nextSibling.nextSibling.style.display = "block";
+            console.log("bottom one")
+            return false;
+          }
+        });
+        locationInputs = $('#form2 :input');
+        locationInputs.each(function() {
+          $(this).prop('readonly', false);
+        })
+      })
+    })
+  });
 </script>
 
 <style media="screen">
