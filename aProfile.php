@@ -115,14 +115,16 @@ while ($row = mysqli_fetch_assoc($result))
               <h6 class="hInCol">Password:</h6>
             </div>
             <div class='input-field col s9'>
-                <input id="password1" name="password1" type="password" class="passValidate">
+              <input id="password1" name="password1" type="password" class="passValidate">
             </div>
             <!--Password confirm Section-->
             <div class="hide passwordComfirmationRow">
-                <div class="col s3 column01"><h6 class="hInCol">Confirm Password:</h6></div>
-                <div class='input-field col s9'>
-                    <input id="password2" name="password2" type="password" class="passValidate">
-                </div>
+              <div class="col s3 column01">
+                <h6 class="hInCol">Confirm Password:</h6>
+              </div>
+              <div class='input-field col s9'>
+                <input id="password2" name="password2" type="password" class="passValidate">
+              </div>
             </div>
             <div class="col s3">
               <a class="waves-effect waves-light btn blue darken-4" id="changeButton">Change password</a>
@@ -172,21 +174,21 @@ while ($row = mysqli_fetch_assoc($result))
 </body>
 
 <script>
-$("#editButton").click(function(){
-  $("#username").prop( "disabled", false );
-  $("#email").prop( "disabled", false );
-  $("#saveButtonDiv").removeClass("hide");
-  $("#editButtonDiv").addClass("hide");
-  $("#changeButton").removeClass("hide");
-})
+  $("#editButton").click(function() {
+    $("#username").prop("disabled", false);
+    $("#email").prop("disabled", false);
+    $("#saveButtonDiv").removeClass("hide");
+    $("#editButtonDiv").addClass("hide");
+    $("#changeButton").removeClass("hide");
+  })
 
-$("#changeButton").click(function(){
-  $("#password1").prop( "disabled", false );
-  $(".passwordComfirmationRow").removeClass("hide");
-  $(".passValidate").prop('disabled', false);
-});
-//disable input
-$(document).ready(function(){
+  $("#changeButton").click(function() {
+    $("#password1").prop("disabled", false);
+    $(".passwordComfirmationRow").removeClass("hide");
+    $(".passValidate").prop('disabled', false);
+  });
+  //disable input
+  $(document).ready(function() {
     var users = <?php echo json_encode($users); ?>;;
     $("#username").val(users["username"]);
     $("#email").val(users["email"]);
@@ -194,7 +196,7 @@ $(document).ready(function(){
     var currentEmail = users["email"];
     var currentUsername = users["username"];
     loadLocationInfo();
-    
+
     $("#form").validate({
       rules: {
         username: {
@@ -275,28 +277,9 @@ $(document).ready(function(){
         );
       }
     });
-    // $('#form2').validate({
-    //   rules: {
-    //     locRow: {
-    //       required: true,
-    //       remote: {
-    //         url: "checkLocation.php",
-    //         type: "post"
-    //       }
-    //     }
-    //   },
-    //   messages: {
-    //     locRow: {
-    //       required: "Enter a location.",
-    //       remote: jQuery.validator.format("Location {0} already exists.")
-    //     }
-    //   }
-    // });
   });
-  
-});
 
-  //FUnction for switching tabs
+  //Function for switching tabs
   $(function($) {
     $('.tab').click(function() {
       $('.is-active').removeClass('is-active');
@@ -309,7 +292,6 @@ $(document).ready(function(){
     });
   });
 
-
   //enable input for location tab
   $(document).ready(function() {
     $("#editButtonB").click(function() {
@@ -320,56 +302,11 @@ $(document).ready(function(){
       $("#editButtonDivB").addClass("hide");
     })
   });
-  /*
-  //disable input for location tab
-  $(document).ready(function(){
-    $("#saveButtonB").click(function(){
-      $(".inputInColB").prop( "readonly", true );
-      $(".removeButtonB").addClass("hide");
-      $("#addButtonB").addClass("hide");
-      $("#editButtonDivB").removeClass("hide");
-      $("#saveButtonDivB").addClass("hide");
-    })
-  });
-  */
-
-  //Function for adding and deleting rows
-  // function appendRow() {
-  //   //variables for a new row
-  //   var locationNameInput = "<div class='col s11'><input value='' type='text' class='validate inputInColB'></div>";
-  //   var removeButtonB = " <div class='col s1'><div class='col s1 removeCell'><a class='waves-effect waves-light btn removeButtonB'><i class='material-icons'>remove</i></a></div></div>";
-  //   //insert a new row
-  //   var locations = "<div class='removable'>" + locationNameInput + removeButtonB + "</div>";
-
-  //   $("#locationInfo").append(locations);
-
-  //   //remove added rows
-  //   $('.removeButtonB').click(function() {
-  //     $(this).closest('.removable').remove();
-  //   });
-
-  // };
 
   //remove existing rows
   $('.removeButtonB').click(function() {
     $(this).closest('.removable').remove();
   });
-
-  // function loadLocationInfo() {
-  //   var location = <?php echo json_encode($locationArray); ?>;
-  //   var format;
-  //   //display data
-  //   location.forEach(function(result) {
-  //     var locationNameInput = "<div class='col s11'><input disabled value='" + result.name + "' type='text' class='validate inputInColB'></div>";
-
-  //     var removeButtonB = " <div class='col s1'><div class='col s1 removeCell'><a class='waves-effect waves-light btn hide removeButtonB'><i class='material-icons'>remove</i></a></div></div>";
-
-  //     var format = "<div class='removable'>" + locationNameInput + removeButtonB + "</div>";
-  //     $("#locationInfo").append(format);
-  //   });
-  // }
-
-
 
   //enable input for location tab
   $(document).ready(function() {
@@ -390,116 +327,149 @@ $(document).ready(function(){
     })
   });
 
-  //Function for adding and deleting rows
-  // function appendRow() {
-
-     //enable input for location tab
-      $(document).ready(function(){
-        $("#editButtonB").click(function(){
-          $(".inputInColB").prop( "disabled", false );
-          $(".removeButtonB").removeClass("hide");
-          $("#addButtonB").removeClass("hide");
-          $("#saveButtonB").removeClass("hide");
-          $("#editButtonB").addClass("hide");
-        })
-      });
-
-  //   //insert a new row
-  //   var locations = "<div class='removable'>" + locationNameInput + removeButtonB + "</div>";
-
-  //   $("#locationInfo").append(locations);
-
-
-  //   //remove added rows
-  //   $('.removeButtonB').click(function() {
-  //     $(this).closest('.removable').remove();
-  //   });
-
-  // };
+  //enable input for location tab
+  $(document).ready(function() {
+    $("#editButtonB").click(function() {
+      $(".inputInColB").prop("disabled", false);
+      $(".removeButtonB").removeClass("hide");
+      $("#addButtonB").removeClass("hide");
+      $("#saveButtonB").removeClass("hide");
+      $("#editButtonB").addClass("hide");
+    })
+  });
 
   //remove existing rows
   $('.removeButtonB').click(function() {
     $(this).closest('.removable').remove();
   });
 
+  //display locations
   function loadLocationInfo() {
     var location = <?php echo json_encode($locationArray); ?>;
     var format;
-
     //display data
     location.forEach(function(result) {
-
       var locationNameInput = "<div class='col s10'><input disabled name='locRow[]' value='" + result.name + "' type='text' class='inputInColB'/><span style='display:none; color:red;'>This location is already added.</span><span style='display:none; color:red;'>Location cannot be blank</span></div>";
-
       var format = "<div class='removable'>" + locationNameInput + "</div>";
       $("#locationInfo").append(format);
     });
+    validateLocationInputs();
   }
-  //validate location input
-  $(document).ready(function() {
-    $("input").each(function() {
-      $(this).bind('change', function(event) {
-        // $('input').prop('readonly',false);
-        console.log("change!!!")
-        $(this).removeAttr("readonly");
-      });
-    });
-    // $(document).on('data-attribute-changed', function() {
-    //   console.log("working!!")
-    //   $('input').prop('readonly',false);
-    // });
-    $('.inputInColB').bind('input', function(input) {
-      //check if input empty
-      if (this.value == "") {
-        input.target.classList.remove("valid");
-        input.target.classList.add("invalid");
-        input.target.nextSibling.nextSibling.style.display = "block";
-        $("#form2").attr("onsubmit", "return false");
-        $("input").removeAttr("readonly");
-        // $('#form2').submit(function( event ) {
-        //   event.preventDefault();
-        // });
-        // console.log($('#form2').onsubmit)
-      } else {
+
+  //set up observer for detecting if input becomes read only
+  var locationInputs = $('#form2 :input');
+  const config = {
+    attributes: true
+  };
+  const callback = function(mutationsList, observer) {
+    for (let mutation of mutationsList) {
+      if (mutation.type === 'attributes') {
+        locationInputs = $('#form2 :input');
+        locationInputs.each(function() {
+          $(this).prop('readonly', false);
+        })
+      }
+    }
+  };
+  const observer = new MutationObserver(callback);
+
+  //function for preventing form submission
+  function preventSubmit(event) {
+    console.log("cancel form submission");
+    event.preventDefault();
+  }
+
+  //function for validating location
+  function locationValidation(input) {
+    //check if multiple inputs are the same
+    locationInputs = $('#form2 :input');
+    locationNames = [];
+    locationInputs.each(function() {
+      locationNames.push(this.value);
+    })
+    //if size of unique names smaller than size of all names
+    if ((new Set(locationNames)).size !== locationNames.length) {
+      input.target.classList.remove("valid");
+      input.target.classList.add("invalid");
+      input.target.nextSibling.style.display = "block";
+      form2.addEventListener('submit', preventSubmit, true);
+    } else { //is invalid
+      input.target.nextSibling.style.display = "none";
+      input.target.classList.remove("invalid");
+      input.target.classList.add("valid");
+      form2.removeEventListener('submit', preventSubmit, true);
+      //check that input not empty
+      if (this.value != "") {
         input.target.nextSibling.nextSibling.style.display = "none";
         input.target.classList.remove("invalid");
         input.target.classList.add("valid");
-        $("#form2").removeAttr("onsubmit");
-        // $('#form2').off( "submit" );
-      }
-      //check if existing location
-      $.ajax({
-        type: "POST",
-        url: "checkLocation.php",
-        data: {
-          location: this.value
-        },
-        success: function(returnData) {
-          if (returnData == 'true') {
-            input.target.nextSibling.style.display = "none";
-            input.target.classList.remove("invalid");
-            input.target.classList.add("valid");
-            $("#form2").removeAttr("onsubmit");
-            // $('#form2').off( "submit" );
-          } else {
-            input.target.classList.remove("valid");
-            input.target.classList.add("invalid");
-            input.target.nextSibling.style.display = "block";
-            $("#form2").attr("onsubmit", "return false");
-            $("input").removeAttr("readonly");
-            // $('#form2').submit(function( event ) {
-            //   event.preventDefault();
-            // });
+        form2.removeEventListener('submit', preventSubmit);
+      } else { //is invalid
+        input.target.classList.remove("valid");
+        input.target.classList.add("invalid");
+        input.target.nextSibling.nextSibling.style.display = "block";
+        form2.addEventListener('submit', preventSubmit);
+        //check if existing location
+        $.ajax({
+          type: "POST",
+          url: "checkLocation.php",
+          data: {
+            location: this.value
+          },
+          success: function(returnData) {
+            if (returnData == 'true') { //is valid
+              input.target.nextSibling.style.display = "none";
+              input.target.classList.remove("invalid");
+              input.target.classList.add("valid");
+              form2.removeEventListener('submit', preventSubmit, true);
+            } else { //is invalid
+              input.target.classList.remove("valid");
+              input.target.classList.add("invalid");
+              input.target.nextSibling.style.display = "block";
+              form2.addEventListener('submit', preventSubmit, true);
+            }
+          },
+          error: function(xhr, textStatus, errorThrown) {
+            alert('ajax loading error... ... ' + url + query);
+            return false;
           }
-        },
-        error: function(xhr, textStatus, errorThrown) {
-          alert('ajax loading error... ... ' + url + query);
-          return false;
-        }
-      });
+        });
+      }
+    }
+    validateLocationInputs();
+  }
 
+  //Function for adding and deleting rows
+  function appendRow() {
+    //variables for a new row
+    var inputDiv = $("<div class='col s10'></div>");
+    var locationInput = $("<input name='locRow[]' type='text' class='inputInColB'>");
+    //bind validation to input
+    locationInput.bind('input', locationValidation);
+    var removeButtonB = $("<div class='col s1'><div class='col s1 removeCell'><a class='waves-effect waves-light btn removeButtonB'><i class='material-icons'>remove</i></a></div></div>");
+    var errorSpans = $("<span style='display:none; color:red;'>This location is already added.</span><span style='display:none; color:red;'>Location cannot be blank</span>");
+    inputDiv.append([locationInput, errorSpans]);
+    //insert a new row
+    var locations = $("<div class='removable'></div>");
+    locations.append([inputDiv, removeButtonB]);
+    $("#locationInfo").append(locations);
+    //remove added rows
+    $('.removeButtonB').click(function() {
+      $(this).closest('.removable').remove();
     });
-  });
+    // validateLocationInputs();
+  };
+
+  //function for validating all location inputs currently on page
+  function validateLocationInputs() {
+    const form2 = document.getElementById("form2");
+    //for all inputs in locations tab, on input change
+    $('.inputInColB').bind('input', locationValidation);
+    //prevent inputs becoming readonly
+    locationInputs.each(function() {
+      observer.observe(this, config);
+    })
+  }
 </script>
 
 <style media="screen">
