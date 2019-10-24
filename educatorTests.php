@@ -1,8 +1,8 @@
 <!--
-=======================================
+=====================================================================================
 Title:Educator Tests;
 Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679527);
-=======================================
+=====================================================================================
 -->
 <!DOCTYPE html>
 <html>
@@ -12,12 +12,6 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679
 	include 'db_connection.php';
 	$conn = OpenCon();
 	include "educatorAccess.php";
-	/*
-	if (isset($_SESSION['userID']))
-		$userID = $_SESSION['userID'];
-	else
-		header('location: login.php');
-	*/
 	?>
     <head>
         <title>Available Tests and Groups</title>
@@ -112,10 +106,13 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679
 					<tbody>
 					<?php
 					//get groups from database
-					//$sql = "SELECT groupID FROM GROUPASSIGNMENT WHERE userID=".$userID." GROUP BY groupID";
-					$sql = "SELECT groupID FROM GROUPTEST WHERE userID=".$userID." GROUP BY groupID";
-					$result = $conn->query($sql);
-					while($row = mysqli_fetch_assoc($result)){
+					$sql = $conn->prepare("SELECT groupID FROM GROUPTEST WHERE userID=? GROUP BY groupID");
+					$sql->bind_param("i", $userID);
+					$sql->execute();
+					$result = $sql->get_result();
+					// $sql = "SELECT groupID FROM GROUPTEST WHERE userID=".$userID." GROUP BY groupID";
+					// $result = $conn->query($sql);
+					while($row = $result->fetch_assoc()){
 						$sql2 = "SELECT name FROM GROUPTEST WHERE groupID=".$row["groupID"];
 						$result2 = $conn->query($sql2);
 						while($row2 = mysqli_fetch_assoc($result2)){
@@ -136,6 +133,7 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679
 						}
 						echo '</td><td><a href="educatorEditGroup.php?userID='.$userID.'&groupID=', $row["groupID"] ,'" class="waves-effect waves-light btn blue darken-4 right editButton">Edit</a></td></tr>';
 					}
+					$sql->close();
 					CloseCon($conn);
 					?>
 					</tbody>

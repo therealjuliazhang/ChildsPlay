@@ -26,10 +26,15 @@ Author:Phuong Linh Bui (5624095)
       $locationArray[] = $row;
     //get the user current location
     $currentLocationArray = array();
-    $sql = "SELECT * FROM LOCATION JOIN LOCATIONASSIGNMENT ON LOCATION.locationID = LOCATIONASSIGNMENT.locationID WHERE LOCATIONASSIGNMENT.userID = " .$userID;
-    $result = $conn ->query($sql);
-    while($row = mysqli_fetch_assoc($result))
+    $sql = $conn->prepare("SELECT * FROM LOCATION JOIN LOCATIONASSIGNMENT ON LOCATION.locationID = LOCATIONASSIGNMENT.locationID WHERE LOCATIONASSIGNMENT.userID = ?");
+    $sql->bind_param("i", $userID);
+    $sql->execute();
+    $result = $sql->get_result();
+    // $sql = "SELECT * FROM LOCATION JOIN LOCATIONASSIGNMENT ON LOCATION.locationID = LOCATIONASSIGNMENT.locationID WHERE LOCATIONASSIGNMENT.userID = " .$userID;
+    // $result = $conn ->query($sql);
+    while($row = $result->fetch_assoc())
       $currentLocationArray[] = $row;
+    $sql->close();
 ?>
   <head>
     <title>ProfilePage</title>
@@ -124,8 +129,6 @@ Author:Phuong Linh Bui (5624095)
           }
           ?>
           </select>
-          
-
         </div>
       </div>
     </div>

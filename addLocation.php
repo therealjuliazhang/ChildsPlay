@@ -38,8 +38,9 @@ for ($i = 0; $i < count($locationArray); $i++) {
     //variable that holds value for location ID
     $locationID = $i + 1;
     //inserting values
-    $sql = "UPDATE LOCATION SET name = '" . $locationArray[$i] . "' WHERE locationID = " . $locationID;
-    if (mysqli_query($conn, $sql)) {
+    $sql = $conn->prepare("UPDATE LOCATION SET name = ? WHERE locationID = ?");
+    $sql->bind_param("si", $locationArray[$i], $locationID);
+    if ($sql->execute()) {
         echo "New record created successfully";
         //refresh page 
         header("Location: aProfile.php");

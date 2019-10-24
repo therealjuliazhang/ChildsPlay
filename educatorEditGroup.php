@@ -142,6 +142,29 @@ $(document).ready(function() {
   $("#locationSelect").trigger('contentChanged');
   //Places error element next to invalid inputs
   $.validator.setDefaults({
+        errorElement: 'div',
+        errorClass: 'invalid',
+        errorPlacement: function (error, element) {
+            var e = document.createElement("div");
+            $(e).append(error.text()).addClass("showError");
+            if (element.attr('type') == "text" || element.attr('type') == "email" || element.attr('type') == "password") {
+                $(element).nextAll("div").remove();
+                $(element)
+                    .closest("form")
+                    .find("input[name='" + element.attr("id") + "']")
+                    .after(e);
+            } else if (element.hasClass("materialSelect")) {
+                $(element).next("div").remove();
+                $(element).after(e);
+            }
+        },
+        success: function (div) {
+            $(div).remove();
+        }
+    });
+  /*
+  //Places error element next to invalid inputs
+  $.validator.setDefaults({
     errorElement : 'div',
     errorClass: 'invalid',
     errorPlacement: function(error, element) {
@@ -158,7 +181,7 @@ $(document).ready(function() {
         element.before(error);
       }
     }
-  })
+  })*/
   //set up rules and messages for errors
   $("#form").validate({
     rules: {
@@ -230,5 +253,12 @@ i.icon-red {
 .addButton:hover, .submit:hover {
   background-color: #FF8C18!important;
 }
+.showError {
+    top: 10px;
+    width: 350px !important;
+    font-style: italic;
+    color: red;
+    font-size: 13px;
+  }
 </style>
 </html>

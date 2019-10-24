@@ -11,13 +11,16 @@
     }
     else{
         //check for existing username by selecting user from database
-        $sql = "SELECT * FROM USERS WHERE email = '" .$input. "'";
-        $result = $conn->query($sql);
+        $sql = $conn->prepare("SELECT * FROM USERS WHERE email = ?");
+        $sql->bind_param("s", $input);
+        $sql->execute();
+        $result = $sql->get_result();
         //return "" for error, true for no error
-        if(mysqli_num_rows($result)==0)
+        if($result->num_rows == 0)
             echo json_encode(true);
         else
             echo json_encode(false);
+        $sql->close();
     }
     CloseCon($conn);
 ?>

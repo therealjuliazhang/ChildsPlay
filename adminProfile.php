@@ -1,8 +1,8 @@
 <!--
-=======================================
+================================================================================================================================================================
 Title:Admin Profile;
 Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Julia Aoqi Zhang (5797585), Andre Knell (5741622), Ren Sugie(5679527);
-=======================================
+=================================================================================================================================================================
 -->
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -168,20 +168,6 @@ $(document).ready(function(){
   loadProfileInfo();
   loadLocationInfo();
 });
-//disable input
-/*
-$(document).ready(function(){
-  $("#saveButton").click(function(){
-    $("#uName").prop( "readonly", true );
-    $("#password").prop( "readonly", true );
-    $("#email").prop( "readonly", true );
-    $("#saveButtonDiv").addClass("hide");
-    $("#editButtonDiv").removeClass("hide");
-
-  })
-});
-*/
-
 
 //loads user info onto page
 function loadProfileInfo()
@@ -218,10 +204,6 @@ function loadProfileInfo()
   }
 }
 
-
-
-
-
 function testValues(){
   var x = document.getElementById("uName");
 
@@ -229,7 +211,6 @@ function testValues(){
 
 
 }
-
 
 //FUnction for switching tabs
 $(function($){
@@ -244,8 +225,6 @@ $(function($){
   });
 });
 
-
-
 //enable input for location tab
 $(document).ready(function(){
   $("#editButtonB").click(function(){
@@ -256,20 +235,6 @@ $(document).ready(function(){
     $("#editButtonB").addClass("hide");
   })
 });
-
-//disable input for location tab
-/*
-$(document).ready(function(){
-  $("#saveButtonB").click(function(){
-    $(".inputInColB").prop( "readonly", true );
-    $(".removeButtonB").addClass("hide");
-    $("#addButtonB").addClass("hide");
-    $("#editButtonDivB").removeClass("hide");
-    $("#saveButtonDivB").addClass("hide");
-  })
-});
-*/
-
 
 //remove existing rows
 $('.removeButtonB').click(function() {
@@ -289,10 +254,7 @@ function loadLocationInfo(){
     $("#locationInfo").append(format);
   });
 }
-
-
-
-     //enable input for location tab
+//enable input for location tab
       $(document).ready(function(){
         $("#editButtonB").click(function(){
           $(".inputInColB").prop( "readonly", false );
@@ -303,16 +265,6 @@ function loadLocationInfo(){
 
       //disable input for location tab
       $(document).ready(function(){
-        /*
-        $("#saveButtonB").click(function(){
-          $(".inputInColB").prop( "readonly", true );
-          $(".removeButtonB").addClass("hide");
-          $("#addButtonB").addClass("hide");
-          
-        })*/
-
-        
-    
         $("#detailForm").validate({
           rules: {
             uName: {
@@ -375,7 +327,6 @@ function loadLocationInfo(){
     }
 
  </script>
-
 <style media="screen">
 .container .btn{
   width: 80px;
@@ -384,5 +335,4 @@ function loadLocationInfo(){
   background-color: #FF8C18!important;
 }
 </style>
-
 </html>

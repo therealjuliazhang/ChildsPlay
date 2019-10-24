@@ -1,9 +1,9 @@
 <!--
-=======================================
+==========================================================================================================================================
 Title:Accessible Test;
 Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Julia Aoqi Zhang (5797585), Ren Sugie(5679527);
 Last Edited: 22/10/2019;
-=======================================
+==========================================================================================================================================
 -->
 <!DOCTYPE html>
 <html>
@@ -12,25 +12,29 @@ $baseURL = "localhost";
 include "adminAccess.php";
 include 'db_connection.php';
 $conn = OpenCon();
-/*
-session_start();
-if(isset($_SESSION['userID']))
-$userID = $_SESSION['userID'];
-else
-header('login.php');
-*/
+
 //get select users ID
 if(isset($_GET['userID']))
 $selectedUserID = $_GET['userID'];
 //get user's fullname from database
-$sql = "SELECT fullName FROM USERS WHERE userID=".$selectedUserID;
-$result = $conn->query($sql);
-$fullName = mysqli_fetch_assoc($result)['fullName'];
+$sql = $conn->prepare("SELECT fullName FROM USERS WHERE userID=?");
+$sql->bind_param("i", $selectedUserID);
+$sql->execute();
+$result = $sql->get_result();
+$fullName = $result->fetch_assoc()["fullName"];
+$sql->close();
+//$sql = "SELECT fullName FROM USERS WHERE userID=".$selectedUserID;
+//$result = $conn->query($sql);
+//$fullName = mysqli_fetch_assoc($result)['fullName'];
+
 //get user's tests
 $tests = array();
-$sql = "SELECT testID, dateConducted FROM TESTASSIGNMENT WHERE userID=".$selectedUserID;
-$testIDsResult = $conn->query($sql);
-while($row = mysqli_fetch_assoc($testIDsResult)){
+$query = $conn->prepare("SELECT testID, dateConducted FROM TESTASSIGNMENT WHERE userID=?");
+$query->bind_param("i", $selectedUserID);
+$query->execute();
+//$sql = "SELECT testID, dateConducted FROM TESTASSIGNMENT WHERE userID=".$selectedUserID;
+$testIDsResult = $query->get_result();
+while($row = $testIDsResult->fetch_assoc()){
   $sql = "SELECT * FROM TEST WHERE testID=".$row['testID'];
   $testsResult = $conn->query($sql);
   while($value = mysqli_fetch_assoc($testsResult)){
@@ -39,6 +43,7 @@ while($row = mysqli_fetch_assoc($testIDsResult)){
     $tests[] = $value;
   }
 }
+$query->close();
 ?>
 <head>
   <title>Accessible Test</title>

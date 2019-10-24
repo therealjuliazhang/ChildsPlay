@@ -14,11 +14,9 @@
         $sql = $conn->prepare("SELECT title FROM TEST WHERE title = ?");
         $sql->bind_param("s", $inputTitle);
         $sql->execute();
-        
-        //$sql = "SELECT title FROM TEST WHERE title = '" .$inputTitle. "'";
-        //$result = $conn->query($sql);
+        $result = $sql->get_result();
         //return "" for error, true for no error
-        if($sql->num_rows > 0)
+        if($result->num_rows > 0)
             echo json_encode(false);
         else
             echo json_encode(true);

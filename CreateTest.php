@@ -56,8 +56,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 $(function() {
-  
-  
   //retrieve the stored input values
   var testTitle = localStorage.getItem('testTitle');
   var description = localStorage.getItem('description');
