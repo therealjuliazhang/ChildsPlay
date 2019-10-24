@@ -11,14 +11,19 @@
         //check if group name already taken by selecting it from database
         include 'db_connection.php';
         $conn = OpenCon();
-        $sql = "SELECT title FROM TEST WHERE title = '" .$inputTitle. "'";
-        $result = $conn->query($sql);
+        $sql = $conn->prepare("SELECT title FROM TEST WHERE title = ?");
+        $sql->bind_param("s", $inputTitle);
+        $sql->execute();
+        
+        //$sql = "SELECT title FROM TEST WHERE title = '" .$inputTitle. "'";
+        //$result = $conn->query($sql);
         //return "" for error, true for no error
-        if(mysqli_num_rows($result) > 0)
-            echo json_encode("");
+        if($sql->num_rows > 0)
+            echo json_encode(false);
         else
-			echo json_encode("true");
+            echo json_encode(true);
+        $sql->close();
     }
 	else
-		echo json_encode("true");
+		echo json_encode(true);
 ?>

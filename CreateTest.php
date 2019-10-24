@@ -1,8 +1,8 @@
 <!--
-=======================================
+===========================================================================================================================
 Title:Create Test;
 Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679527), Julia Aoqi Zhang (5797585);
-=======================================
+===========================================================================================================================
 -->
 
 <?php
@@ -11,6 +11,7 @@ unset($_SESSION["createURL"]);
 //get the url of the current page
 $_SESSION["createURL"] = basename($_SERVER["REQUEST_URI"]);
 $url = $_SESSION["createURL"];
+//echo $url;
 
 $index = 0;
 $taskIdList = array();
@@ -55,39 +56,8 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 $(function() {
-  //Places error element next to invalid inputs
-  $.validator.setDefaults({
-    errorElement: 'div',
-    errorClass: 'invalid',
-    errorPlacement: function(error, element) {
-      if (element.attr('type') == "text" || element.attr('type') == "number") {
-        $(element)
-        .closest("form")
-        .find("label[for='" + element.attr("id") + "']")
-        .attr('data-error', error.text());
-      }
-    }
-  })
-  //validate test title
-  $("#form").validate({
-    rules: {
-      testTitle: {
-        required: true,
-        remote: {
-          url: "checkTestTitle.php",
-          type: "post"
-        }
-      },
-      description: "required"
-    },
-    messages: {
-      testTitle: {
-        required: "Enter a test title.",
-        remote: jQuery.validator.format("{0} is already used by an existing test.")
-      },
-      description: "Enter a description for the test."
-    }
-  });
+  
+  
   //retrieve the stored input values
   var testTitle = localStorage.getItem('testTitle');
   var description = localStorage.getItem('description');
@@ -107,6 +77,59 @@ function storeValues(){
 var tasks = <?php echo json_encode($tasks); ?>;
 $(document).ready(function(){
   displayTasks();
+  /*
+  //Places error element next to invalid inputs
+  $.validator.setDefaults({
+    errorElement: 'div',
+    errorClass: 'invalid',
+    errorPlacement: function(error, element) {
+      if (element.attr('type') == "text" || element.attr('type') == "number") {
+        $(element)
+        .closest("form")
+        .find("label[for='" + element.attr("id") + "']")
+        .attr('data-error', error.text());
+      }
+    }
+  })*/
+  //Places error element next to invalid inputs
+  $.validator.setDefaults({
+        errorElement: 'div',
+        errorClass: 'invalid',
+        errorPlacement: function (error, element) {
+            var e = document.createElement("div");
+            $(e).append(error.text()).addClass("showError");
+            if (element.attr('type') == "text") {
+                $(element).nextAll("div").remove();
+                $(element)
+                    .closest("form")
+                    .find("input[name='" + element.attr("id") + "']")
+                    .after(e);
+            }
+        },
+        success: function (div) {
+            $(div).remove();
+        }
+    });
+  //validate test title
+  $("#form").validate({
+    rules: {
+      testTitle: {
+        required: true,
+        remote: {
+          url: "checkTestTitle.php",
+          type: "post"
+        }
+      },
+      description: "required"
+    },
+    messages: {
+      testTitle: {
+        required: "Enter a test title.",
+        remote: jQuery.validator.format("{0} is already used by an existing test.")
+      },
+      description: "Enter a description for the test."
+    }
+});
 });
 //display all tasks
 function displayTasks() {
@@ -264,5 +287,11 @@ label[data-error] {
 .submit:hover, .addButton:hover, .cancelButton:hover {
   background-color: #FF8C18!important;
 }
+.showError {
+    top: 10px;
+    width: 300px !important;
+    font-style: italic;
+    color: red;
+  }
 </style>
 </html>

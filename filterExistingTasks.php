@@ -1,8 +1,8 @@
 <!--
-=======================================
+===========================================================================================
 Title:Filter Existing Tasks;
 Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679527);
-=======================================
+===========================================================================================
 -->
 <?php
 include "adminAccess.php";
@@ -80,7 +80,7 @@ function filter(){
         <form action="" method="post">
           <div class="col s4">Start date</div>
           <div class="col s4">End date</div>
-          <div class="col s4"></br></div>
+          <div class="col s4"><br/></div>
           <div class="col s4"><input type="text" class="datepicker" id="startDate" name="startDate"></div>
           <div class="col s4"><input type="text" class="datepicker" id="endDate" name="endDate"></div>
           <div class="input-field col s4">
@@ -126,9 +126,6 @@ function filter(){
         <th class='instructionCol'>Instruction</th>
         <th class='activityStyleCol'>Activity Style</th>
         <th class='dateCreatedCol'>Date Created</th>
-        <!-- <th class='previewCol'>Preview</th>
-        <th class='editCol'>Edit</th>
-        <th class='addCol'>Add</th> -->
       </tr>
     </thead>
     <tbody>
@@ -157,7 +154,9 @@ function filter(){
 <div class="row">
   <div class="col s12">
     <!--<a class="waves-effect waves-light btn #2196f3 blue right" id="cancelButton">Cancel</a>-->
-    <a class="waves-effect waves-light btn blue darken-4 cancelButton right" onClick="javascript:history.go(-1)">Cancel</a>
+    <!--<a class="waves-effect waves-light btn blue darken-4 cancelButton right" onClick="javascript:history.go(-1)">Cancel</a>--->
+    <a class="waves-effect waves-light btn blue darken-4 cancelButton right" href="<?php echo isset($_SESSION["createURL"]) ? $_SESSION["createURL"]:"" ; ?>" >Cancel</a>
+    
   </div>
 </div>
 </div>
@@ -216,7 +215,6 @@ function checkDate(){
   margin-top: 15px;
   margin-right:15px;
 }
-
 .nav-wrapper > ul {
   margin-left: 220px;
 }
@@ -237,7 +235,6 @@ function checkDate(){
 .sortButton{
   width: 100px;
 }
-
 td .btn{
   width: 100px;
 }
@@ -254,6 +251,5 @@ td .btn{
 .row {
     margin-bottom: 0px;
 }
-
 </style>
 </html>

@@ -33,7 +33,6 @@ if(isset($_GET["taskID"])){
     $query = $conn->prepare("INSERT INTO TASKASSIGNMENT(testID, taskID, orderInTest) VALUES (?, ?, ?)");
     $query->bind_param("iii", $testID, $taskID, $index);
     
-    //$sql = "INSERT INTO TASKASSIGNMENT(testID, taskID, orderInTest) VALUES($testID, $taskID, $index)";
     if(!$query->execute())
       echo "<span style='color:red'>Failed to add record!".mysqli_error($conn)."</span><br/>";
     $query->close();

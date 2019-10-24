@@ -51,6 +51,7 @@ Julia Aoqi Zhang (5797585);
   <script src="uploadImage.js"></script>
   <script>
     function createNewTask() {
+      var validate = true;
       var imageAddress = $("#imageAddress").val();
       var instruction = $("#instruction").val();
       var activityStyle = $("#activityStyle option:selected").val();
@@ -68,11 +69,57 @@ Julia Aoqi Zhang (5797585);
                         else $index = 0;
                         echo json_encode($index); ?>;
       var div = document.getElementById("results");
+      var imageError = document.getElementById("imageError");
+      var instructionError = document.getElementById("instructionError");
+      var styleError = document.getElementById("styleError");
+      var titleError = document.getElementById("titleError");
+      var pointsError = document.getElementById("pointsError");
       if (imageAddress == "") {
-        div.style.color = "red";
-        div.style.fontStyle = "italic";
-        div.innerHTML = "Please select image(s) to upload!";
-      } else {
+        imageError.style.color = "red";
+        imageError.style.fontStyle = "italic";
+        imageError.innerHTML = "Please select image(s) to upload!";
+        validate = false;
+      }
+      else
+        imageError.innerHTML = "";
+      
+      if(instruction == ""){
+        instructionError.style.color = "red";
+        instructionError.style.fontStyle = "italic";
+        instructionError.innerHTML = "Please provide an instruction.";
+        validate = false;
+      }
+      else
+        instructionError.innerHTML = "";
+        
+      if(taskTitle == ""){
+        titleError.style.color = "red";
+        titleError.style.fontStyle = "italic";
+        titleError.innerHTML = "Please choose an activity style.";
+        validate = false;
+      }
+      else
+        titleError.innerHTML = "";
+      
+      if(activityStyle == ""){
+        styleError.style.color = "red";
+        styleError.style.fontStyle = "italic";
+        styleError.innerHTML = "Please choose an activity style.";
+        validate = false;
+      }
+      else
+        styleError.innerHTML = "";
+
+      if($("#points").val() == ""){
+        pointsError.style.color = "red";
+        pointsError.style.fontStyle = "italic";
+        pointsError.innerHTML = "Please provide points interval for the task.";
+        validate = false;
+      }
+      else
+        pointsError.innerHTML = "";
+      
+      if(validate) {
         $.post("createTask.php", {
             imageAddress: imageAddress,
             instruction: instruction,
@@ -146,7 +193,11 @@ Julia Aoqi Zhang (5797585);
             pointInput.setAttribute("required", "");
             pointInput.setAttribute("oninput", "validity.valid||(value='');");
 
+            var pointsError = document.createElement("div");
+            pointsError.setAttribute("id", "pointsError");
             div.appendChild(pointInput);
+            div.appendChild(pointsError);
+
             var wrapper = document.getElementById("pointRow");
             wrapper.appendChild(header);
             wrapper.appendChild(div);
@@ -176,9 +227,6 @@ Julia Aoqi Zhang (5797585);
 </head>
 
 <body>
-  <?php
-  //(isset($_POST["activityStyle"])) ? $activityStyle = $_POST["activityStyle"] : $activityStyle = 1;
-  ?>
   <!--header-->
   <div id="InsertHeader"></div>
   <script>
@@ -204,6 +252,7 @@ Julia Aoqi Zhang (5797585);
           <div class="input-field">
             <input id="taskTitle" name="taskTitle" type="text" value="<?php echo isset($taskTitle) ? $taskTitle : ""; ?>" required>
           </div>
+          <div id="titleError"></div>
         </div>
         <div class="col s6">
           <h5 class="blue-text text-darken-4 header">
@@ -213,7 +262,7 @@ Julia Aoqi Zhang (5797585);
             Activity Style:
           </h5>
           <div class="input-field">
-            <select name="activityStyle" id="activityStyle" onchange="loadContent()">
+            <select name="activityStyle" id="activityStyle" class="materialSelect" onchange="loadContent()">
               <option value="" disabled selected>Choose an option</option>
               <option <?php if (isset($activityStyle)) {
                         if ($activityStyle == "Identify Body Parts") echo "selected";
@@ -227,6 +276,7 @@ Julia Aoqi Zhang (5797585);
               <option <?php if (isset($activityStyle)) if ($activityStyle == "Preferred Mechanics") echo "selected"; ?> value="Preferred Mechanics">Preferred Mechanics</option>
             </select>
           </div>
+          <div id="styleError"></div>
         </div>
       </div>
       <div class="row">
@@ -239,6 +289,7 @@ Julia Aoqi Zhang (5797585);
         <div class="input-field col s12">
           <input id="instruction" name="instruction" value="<?php echo isset($instruction) ? $instruction : ""; ?>" type="text" required/>
         </div>
+        <div id="instructionError"></div>
       </div>
       <div class="col s12" id="pointRow"></div>
       <h5 class="blue-text text-darken-4 header">
@@ -272,6 +323,7 @@ Julia Aoqi Zhang (5797585);
 
               </div>
             </div>
+            <div id="imageError"></div>
           </form>
           <!--end upload button + path-->
         </div>
@@ -288,7 +340,7 @@ Julia Aoqi Zhang (5797585);
       </div>
       <div id="results"></div>
     </form>
-    <!--end form-->
+    <!--end form -->
   </div>
   <!--end body content-->
 </body>
