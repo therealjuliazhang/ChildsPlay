@@ -1,8 +1,8 @@
 <!--
-=======================================
+=================================================================
 Title:Group Tasks; 
 Author:Alex Satoru Hanrahan (4836789), Ren Sugie(5679527); 
-=======================================
+=================================================================
 -->
 <!DOCTYPE html>
 <html>
@@ -69,15 +69,15 @@ Author:Alex Satoru Hanrahan (4836789), Ren Sugie(5679527);
 			</div>
 			<form style="font-size:18px">
 				<div class="row">
-
 				<?php
 				session_start();
 				if(isset($_SESSION['childnames'])){
-    foreach ($_SESSION['childnames'] as $arr) {
-        echo "Tester: ". $arr . "<br />";
-        unset($_SESSION['childnames']);
-    }
-}?>
+					foreach ($_SESSION['childnames'] as $arr) {
+						echo "Tester: ". $arr . "<br />";
+						unset($_SESSION['childnames']);
+					}
+				}
+				?>
 					<div class="col s6">
 						<input value="Julia" id="name2" type="text" class="validate">
 					</div>
@@ -188,10 +188,6 @@ Author:Alex Satoru Hanrahan (4836789), Ren Sugie(5679527);
 					</div>
 				</div>
 			</form>
-
-
-
-
         </div>
 
         <!--end body content-->

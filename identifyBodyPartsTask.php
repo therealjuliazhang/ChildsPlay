@@ -1,9 +1,9 @@
 <!--
-=======================================
+==========================================================================================
 Title:Identify Body Parts Task; 
-Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Julia Aoqi Zhang (5797585), Ren
-Sugie(5679527); 
-=======================================
+Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), 
+Julia Aoqi Zhang (5797585), Ren Sugie(5679527); 
+==========================================================================================
 -->
 <html>
 <?php
@@ -59,22 +59,32 @@ $conn = OpenCon();
 // $sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$groupID;
 // else
 // $sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=".$groupID." AND userID=".$userID;
-$sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=" . $groupID;
-$result = $conn->query($sql);
+$sql = $conn->prepare("SELECT preID FROM GROUPASSIGNMENT WHERE groupID=?");
+$sql->bind_param("i", $groupID);
+$sql->execute();
+$result = $sql->get_result();
+// $sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=" . $groupID;
+// $result = $conn->query($sql);
 $preschoolers = array();
-while ($row = mysqli_fetch_assoc($result)) {
+while ($row = $result->fetch_assoc()) {
 	$sql2 = "SELECT * FROM PRESCHOOLER WHERE preID=" . $row["preID"];
 	$result2 = $conn->query($sql2);
 	while ($value = mysqli_fetch_assoc($result2)) {
 		$preschoolers[] = $value;
 	}
 }
+$sql->close();
 //fetch images
-$sql = "SELECT I.imageID, I.address, IA.taskID FROM IMAGE I JOIN IMAGEASSIGNMENT IA ON I.imageID = IA.imageID WHERE taskID = $taskID";
-$result = $conn->query($sql);
+$query = $conn->prepare("SELECT I.imageID, I.address, IA.taskID FROM IMAGE I JOIN IMAGEASSIGNMENT IA ON I.imageID = IA.imageID WHERE taskID = ?");
+$query->bind_param("i", $taskID);
+$query->execute();
+$result = $query->get_result();
+// $sql = "SELECT I.imageID, I.address, IA.taskID FROM IMAGE I JOIN IMAGEASSIGNMENT IA ON I.imageID = IA.imageID WHERE taskID = $taskID";
+// $result = $conn->query($sql);
 $images = array();
-while ($row = mysqli_fetch_assoc($result))
+while ($row = $result->fetch_assoc())
 	$images[] = $row;
+$query->close();
 CloseCon($conn);
 ?>
 

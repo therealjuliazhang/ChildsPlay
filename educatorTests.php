@@ -118,7 +118,7 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679
 						while($row2 = mysqli_fetch_assoc($result2)){
 							echo '<tr><td>', $row2['name'], '</td>', '<td>'; //print out group name
 						}
-						$sql3 =  "SELECT name FROM PRESCHOOLER P JOIN GROUPASSIGNMENT GA ON P.preID = GA.preID WHERE GA.groupID=".$row["groupID"];//." AND GA.userID=".$userID;
+						$sql3 = "SELECT name FROM PRESCHOOLER P JOIN GROUPASSIGNMENT GA ON P.preID = GA.preID WHERE GA.groupID=".$row["groupID"];//." AND GA.userID=".$userID;
 						$result3 = $conn->query($sql3);
 						$names = array();
 						while($row3 = mysqli_fetch_assoc($result3)){

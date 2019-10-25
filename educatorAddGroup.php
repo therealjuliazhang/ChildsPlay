@@ -13,14 +13,19 @@ $conn = OpenCon();
 include "educatorAccess.php";
 //fetch locations for select drop down
 $locations = array();
-$sql = "SELECT locationID FROM LOCATIONASSIGNMENT WHERE userID=".$userID;
-$result = $conn->query($sql);
-while($row = mysqli_fetch_assoc($result)){
+$sql = $conn->prepare("SELECT locationID FROM LOCATIONASSIGNMENT WHERE userID=?");
+$sql->bind_param("i", $userID);
+$sql->execute();
+$result = $sql->get_result();
+//$sql = "SELECT locationID FROM LOCATIONASSIGNMENT WHERE userID=".$userID;
+// $result = $conn->query($sql);
+while($row = $result->fetch_assoc()){
   $sql2 = "SELECT * FROM LOCATION WHERE locationID=".$row["locationID"];
   $result2 = $conn->query($sql2);
   while($value = mysqli_fetch_assoc($result2))
     $locations[] = $value;
 }
+$sql->close();
 ?>
 <head>
   <title>Add New Group For Educator</title>

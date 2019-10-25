@@ -10,54 +10,64 @@ Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4
     <?php
         include 'db_connection.php';
         $conn = OpenCon();
-        //get userID
-        // if(isset($_GET["userID"]))
-        //     $userID = (int)str_replace('"', '', $_GET["userID"]);
-        /*
-        session_start();
-        if(isset($_SESSION['userID']))
-            $userID = $_SESSION['userID'];
-        else
-            header('Location: login.php');
-        */
         include "educatorAccess.php";
         //get groupID
         if(isset($_GET["groupID"]))
             $groupID = (int)str_replace('"', '', $_GET["groupID"]);
         //get current group name from database
-        $sql = "SELECT name FROM GROUPTEST WHERE groupID = " . $groupID;
-        $result = $conn->query($sql);
-        $currentGroupName = mysqli_fetch_assoc($result)["name"];
+        $sql = $conn->prepare("SELECT name FROM GROUPTEST WHERE groupID = ?");
+        $sql->bind_param("i", $groupID);
+        $sql->execute();
+        $result = $sql->get_result();
+        // $sql = "SELECT name FROM GROUPTEST WHERE groupID = " . $groupID;
+        // $result = $conn->query($sql);
+        $currentGroupName = $result->fetch_assoc()["name"];
+        $sql->close();
         //get current location of group
-		    $sql = "SELECT name, locationID FROM GROUPTEST WHERE groupID=".$groupID;
-        $result = $conn->query($sql);
-	    	$values = mysqli_fetch_assoc($result);
+        $query = $conn->prepare("SELECT name, locationID FROM GROUPTEST WHERE groupID=?");
+        $query->bind_param("i", $groupID);
+        $query->execute();
+        $result = $query->get_result();
+		    // $sql = "SELECT name, locationID FROM GROUPTEST WHERE groupID=".$groupID;
+        // $result = $conn->query($sql);
+	    	$values = $result->fetch_assoc();
 		    $groupName = $values["name"];
         $currentLocationID = $values["locationID"];
+        $query->close();
         //fetch locations for select drop down
-        $sql2 = "SELECT locationID FROM LOCATIONASSIGNMENT WHERE userID=".$userID;
-        $result2 = $conn->query($sql2);
+        $sql2 = $conn->prepare("SELECT locationID FROM LOCATIONASSIGNMENT WHERE userID=?");
+        $sql2->bind_param("i", $userID);
+        $sql2->execute();
+        $result2 = $sql2->get_result();
+        // $sql2 = "SELECT locationID FROM LOCATIONASSIGNMENT WHERE userID=".$userID;
+        // $result2 = $conn->query($sql2);
         $locations = array();
-		while($row = mysqli_fetch_assoc($result2)){
+		while($row = $result2->fetch_assoc()){
 			$query = "SELECT * FROM LOCATION WHERE locationID=".$row["locationID"];
 			$qResult = $conn->query($query);
 			while($value = mysqli_fetch_assoc($qResult))
 				$locations[] = $value;
-		}
+    }
+    $sql2->close();
         //fetch preschoolerIDs from groupassignment table
-        $sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID = " . $groupID;// ." AND userID=".$userID;
-        $result = $conn->query($sql);
+        $sql = $conn->prepare("SELECT preID FROM GROUPASSIGNMENT WHERE groupID = ?");
+        $sql->bind_param("i", $groupID);
+        $sql->execute();
+        $result = $sql->get_result();
+        // $sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID = " . $groupID;// ." AND userID=".$userID;
+        // $result = $conn->query($sql);
         $preschoolerIDs = array();
-        while($row = mysqli_fetch_assoc($result))
+        while($row = $result->fetch_assoc())
             $preschoolerIDs[] = $row;
         //fetch preschoolers from database
         $preschoolers = array();
         foreach($preschoolerIDs as $value){
-            $sql = "SELECT * FROM PRESCHOOLER WHERE preID = " . $value['preID'];
-            $result = $conn->query($sql);
-            while($row = mysqli_fetch_assoc($result))
+            $query = "SELECT * FROM PRESCHOOLER WHERE preID = ".$value['preID'];
+            $resultPre = $conn->query($query);
+            while($row = mysqli_fetch_assoc($resultPre))
                 array_push($preschoolers, $row);
         }
+        $sql->close();
     ?>
     <head>
         <title>Edit Group for Educator</title>

@@ -18,12 +18,16 @@ if($_REQUEST["x"] && $_REQUEST["y"] && $_REQUEST["taskID"] && $_REQUEST["preID"]
 	$testID = $_REQUEST["testID"];
 	$preID = $_REQUEST["preID"];
 	$dateCollected = date('Y-m-d');
-	$sql = "INSERT INTO RESULTS(x, y, testID, taskID, preID) VALUES ($x, $y, $testID, $taskID, $preID)";
-	if ($conn->query($sql) === TRUE) {
+	$sql = $conn->prepare("INSERT INTO RESULTS(x, y, testID, taskID, preID) VALUES (?, ?, ?, ?, ?)");
+	$sql->bind_param("ddiii", $x, $y, $testID, $taskID, $preID);
+	
+	//$sql = "INSERT INTO RESULTS(x, y, testID, taskID, preID) VALUES ($x, $y, $testID, $taskID, $preID)";
+	if ($sql->execute()) {
 		echo "New record created successfully";
 	} else {
 		echo "Error: " . $sql . "<br>" . $conn->error;
 	}
+	$sql->close();
 	CloseCon($conn);
 }
 else

@@ -28,12 +28,13 @@ $sql = "SELECT * FROM TASK";
 //if editing test, get taskIDs in test
 if ($from == "edit") {
 	$taskIDs = array();
-	$query = "SELECT taskID FROM TASKASSIGNMENT WHERE testID = ".$testID;
-	$taskIDsResult = $conn->query($query);
+	$query = $conn->prepare("SELECT taskID FROM TASKASSIGNMENT WHERE testID = ?");
+	$query->bind_param("i", $testID);
+	$query->execute();
+	//$query = "SELECT taskID FROM TASKASSIGNMENT WHERE testID = ".$testID;
+	$taskIDsResult = $query->get_result();
 
-	//$sql = "SELECT T.*, TEST.testID, MIN(TEST.dateCreated) AS date FROM TASK T JOIN TASKASSIGNMENT TA ON T.taskID = TA.taskID JOIN TEST ON TEST.testID = TA.testID";
-
-	if(mysqli_num_rows($taskIDsResult)> 0){
+	if($taskIDsResult->num_rows > 0){
 		$sql .= " WHERE taskID NOT IN (";
 		//$sql = "SELECT T.*, TEST.testID, MIN(TEST.dateCreated) AS date FROM TASK T JOIN TASKASSIGNMENT TA ON T.taskID = TA.taskID JOIN TEST ON TEST.testID = TA.testID WHERE T.taskID NOT IN (";
 		$index = 0;
@@ -45,6 +46,7 @@ if ($from == "edit") {
 		}
 		$sql .= ")";
 	}
+	$query->close();
 } /*else
 	//$sql = "SELECT T.*, TEST.testID, MIN(TEST.dateCreated) AS date FROM TASK T JOIN TASKASSIGNMENT TA ON T.taskID = TA.taskID JOIN TEST ON TEST.testID = TA.testID";
 	$sql = "SELECT * FROM TASK";*/
@@ -121,6 +123,5 @@ else {
 			" href='createNewTaskInCreateTest.php?exist=true&taskID=".$row["taskID"]."&testID=".$_SESSION["testID"]."&from=".$from."'>Edit</a></td>";
 			echo "<td style='width:7%' class='addCol'><a class='waves-effect waves-light btn blue darken-4' href='editTest.php?taskID=" . $row["taskID"] . "&testID=" . $_SESSION["testID"] . "'>Add</a></td>";
 		}
-			//echo "<td style='width:7%' class='addCol'><a class='waves-effect waves-light btn blue darken-4' href='editTest.php?taskID=" . $row["taskID"] . "&testID=" . $_SESSION["testID"] . "'>Add</a></td>";
 	}
 }

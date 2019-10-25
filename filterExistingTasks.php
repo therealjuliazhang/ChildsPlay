@@ -57,15 +57,6 @@ function filter(){
   </script>
   <!--end header-->
   <!-- body content -->
-  <?php
-  /*
-  session_start();
-  if (isset($_SESSION['userID']))
-  $userID = $_SESSION['userID'];
-  else
-  header('location: login.php');
-  */
-  ?>
   <div class="container">
     <h3 class="blue-text text-darken-4">Filter By:</h3>
 
@@ -99,23 +90,6 @@ function filter(){
         </form>
       </div>
     </div>
-    <!--
-    <h6 class="blue-text text-darken-4 header">Activity Style</h6>
-    <div class="row">
-    <div class="input-field col s6">
-    <select class="" name="activityStyle" id="activityStyle">
-    <option value="" selected disabled>Select Activity Style:</option>
-    <option value="Identify Body Parts">Identify Body Parts</option>
-    <option value="Character Ranking">Character Ranking</option>
-    <option value="Likert Scale">Likert Scale</option>
-    <option value="Preferred Mechanics">Preferred Mechanics</option>
-  </select>
-</div>
-</div>
-<div class="row">
-<button class="btn waves-effect waves-light blue darken-4 sortButton" type="submit" name="submitFilter" onclick="filter()">Filter</button>
-</div>
-</form> -->
 <br/>
 <!--table for holding tasks-->
 <div style="overflow:auto">
