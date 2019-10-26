@@ -144,9 +144,9 @@ include "adminAccess.php";
         <table class="striped tablesorter">
           <thead class="blue-text text-darken-4">
             <tr>
-              <th>Name</th>
+              <th>Full Name</th>
+              <th>Username</th>
               <th>Email</th>
-              <th>Organisation</th>
             </tr>
           </thead>
           <tbody class="">
@@ -155,12 +155,13 @@ include "adminAccess.php";
             $sql = "SELECT * FROM USERS WHERE accountType = 1 AND accepted = 1"; //accepted admin
             $sqlResult = $conn->query($sql);
             while($row = mysqli_fetch_assoc($sqlResult)){
-              $query = "SELECT L.name FROM LOCATION L JOIN LOCATIONASSIGNMENT LA ON L.locationID = LA.locationID WHERE userID=".$row["userID"];
-              $result = $conn->query($query);
-              $location = mysqli_fetch_array($result);
+              //$query = "SELECT L.name FROM LOCATION L JOIN LOCATIONASSIGNMENT LA ON L.locationID = LA.locationID WHERE userID=".$row["userID"];
+              //$result = $conn->query($query);
+              //$location = mysqli_fetch_array($result);
               echo "<tr><td>".$row["fullName"]."</td>".
-              "<td>".$row["email"]."</td>".
-              "<td>".$location["name"]."</td></tr>";
+              "<td>".$row["username"]."</td>".
+              "<td>".$row["email"]."</td></tr>";
+              //"<td>".$location["name"]."</td></tr>";
             }
             CloseCon($conn);
             ?>
