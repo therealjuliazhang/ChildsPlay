@@ -1,19 +1,12 @@
 <!--
-=======================================
+=============================================================================================================
 Title:Select Group For Task;
 Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679527);
-=======================================
+=============================================================================================================
 -->
 <!DOCTYPE html>
 <html>
 <?php
-/*
-session_start();
-if(isset($_SESSION['userID']))
-	$userID = $_SESSION['userID'];
-else
-	header('location: login.php');
-*/
 include "educatorAccess.php";
 if(isset($_GET['testID'])){
 	$testID = $_GET['testID'];
@@ -80,12 +73,12 @@ $conn = OpenCon();
 						if($count == sizeof($names)) break;
 						echo ", ";
 					}
-					echo '</td><td><a href="instruction.php?groupID='.$row["groupID"].'" class="waves-effect waves-light btn blue darken-4 right selectButton">Select</a></td></tr>';
+					echo '</td><td><div style="margin-right:46px"><a href="instruction.php?groupID='.$row["groupID"].'" class="waves-effect waves-light btn blue darken-4 right selectButton">Select</a></div></td></tr>';
 				}
 				CloseCon($conn);
 				?>
 			</tbody>
-		</table>
+		</table><br/>
 		<div class="row">
 			<div class="col s12">
 				<a class="waves-effect waves-light btn blue darken-4 cancelButton right" href="educatorTests.php#tests">Cancel</a>
