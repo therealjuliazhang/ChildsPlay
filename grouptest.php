@@ -189,9 +189,7 @@ Author:Alex Satoru Hanrahan (4836789), Ren Sugie(5679527);
 				</div>
 			</form>
         </div>
-
         <!--end body content-->
-
     </body>
 	<script>
 	</script>

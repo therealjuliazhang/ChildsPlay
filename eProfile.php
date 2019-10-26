@@ -120,7 +120,7 @@ Author:Phuong Linh Bui (5624095)
         <input id="email" name="email" type="email" class="validate">
       </div>
       <div class="col s3 column01"><h6 class="hInCol">Location:</h6></div>
-      <div class="removable">
+      <!--<div class="removable">--->
         <div class="input-field col s9 locationCell">
           <select name="location" id="location" class="materialSelect" multiple required="required">
           <?php
@@ -130,10 +130,9 @@ Author:Phuong Linh Bui (5624095)
           ?>
           </select>
         </div>
-      </div>
+      <!--</div>--->
     </div>
   </div>
-
   <div class="container" id="educatorProfileButtonsContainer">
     <div class="row">
         <div class="col s1 offset-s11" id="editButtonDiv">

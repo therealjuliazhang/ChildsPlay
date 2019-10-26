@@ -1,19 +1,14 @@
 <?php
 /*
-=======================================
+=================================================================
 Title:Login User; 
 Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789);
-=======================================
+=================================================================
 */
     session_start();
     include 'db_connection.php';
     $conn = OpenCon();
-    /*
-	if(isset($_SESSION["userID"]))
-		$userID = $_SESSION["userID"];
-	else
-		header("Location: login.php");
-	*/
+
     //Get inputs
     if(isset($_POST["username"]))
         $username = mysqli_real_escape_string($conn, $_POST["username"]);
@@ -21,9 +16,13 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789);
         $password = mysqli_real_escape_string($conn, $_POST["password"]);
     //Get user from database if exists
     $password = md5($password);
-    $query = "SELECT userID, accountType, accepted FROM USERS WHERE username='$username' AND password='$password'";
-  	$results = mysqli_query($conn, $query);
-  	if (mysqli_num_rows($results) == 1) {
+    $query = $conn->prepare("SELECT userID, accountType, accepted FROM USERS WHERE username=? AND password=?");
+    $query->bind_param("ss", $username, $password);
+    $query->execute();
+    $results = $query->get_result();
+    // $query = "SELECT userID, accountType, accepted FROM USERS WHERE username='$username' AND password='$password'";
+  	// $results = mysqli_query($conn, $query);
+  	if ($results->num_rows == 1) {
             $user = mysqli_fetch_assoc($results);
             //login fail if user not accepted by admin yet
             if($user['accepted']== 0)
@@ -41,7 +40,8 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789);
                     $_SESSION['accountType'] = 0;
                     header('location: educatorTests.php');
                 }
-			}
+            }
+        $query->close();
   	}else {
         header('location: login.php?msg=failed');
   	}

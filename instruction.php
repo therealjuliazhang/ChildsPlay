@@ -82,22 +82,32 @@ else{
 function getTasks($conn, $testID, $taskID){
 	$tasksArray = array();
 	if($testID != 0 && $taskID == 0){
-		$query = "SELECT taskID FROM TASKASSIGNMENT WHERE testID=".$testID;
-		$result = $conn->query($query);
-		while($value = mysqli_fetch_assoc($result)){
+		$query = $conn->prepare("SELECT taskID FROM TASKASSIGNMENT WHERE testID=?");
+		$query->bind_param("i", $testID);
+		$query->execute();
+		$result = $query->get_result();
+		// $query = "SELECT taskID FROM TASKASSIGNMENT WHERE testID=".$testID;
+		// $result = $conn->query($query);
+		while($value = $result->fetch_assoc()){
 			$taskQuery = "SELECT * FROM TASK WHERE taskID=".$value["taskID"];
 			$result2 = $conn->query($taskQuery);
 			while($row = mysqli_fetch_assoc($result2))
-			$tasksArray[] = $row;
+				$tasksArray[] = $row;
 		}
+		$query->close();
 		if(count($tasksArray) > 0)
 		$taskID = $tasksArray[0]["taskID"];
 	}
 	else if ($taskID != 0){
-		$taskQuery = "SELECT * FROM TASK WHERE taskID=".$taskID;
-		$result2 = $conn->query($taskQuery);
-		while($row = mysqli_fetch_assoc($result2))
-		$tasksArray[] = $row;
+		$taskQuery = $conn->prepare("SELECT * FROM TASK WHERE taskID=?");
+		$taskQuery->bind_param("i", $taskID);
+		$taskQuery->execute();
+		$result2 = $taskQuery->get_result();
+		// $taskQuery = "SELECT * FROM TASK WHERE taskID=".$taskID;
+		// $result2 = $conn->query($taskQuery);
+		while($row = $result2->fetch_assoc())
+			$tasksArray[] = $row;
+		$taskQuery->close();
 	}
 	$_SESSION["tasks"] = $tasksArray;
 	return $tasksArray;

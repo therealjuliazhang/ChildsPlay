@@ -1,9 +1,9 @@
 <?php
 /* 
-=======================================
+============================================================================================================
 Title:Preferred Mechanics Task;
 Author:Zhixing Yang(5524726), Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679527);
-=======================================
+============================================================================================================
 */
 //get information
 session_start();
@@ -60,16 +60,21 @@ $conn = OpenCon();
 // $sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=" . $groupID;
 // else
 // $sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=" . $groupID . " AND userID=" . $userID;
-$sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=" . $groupID;
-$result = $conn->query($sql);
+$sql = $conn->prepare("SELECT preID FROM GROUPASSIGNMENT WHERE groupID=?");
+$sql->bind_param("i", $groupID);
+$sql->execute();
+$result = $sql->get_result();
+// $sql = "SELECT preID FROM GROUPASSIGNMENT WHERE groupID=" . $groupID;
+// $result = $conn->query($sql);
 $preschoolers = array();
-while ($row = mysqli_fetch_assoc($result)) {
+while ($row = $result->fetch_assoc()) {
 	$sql2 = "SELECT * FROM PRESCHOOLER WHERE preID=" . $row["preID"];
 	$result2 = $conn->query($sql2);
 	while ($value = mysqli_fetch_assoc($result2)) {
 		$preschoolers[] = $value;
 	}
 }
+$sql->close();
 CloseCon($conn);
 ?>
 <html>

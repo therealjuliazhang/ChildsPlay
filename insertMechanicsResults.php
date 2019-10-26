@@ -24,18 +24,19 @@ include "educatorAccess.php";
 	echo "Mechanic: ".$mechanic."<br/>";
 	
 	if($mechanic == "Other"){
-		$mechanic = "'".$mechanic."'";
-		$otherComment = "'".$otherComment."'";
-		$sql = "INSERT INTO RESULTS (mechanic, taskID, preID, testID, otherComment) VALUES ($mechanic, $taskID, $preID, $testID, $otherComment)";
+        $sql = $conn->prepare("INSERT INTO RESULTS (mechanic, taskID, preID, testID, otherComment) VALUES (?,?,?,?,?)");
+        $sql->bind_param("siiis", $mechanic, $taskID, $preID, $testID, $otherComment);
+		//$sql = "INSERT INTO RESULTS (mechanic, taskID, preID, testID, otherComment) VALUES ($mechanic, $taskID, $preID, $testID, $otherComment)";
 	}
 	else{
-		$mechanic = "'".$mechanic."'";
-		$sql = "INSERT INTO RESULTS (mechanic, taskID, preID, testID) VALUES ($mechanic, $taskID, $preID, $testID)";
+        $sql = $conn->prepare("INSERT INTO RESULTS (mechanic, taskID, preID, testID) VALUES (?,?,?,?)");
+        $sql->bind_param("siii", $mechanic, $taskID, $preID, $testID);
+		//$sql = "INSERT INTO RESULTS (mechanic, taskID, preID, testID) VALUES ($mechanic, $taskID, $preID, $testID)";
 	}
-	echo "Query: ".$sql;
-    if ($conn->query($sql) === TRUE)
+    if ($sql->execute())
         echo "New record created successfully";
     else
         echo "Error: " . $sql . "<br>" . $conn->error;
+    $sql->close();
     CloseCon($conn);
 ?>
