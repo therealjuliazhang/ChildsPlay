@@ -26,7 +26,7 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789);
             $user = mysqli_fetch_assoc($results);
             //login fail if user not accepted by admin yet
             if($user['accepted']== 0)
-                header('location: login.php?msg=notaccepted');
+                header('location: login.php?msg=pending');
             else if ($user['accepted'] == 1){
 				//set user ID to session
 				$userID = $user['userID'];
@@ -41,6 +41,8 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789);
                     header('location: educatorTests.php');
                 }
             }
+            else if($user['accepted'] == -1)
+                header('location: login.php?msg=declined');
         $query->close();
   	}else {
         header('location: login.php?msg=failed');

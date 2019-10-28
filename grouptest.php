@@ -31,7 +31,6 @@ Author:Alex Satoru Hanrahan (4836789), Ren Sugie(5679527);
         <!--end header-->
 
         <!-- body content -->
-
         <div class="container grey-text text-darken-1">
 			<div class="row">
 				<div class="col s12">

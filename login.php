@@ -47,10 +47,12 @@ Last Edited: 22/10/2019;
               <?php
               if(isset($_GET["msg"])){
                 $msg = $_GET["msg"];
-                if($msg == "notaccepted")
-                echo "<span style='font-size:12px;color:#EC453C;'>Your account has not been accepted or rejected by admin. Please check your email for more details!</span>";
+                if($msg == "pending")
+                  echo "<span style='font-size:12px;color:#EC453C;'>Your account has not been accepted by admin. Please check your email for notification!</span>";
+                else if ($msg == "declined")
+                  echo "<span style='font-size:12px;color:#EC453C;'>Sorry, your account has been declined by admin.</span>";
                 else
-                echo "<span style=\"font-size: 12px; color: #EC453C;\">Incorrect username or password.</span>";
+                  echo "<span style=\"font-size: 12px; color: #EC453C;\">Incorrect username or password.</span>";
               }
               ?>
               <div class="row">

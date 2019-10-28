@@ -312,5 +312,4 @@ CloseCon($conn);
 	</div>
 	<!--end body content-->
 </body>
-
 </html>

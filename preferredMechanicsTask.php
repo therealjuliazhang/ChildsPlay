@@ -353,7 +353,6 @@ $(document).ready(function(){
 	}
 	#commentCol{
 	}
-
 	.panel{
 		display:none;
 	}
