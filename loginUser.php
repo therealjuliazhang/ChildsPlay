@@ -20,8 +20,6 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789);
     $query->bind_param("ss", $username, $password);
     $query->execute();
     $results = $query->get_result();
-    // $query = "SELECT userID, accountType, accepted FROM USERS WHERE username='$username' AND password='$password'";
-  	// $results = mysqli_query($conn, $query);
   	if ($results->num_rows == 1) {
             $user = mysqli_fetch_assoc($results);
             //login fail if user not accepted by admin yet

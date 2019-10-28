@@ -1,9 +1,9 @@
 <?php
 /*
-=======================================
+=============================================================
 Title:Update Admin; 
 Author:Alex Satoru Hanrahan (4836789), Andre Knell (5741622);
-=======================================
+=============================================================
 */ 
 include "adminAccess.php";
 include 'db_connection.php';
@@ -31,14 +31,19 @@ if(isset($_POST["password1"])){
 	if($password != ""){
 		$password = md5($password);
 		//update educator details
-		$sql = "UPDATE USERS SET username = '".$username."', password = '".$password."', email = '".$email."' WHERE userID=$userID";
+		$sql = $conn->prepare("UPDATE USERS SET username = ?, password=?, email=? WHERE userID=?");
+		$sql->bind_param("sssi", $username, $password, $email, $userID);
 	}
-	else
-		$sql = "UPDATE USERS SET username = '".$username."', email = '".$email."' WHERE userID=$userID";
+	else{
+		$sql = $conn->prepare("UPDATE USERS SET username = ?, email=? WHERE userID=?");
+		$sql->bind_param("ssi", $username, $email, $userID);
+	}
 }
-if ($conn->query($sql) === TRUE){
+if ($sql->execute()){
 	echo "Successfully updated educator profile!";
 }
 else
 	echo "Failed to update user record!";
+$sql->close();
+CloseCon($conn);
 ?>

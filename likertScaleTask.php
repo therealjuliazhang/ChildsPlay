@@ -168,12 +168,6 @@ Julia Aoqi Zhang (5797585), Ren Sugie(5679527);
 					//if task was preview, go back to edit test page
 					if(isPreview)
 						window.location.href = "comments.php?taskIndex=" + taskIndex + "&from=" + from;
-						/*if(from == "edit")
-							window.location.href = "editTest.php";
-						else if(from == "availableTests")
-							window.location.href = "viewExistingTests.php";
-						else if (from == "existingTasks")
-							window.location.href = "filterExistingQuestions.php";*/
 					else
 						window.location.href = "comments.php?taskIndex=" + taskIndex;
 				}
@@ -187,10 +181,8 @@ Julia Aoqi Zhang (5797585), Ren Sugie(5679527);
 		}
 		function sadClicked(){
 			faceClicked = true;
-			//alert("Sad is clicked");
 			$("#happy").prop("onclick", null).off("click");
 			$("#sad").hide();
-            //document.getElementById("sad").src="images/transparent.png";
 			if(!isPreview){
 			//insert data only when in start mode
 			$.ajax({
@@ -202,10 +194,8 @@ Julia Aoqi Zhang (5797585), Ren Sugie(5679527);
 		}
 		function happyClicked(){
 			faceClicked = true;
-			//alert("Happy is clicked");
 			$("#sad").prop("onclick", null).off("click");
 			$("#happy").hide();
-			//document.getElementById("happy").src="images/transparent.png";
 			//insert data only when in start mode
 			if(!isPreview){
 			$.ajax({

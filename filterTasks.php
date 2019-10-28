@@ -31,12 +31,10 @@ if ($from == "edit") {
 	$query = $conn->prepare("SELECT taskID FROM TASKASSIGNMENT WHERE testID = ?");
 	$query->bind_param("i", $testID);
 	$query->execute();
-	//$query = "SELECT taskID FROM TASKASSIGNMENT WHERE testID = ".$testID;
 	$taskIDsResult = $query->get_result();
 
 	if($taskIDsResult->num_rows > 0){
 		$sql .= " WHERE taskID NOT IN (";
-		//$sql = "SELECT T.*, TEST.testID, MIN(TEST.dateCreated) AS date FROM TASK T JOIN TASKASSIGNMENT TA ON T.taskID = TA.taskID JOIN TEST ON TEST.testID = TA.testID WHERE T.taskID NOT IN (";
 		$index = 0;
 		while ($row = mysqli_fetch_assoc($taskIDsResult)){
 			$sql .= $row["taskID"];
@@ -94,8 +92,6 @@ if (isset($_POST["submitFilter"])) {
 		$sql .= $connector . " activityStyle=$activityStyle";
 	}
 }
-
-//$sql .= " GROUP BY TA.taskID";
 $result = $conn->query($sql);
 if (mysqli_num_rows($result) == 0)
 	echo "<span style='color:red;font-style:italic'>No results found!</span><br/>";
@@ -114,10 +110,6 @@ else {
 			" href='createNewTaskInCreateTest.php?exist=true&taskID=".$row["taskID"]."&from=".$from."'>Edit</a></td>";
 			echo "<td style='width:7%' class='addCol'><a class='waves-effect waves-light btn blue darken-4 addButton' href='" .$url. $row["taskID"] . "'>Add</a></td>";
 		}
-		/*"<td style='width:7%' class='editCol'><a class='waves-effect waves-light btn blue darken-4'".
-		" href='CreateNewTaskInCreateTest.php?exist=true&taskID=".$row["taskID"]."&testID=".$_SESSION["testID"]."&from=".$from."'>Edit</a></td>";
-		if ($from == "create")
-			echo "<td style='width:7%' class='addCol'><a class='waves-effect waves-light btn blue darken-4' href='createTest.php?taskID=" . $row["taskID"] . "'>Add</a></td>";*/
 		else if ($from == "edit"){
 			echo "<td style='width:7%' class='editCol'><a class='waves-effect waves-light btn blue darken-4'".
 			" href='createNewTaskInCreateTest.php?exist=true&taskID=".$row["taskID"]."&testID=".$_SESSION["testID"]."&from=".$from."'>Edit</a></td>";

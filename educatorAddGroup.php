@@ -17,8 +17,6 @@ $sql = $conn->prepare("SELECT locationID FROM LOCATIONASSIGNMENT WHERE userID=?"
 $sql->bind_param("i", $userID);
 $sql->execute();
 $result = $sql->get_result();
-//$sql = "SELECT locationID FROM LOCATIONASSIGNMENT WHERE userID=".$userID;
-// $result = $conn->query($sql);
 while($row = $result->fetch_assoc()){
   $sql2 = "SELECT * FROM LOCATION WHERE locationID=".$row["locationID"];
   $result2 = $conn->query($sql2);
@@ -100,15 +98,7 @@ $(document).ready(function() {
   $('.materialSelect').on('contentChanged', function() {
     $(this).material_select();
   });
-  //set locations into select options
-  var locations = <?php echo json_encode($locations); ?>;
-  for(var i=0; i<locations.length; i++){
-    var option = document.createElement("option");
-    option.value = locations[i]['locationID'];
-    option.name = locations[i]['name'];
-    option.innerHTML = locations[i]['name'];
-    document.getElementById("locationSelect").appendChild(option);
-  }
+  
   $("#locationSelect").trigger('contentChanged');
   //Places error element next to invalid inputs
   $.validator.setDefaults({
@@ -129,6 +119,15 @@ $(document).ready(function() {
       }
     }
   })
+  //set locations into select options
+  var locations = <?php echo json_encode($locations); ?>;
+  for(var i=0; i<locations.length; i++){
+    var option = document.createElement("option");
+    option.value = locations[i]['locationID'];
+    option.name = locations[i]['name'];
+    option.innerHTML = locations[i]['name'];
+    document.getElementById("locationSelect").appendChild(option);
+  }
   //set up rules and messages for errors
   $("#form").validate({
     rules: {

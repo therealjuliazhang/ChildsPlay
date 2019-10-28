@@ -31,12 +31,14 @@ $mail->isHTML(true); //allows to use HTML content
 if(isset($_POST["resetEmail"])){
 	$email = $_POST["resetEmail"];
 
-	$password = rand(999, 99999);
-	$password_hash = md5($password);
+	$token = rand(999, 99999);
+	$token_hash = md5($token);
 
-	$sql = "UPDATE USERS SET token='$password_hash' WHERE email='$email'";
-	$result = $conn->query($sql);
-	$count = mysqli_affected_rows($conn);
+	$sql = $conn->prepare("UPDATE USERS SET token=? WHERE email=?");
+	$sql->bind_param("ss", $token_hash, $email);
+	$sql->execute();
+	$count = $sql->affected_rows;
+	$sql->close();
 	if($count == 1){
 		$mail->Subject = 'ChildsPlay Reset Password Notification';
 		$mail->addAddress($email); // Set the recipient of the message.

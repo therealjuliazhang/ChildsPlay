@@ -1,9 +1,9 @@
 <?php
 /*
-=======================================
+=============================================================
 Title:Update User Page; 
 Author:Phuong Linh Bui (5624095), Julia Aoqi Zhang (5797585); 
-=======================================
+=============================================================
 */
     //session_start();
     include "adminAccess.php";
@@ -28,7 +28,7 @@ Author:Phuong Linh Bui (5624095), Julia Aoqi Zhang (5797585);
         $check = true;
     }
     else
-    $check = false;
+        $check = false;
     //query works if there is a value for userID
     if($check){
         $query = "UPDATE USERS SET accepted = ".$accepted." WHERE userID = ".$userID;

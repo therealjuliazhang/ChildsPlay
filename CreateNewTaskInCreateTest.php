@@ -141,7 +141,7 @@ Julia Aoqi Zhang (5797585);
                 window.location = "editTest.php?testID=" + testID;
               if (from == "create"){
                 var para = <?php echo isset($_SESSION["createURL"]) ? json_encode($_SESSION["createURL"]) : json_encode(""); ?>;
-                if(para.indexOf("taskID=") !== -1) //if para contains "taskID="
+                if(para.indexOf("taskID=") !== -1) //if parameter contains "taskID="
                   window.location = "createTest.php?" + para + "&" + taskID;
                 else
                   window.location = "createTest.php?taskID=" + taskID;

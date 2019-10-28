@@ -63,10 +63,12 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679
 				<tbody>
 				<?php
 				//get tests from database
-				$sql1 = "SELECT testID FROM TESTASSIGNMENT WHERE userID=".$userID;
-				$testIndexes = $conn->query($sql1);
+				$sql1 = $conn->prepare("SELECT testID FROM TESTASSIGNMENT WHERE userID=?");
+				$sql1->bind_param("i", $userID);
+				$sql1->execute();
+				$testIndexes = $sql1->get_result();
 				$tests = array();
-				while($row = mysqli_fetch_assoc($testIndexes)){
+				while($row = $testIndexes->fetch_assoc()){
 					$sql2 = "SELECT * FROM TEST WHERE testID=".$row["testID"];
 					$result = $conn->query($sql2);
 					while($value = mysqli_fetch_assoc($result)){
@@ -89,6 +91,7 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679
 						}
 					}
 				}
+				$sql1->close();
 				?>
 				</tbody>
 			</table>
@@ -110,8 +113,6 @@ Author:Phuong Linh Bui (5624095), Alex Satoru Hanrahan (4836789), Ren Sugie(5679
 					$sql->bind_param("i", $userID);
 					$sql->execute();
 					$result = $sql->get_result();
-					// $sql = "SELECT groupID FROM GROUPTEST WHERE userID=".$userID." GROUP BY groupID";
-					// $result = $conn->query($sql);
 					while($row = $result->fetch_assoc()){
 						$sql2 = "SELECT name FROM GROUPTEST WHERE groupID=".$row["groupID"];
 						$result2 = $conn->query($sql2);

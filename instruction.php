@@ -86,8 +86,6 @@ function getTasks($conn, $testID, $taskID){
 		$query->bind_param("i", $testID);
 		$query->execute();
 		$result = $query->get_result();
-		// $query = "SELECT taskID FROM TASKASSIGNMENT WHERE testID=".$testID;
-		// $result = $conn->query($query);
 		while($value = $result->fetch_assoc()){
 			$taskQuery = "SELECT * FROM TASK WHERE taskID=".$value["taskID"];
 			$result2 = $conn->query($taskQuery);
@@ -103,8 +101,6 @@ function getTasks($conn, $testID, $taskID){
 		$taskQuery->bind_param("i", $taskID);
 		$taskQuery->execute();
 		$result2 = $taskQuery->get_result();
-		// $taskQuery = "SELECT * FROM TASK WHERE taskID=".$taskID;
-		// $result2 = $conn->query($taskQuery);
 		while($row = $result2->fetch_assoc())
 			$tasksArray[] = $row;
 		$taskQuery->close();

@@ -167,18 +167,23 @@ if(isset($_POST["resetBtn"])){
             $token = $_GET["token"];
             $password = md5($password);//encrypt the password before saving in the database
 
-            $pwCheck = "SELECT password FROM USERS WHERE token='$token'";
-            $result1 = $conn->query($pwCheck);
+            $pwcheck = $conn->prepare("SELECT password FROM USERS WHERE token=?");
+            $pwcheck->bind_param("s", $token);
+            $pwcheck->execute();
+            $result1 = $pwcheck->get_result();
             $oldPassword = "";
             //get the old password
-            while($value = mysqli_fetch_assoc($result1))
+            while($value = $result1->fetch_assoc())
                 $oldPassword = $value["password"];
+            $pwcheck->close();
             //if the new password is different from the old password, update the database
             if($password != $oldPassword){
                 //update new password in database
-                $sql = "UPDATE USERS SET password='$password' WHERE token='$token'";
-                $result = $conn->query($sql);
-                $count = mysqli_affected_rows($conn);
+                $sql = $conn->prepare("UPDATE USERS SET password=? WHERE token=?");
+                $sql->bind_param("ss", $password, $token);
+                $sql->execute();
+                $count = $sql->affected_rows;
+                $sql->close();
                 if($count == 1){
                     echo "<div style='color:green;font-style:italic'>Reset password successfully!</div>";
                 }

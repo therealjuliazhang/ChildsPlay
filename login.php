@@ -48,7 +48,8 @@ Last Edited: 22/10/2019;
               if(isset($_GET["msg"])){
                 $msg = $_GET["msg"];
                 if($msg == "pending")
-                  echo "<span style='font-size:12px;color:#EC453C;'>Your account has not been accepted by admin. Please check your email for notification!</span>";
+                  echo "<span style='font-size:12px;color:#EC453C;'>Your account has not been accepted by admin. 
+                      Please check your email for notification!</span>";
                 else if ($msg == "declined")
                   echo "<span style='font-size:12px;color:#EC453C;'>Sorry, your account has been declined by admin.</span>";
                 else
@@ -64,12 +65,10 @@ Last Edited: 22/10/2019;
               <div class="col s12 center">
                 <a href="forgotPassword.php">Forgot your password?</a>
               </div>
-
               <div class="row">
                 <div class="col s12">
                   <div class="divider"></div>
                 </div>
-
                 <div class="col s12">
                   <h6>Don't have an account?</h6>
                 </div>
@@ -78,7 +77,6 @@ Last Edited: 22/10/2019;
                   <a href="register.php" class="waves-effect waves-light btn btn02">Sign up</a>
                 </div>
               </div>
-
             </div>
           </form>
         </div>
