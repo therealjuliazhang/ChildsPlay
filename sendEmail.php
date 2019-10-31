@@ -47,7 +47,12 @@ if(isset($_SESSION["uID"])){
 		}
 	}
 	$mail->Body = $message; // Set a plain text body.
-
+	
+	if ($mail->send()) {
+		echo "Your message was sent successfully!";
+	} else {
+		echo "Mailer Error: " . $mail->ErrorInfo;
+	}
 	// ... or send an email with HTML.
 	//$mail->msgHTML(file_get_contents('contents.html'));
 	// Optional when using HTML: Set an alternative plain text message for email clients who prefer that.
@@ -55,12 +60,6 @@ if(isset($_SESSION["uID"])){
 
 	// Optional: attach a file
 	//$mail->addAttachment('images/phpmailer_mini.png');
-
-	if ($mail->send()) {
-		echo "Your message was sent successfully!";
-	} else {
-		echo "Mailer Error: " . $mail->ErrorInfo;
-	}
 }
 //send email to admin when there's a new registered account
 if(isset($_POST["registerEmail"])){

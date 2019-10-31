@@ -74,51 +74,54 @@ Julia Aoqi Zhang (5797585);
       var styleError = document.getElementById("styleError");
       var titleError = document.getElementById("titleError");
       var pointsError = document.getElementById("pointsError");
+      console.log("Points error: " + imageError);
       if (imageAddress == "") {
         imageError.style.color = "red";
         imageError.style.fontStyle = "italic";
-        imageError.innerHTML = "Please select image(s) to upload!";
+        imageError.innerText = "Please select image(s) to upload!";
         validate = false;
       }
       else
-        imageError.innerHTML = "";
+        imageError.innerText = "";
       
       if(instruction == ""){
         instructionError.style.color = "red";
         instructionError.style.fontStyle = "italic";
-        instructionError.innerHTML = "Please provide an instruction.";
+        instructionError.innerText = "Please provide an instruction.";
         validate = false;
       }
       else
-        instructionError.innerHTML = "";
+        instructionError.innerText = "";
         
       if(taskTitle == ""){
         titleError.style.color = "red";
         titleError.style.fontStyle = "italic";
-        titleError.innerHTML = "Please choose an activity style.";
+        titleError.innerText = "Please choose an activity style.";
         validate = false;
       }
       else
-        titleError.innerHTML = "";
+        titleError.innerText = "";
       
       if(activityStyle == ""){
         styleError.style.color = "red";
         styleError.style.fontStyle = "italic";
-        styleError.innerHTML = "Please choose an activity style.";
+        styleError.innerText = "Please choose an activity style.";
         validate = false;
       }
       else
-        styleError.innerHTML = "";
+        styleError.innerText = "";
 
       if($("#points").val() == ""){
         pointsError.style.color = "red";
         pointsError.style.fontStyle = "italic";
-        pointsError.innerHTML = "Please provide points interval for the task.";
+        if (pointsError != null)
+          pointsError.innerText = "Please provide points interval for the task.";
         validate = false;
       }
-      else
-        pointsError.innerHTML = "";
-      
+      else{
+        if (pointsError != null)
+          pointsError.innerText = "";
+      }
       if(validate) {
         $.post("createTask.php", {
             imageAddress: imageAddress,

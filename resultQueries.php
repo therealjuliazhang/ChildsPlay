@@ -178,8 +178,7 @@ else if(isset($_GET["testID"])){
 	}
 	else
 		$filteredPreIDs = array_intersect($preList1, $preList2, $preList3);
-	//foreach ($filteredPreIDs as $id)
-		//echo "Array: ".$id;
+	
 	if(count($filteredPreIDs) > 0){
 		if(count($filteredPreIDs) > 1){
 			$preIDsForQuery = join("','",$filteredPreIDs);
